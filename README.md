@@ -1,1 +1,1 @@
-# Rich Data Interfaces for Copernicus Data - A Bachelor's Thesis
+# Rich Data Interfaces for Copernicus Data - Bachelor Thesis
