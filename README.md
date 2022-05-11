@@ -1,1 +1,1 @@
-# Rich Data Interfaces for Copernicus Data - Bachelor Thesis
+# Rich Data Interfaces for Copernicus Data - Eine Bachelorarbeit im Fach Geoinformatik
