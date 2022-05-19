@@ -21,8 +21,8 @@ Anwender bietet eine API, in Abgrenzung zu simpleren Diensten, häufig die Mögl
 Anfragen zu parametrisieren und so exakt auf ihre Fragestellung anzupassen.
 
 ## 2 Zielsetzung
-Ziel der Arbeit ist das Implementieren eines leichtgewichtigen, OGC API - Processes
-- Part: 1 Core Standard konformen Application Programming Interface (API). Um
+Ziel der Arbeit ist das Implementieren eines leichtgewichtigen, OGC API - Processes - 
+Part: 1 Core Standard konformen Application Programming Interface (API). Um
 einen praktischen Bezug zu schaffen, soll die API einen Prozess anbieten, welcher
 Überschwemmungsmonitoring auf Basis von Copernicus-Daten ermöglicht. Die API
 wird sämtliche Vorverarbeitungsschritte durchführen und als Resultat einsatzbereite
@@ -33,3 +33,16 @@ Ein besonderes Augenmerk liegt dabei auf Aspekten wie Einfachheit, Wartbarkeit u
 Erweiterbarkeit der API und der Eignung des OGC API - Processes - Part 1: Core
 Standards für die Entwicklung von Datenschnittstellen zu Copernicus-Daten mit zahlreichen
 Interaktionsmöglichkeiten.
+
+## 3 Methoden
+Damit eine möglichst leichtgewichtige, simple, aber erweiterbare API entworfen werden
+kann, wird die Programmiersprache Python und das Web Framework Flask zum
+Einsatz kommen. Für die eigentliche Prozessierung sollen möglichst nur bewährte Programme
+und Python Packages verwendet werden, um eine möglichst hoheWartbarkeit
+zu gewährleisten. Die Versionierung erfolgt mit Git. Das Überschwemmungsmonitoring
+soll auf Basis von Radardaten der Sentinel-1 Mission erfolgen, da diese wetterund
+tageszeitunabhängig Messungen durchführen können [1]. Die notwendigen Kalibrierungen
+und Filterungen sollen ebenfalls Teil der bereitgestellten Prozessierung
+sein. Anschließend soll der Normalized Difference Sigma-Naught Index (NDSI) berechnet
+werden [3]. Aus diesem können mithilfe eines automatischen Grenzwertverfahrens
+Überflutungsmasken abgeleitet werden.
