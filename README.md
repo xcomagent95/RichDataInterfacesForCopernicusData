@@ -1,6 +1,8 @@
 # Rich Data Interfaces for Copernicus Data
 
-## 1 Motivation
+## Proposal
+
+### 1 Motivation
 Im Rahmen des von der European Space Agency (ESA) gestarteten Erdbeobachtungsprogramms
 Copernicus werden unterschiedlichste Fernerkundungsdaten unter anderem
 von den Satelliten der Sentinel-Reihe aufgenommen. Diese zeichnen sich durch
@@ -20,7 +22,7 @@ sowie auf die Eigenschaften der Resultate Einfluss genommen werden. Für
 Anwender bietet eine API, in Abgrenzung zu simpleren Diensten, häufig die Möglichkeit
 Anfragen zu parametrisieren und so exakt auf ihre Fragestellung anzupassen.
 
-## 2 Zielsetzung
+### 2 Zielsetzung
 Ziel der Arbeit ist das Implementieren eines leichtgewichtigen, OGC API - Processes - 
 Part: 1 Core Standard konformen Application Programming Interface (API). Um
 einen praktischen Bezug zu schaffen, soll die API einen Prozess anbieten, welcher
@@ -34,7 +36,7 @@ Erweiterbarkeit der API und der Eignung des OGC API - Processes - Part 1: Core
 Standards für die Entwicklung von Datenschnittstellen zu Copernicus-Daten mit zahlreichen
 Interaktionsmöglichkeiten.
 
-## 3 Methoden
+### 3 Methoden
 Damit eine möglichst leichtgewichtige, simple, aber erweiterbare API entworfen werden
 kann, wird die Programmiersprache Python und das Web Framework Flask zum
 Einsatz kommen. Für die eigentliche Prozessierung sollen möglichst nur bewährte Programme
