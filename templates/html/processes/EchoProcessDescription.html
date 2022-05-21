@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>
+id: Echo<br>
+title: Echo<br>
+description: This process accepts a Test input and returns an echo<br>
+version: 1.0.0<br>
+jobControlOptions: async-execute<br>
+</p>
+<p>
+outputTransmission: value, reference
+</p>
+<p>
+inputs:<br>
+	stringInput:<br>
+	title: input<br>
+	description: The input value<br>
+	schema:<br>
+		type: string
+</p>
+<p>
+outputs:<br>
+	stringOutput:<br>
+	title: output<br>
+	description: The echo value<br>
+	schema:<br>
+		type: string
+</p>
+<p>
+links:<br>
+	href:<a href="https://processing.example.org/oapi-p/processes/EchoProcess/execution">https://processing.example.org/oapi-p/processes/EchoProcess/execution</a><br>
+	rel: https://processing.example.org/oapi-p/processes/EchoProcess/execution,<br>
+	title: Execute endpoint
+	</p>
+</body>
+</html>
+

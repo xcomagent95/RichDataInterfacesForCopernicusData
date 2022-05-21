@@ -1,0 +1,38 @@
+{
+  "id": "Echo",
+  "title": "Echo",
+  "description": "This process accepts a Test input and returns an echo",
+  "version": "1.0.0",
+  "jobControlOptions": [
+    "sync-execute"
+  ],
+  "outputTransmission": [
+    "value",
+    "reference"
+  ],
+  "inputs": {
+    "stringInput": {
+      "title": "input",
+      "description": "The input value",
+      "schema": {
+        "type": "string"
+      }
+	}
+  },
+  "outputs": {
+   "stringOutput": {
+      "title": "output",
+      "description": "The echo value",
+      "schema": {
+        "type": "string"
+      }
+    }
+  },
+  "links": [
+    {
+      "href": "https://processing.example.org/oapi-p/processes/EchoProcess/execution",
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "title": "Execute endpoint"
+    }
+  ]
+}
