@@ -7,7 +7,6 @@ import datetime
 #initialize app
 app = Flask(__name__) #define flask app
 
-#conformance endpoint
 #landingpage endpoint
 @app.route('/',  methods = ['GET']) 
 def getLandingPage():
@@ -27,6 +26,7 @@ def getLandingPage():
     except:
         return "HTTP status code 500: internal server error", 500 #internal server error
 
+#conformance endpoint
 @app.route('/conformance',  methods = ['GET']) 
 def getConformance():
     try:
@@ -68,7 +68,7 @@ def getProcesses():
                     counter += 1
                     if(counter == limit):
                         break
-                response += """<p><b>links:<b><br>
+                response += """<p><b>links:</b><br>
                         	href:<a href="localhost:5000/processes?f=text/html">localhost:5000/processes?f=text/html,</a><br>
                         	rel: self,<br>
                             type: text/html,<br>
@@ -165,7 +165,7 @@ def executeProcess(processID):
                                   "progress": 0, 
                                   "created": str(datetime.datetime.now()),
                                   "links": [
-                                          {"href": "link zum job",
+                                          {"href": "localhots:5000/jobs/" + jobID + "?f=application/json",
                                            "rel": "self",
                                            "type": "application/json",
                                            "title": "this document"}
@@ -186,50 +186,84 @@ def executeProcess(processID):
 #jobs endpoint    
 @app.route('/jobs', methods = ['GET'])
 def getJobs():
-    if(request.args.get('limit') == None):
+    if(request.args.get('limit') == None or int(request.args.get('limit')) <= 0):
         limit = 10 #default value
     else:
-        limit = request.args.get('limit')
-    try:
-        jobList = os.listdir('jobs/')
-        jobArray = []
-        count = 0
-        for i in jobList:
-            if count == int(limit):
+        limit = int(request.args.get('limit')) 
+    if(request.content_type == "text/html" or request.args.get('f')=="text/html"):
+        jobs = os.listdir("jobs/")
+        response = "<!DOCTYPE html><html><body><h1>Jobs:</h1>"
+        counter = 0
+                
+        for i in jobs:
+            file = open('jobs/' + i + "/status.json",)
+            status = json.load(file)
+            file.close() 
+            file = open('jobs/' + i + "/job.json",)
+            job = json.load(file)
+            file.close() 
+            jobHTML = "<p>processID: "+ job["processID"] + "<br>jobID: " + status["jobID"] + "<br>status: " + status["status"] + "<br>message: " + status["message"] + "<br>created: " + status["created"] + "<br>links:<br> href: <a href=localhost:5000/jobs/"+ status["jobID"] + "?f=application/json>localhost:5000/jobs/" + status["jobID"] + "?f=application/json</a><br>rel: status<br>title: Job Status<br> type: application/json</p>"
+    
+            response += jobHTML
+            counter += 1
+            if(counter == limit):
                 break
-            with open('jobs/' + i + '/status.json', "r") as f:
-                data = json.load(f)
-                jobID = data["jobID"]
-                status = data["status"]
-                message = data["message"]
-                progress = data["progress"]
-                #links müssen noch ergänzt werden
-            f.close()
-            
-            with open('jobs/' + i + '/job.json', "r") as f:
-                data = json.load(f)
-                processID = data["jobId"]
-                #links müssen noch ergänzt werden
-            f.close()
-            job = {"processID": processID,
-                   "jobID": jobID,
-                   "status": status,
-                   "message": message,
-                   "progress": progress,
-                   "links": [{
-                              "href": "link to job status",
-                              "rel": "status",
-                              "type": "application/json",
-                              "hreflang": "en",
-                              "title": "Job status"
-                            }]
-                }
-            jobArray.append(job)
-            count += 1
-        jobs = {"jobs": jobArray}
-        response = jsonify(jobs)  
-        response.status_code = 200
-        return response #return response and ok and files created  
+        response += """<p><b>links:</b><br>
+                    href:<a href="localhost:5000/jobs?f=text/html">localhost:5000/jobs?f=text/html,</a><br>
+                    rel: self,<br>
+                    type: text/html,<br>
+                    title: This document<br>
+                    <br>
+                    href:<a href="localhost:5000/jobs?f=application/json">localhost:5000/jobs?f=application/json,</a><br>
+                    rel: alternate,<br>
+                    type: application/json,<br>
+                    title: This document as JSON<br>
+                    </body></html>"""
+        return(response), 200 
+    try:
+        if(request.content_type == "text/html" or request.args.get('f')=="text/html"):
+            print("test")
+        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"):
+            jobList = os.listdir('jobs/')
+            jobArray = []
+            count = 0
+            for i in jobList:
+                if count == int(limit):
+                    break
+                with open('jobs/' + i + '/status.json', "r") as f:
+                    data = json.load(f)
+                    jobID = data["jobID"]
+                    status = data["status"]
+                    message = data["message"]
+                    progress = data["progress"]
+                    #links müssen noch ergänzt werden
+                f.close()
+                    
+                with open('jobs/' + i + '/job.json', "r") as f:
+                    data = json.load(f)
+                    processID = data["jobID"]
+                    #links müssen noch ergänzt werden
+                f.close()
+                job = {"processID": processID,
+                       "jobID": jobID,
+                       "status": status,
+                       "message": message,
+                       "progress": progress,
+                       "links": [{
+                           "href": "localhost:5000/jobs/" + jobID + "?f=application/json",
+                           "rel": "status",
+                           "type": "application/json",
+                           "title": "Job status"
+                           }]
+                       }
+                jobArray.append(job)
+                count += 1
+            jobs = {"jobs": jobArray}
+            response = jsonify(jobs)  
+            response.status_code = 200
+            return response #return response and ok and files created  
+        else:
+            return "HTTP status code 406: not acceptable", 406
     except:
          return "HTTP status code 500: internal server error", 500 #internal server error
 
@@ -258,6 +292,7 @@ def getJob(jobID):
                     file = json.load(f)
                     if(file["status"] != "dismissed"):
                         file["status"] = "dismissed"
+                        file["message"] = "job dismissed"
                         f.close()
                         with open('jobs/' + str(jobID) + '/status.json', "w") as f:
                             json.dump(file, f)
