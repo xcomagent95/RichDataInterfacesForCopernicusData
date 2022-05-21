@@ -12,10 +12,10 @@ app = Flask(__name__) #define flask app
 @app.route('/',  methods = ['GET']) 
 def getLandingPage():
     try:
-        if(request.content_type == "text/html"):
+        if(request.content_type == "text/html" or request.args.get('f')=="text/html"):
             response = render_template('html/LandingPage.html')
             return response, 200
-        elif(request.content_type == "application/json"):
+        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"):
             file = open('templates/json/LandingPage.json',) #open LandingPage.json
             payload = json.load(file) #create response
             file.close() #close LandingPage.json
@@ -30,10 +30,10 @@ def getLandingPage():
 @app.route('/conformance',  methods = ['GET']) 
 def getConformance():
     try:
-        if(request.content_type == "text/html"):
+        if(request.content_type == "text/html" or request.args.get('f')=="text/html"):
             response = render_template('html/ConfClasses.html')
             return response, 200
-        elif(request.content_type == "application/json"):
+        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"):
             file = open('templates/json/ConfClasses.json',) #open ConfClasses.json
             payload = json.load(file) #create response
             file.close() #close ConfClasses.json
@@ -53,11 +53,34 @@ def getProcesses():
     else:
         limit = int(request.args.get('limit')) 
     try:
-        if(request.content_type == "text/html"):
-            return("test"), 200
-            #generate from files
-        
-        elif(request.content_type == "application/json"):
+        if(request.content_type == "text/html" or request.args.get('f')=="text/html"):
+                processDescriptions = os.listdir("templates/json/processes")
+            
+                response = "<!DOCTYPE html><html><body><h1>Processes:</h1>"
+                counter = 0
+                for i in processDescriptions:
+                    file = open('templates/json/processes/' + i,)
+                    process = json.load(file)
+                    file.close() 
+                    processHTML = "<p><b>id: " + process["id"] + "</b><br>title: " + process["title"] + "<br>description: " + process["description"] + "<br>version: " + process["version"] + "<br>jobControlOptions: " + str(process["jobControlOptions"]) + "<br>outputTransmission: " + str(process["outputTransmission"]) + "</p>"
+
+                    response += processHTML
+                    counter += 1
+                    if(counter == limit):
+                        break
+                response += """<p><b>links:<b><br>
+                        	href:<a href="localhost:5000/processes?f=text/html">localhost:5000/processes?f=text/html,</a><br>
+                        	rel: self,<br>
+                            type: text/html,<br>
+                        	title: This document<br>
+                            <br>
+                            href:<a href="localhost:5000/processes?f=application/json">localhost:5000/processes?f=application/json,</a><br>
+                        	rel: alternate,<br>
+                            type: application/json,<br>
+                        	title: This document as JSON<br>
+                            </body></html>"""
+                return(response), 200
+        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"):
             processDescriptions = os.listdir("templates/json/processes")
             processesArray = []
                         
@@ -69,12 +92,12 @@ def getProcesses():
             processes = {"processes": processesArray[0:limit],
                             "links": [
                                {
-                                 "href": "https://processing.example.org/oapi-p/processes?f=json",
+                                 "href": "localhost:5000/processes?f=applicattion/json",
                                  "rel": "self",
                                  "type": "application/json"
                             },
                                {
-                                 "href": "https://processing.example.org/oapi-p/processes?f=html",
+                                 "href": "localhost:5000/processes?f=text/html",
                                  "rel": "alternate",
                                  "type": "text/html"
                             }
@@ -91,13 +114,13 @@ def getProcesses():
 @app.route('/processes/<processID>', methods = ['GET'])
 def getProcess(processID):
     try:
-        if(request.content_type == "text/html"):
+        if(request.content_type == "text/html" or request.args.get('f')=="text/html"):
             if(os.path.exists('templates/html/processes/' + str(processID) + 'ProcessDescription.html')):
                 response = render_template('html/processes/' + str(processID) + 'ProcessDescription.html')
                 return response, 200
             else:
                 return "HTTP status code 404: not found", 404 #not found
-        elif(request.content_type == "application/json"):
+        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"):
             if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):
                 file = open('templates/json/processes/' + str(processID) + 'ProcessDescription.json',) #open ProcessDescription.json
                 payload = json.load(file) #create response   
@@ -159,6 +182,56 @@ def executeProcess(processID):
             return "HTTP status code 404: not found", 404 #not found
     except:
         return "HTTP status code 500: internal server error", 500 #internal server error
+
+#jobs endpoint    
+@app.route('/jobs', methods = ['GET'])
+def getJobs():
+    if(request.args.get('limit') == None):
+        limit = 10 #default value
+    else:
+        limit = request.args.get('limit')
+    try:
+        jobList = os.listdir('jobs/')
+        jobArray = []
+        count = 0
+        for i in jobList:
+            if count == int(limit):
+                break
+            with open('jobs/' + i + '/status.json', "r") as f:
+                data = json.load(f)
+                jobID = data["jobID"]
+                status = data["status"]
+                message = data["message"]
+                progress = data["progress"]
+                #links müssen noch ergänzt werden
+            f.close()
+            
+            with open('jobs/' + i + '/job.json', "r") as f:
+                data = json.load(f)
+                processID = data["jobId"]
+                #links müssen noch ergänzt werden
+            f.close()
+            job = {"processID": processID,
+                   "jobID": jobID,
+                   "status": status,
+                   "message": message,
+                   "progress": progress,
+                   "links": [{
+                              "href": "link to job status",
+                              "rel": "status",
+                              "type": "application/json",
+                              "hreflang": "en",
+                              "title": "Job status"
+                            }]
+                }
+            jobArray.append(job)
+            count += 1
+        jobs = {"jobs": jobArray}
+        response = jsonify(jobs)  
+        response.status_code = 200
+        return response #return response and ok and files created  
+    except:
+         return "HTTP status code 500: internal server error", 500 #internal server error
 
 #job endpoint for status and dismiss
 @app.route('/jobs/<jobID>', methods = ['GET', 'DELETE'])
