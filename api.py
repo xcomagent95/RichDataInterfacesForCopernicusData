@@ -311,7 +311,7 @@ def getJob(jobID):
             else:
                 return "HTTP status code 404: not found", 404 #not found
         else:
-            return "HTTP status code 406: not acceptable", 406
+            return "HTTP status code 406: not acceptable", 406 #not acceptable
         
     if(request.method == 'DELETE'):
         try:       
@@ -332,6 +332,17 @@ def getJob(jobID):
                 return "HTTP status code 404: not found", 404 #not found
         except:
             return "HTTP status code 500: internal server error", 500 #internal server error
-                
+
+@app.route('/jobs/<jobID>/results', methods = ["GET"])
+def getResults(jobID):
+    if(os.path.exists('jobs/' + str(jobID) + '/results.zip')):
+        try:
+            return send_file('jobs/' + str(jobID) + '/results.zip', mimetype='application/zip'), 200
+        except:
+            return "HTTP status code 500: internal server error", 500 #internal server error
+    else:
+        return "HTTP status code 404: not found", 404 #not found
+
+         
 #run application
 app.run(debug=True, use_reloader=False) 
