@@ -4,11 +4,10 @@
   "description": "This process accepts a Test input and returns an echo",
   "version": "1.0.0",
   "jobControlOptions": [
-    "sync-execute"
+    "async-execute", "dismiss"
   ],
   "outputTransmission": [
-    "value",
-    "reference"
+    "value"
   ],
   "inputs": {
     "stringInput": {
@@ -30,9 +29,21 @@
   },
   "links": [
     {
-      "href": "localhost:5000/processes/Echo/excecute",
-      "rel": "localhost:5000/processes/Echo/excecute",
+      "href": "localhost:5000/processes/Echo/excecution?input=test",
+      "rel": "localhost:5000/processes/Echo/excecution?input=test",
       "title": "Execute endpoint"
-    }
+    },
+	{
+		"href": "localhost:5000/processes/Echo?f=application/json",
+		"rel": "self",
+		"type": "application/json",
+		"title": "This document"
+	},
+	{
+		"href": "localhost:5000/processes/Echo?f=text/html",
+		"rel": "alternate",
+		"type": "text/html",
+		"title": "This document as HTML"
+	}
   ]
 }

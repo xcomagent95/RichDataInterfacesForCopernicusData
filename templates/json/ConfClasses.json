@@ -4,5 +4,18 @@
 		"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/json",
 		"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/html",
 		"http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/oas30"
+	],
+	"links": [{
+		"href": "localhost:5000/conformance?f=application/json",
+		"rel": "self",
+		"type": "application/json",
+		"title": "The endpoint for job monitoring as JSON"
+	},
+		{
+		"href": "localhost:5000/conformance?f=text/html",
+		"rel": "alternate",
+		"type": "text/html",
+		"title": "The endpoint for job monitoring as HTML"
+	}
 	]
 }

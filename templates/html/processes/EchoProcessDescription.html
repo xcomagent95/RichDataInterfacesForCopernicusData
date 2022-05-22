@@ -6,10 +6,10 @@ id: Echo<br>
 title: Echo<br>
 description: This process accepts a Test input and returns an echo<br>
 version: 1.0.0<br>
-jobControlOptions: async-execute<br>
+jobControlOptions: async-execute, dismiss<br>
 </p>
 <p>
-outputTransmission: value, reference
+outputTransmission: value
 </p>
 <p>
 inputs:<br>
@@ -29,10 +29,20 @@ outputs:<br>
 </p>
 <p>
 links:<br>
-	href:<a href="https://processing.example.org/oapi-p/processes/EchoProcess/execution">https://processing.example.org/oapi-p/processes/EchoProcess/execution</a><br>
-	rel: https://processing.example.org/oapi-p/processes/EchoProcess/execution,<br>
-	title: Execute endpoint
-	</p>
+href:<a href="localhost:5000/processes/Echo/excecution?input=test">localhost:5000/processes/Echo/excecution?input=test</a><br>
+rel: localhost:5000/processes/Echo/excecution?input=test<br>
+title: Execute endpoint<br>
+<br>
+href:<a href="localhost:5000/processes/Echo?f=text/html">localhost:5000/processes/Echo?f=text/html</a><br>
+rel: self<br>
+type: text/html,<br>
+title: This document as HTML<br>
+<br>
+href:<a href="localhost:5000/processes/Echo?f=application/json">localhost:5000/processes/Echo?f=application/json</a><br>
+rel: alternate<br>
+type: application/json,<br>
+title: This document as JSON
+</p>
 </body>
 </html>
 
