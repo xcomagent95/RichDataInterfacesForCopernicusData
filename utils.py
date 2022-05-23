@@ -3,6 +3,7 @@ import json
 from shutil import make_archive
 from zipfile import ZipFile
 import os
+import datetime
 
 class job:
     def __init__(self, id, process, job_path, results_path, downloads_path, input):
@@ -25,6 +26,8 @@ def echoProcess(job):
     if(checkForDismissal(job.path + '/status.json') == True):
         return
     
+    setStarted(job.path + '/status.json')
+    
     input = job.input[0]
     time.sleep(60)
     
@@ -38,6 +41,7 @@ def echoProcess(job):
         json.dump(result, f) #write content
         f.close() #close file
     updateStatus(job.path + '/status.json', "finished", "Step 1 of 1 completed", "100")
+    setFinished(job.path + '/status.json')
 
 def checkForDismissal(path):
     with open(path, "r") as f:
@@ -54,6 +58,22 @@ def updateStatus(path, status, message, percentage):
             data["status"] = status
             data["message"] = message
             data["progress"] = percentage
+            f.close()
+            with open(path, "w") as f:
+                json.dump(data, f) 
+
+def setStarted(path):
+    with open(path, "r") as f:
+            data = json.load(f)
+            data["started"] = str(datetime.datetime.now())
+            f.close()
+            with open(path, "w") as f:
+                json.dump(data, f) 
+
+def setFinished(path):
+    with open(path, "r") as f:
+            data = json.load(f)
+            data["finished"] = str(datetime.datetime.now())
             f.close()
             with open(path, "w") as f:
                 json.dump(data, f) 

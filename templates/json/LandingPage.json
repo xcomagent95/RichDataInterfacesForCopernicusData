@@ -1,63 +1,63 @@
 {
 	"links": [
+	{
+		"href": "localhost:5000/?f=application/json",
+		"rel": "self",
+		"type": "application/json",
+		"title": "This document"
+	},{
+		"href": "localhost:5000/?f=text/html",
+		"rel": "alternate",
+		"type": "text/html",
+		"title": "This document as HTML"
+	},
+	{
+		"href": "tbd",
+		"rel": "service-desc",
+		"type": "application/json",
+		"title": "API definition for this endpoint as JSON"
+	},
+	{
+		"href": "tbd",
+		"rel": "service-desc",
+		"type": "text/html",
+		"title": "API definition for this endpoint as HTML"
+	},
+	{
+		"href": "localhost:5000/conformance?f=application/json",
+		"rel": "conformance",
+		"type": "application/json",
+		"title": "OGC API - Processes conformance classes implemented by this server as JSON"
+	},
+	{
+		"href": "localhost:5000/conformance?f=text/html",
+		"rel": "conformance",
+		"type": "text/html",
+		"title": "OGC API - Processes conformance classes implemented by this server as HTML"
+	},
+	{
+		"href": "localhost:5000/processes?f=application/json",
+		"rel": "processes",
+		"type": "application/json",
+		"title": "Metadata about the processes as JSON"
+	},
 		{
-			"href": "localhost:5000/?f=application/json",
-			"rel": "self",
-			"type": "application/json",
-			"title": "This document as JSON"
-		},{
-			"href": "localhost:5000/?f=text/html",
-			"rel": "alternate",
-			"type": "text/html",
-			"title": "This document as HTML"
-		},
+		"href": "localhost:5000/processes?f=text/html",
+		"rel": "processes",
+		"type": "text/html",
+		"title": "Metadata about the processes as HTML"
+	},
+	{
+		"href": "localhost:5000/jobs?f=application/json",
+		"rel": "jobs",
+		"type": "application/json",
+		"title": "The endpoint for job monitoring as JSON"
+	},
 		{
-			"href": "tbd",
-			"rel": "service-desc",
-			"type": "application/json",
-			"title": "API definition for this endpoint as JSON"
-		},
-		{
-			"href": "tbd",
-			"rel": "service-desc",
-			"type": "text/html",
-			"title": "API definition for this endpoint as HTML"
-		},
-		{
-			"href": "localhost:5000/conformance?f=application/json",
-			"rel": "localhost:5000/conformance?f=application/json",
-			"type": "application/json",
-			"title": "OGC API - Processes conformance classes implemented by this server as JSON"
-		},
-		{
-			"href": "localhost:5000/conformance?f=text/html",
-			"rel": "localhost:5000/conformance?f=text/html",
-			"type": "text/html",
-			"title": "OGC API - Processes conformance classes implemented by this server as HTML"
-		},
-		{
-			"href": "localhost:5000/processes?f=application/json",
-			"rel": "localhost:5000/processes?f=application/json",
-			"type": "application/json",
-			"title": "Metadata about the processes as JSON"
-		},
-			{
-			"href": "localhost:5000/processes?f=text/html",
-			"rel": "localhost:5000/processes?f=text/html",
-			"type": "text/html",
-			"title": "Metadata about the processes as HTML"
-		},
-		{
-			"href": "localhost:5000/jobs?f=application/json",
-			"rel": "localhost:5000/jobs?f=application/json",
-			"type": "application/json",
-			"title": "The endpoint for job monitoring as JSON"
-		},
-			{
-			"href": "localhost:5000/jobs?f=text/html",
-			"rel": "localhost:5000/jobs?f=text/html",
-			"type": "text/html",
-			"title": "The endpoint for job monitoring as HTML"
-		}
+		"href": "localhost:5000/jobs?f=text/html",
+		"rel": "jobs",
+		"type": "text/html",
+		"title": "The endpoint for job monitoring as HTML"
+	}
 	]
 }
