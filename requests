@@ -1,0 +1,24 @@
+curl -X GET -H "Content-Type:text/html" "localhost:5000/"
+curl -X GET -H "Content-Type:application/json" "localhost:5000/"
+
+curl -X GET -H "Content-Type:text/html" "localhost:5000/conformance" 
+curl -X GET -H "Content-Type:application/json" "localhost:5000/conformance" 
+
+curl -X GET -H "Content-Type:text/html" "localhost:5000/processes" 
+curl -X GET -H "Content-Type:application/json" "localhost:5000/processes" 
+
+curl -X GET -H "Content-Type:text/html" "localhost:5000/processes/Echo" 
+curl -X GET -H "Content-Type:application/json" "localhost:5000/processes/Echo" 
+
+curl -X POST "localhost:5000/processes/Echo/execution?input=test" 
+
+curl -X GET "localhost:5000/jobs/74cb19d3-7d46-42a1-b627-dd97d3e694e2" 
+curl -X DELETE "localhost:5000/jobs/74cb19d3-7d46-42a1-b627-dd97d3e694e2" 
+
+curl -X GET "localhost:5000/jobs" 
+
+
+
+curl "localhost:5000/processes/FloodMonitoring/execution?preDate=20220424&postDate=20220427&username=xcomagent95&password=alex@copernicus95&ulx=8.380851745605469&uly=53.97446465056279&lrx=8.56109619140625&lry=53.89098663140719" -X POST
+
+curl "localhost:5000/jobs/3bba9f59-5d12-4016-ae98-59a8af2d74b7/results" -X GET

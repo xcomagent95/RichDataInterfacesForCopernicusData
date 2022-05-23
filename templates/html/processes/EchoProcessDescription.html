@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<p>
+			<b>id:</b> Echo<br>
+			<b>title:</b> Echo<br>
+			<b>description:</b> This process accepts a Test input and returns an echo<br>
+			<b>version:</b> 1.0.0<br>
+			<b>jobControlOptions:</b> async-execute, dismiss<br>
+			<b>outputTransmission:</b> value
+		</p>
+		<p>
+		<b>inputs:</b><br>
+		&nbsp;stringInput:<br>
+		&nbsp;&nbsp;title: input<br>
+		&nbsp;&nbsp;&nbsp;description: The input value<br>
+		&nbsp;&nbsp;&nbsp;schema:<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;type: string
+		</p>
+		<p>
+		<b>outputs:</b><br>
+		&nbsp;complexObjectOutput:<br>
+		&nbsp;&nbsp;schema:<br>
+		&nbsp;&nbsp;&nbsp;type: object<br>
+		&nbsp;&nbsp;&nbsp;required: result, message<br>
+		&nbsp;&nbsp;properties:<br>
+		&nbsp;&nbsp;&nbsp;result:<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;type: string<br>
+		&nbsp;&nbsp;&nbsp;message:<br>
+		&nbsp;&nbsp;&nbsp;&nbsp;type: string		
+		</p>
+		<p>
+		<b>links:</b><br>
+		href:<a href="localhost:5000/processes/Echo/excecution?input=test">localhost:5000/processes/Echo/excecution?input=test</a><br>
+		rel: localhost:5000/processes/Echo/excecution?input=test<br>
+		title: Execute endpoint with text input<br>
+		<br>
+		href:<a href="localhost:5000/processes/Echo?f=text/html">localhost:5000/processes/Echo?f=text/html</a><br>
+		rel: self<br>
+		type: text/html,<br>
+		title: This document as HTML<br>
+		<br>
+		href:<a href="localhost:5000/processes/Echo?f=application/json">localhost:5000/processes/Echo?f=application/json</a><br>
+		rel: alternate<br>
+		type: application/json,<br>
+		title: This document as JSON
+	</p>
+</body>
+</html>
+

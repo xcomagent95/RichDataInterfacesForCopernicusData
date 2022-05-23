@@ -1,0 +1,59 @@
+{
+  "id": "Echo",
+  "title": "Echo",
+  "description": "This process accepts a Test input and returns an echo",
+  "version": "1.0.0",
+  "jobControlOptions": [
+    "async-execute", "dismiss"
+  ],
+  "outputTransmission": [
+    "value"
+  ],
+  "inputs": {
+    "stringInput": {
+      "title": "input",
+      "description": "The input value",
+      "schema": {
+        "type": "string"
+      }
+	}
+  },
+  "outputs": {
+   "complexObjectOutput": {
+      "schema": {
+        "type": "object",
+        "required": [
+          "result",
+          "message"
+        ],
+        "properties": {
+          "result": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+        }
+      }
+  },
+  "links": [
+    {
+      "href": "localhost:5000/processes/Echo/excecution?input=test",
+      "rel": "localhost:5000/processes/Echo/excecution?input=test",
+      "title": "Execute endpoint with test input"
+    },
+	  {
+		  "href": "localhost:5000/processes/Echo?f=application/json",
+		  "rel": "self",
+		  "type": "application/json",
+		  "title": "This document"
+	  },
+	  {
+		  "href": "localhost:5000/processes/Echo?f=text/html",
+		  "rel": "alternate",
+		  "type": "text/html",
+		  "title": "This document as HTML"
+	  }
+  ]
+}
