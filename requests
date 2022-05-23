@@ -12,8 +12,10 @@ curl -X GET -H "Content-Type:application/json" "localhost:5000/processes/Echo"
 
 curl -X POST "localhost:5000/processes/Echo/execution?input=test" 
 
-curl -X GET "localhost:5000/jobs/74cb19d3-7d46-42a1-b627-dd97d3e694e2" 
-curl -X DELETE "localhost:5000/jobs/74cb19d3-7d46-42a1-b627-dd97d3e694e2" 
+curl -X GET -H "Content-Type:text/html" "localhost:5000/jobs/96a1ec6f-a5ad-4181-a2c9-e2a1b14dbf83" 
+curl -X GET -H "Content-Type:application/json" "localhost:5000/jobs/96a1ec6f-a5ad-4181-a2c9-e2a1b14dbf83" 
+
+curl -X DELETE "localhost:5000/jobs/96a1ec6f-a5ad-4181-a2c9-e2a1b14dbf83" 
 
 curl -X GET "localhost:5000/jobs" 
 
