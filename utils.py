@@ -37,9 +37,6 @@ def echoProcess(job):
     with open(job.results + "result.json", 'w') as f: #create file
         json.dump(result, f) #write content
         f.close() #close file
-    
-    zipResults(job)
-    
     updateStatus(job.path + '/status.json', "finished", "Step 1 of 1 completed", "100")
 
 def checkForDismissal(path):

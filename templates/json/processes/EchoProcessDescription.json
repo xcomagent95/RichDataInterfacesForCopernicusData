@@ -19,31 +19,41 @@
 	}
   },
   "outputs": {
-   "stringOutput": {
-      "title": "output",
-      "description": "The echo value",
+   "complexObjectOutput": {
       "schema": {
-        "type": "string"
+        "type": "object",
+        "required": [
+          "result",
+          "message"
+        ],
+        "properties": {
+          "result": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+        }
       }
-    }
   },
   "links": [
     {
       "href": "localhost:5000/processes/Echo/excecution?input=test",
       "rel": "localhost:5000/processes/Echo/excecution?input=test",
-      "title": "Execute endpoint"
+      "title": "Execute endpoint with test input"
     },
-	{
-		"href": "localhost:5000/processes/Echo?f=application/json",
-		"rel": "self",
-		"type": "application/json",
-		"title": "This document"
-	},
-	{
-		"href": "localhost:5000/processes/Echo?f=text/html",
-		"rel": "alternate",
-		"type": "text/html",
-		"title": "This document as HTML"
-	}
+	  {
+		  "href": "localhost:5000/processes/Echo?f=application/json",
+		  "rel": "self",
+		  "type": "application/json",
+		  "title": "This document"
+	  },
+	  {
+		  "href": "localhost:5000/processes/Echo?f=text/html",
+		  "rel": "alternate",
+		  "type": "text/html",
+		  "title": "This document as HTML"
+	  }
   ]
 }

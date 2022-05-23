@@ -337,7 +337,8 @@ def getJob(jobID):
 def getResults(jobID):
     if(os.path.exists('jobs/' + str(jobID) + '/results.zip')):
         try:
-            return send_file('jobs/' + str(jobID) + '/results.zip', mimetype='application/zip'), 200
+            if(jobID == "Echo"):
+                return send_file('jobs/' + str(jobID) + '/results/results.json', mimetype='application/json'), 200
         except:
             return "HTTP status code 500: internal server error", 500 #internal server error
     else:
