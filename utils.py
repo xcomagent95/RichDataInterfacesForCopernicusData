@@ -88,5 +88,3 @@ def convertRFC3339ToDatetime(datetimeString):
     r2 = r1.replace('T', ' ') 
     date = datetime.datetime.strptime(r2, "%Y-%m-%d %H:%M:%S")
     return date
-    
-convertRFC3339ToDatetime('1995"-"12"-"06"T"00":"00":"00')

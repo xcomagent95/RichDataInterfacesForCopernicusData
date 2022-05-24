@@ -218,7 +218,7 @@ def getJobs():
     if(request.args.get('status') == None):
         stati = ["accepted", "running", "successful", "failed", "dismissed"]
     else:
-        stati = request.args.get('status') 
+        stati = request.args.get('status')
         
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"):
@@ -255,7 +255,40 @@ def getJobs():
                     if(jobCreaationDate < lowerDate and jobCreaationDate > upperDate):
                         datetimeParam = True
                 
-                if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True):
+                minDurationParam = False
+                maxDurationParam = False
+                if(status["started"] != "none"):
+                    duration = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") - datetime.datetime.strptime(str(status["started"]), "%Y-%m-%d %H:%M:%S")
+                    duration_in_s = duration.total_seconds()
+                    if(request.args.get('minDuration') == None and request.args.get('maxDuration') == None):
+                        minDurationParam = True
+                        maxDurationParam = True
+                    elif(request.args.get('minDuration') != None and request.args.get('maxDuration') == None):
+                        if(duration_in_s > int(request.args.get('minDuration')[0])):
+                            minDurationParam = True
+                        else:
+                            minDurationParam = False
+                        maxDurationParam = True
+                        
+                    elif(request.args.get('minDuration') == None and request.args.get('maxDuration') != None):
+                        if(duration_in_s < int(request.args.get('maxDuration')[0])):
+                            maxDurationParam = True
+                        else:
+                            maxDurationParam = False
+                        minDurationParam = True
+                        
+                    else:
+                        if(duration_in_s < int(request.args.get('maxDuration')[0]) and duration_in_s > int(request.args.get('minDuration')[0])):
+                            minDurationParam = True
+                            maxDurationParam = True
+                        else:
+                            minDurationParam = False
+                            maxDurationParam = False
+                else:
+                    minDurationParam = False
+                    maxDurationParam = False
+                
+                if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True and minDurationParam == True and maxDurationParam == True):
                     jobHTML = ("<p><b>jobID</b>: " + status["jobID"] + "<br><b>processID:</b> " 
                                + job["processID"] + "<br>type: "
                                + status["type"] + "<br>status: " 
@@ -273,14 +306,14 @@ def getJobs():
                         break
                     
             response += """<p><b>links:</b><br>
-                        href:<a href="localhost:5000/jobs?f=text/html">localhost:5000/jobs?f=text/html,</a><br>
-                        rel: self,<br>
-                        type: text/html,<br>
+                        href:<a href="localhost:5000/jobs?f=text/html">localhost:5000/jobs?f=text/html</a><br>
+                        rel: self<br>
+                        type: text/html<br>
                         title: This document<br>
                         <br>
-                        href:<a href="localhost:5000/jobs?f=application/json">localhost:5000/jobs?f=application/json,</a><br>
-                        rel: alternate,<br>
-                        type: application/json,<br>
+                        href:<a href="localhost:5000/jobs?f=application/json">localhost:5000/jobs?f=application/json</a><br>
+                        rel: alternate<br>
+                        type: application/json<br>
                         title: This document as JSON<br>
                         </body></html>"""
             return(response), 200 
@@ -321,6 +354,39 @@ def getJobs():
                     lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
                     if(jobCreaationDate < lowerDate and jobCreaationDate > upperDate):
                         datetimeParam = True
+                    
+                minDurationParam = False
+                maxDurationParam = False
+                if(status["started"] != "none"):
+                    duration = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") - datetime.datetime.strptime(str(status["started"]), "%Y-%m-%d %H:%M:%S")
+                    duration_in_s = duration.total_seconds()
+                    if(request.args.get('minDuration') == None and request.args.get('maxDuration') == None):
+                        minDurationParam = True
+                        maxDurationParam = True
+                    elif(request.args.get('minDuration') != None and request.args.get('maxDuration') == None):
+                        if(duration_in_s > int(request.args.get('minDuration')[0])):
+                            minDurationParam = True
+                        else:
+                            minDurationParam = False
+                        maxDurationParam = True
+                        
+                    elif(request.args.get('minDuration') == None and request.args.get('maxDuration') != None):
+                        if(duration_in_s < int(request.args.get('maxDuration')[0])):
+                            maxDurationParam = True
+                        else:
+                            maxDurationParam = False
+                        minDurationParam = True
+                        
+                    else:
+                        if(duration_in_s < int(request.args.get('maxDuration')[0]) and duration_in_s > int(request.args.get('minDuration')[0])):
+                            minDurationParam = True
+                            maxDurationParam = True
+                        else:
+                            minDurationParam = False
+                            maxDurationParam = False
+                else:
+                    minDurationParam = False
+                    maxDurationParam = False
                 
                 if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True):
                     print(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True)
@@ -353,11 +419,11 @@ def getJobs():
                                    "rel": "self",
                                    "type": "application/json",
                                    "title": "this document as JSON"},
-                                   {"href": "localhost:5000/jobs?f=text/html",
-                                    "rel": "alternate",
-                                    "type": "text/html",
-                                    "title": "this document as HTML"}
-                                   ]}
+                                  {"href": "localhost:5000/jobs?f=text/html",
+                                   "rel": "alternate",
+                                   "type": "text/html",
+                                   "title": "this document as HTML"}
+                             ]}
             response = jsonify(jobs)  
             response.status_code = 200
             return response #return response and ok and files created  
