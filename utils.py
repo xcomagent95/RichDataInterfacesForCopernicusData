@@ -65,7 +65,7 @@ def updateStatus(path, status, message, percentage):
 def setStarted(path):
     with open(path, "r") as f:
             data = json.load(f)
-            data["started"] = str(datetime.datetime.now())
+            data["started"] = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             f.close()
             with open(path, "w") as f:
                 json.dump(data, f) 
@@ -73,7 +73,7 @@ def setStarted(path):
 def setFinished(path):
     with open(path, "r") as f:
             data = json.load(f)
-            data["finished"] = str(datetime.datetime.now())
+            data["finished"] = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             f.close()
             with open(path, "w") as f:
                 json.dump(data, f) 
@@ -82,3 +82,11 @@ def zipResults(job):
     file = job.path + "/results"  # zip file name
     directory = job.results
     make_archive(file, "zip", directory)  # zipping the directory
+    
+def convertRFC3339ToDatetime(datetimeString):
+    r1 = datetimeString.replace('"', '') 
+    r2 = r1.replace('T', ' ') 
+    date = datetime.datetime.strptime(r2, "%Y-%m-%d %H:%M:%S")
+    return date
+    
+convertRFC3339ToDatetime('1995"-"12"-"06"T"00":"00":"00')

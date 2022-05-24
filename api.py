@@ -3,6 +3,8 @@ import json
 import os
 import uuid
 import datetime
+import utils
+import traceback
 
 #initialize app
 app = Flask(__name__) #define flask app
@@ -48,7 +50,7 @@ def getConformance():
 #processes endpoint
 @app.route('/processes', methods = ['GET']) #allowed methods: GET
 def getProcesses():
-    if(request.args.get('limit') == None or int(request.args.get('limit')) <= 0): #if no limit is set
+    if(request.args.get('limit') == None or int(request.args.get('limit')) <= 0 or int(request.args.get('limit')) > 1000): #if no limit is set
         limit = 10 #default value
     else:
         limit = int(request.args.get('limit')) #get limit from request
@@ -62,7 +64,14 @@ def getProcesses():
                     process = json.load(file) #load the data from .json file
                     file.close() #close file
                     #create process description as HTML
-                    processHTML = "<p><b>id: " + process["id"] + "</b><br>title: " + process["title"] + "<br>description: " + process["description"] + "<br>version: " + process["version"] + "<br>jobControlOptions: " + str(process["jobControlOptions"]) + "<br>outputTransmission: " + str(process["outputTransmission"]) + "</p>links:<br> href: <a href=localhost:5000/processes/"+ process["id"] + "/execution?input=test>localhost:5000/processes/" + process["id"] + "/execution?input=test</a><br>title: Execute endpoint</p>"
+                    processHTML = ("<p><b>id: " + process["id"] + "</b><br>title: " 
+                                   + process["title"] + "<br>description: " 
+                                   + process["description"] + "<br>version: " 
+                                   + process["version"] + "<br>jobControlOptions: " 
+                                   + str(process["jobControlOptions"]) + "<br>outputTransmission: " 
+                                   + str(process["outputTransmission"]) + "</p>links:<br> href: <a href=localhost:5000/processes/"
+                                   + process["id"] + "/execution?input=test>localhost:5000/processes/" 
+                                   + process["id"] + "/execution?input=test</a><br>title: Execute endpoint</p>")
                     response += processHTML #add process as HTML to response
                     counter += 1 #increment counter
                     if(counter == limit): #check if counter has reached request limit
@@ -162,7 +171,7 @@ def executeProcess(processID):
                            "message": "Step 0/1",
                            "type": "process",
                            "progress": 0, 
-                           "created": str(datetime.datetime.now()),
+                           "created": str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
                            "started": "none",
                            "finished": "none",
                            "links": [
@@ -191,10 +200,26 @@ def executeProcess(processID):
 #jobs endpoint    
 @app.route('/jobs', methods = ['GET'])
 def getJobs():
-    if(request.args.get('limit') == None or int(request.args.get('limit')) <= 0):
+    if(request.args.get('limit') == None or int(request.args.get('limit')) <= 0 or int(request.args.get('limit')) > 1000):
         limit = 10 #default value
     else:
-        limit = int(request.args.get('limit'))       
+        limit = int(request.args.get('limit'))   
+        
+    if(request.args.get('type') == None):
+        type = ["process"]
+    else:
+        type = request.args.get('type')   
+        
+    if(request.args.get('processID') == None):
+        processes = ["Echo"]
+    else:
+        processes = request.args.get('processID')  
+        
+    if(request.args.get('status') == None):
+        stati = ["accepted", "running", "successful", "failed", "dismissed"]
+    else:
+        stati = request.args.get('status') 
+        
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"):
             jobs = os.listdir("jobs/")
@@ -207,12 +232,46 @@ def getJobs():
                 file = open('jobs/' + i + "/job.json",)
                 job = json.load(file)
                 file.close() 
-                jobHTML = "<p>processID: " + job["processID"] + "<br>jobID: " + status["jobID"] + "<br>status: " + status["status"] + "<br>message: " + status["message"] + "<br>created: " + status["created"] + "<br>links:<br>href: <a href=localhost:5000/jobs/"+ status["jobID"] + "?f=application/json>localhost:5000/jobs/" + status["jobID"] + "?f=application/json</a><br>rel: status as JSON<br>title: Job Status<br> type: application/json<br>href: <a href=localhost:5000/jobs/"+ status["jobID"] + "?f=text/html>localhost:5000/jobs/" + status["jobID"] + "?f=text/html</a><br>rel: status as JSON<br>title: Job Status<br> type: text/html</p>"
-        
-                response += jobHTML
-                counter += 1
-                if(counter == limit):
-                    break
+                
+                jobCreaationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") 
+                datetimeParam = False
+                if(request.args.get('datetime') == None):
+                    datetimeParam = True
+                elif(request.args.get('datetime').startswith('[')):
+                    lowerBound = request.args.get('datetime')[9:]
+                    lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
+                    if(jobCreaationDate < lowerDate):
+                        datetimeParam = True
+                elif(request.args.get('datetime').endswith(']')):
+                    upperBound = request.args.get('datetime')[0:29]
+                    upperDate = utils.convertRFC3339ToDatetime(upperBound)
+                    if(jobCreaationDate > upperDate):
+                        datetimeParam = True
+                else:
+                    upperBound = request.args.get('datetime')[0:29]
+                    upperDate = utils.convertRFC3339ToDatetime(upperBound)
+                    lowerBound = request.args.get('datetime')[32:]
+                    lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
+                    if(jobCreaationDate < lowerDate and jobCreaationDate > upperDate):
+                        datetimeParam = True
+                
+                if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True):
+                    jobHTML = ("<p><b>jobID</b>: " + status["jobID"] + "<br><b>processID:</b> " 
+                               + job["processID"] + "<br>type: "
+                               + status["type"] + "<br>status: " 
+                               + status["status"] + "<br>message: " 
+                               + status["message"] + "<br>created: " 
+                               + status["created"] + "<br><br><b>links:</b><br>href: <a href=localhost:5000/jobs/"
+                               + status["jobID"] + "?f=application/json>localhost:5000/jobs/" 
+                               + status["jobID"] + "?f=application/json</a><br>rel: status as JSON<br>title: Job Status<br> type: application/json<br>href: <a href=localhost:5000/jobs/"
+                               + status["jobID"] + "?f=text/html>localhost:5000/jobs/" 
+                               + status["jobID"] + "?f=text/html</a><br>rel: status as JSON<br>title: Job Status<br> type: text/html</p>")
+            
+                    response += jobHTML
+                    counter += 1
+                    if(counter == limit):
+                        break
+                    
             response += """<p><b>links:</b><br>
                         href:<a href="localhost:5000/jobs?f=text/html">localhost:5000/jobs?f=text/html,</a><br>
                         rel: self,<br>
@@ -225,52 +284,80 @@ def getJobs():
                         title: This document as JSON<br>
                         </body></html>"""
             return(response), 200 
+        
+        
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"):
             jobList = os.listdir('jobs/')
             jobArray = []
             count = 0
             for i in jobList:
+                
+                file = open('jobs/' + i + "/status.json",)
+                status = json.load(file)
+                file.close() 
+                
+                file = open('jobs/' + i + "/job.json",)
+                job = json.load(file)
+                file.close() 
+                
+                jobCreaationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") 
+                datetimeParam = False
+                if(request.args.get('datetime') == None):
+                    datetimeParam = True
+                elif(request.args.get('datetime').startswith('[')):
+                    lowerBound = request.args.get('datetime')[9:]
+                    lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
+                    if(jobCreaationDate < lowerDate):
+                        datetimeParam = True
+                elif(request.args.get('datetime').endswith(']')):
+                    upperBound = request.args.get('datetime')[0:29]
+                    upperDate = utils.convertRFC3339ToDatetime(upperBound)
+                    if(jobCreaationDate > upperDate):
+                        datetimeParam = True
+                else:
+                    upperBound = request.args.get('datetime')[0:29]
+                    upperDate = utils.convertRFC3339ToDatetime(upperBound)
+                    lowerBound = request.args.get('datetime')[32:]
+                    lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
+                    if(jobCreaationDate < lowerDate and jobCreaationDate > upperDate):
+                        datetimeParam = True
+                
+                if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True):
+                    print(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True)
+                    job = {"jobID": status["jobID"],
+                           "processID": job["processID"],
+                           "type": status["type"],
+                           "status": status["status"],
+                           "message": status["message"],
+                           "created": status["created"],
+                           "links": [{
+                               "href": "localhost:5000/jobs/" + status["jobID"] + "?f=application/json",
+                               "rel": "status",
+                               "type": "application/json",
+                               "title": "Job status as JSON"
+                               },
+                               {
+                               "href": "localhost:5000/jobs/" + status["jobID"] + "?f=text/html",
+                               "rel": "status",
+                               "type": "text/html",
+                               "title": "Job status as HTML"
+                               }]
+                           }
+                    jobArray.append(job)
+                    count += 1
                 if count == int(limit):
                     break
-                with open('jobs/' + i + '/status.json', "r") as f:
-                    data = json.load(f)
-                    jobID = data["jobID"]
-                    status = data["status"]
-                    message = data["message"]
-                    progress = data["progress"]
-                    #links müssen noch ergänzt werden
-                f.close()
-                    
-                with open('jobs/' + i + '/job.json', "r") as f:
-                    data = json.load(f)
-                    processID = data["jobID"]
-                    #links müssen noch ergänzt werden
-                f.close()
-                job = {"processID": processID,
-                       "jobID": jobID,
-                       "status": status,
-                       "message": message,
-                       "progress": progress,
-                       "links": [{
-                           "href": "localhost:5000/jobs/" + jobID + "?f=application/json",
-                           "rel": "status",
-                           "type": "application/json",
-                           "title": "Job status"
-                           }]
-                       }
-                jobArray.append(job)
-                count += 1
             jobs = {"jobs": jobArray,
                     "links": [
-                               {"href": "localhost:5000/jobs?f=application/json",
-                                "rel": "self",
-                                "type": "application/json",
-                                "title": "this document as JSON"},
-                               {"href": "localhost:5000/jobs?f=text/html",
-                                "rel": "alternate",
-                                "type": "text/html",
-                                "title": "this document as HTML"}
-                               ]}
+                                  {"href": "localhost:5000/jobs?f=application/json",
+                                   "rel": "self",
+                                   "type": "application/json",
+                                   "title": "this document as JSON"},
+                                   {"href": "localhost:5000/jobs?f=text/html",
+                                    "rel": "alternate",
+                                    "type": "text/html",
+                                    "title": "this document as HTML"}
+                                   ]}
             response = jsonify(jobs)  
             response.status_code = 200
             return response #return response and ok and files created  

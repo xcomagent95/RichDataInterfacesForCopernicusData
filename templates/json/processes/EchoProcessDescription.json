@@ -39,8 +39,8 @@
   },
   "links": [
     {
-      "href": "localhost:5000/processes/Echo/excecution?input=test",
-      "rel": "localhost:5000/processes/Echo/excecution?input=test",
+      "href": "localhost:5000/processes/Echo/execution?input=test",
+      "rel": "execute",
       "title": "Execute endpoint with test input"
     },
 	  {
