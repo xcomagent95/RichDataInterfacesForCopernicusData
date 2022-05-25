@@ -29,7 +29,7 @@ def echoProcess(job):
     setStarted(job.path + '/status.json')
     
     input = job.input[0]
-    time.sleep(60)
+    time.sleep(10)
     
     if(checkForDismissal(job.path + '/status.json') == True):
         return
@@ -40,7 +40,7 @@ def echoProcess(job):
     with open(job.results + "result.json", 'w') as f: #create file
         json.dump(result, f) #write content
         f.close() #close file
-    updateStatus(job.path + '/status.json', "finished", "Step 1 of 1 completed", "100")
+    updateStatus(job.path + '/status.json', "successful", "Step 1 of 1 completed", "100")
     setFinished(job.path + '/status.json')
 
 def checkForDismissal(path):

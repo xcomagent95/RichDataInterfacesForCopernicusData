@@ -233,60 +233,65 @@ def getJobs():
                 job = json.load(file)
                 file.close() 
                 
-                jobCreaationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") 
+                jobCreationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") 
                 datetimeParam = False
                 if(request.args.get('datetime') == None):
                     datetimeParam = True
                 elif(request.args.get('datetime').startswith('[')):
                     lowerBound = request.args.get('datetime')[9:]
                     lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
-                    if(jobCreaationDate < lowerDate):
+                    if(jobCreationDate < lowerDate):
                         datetimeParam = True
                 elif(request.args.get('datetime').endswith(']')):
                     upperBound = request.args.get('datetime')[0:29]
                     upperDate = utils.convertRFC3339ToDatetime(upperBound)
-                    if(jobCreaationDate > upperDate):
+                    if(jobCreationDate > upperDate):
                         datetimeParam = True
                 else:
                     upperBound = request.args.get('datetime')[0:29]
                     upperDate = utils.convertRFC3339ToDatetime(upperBound)
                     lowerBound = request.args.get('datetime')[32:]
                     lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
-                    if(jobCreaationDate < lowerDate and jobCreaationDate > upperDate):
+                    if(jobCreationDate < lowerDate and jobCreationDate > upperDate):
                         datetimeParam = True
                 
-                minDurationParam = False
-                maxDurationParam = False
-                if(status["started"] != "none"):
-                    duration = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") - datetime.datetime.strptime(str(status["started"]), "%Y-%m-%d %H:%M:%S")
+                if(status["started"] != "none" and (request.args.get('minDuration') != None or request.args.get('maxDuration') != None)):
+                    now = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S")
+                    started = datetime.datetime.strptime(str(status["started"]), "%Y-%m-%d %H:%M:%S")
+                    duration = now - started
                     duration_in_s = duration.total_seconds()
-                    if(request.args.get('minDuration') == None and request.args.get('maxDuration') == None):
-                        minDurationParam = True
-                        maxDurationParam = True
-                    elif(request.args.get('minDuration') != None and request.args.get('maxDuration') == None):
-                        if(duration_in_s > int(request.args.get('minDuration')[0])):
+                    print(duration_in_s)
+                    if(request.args.get('minDuration') != None and request.args.get('maxDuration') == None):
+                        minDuration = int(request.args.get('minDuration')[1:-1])
+                        if(duration_in_s > minDuration):
                             minDurationParam = True
                         else:
                             minDurationParam = False
                         maxDurationParam = True
                         
                     elif(request.args.get('minDuration') == None and request.args.get('maxDuration') != None):
-                        if(duration_in_s < int(request.args.get('maxDuration')[0])):
+                        maxDuration = int(request.args.get('maxDuration')[1:-1])
+                        if(duration_in_s < maxDuration):
                             maxDurationParam = True
                         else:
                             maxDurationParam = False
                         minDurationParam = True
                         
                     else:
-                        if(duration_in_s < int(request.args.get('maxDuration')[0]) and duration_in_s > int(request.args.get('minDuration')[0])):
+                        minDuration = int(request.args.get('minDuration')[1:-1])
+                        maxDuration = int(request.args.get('maxDuration')[1:-1])
+                        if(duration_in_s < maxDuration and duration_in_s > minDuration):
                             minDurationParam = True
                             maxDurationParam = True
                         else:
                             minDurationParam = False
                             maxDurationParam = False
-                else:
+                elif(status["started"] == "none" and (request.args.get('minDuration') != None or request.args.get('maxDuration') != None)):
                     minDurationParam = False
                     maxDurationParam = False
+                else:
+                    minDurationParam = True
+                    maxDurationParam = True
                 
                 if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True and minDurationParam == True and maxDurationParam == True):
                     jobHTML = ("<p><b>jobID</b>: " + status["jobID"] + "<br><b>processID:</b> " 
@@ -333,7 +338,7 @@ def getJobs():
                 job = json.load(file)
                 file.close() 
                 
-                jobCreaationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") 
+                jobCreationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") 
                 datetimeParam = False
                 if(request.args.get('datetime') == None):
                     datetimeParam = True
@@ -352,43 +357,51 @@ def getJobs():
                     upperDate = utils.convertRFC3339ToDatetime(upperBound)
                     lowerBound = request.args.get('datetime')[32:]
                     lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
-                    if(jobCreaationDate < lowerDate and jobCreaationDate > upperDate):
+                    if(jobCreationDate < lowerDate and jobCreationDate > upperDate):
                         datetimeParam = True
-                    
-                minDurationParam = False
-                maxDurationParam = False
-                if(status["started"] != "none"):
-                    duration = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") - datetime.datetime.strptime(str(status["started"]), "%Y-%m-%d %H:%M:%S")
-                    duration_in_s = duration.total_seconds()
-                    if(request.args.get('minDuration') == None and request.args.get('maxDuration') == None):
-                        minDurationParam = True
-                        maxDurationParam = True
-                    elif(request.args.get('minDuration') != None and request.args.get('maxDuration') == None):
-                        if(duration_in_s > int(request.args.get('minDuration')[0])):
-                            minDurationParam = True
-                        else:
-                            minDurationParam = False
-                        maxDurationParam = True
-                        
-                    elif(request.args.get('minDuration') == None and request.args.get('maxDuration') != None):
-                        if(duration_in_s < int(request.args.get('maxDuration')[0])):
-                            maxDurationParam = True
-                        else:
-                            maxDurationParam = False
-                        minDurationParam = True
-                        
-                    else:
-                        if(duration_in_s < int(request.args.get('maxDuration')[0]) and duration_in_s > int(request.args.get('minDuration')[0])):
-                            minDurationParam = True
-                            maxDurationParam = True
-                        else:
-                            minDurationParam = False
-                            maxDurationParam = False
-                else:
-                    minDurationParam = False
-                    maxDurationParam = False
                 
-                if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True):
+                if(request.args.get('minDuration') != None or request.args.get('maxDuration') != None):
+                    if(status["started"] != "none"):
+                        minDurationParam = False
+                        maxDurationParam = False
+                        now = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S")
+                        started = datetime.datetime.strptime(str(status["started"]), "%Y-%m-%d %H:%M:%S")
+                        duration = now - started
+                        duration_in_s = duration.total_seconds()
+                        print(duration_in_s)
+                        if(request.args.get('minDuration') != None and request.args.get('maxDuration') == None):
+                            minDuration = int(request.args.get('minDuration')[1:-1])
+                            if(duration_in_s > minDuration):
+                                minDurationParam = True
+                            else:
+                                minDurationParam = False
+                            maxDurationParam = True
+                            
+                        elif(request.args.get('minDuration') == None and request.args.get('maxDuration') != None):
+                            maxDuration = int(request.args.get('maxDuration')[1:-1])
+                            if(duration_in_s < maxDuration):
+                                maxDurationParam = True
+                            else:
+                                maxDurationParam = False
+                            minDurationParam = True
+                            
+                        else:
+                            minDuration = int(request.args.get('minDuration')[1:-1])
+                            maxDuration = int(request.args.get('maxDuration')[1:-1])
+                            if(duration_in_s < maxDuration and duration_in_s > minDuration):
+                                minDurationParam = True
+                                maxDurationParam = True
+                            else:
+                                minDurationParam = False
+                                maxDurationParam = False
+                    elif(status["started"] == "none" and (request.args.get('minDuration') != None or request.args.get('maxDuration') != None)):
+                        minDurationParam = False
+                        maxDurationParam = False
+                    else:
+                        minDurationParam = True
+                        maxDurationParam = True
+                
+                if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True and minDurationParam == True and maxDurationParam == True):
                     print(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True)
                     job = {"jobID": status["jobID"],
                            "processID": job["processID"],
@@ -430,7 +443,7 @@ def getJobs():
         else:
             return "HTTP status code 406: not acceptable", 406
     except:
-         return "HTTP status code 500: internal server error", 500 #internal server error
+        return "HTTP status code 500: internal server error", 500 #internal server error
 
 #job endpoint for status and dismiss
 @app.route('/jobs/<jobID>', methods = ['GET', 'DELETE'])
@@ -488,14 +501,27 @@ def getJob(jobID):
 
 @app.route('/jobs/<jobID>/results', methods = ["GET"])
 def getResults(jobID):
-    if(os.path.exists('jobs/' + str(jobID) + '/results.zip')):
+    if(os.path.exists('jobs/' + str(jobID))):
         try:
-            if(jobID == "Echo"):
-                return send_file('jobs/' + str(jobID) + '/results/results.json', mimetype='application/json'), 200
-        except:
+            file = open('jobs/' + str(jobID) + "/status.json",)
+            status = json.load(file)
+            file.close() 
+            file = open('jobs/' + str(jobID) + "/job.json",)
+            job = json.load(file)
+            file.close() 
+            
+            if(job["processID"] == "Echo"):
+                if(status["status"] == "successful"):
+                    return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype='application/json'), 200
+                else:
+                    return "HTTP status code 404: not found - Result not ready", 404 #not found
+        except Exception:
+            traceback_output = traceback.format_exc()
+            # Now you can print it, or send it, or save it in a file
+            print(traceback_output)
             return "HTTP status code 500: internal server error", 500 #internal server error
     else:
-        return "HTTP status code 404: not found", 404 #not found
+        return "HTTP status code 404: not found - No such job", 404 #not found
 
          
 #run application
