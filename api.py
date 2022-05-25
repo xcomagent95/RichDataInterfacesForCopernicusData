@@ -15,8 +15,7 @@ def getLandingPage():
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
             response = render_template('html/LandingPage.html') #render static landing page
-            response.headers['link'] = "localhost:5000/?f=text/html"
-            return response, 200 #return response and ok
+            return response, 200, {"link": "localhost:5000/?f=text/html"} #return response and ok
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
             file = open('templates/json/LandingPage.json',) #open LandingPage.json
             payload = json.load(file) #create response
@@ -36,8 +35,7 @@ def getConformance():
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
             response = render_template('html/ConfClasses.html') #render static conformance page
-            response.headers['link'] = "localhost:5000/conformance?f=text/html"
-            return response, 200 #return response and ok
+            return response, 200, {"link": "localhost:5000/conformance?f=text/html"} #return response and ok
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
             file = open('templates/json/ConfClasses.json',) #open ConfClasses.json
             payload = json.load(file) #create response
@@ -57,8 +55,7 @@ def getAPIDefinition():
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
             response = render_template('html/APIDefinition.html') #render static conformance page
-            response.headers['link'] = "localhost:5000/apiDefinition?f=text/html"
-            return response, 200 #return response and ok
+            return response, 200, "localhost:5000/apiDefinition?f=text/html" #return response and ok
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
             file = open('templates/json/APIDefinition.json',) #open ConfClasses.json
             payload = json.load(file) #create response
@@ -114,8 +111,7 @@ def getProcesses():
                             type: application/json,<br>
                         	title: This document as JSON<br>
                             </body></html>"""
-                response.headers['link'] = "localhost:5000/processes?f=text/html"
-                return(response), 200 #return response and ok
+                return response, 200, {'link':'localhost:5000/processes?f=text/html'} #return response and ok
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
             processDescriptions = os.listdir("templates/json/processes")  #list registered processes
             processesArray = [] #initialize process array                        
@@ -153,8 +149,7 @@ def getProcess(processID):
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"):  #check requested content-type
             if(os.path.exists('templates/html/processes/' + str(processID) + 'ProcessDescription.html')):
                 response = render_template('html/processes/' + str(processID) + 'ProcessDescription.html')
-                response.headers['link'] = "localhost:5000/processes/" + str(processID) + "?f=text/html"
-                return response, 200
+                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html"}
             else:
                 return "HTTP status code 404: not found", 404 #not found
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"):  #check requested content-type
@@ -300,8 +295,7 @@ def getJobs():
                         type: application/json<br>
                         title: This document as JSON<br>
                         </body></html>"""
-            #response.headers['link'] = "localhost:5000/jobs?f=text/html"
-            return response, 200 
+            return response, 200, {"link": "localhost:5000/jobs?f=text/html"}
         
         
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"):
@@ -396,8 +390,7 @@ def getJob(jobID):
                     print(job)
                     file.close() #close status.json
                     jobHTML = "<!DOCTYPE html><html><body><p><b>jobID: " + job["jobID"] + "</b><br>Status: " + job["status"] + "<br>Message: " + job["message"] + "<br>progress: " + str(job["progress"]) + "<br>" + job["created"] + "<br><b>links:</b><br><br>href: <a href=localhost:5000/jobs/"+ job["jobID"] + "?f=text/html>localhost:5000/jobs/" + job["jobID"] + "?f=text/html</a><br>rel: status<br>title: Job Status<br> type: text/html<br>href: <a href=localhost:5000/jobs/"+ job["jobID"] + "?f=application/json>localhost:5000/jobs/" + job["jobID"] + "?f=application/json</a><br>rel: status<br>title: Job Status<br> type: application/json</p></body></html>"
-                    #jobHTML.headers['link'] = "localhost:5000/jobs/" + str(jobID) + "?f=text/html"
-                    return  jobHTML, 200 #return response and ok
+                    return  jobHTML, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html"} #return response and ok
                 except:
                     return "HTTP status code 500: internal server error", 500 #internal server error
             else:
