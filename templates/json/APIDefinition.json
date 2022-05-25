@@ -1,0 +1,39 @@
+{
+    "openapi": "3.0.2",
+	"info": {
+		"title": "Test",
+		"description": "Test",
+		"contact": {
+			"email": "test"
+		},
+		"license": {
+			"name": "Test",
+			"url": "Test"
+		},
+		"version": "1.0.0"
+	},
+	"paths": {
+		"/": {
+		},
+		"/conformance": {
+		},
+		"/apiDescription": {
+		},
+		"/processes": {
+		},
+		"/jobs": {
+		},
+		"/processes/<processID>": {
+		},
+		"/processes/<processID>/execution": {
+		},
+		"/jobs/<jobID>": {
+		},
+		"/jobs/<jobID>/results": {
+		}
+	},
+	"components": {
+		"schemas": {
+		}
+	}
+}

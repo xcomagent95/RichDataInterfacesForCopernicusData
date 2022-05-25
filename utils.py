@@ -88,3 +88,67 @@ def convertRFC3339ToDatetime(datetimeString):
     r2 = r1.replace('T', ' ') 
     date = datetime.datetime.strptime(r2, "%Y-%m-%d %H:%M:%S")
     return date
+
+def checkCreationDate(creationDate, request):
+    datetimeParam = False
+    if(request.args.get('datetime') == None):
+        datetimeParam = True
+    elif(request.args.get('datetime').startswith('[')):
+        lowerBound = request.args.get('datetime')[9:]
+        lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
+        if(jobCreationDate < lowerDate):
+            datetimeParam = True
+    elif(request.args.get('datetime').endswith(']')):
+        upperBound = request.args.get('datetime')[0:29]
+        upperDate = utils.convertRFC3339ToDatetime(upperBound)
+        if(jobCreationDate > upperDate):
+            datetimeParam = True
+    else:
+        upperBound = request.args.get('datetime')[0:29]
+        upperDate = utils.convertRFC3339ToDatetime(upperBound)
+        lowerBound = request.args.get('datetime')[32:]
+        lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
+        if(jobCreationDate < lowerDate and jobCreationDate > upperDate):
+            datetimeParam = True
+    return datetimeParam
+
+def checkDuration(status, request):
+    if(status["started"] != "none" and (request.args.get('minDuration') != None or request.args.get('maxDuration') != None)):
+        now = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S")
+        started = datetime.datetime.strptime(str(status["started"]), "%Y-%m-%d %H:%M:%S")
+        duration = now - started
+        duration_in_s = duration.total_seconds()
+        print(duration_in_s)
+        if(request.args.get('minDuration') != None and request.args.get('maxDuration') == None):
+            minDuration = int(request.args.get('minDuration')[1:-1])
+            if(duration_in_s > minDuration):
+                minDurationParam = True
+            else:
+                minDurationParam = False
+            maxDurationParam = True
+                        
+        elif(request.args.get('minDuration') == None and request.args.get('maxDuration') != None):
+            maxDuration = int(request.args.get('maxDuration')[1:-1])
+            if(duration_in_s < maxDuration):
+                maxDurationParam = True
+            else:
+                maxDurationParam = False
+            minDurationParam = True
+                        
+        else:
+            minDuration = int(request.args.get('minDuration')[1:-1])
+            maxDuration = int(request.args.get('maxDuration')[1:-1])
+            if(duration_in_s < maxDuration and duration_in_s > minDuration):
+                minDurationParam = True
+                maxDurationParam = True
+            else:
+                minDurationParam = False
+                maxDurationParam = False
+    elif(status["started"] == "none" and (request.args.get('minDuration') != None or request.args.get('maxDuration') != None)):
+        minDurationParam = False
+        maxDurationParam = False
+    else:
+        minDurationParam = True
+        maxDurationParam = True
+    
+    return [minDurationParam, maxDurationParam]

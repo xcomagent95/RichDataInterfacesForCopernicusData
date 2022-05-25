@@ -10,7 +10,7 @@ curl -X GET -H "Content-Type:application/json" "localhost:5000/processes"
 curl -X GET -H "Content-Type:text/html" "localhost:5000/processes/Echo" 
 curl -X GET -H "Content-Type:application/json" "localhost:5000/processes/Echo" 
 
-curl -X POST "localhost:5000/processes/Echo/execution?input=test" 
+curl -X POST -H "Content-Type:application/json" "localhost:5000/processes/Echo/execution?input=test" 
 
 curl -X GET -H "Content-Type:text/html" "localhost:5000/jobs/96a1ec6f-a5ad-4181-a2c9-e2a1b14dbf83" 
 curl -X GET -H "Content-Type:application/json" "localhost:5000/jobs/96a1ec6f-a5ad-4181-a2c9-e2a1b14dbf83" 

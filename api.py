@@ -46,6 +46,26 @@ def getConformance():
                 return "HTTP status code 406: not acceptable", 406 #not acceptable 
     except:
         return "HTTP status code 500: internal server error", 500 #internal server error
+    
+#api endpoint
+@app.route('/apiDefinition',  methods = ['GET']) #allowed methods: GET
+def getAPIDefinition():
+    try:
+        if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
+            response = render_template('html/APIDefinition.html') #render static conformance page
+            return response, 200 #return response and ok
+        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
+            file = open('templates/json/APIDefinition.json',) #open ConfClasses.json
+            payload = json.load(file) #create response
+            file.close() #close ConfClasses.json
+            response = jsonify(payload) #create response
+            response.status_code = 200 #set response code
+            return response #return response and ok
+        else:
+                return "HTTP status code 406: not acceptable", 406 #not acceptable 
+    except Exception:
+        traceback.print_exc()
+        return "HTTP status code 500: internal server error", 500 #internal server error
 
 #processes endpoint
 @app.route('/processes', methods = ['GET']) #allowed methods: GET
@@ -146,6 +166,7 @@ def getProcess(processID):
 #execute endpoint
 @app.route('/processes/<processID>/execution', methods = ['POST']) #allowed methods: POST
 def executeProcess(processID):
+    
     try:
         if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):                
             input = request.args.get('input')
@@ -190,10 +211,10 @@ def executeProcess(processID):
             f.close() #close file               
             response = jsonify(status_file) #create response
             response.status_code = 201 #set response code
-            response.headers['location'] = "jobs/" + jobID #set location header
+            response.headers['location'] = "localhost:5000/jobs/" + jobID + "?f=application/json" #set location header
             return response #return response and ok and files created
         else:
-            return "HTTP status code 404: not found", 404 #not found
+            return "HTTP status code 404: not found - No such process", 404 #not found
     except:
         return "HTTP status code 500: internal server error", 500 #internal server error
 
@@ -234,64 +255,11 @@ def getJobs():
                 file.close() 
                 
                 jobCreationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") 
-                datetimeParam = False
-                if(request.args.get('datetime') == None):
-                    datetimeParam = True
-                elif(request.args.get('datetime').startswith('[')):
-                    lowerBound = request.args.get('datetime')[9:]
-                    lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
-                    if(jobCreationDate < lowerDate):
-                        datetimeParam = True
-                elif(request.args.get('datetime').endswith(']')):
-                    upperBound = request.args.get('datetime')[0:29]
-                    upperDate = utils.convertRFC3339ToDatetime(upperBound)
-                    if(jobCreationDate > upperDate):
-                        datetimeParam = True
-                else:
-                    upperBound = request.args.get('datetime')[0:29]
-                    upperDate = utils.convertRFC3339ToDatetime(upperBound)
-                    lowerBound = request.args.get('datetime')[32:]
-                    lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
-                    if(jobCreationDate < lowerDate and jobCreationDate > upperDate):
-                        datetimeParam = True
+                datetimeParam = utils.checkCreationDate(jobCreationDate, request)
                 
-                if(status["started"] != "none" and (request.args.get('minDuration') != None or request.args.get('maxDuration') != None)):
-                    now = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S")
-                    started = datetime.datetime.strptime(str(status["started"]), "%Y-%m-%d %H:%M:%S")
-                    duration = now - started
-                    duration_in_s = duration.total_seconds()
-                    print(duration_in_s)
-                    if(request.args.get('minDuration') != None and request.args.get('maxDuration') == None):
-                        minDuration = int(request.args.get('minDuration')[1:-1])
-                        if(duration_in_s > minDuration):
-                            minDurationParam = True
-                        else:
-                            minDurationParam = False
-                        maxDurationParam = True
-                        
-                    elif(request.args.get('minDuration') == None and request.args.get('maxDuration') != None):
-                        maxDuration = int(request.args.get('maxDuration')[1:-1])
-                        if(duration_in_s < maxDuration):
-                            maxDurationParam = True
-                        else:
-                            maxDurationParam = False
-                        minDurationParam = True
-                        
-                    else:
-                        minDuration = int(request.args.get('minDuration')[1:-1])
-                        maxDuration = int(request.args.get('maxDuration')[1:-1])
-                        if(duration_in_s < maxDuration and duration_in_s > minDuration):
-                            minDurationParam = True
-                            maxDurationParam = True
-                        else:
-                            minDurationParam = False
-                            maxDurationParam = False
-                elif(status["started"] == "none" and (request.args.get('minDuration') != None or request.args.get('maxDuration') != None)):
-                    minDurationParam = False
-                    maxDurationParam = False
-                else:
-                    minDurationParam = True
-                    maxDurationParam = True
+                durationParams = utils.checkDuration(status, request)
+                minDurationParam = durationParams[0]
+                maxDurationParam = durationParams[1]
                 
                 if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True and minDurationParam == True and maxDurationParam == True):
                     jobHTML = ("<p><b>jobID</b>: " + status["jobID"] + "<br><b>processID:</b> " 
@@ -333,73 +301,16 @@ def getJobs():
                 file = open('jobs/' + i + "/status.json",)
                 status = json.load(file)
                 file.close() 
-                
                 file = open('jobs/' + i + "/job.json",)
                 job = json.load(file)
                 file.close() 
                 
                 jobCreationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") 
-                datetimeParam = False
-                if(request.args.get('datetime') == None):
-                    datetimeParam = True
-                elif(request.args.get('datetime').startswith('[')):
-                    lowerBound = request.args.get('datetime')[9:]
-                    lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
-                    if(jobCreaationDate < lowerDate):
-                        datetimeParam = True
-                elif(request.args.get('datetime').endswith(']')):
-                    upperBound = request.args.get('datetime')[0:29]
-                    upperDate = utils.convertRFC3339ToDatetime(upperBound)
-                    if(jobCreaationDate > upperDate):
-                        datetimeParam = True
-                else:
-                    upperBound = request.args.get('datetime')[0:29]
-                    upperDate = utils.convertRFC3339ToDatetime(upperBound)
-                    lowerBound = request.args.get('datetime')[32:]
-                    lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
-                    if(jobCreationDate < lowerDate and jobCreationDate > upperDate):
-                        datetimeParam = True
+                datetimeParam = utils.checkCreationDate(jobCreationDate, request)
                 
-                if(request.args.get('minDuration') != None or request.args.get('maxDuration') != None):
-                    if(status["started"] != "none"):
-                        minDurationParam = False
-                        maxDurationParam = False
-                        now = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S")
-                        started = datetime.datetime.strptime(str(status["started"]), "%Y-%m-%d %H:%M:%S")
-                        duration = now - started
-                        duration_in_s = duration.total_seconds()
-                        print(duration_in_s)
-                        if(request.args.get('minDuration') != None and request.args.get('maxDuration') == None):
-                            minDuration = int(request.args.get('minDuration')[1:-1])
-                            if(duration_in_s > minDuration):
-                                minDurationParam = True
-                            else:
-                                minDurationParam = False
-                            maxDurationParam = True
-                            
-                        elif(request.args.get('minDuration') == None and request.args.get('maxDuration') != None):
-                            maxDuration = int(request.args.get('maxDuration')[1:-1])
-                            if(duration_in_s < maxDuration):
-                                maxDurationParam = True
-                            else:
-                                maxDurationParam = False
-                            minDurationParam = True
-                            
-                        else:
-                            minDuration = int(request.args.get('minDuration')[1:-1])
-                            maxDuration = int(request.args.get('maxDuration')[1:-1])
-                            if(duration_in_s < maxDuration and duration_in_s > minDuration):
-                                minDurationParam = True
-                                maxDurationParam = True
-                            else:
-                                minDurationParam = False
-                                maxDurationParam = False
-                    elif(status["started"] == "none" and (request.args.get('minDuration') != None or request.args.get('maxDuration') != None)):
-                        minDurationParam = False
-                        maxDurationParam = False
-                    else:
-                        minDurationParam = True
-                        maxDurationParam = True
+                durationParams = utils.checkDuration(status, request)
+                minDurationParam = durationParams[0]
+                maxDurationParam = durationParams[1]
                 
                 if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True and minDurationParam == True and maxDurationParam == True):
                     print(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True)
@@ -515,10 +426,7 @@ def getResults(jobID):
                     return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype='application/json'), 200
                 else:
                     return "HTTP status code 404: not found - Result not ready", 404 #not found
-        except Exception:
-            traceback_output = traceback.format_exc()
-            # Now you can print it, or send it, or save it in a file
-            print(traceback_output)
+        except:
             return "HTTP status code 500: internal server error", 500 #internal server error
     else:
         return "HTTP status code 404: not found - No such job", 404 #not found
