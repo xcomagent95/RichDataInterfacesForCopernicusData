@@ -6,11 +6,13 @@ Created on Mon Apr  4 10:28:07 2022
 """
 import os
 import json
-
+import time
 import utils
 
 def processingChain():
     jobs = os.listdir('jobs/')
+    
+    
     processing_list = []
     for i in jobs:
         job = os.listdir('jobs/' + i)
@@ -20,7 +22,7 @@ def processingChain():
             processing_list.append((response["jobID"], response["created"]))
         file.close()
     processing_list.sort(key = lambda x: x[1])
-    print(processing_list)
+
     if(len(processing_list) > 0):
         oldest_job = processing_list[0][0]
         print('oldest job-id: ' + oldest_job)
@@ -39,5 +41,8 @@ def processingChain():
         if(data["processID"] == 'Echo'):
            job = utils.readJob('jobs/' + oldest_job + '/job.json')
            utils.echoProcess(job)
-           
-processingChain()    
+        processingChain()
+
+while(True):           
+    processingChain() 
+    time.sleep(300)

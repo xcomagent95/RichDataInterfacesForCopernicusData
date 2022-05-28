@@ -50,7 +50,7 @@ def getConformance():
         return "HTTP status code 500: internal server error", 500 #internal server error
     
 #api endpoint
-@app.route('/apiDefinition',  methods = ['GET']) #allowed methods: GET
+@app.route('/api',  methods = ['GET']) #allowed methods: GET
 def getAPIDefinition():
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
@@ -171,7 +171,6 @@ def getProcess(processID):
 #execute endpoint
 @app.route('/processes/<processID>/execution', methods = ['POST']) #allowed methods: POST
 def executeProcess(processID):
-    
     try:
         if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):                
             input = request.args.get('input')
@@ -389,7 +388,16 @@ def getJob(jobID):
                     job = json.load(file) #create response   
                     print(job)
                     file.close() #close status.json
-                    jobHTML = "<!DOCTYPE html><html><body><p><b>jobID: " + job["jobID"] + "</b><br>Status: " + job["status"] + "<br>Message: " + job["message"] + "<br>progress: " + str(job["progress"]) + "<br>" + job["created"] + "<br><b>links:</b><br><br>href: <a href=localhost:5000/jobs/"+ job["jobID"] + "?f=text/html>localhost:5000/jobs/" + job["jobID"] + "?f=text/html</a><br>rel: status<br>title: Job Status<br> type: text/html<br>href: <a href=localhost:5000/jobs/"+ job["jobID"] + "?f=application/json>localhost:5000/jobs/" + job["jobID"] + "?f=application/json</a><br>rel: status<br>title: Job Status<br> type: application/json</p></body></html>"
+                    jobHTML = ("<!DOCTYPE html><html><body><p><b>jobID: " 
+                        + job["jobID"] + "</b><br>Status: "  
+                        + job["status"] + "<br>Message: "  
+                        + job["message"] + "<br>progress: "  
+                        + str(job["progress"]) + "<br>"  
+                        + job["created"] + "<br><b>links:</b><br><br>href: <a href=localhost:5000/jobs/" 
+                        + job["jobID"] + "?f=text/html>localhost:5000/jobs/"  
+                        + job["jobID"] + "?f=text/html</a><br>rel: status<br>title: Job Status<br> type: text/html<br>href: <a href=localhost:5000/jobs/"+ 
+                        + job["jobID"] + "?f=application/json>localhost:5000/jobs/"  
+                        + job["jobID"] + "?f=application/json</a><br>rel: status<br>title: Job Status<br> type: application/json</p></body></html>")
                     return  jobHTML, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html"} #return response and ok
                 except:
                     return "HTTP status code 500: internal server error", 500 #internal server error

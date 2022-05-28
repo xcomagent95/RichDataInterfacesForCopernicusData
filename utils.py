@@ -28,8 +28,11 @@ def echoProcess(job):
     
     setStarted(job.path + '/status.json')
     
-    input = job.input[0]
-    time.sleep(10)
+    try:
+        input = job.input[0]
+        time.sleep(10)
+    except:
+        updateStatus(job.path + '/status.json', "failed", "The job has failed", "-")
     
     if(checkForDismissal(job.path + '/status.json') == True):
         return
@@ -42,6 +45,7 @@ def echoProcess(job):
         f.close() #close file
     updateStatus(job.path + '/status.json', "successful", "Step 1 of 1 completed", "100")
     setFinished(job.path + '/status.json')
+
 
 def checkForDismissal(path):
     with open(path, "r") as f:
