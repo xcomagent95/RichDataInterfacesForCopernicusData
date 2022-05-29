@@ -1,4 +1,4 @@
-from flask import Flask , render_template, jsonify, request, send_file
+from flask import Flask , render_template, jsonify, request, send_file, redirect
 import json
 import os
 import uuid
@@ -54,8 +54,8 @@ def getConformance():
 def getAPIDefinition():
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
-            response = render_template('html/APIDefinition.html') #render static conformance page
-            return response, 200, "localhost:5000/apiDefinition?f=text/html" #return response and ok
+            response = render_template('html/api/index.html') #render api definition
+            return response
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
             file = open('templates/json/apiDefinition.json',) #open ConfClasses.json
             payload = json.load(file) #create response
