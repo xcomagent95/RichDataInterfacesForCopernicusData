@@ -57,7 +57,7 @@ def getAPIDefinition():
             response = render_template('html/APIDefinition.html') #render static conformance page
             return response, 200, "localhost:5000/apiDefinition?f=text/html" #return response and ok
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
-            file = open('templates/json/APIDefinition.json',) #open ConfClasses.json
+            file = open('templates/json/apiDefinition.json',) #open ConfClasses.json
             payload = json.load(file) #create response
             file.close() #close ConfClasses.json
             response = jsonify(payload) #create response
@@ -147,9 +147,12 @@ def getProcesses():
 def getProcess(processID):
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"):  #check requested content-type
-            if(os.path.exists('templates/html/processes/' + str(processID) + 'ProcessDescription.html')):
-                response = render_template('html/processes/' + str(processID) + 'ProcessDescription.html')
-                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html"}
+            if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):
+                file = open('templates/json/processes/' + str(processID) + 'ProcessDescription.json',) #open ProcessDescription.json
+                process = json.load(file) #create response   
+                file.close() #close ProcessDescription.json
+                response = render_template("html/Process.html", processID=process["id"], title=process["title"], description=process["description"], version=process["version"], jobControlOptions=process["jobControlOptions"], inputs=process["inputs"], outputs=process["outputs"])
+                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html"} #return response and ok
             else:
                 return "HTTP status code 404: not found", 404 #not found
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"):  #check requested content-type
@@ -165,7 +168,8 @@ def getProcess(processID):
                 return "HTTP status code 404: not found", 404 #not found
         else:
             return "HTTP status code 406: not acceptable", 406 #not acceptable
-    except:
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #internal server error    
 
 #execute endpoint
@@ -388,17 +392,8 @@ def getJob(jobID):
                     job = json.load(file) #create response   
                     print(job)
                     file.close() #close status.json
-                    jobHTML = ("<!DOCTYPE html><html><body><p><b>jobID: " 
-                        + job["jobID"] + "</b><br>Status: "  
-                        + job["status"] + "<br>Message: "  
-                        + job["message"] + "<br>progress: "  
-                        + str(job["progress"]) + "<br>"  
-                        + job["created"] + "<br><b>links:</b><br><br>href: <a href=localhost:5000/jobs/" 
-                        + job["jobID"] + "?f=text/html>localhost:5000/jobs/"  
-                        + job["jobID"] + "?f=text/html</a><br>rel: status<br>title: Job Status<br> type: text/html<br>href: <a href=localhost:5000/jobs/" 
-                        + job["jobID"] + "?f=application/json>localhost:5000/jobs/"  
-                        + job["jobID"] + "?f=application/json</a><br>rel: status<br>title: Job Status<br> type: application/json</p></body></html>")
-                    return  jobHTML, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html"} #return response and ok
+                    response = render_template("html/Job.html", jobID=job["jobID"], status=job["status"], message=job["message"], progress=job["progress"], created=job["created"])
+                    return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html"} #return response and ok
                 except:
                     return "HTTP status code 500: internal server error", 500 #internal server error
             else:
