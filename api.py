@@ -395,7 +395,7 @@ def getJob(jobID):
                         + str(job["progress"]) + "<br>"  
                         + job["created"] + "<br><b>links:</b><br><br>href: <a href=localhost:5000/jobs/" 
                         + job["jobID"] + "?f=text/html>localhost:5000/jobs/"  
-                        + job["jobID"] + "?f=text/html</a><br>rel: status<br>title: Job Status<br> type: text/html<br>href: <a href=localhost:5000/jobs/"+ 
+                        + job["jobID"] + "?f=text/html</a><br>rel: status<br>title: Job Status<br> type: text/html<br>href: <a href=localhost:5000/jobs/" 
                         + job["jobID"] + "?f=application/json>localhost:5000/jobs/"  
                         + job["jobID"] + "?f=application/json</a><br>rel: status<br>title: Job Status<br> type: application/json</p></body></html>")
                     return  jobHTML, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html"} #return response and ok
@@ -418,7 +418,15 @@ def getJob(jobID):
                         with open('jobs/' + str(jobID) + '/status.json', "w") as f:
                             json.dump(file, f)
                             f.close()
-                        return "HTTP Status Code 200: ok", 200
+                        
+                        file = open('jobs/' + str(jobID) + '/status.json') #open status.json
+                        data = json.load(file) #create response   
+                        file.close() #close status.json
+                        
+                        response = jsonify(data)
+                        response.headers['link'] = "localhost:5000/jobs/" + str(jobID) + "?f=application/json"
+                        response.status_code = 200
+                        return  response #return response and ok
                     else:
                         return "HTTP Status Code 200: ok", 200
             else:
