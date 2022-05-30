@@ -1,43 +1,42 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Apr  4 10:28:07 2022
-
-@author: Alexander
-"""
 import os
 import json
-
+import time
 import utils
 
 def processingChain():
-    jobs = os.listdir('jobs/')
-    processing_list = []
-    for i in jobs:
-        job = os.listdir('jobs/' + i)
-        file = open('jobs/' + i + '/status.json')
-        response = json.load(file)
-        if(response["status"] == 'accepted'):
-            processing_list.append((response["jobID"], response["created"]))
-        file.close()
-    processing_list.sort(key = lambda x: x[1])
-    print(processing_list)
-    if(len(processing_list) > 0):
-        oldest_job = processing_list[0][0]
-        print('oldest job-id: ' + oldest_job)
+    jobs = os.listdir('jobs/') #list all created jobs
+    
+    
+    processing_list = [] #initialize processing list
+    for i in jobs: #iterate over created jobs
+        job = os.listdir('jobs/' + i) #list items in job directory
+        file = open('jobs/' + i + '/status.json') #read status.json
+        data = json.load(file) #load data from .json
+        file.close() #close file
         
-        with open('jobs/' + oldest_job + '/status.json', "r") as f:
-            data = json.load(f)
-            data["status"] = "running"
-            f.close()
-            with open('jobs/' + oldest_job + '/status.json', "w") as f:
+        if(data["status"] == 'accepted'): #check is status is accepted
+            processing_list.append((data["jobID"], data["created"])) #append jobID and created timestamp
+    processing_list.sort(key = lambda x: x[1]) #sort processing list by created timestamp
+
+    if(len(processing_list) > 0): #check if there are unprocesses jobs
+        oldest_job = processing_list[0][0] #retrieve the oldest job        
+        with open('jobs/' + oldest_job + '/status.json', "r") as f: #open status file
+            data = json.load(f) #load data from .json
+            data["status"] = "running" #set status to running
+            f.close() #close file
+            with open('jobs/' + oldest_job + '/status.json', "w") as f: #store status.json
                 json.dump(data, f)
-            f.close()
+            f.close() #close file
         
-        with open('jobs/' + oldest_job + '/job.json', "r") as f:
-            data = json.load(f)
+        with open('jobs/' + oldest_job + '/job.json', "r") as f: #load job.json
+            data = json.load(f) #load data from .json
         
-        if(data["processID"] == 'Echo'):
-           job = utils.readJob('jobs/' + oldest_job + '/job.json')
-           utils.echoProcess(job)
-           
-processingChain()    
+        if(data["processID"] == 'Echo'): #if job is running an Echo process
+           job = utils.readJob('jobs/' + oldest_job + '/job.json') #create job object
+           utils.echoProcess(job) #run echo process
+        processingChain() #restart processing chain
+
+while(True): #run           
+    processingChain() #processing chain
+    time.sleep(300) #every five minutes

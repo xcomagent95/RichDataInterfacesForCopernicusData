@@ -1,0 +1,813 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "A rich data interface for copernicus data conforming to the OGC API - Processes - Part 1: Core standard",
+    "version" : "1.0.0",
+    "description" : "API Beschreibung",
+    "contact" : {
+      "name" : "Alexander Pilz",
+      "email" : "apilz@uni-muenster.de",
+      "url" : "https://github.com/xcomagent95/RichDataInterfacesForCopernicusData"
+    },
+    "license" : {
+      "name" : "MIT license",
+      "url" : "https://mit-license.org/"
+    }
+  },
+  "paths" : {
+    "/" : {
+      "get" : {
+        "description" : "landing page for this API providing links to other resources",
+        "operationId" : "getLandingPage",
+        "tags" : [ "Capabilities" ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/landingPage"
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "not acceptable",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "internal server error",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/conformance" : {
+      "get" : {
+        "description" : "information about requiremnt classes that this API conforms to",
+        "operationId" : "getConformanceClasses",
+        "tags" : [ "ConformanceDeclaration" ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/confClasses"
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "not acceptable",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "internal server error",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/processes" : {
+      "get" : {
+        "description" : "retrieve the list of available processes",
+        "operationId" : "getProcesses",
+        "tags" : [ "ProcessList" ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/processList"
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "not acceptable",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "internal server error",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/processes/{processID}" : {
+      "get" : {
+        "description" : "retrieve the process description of a specific process",
+        "operationId" : "getProcessDescription",
+        "tags" : [ "ProcessDescription" ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "processID",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true,
+          "description" : "ID of the process to get"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/processSummary"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "not found",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "not acceptable",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "internal server error",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs" : {
+      "get" : {
+        "description" : "retrieve the list of jobs",
+        "operationId" : "getJobs",
+        "tags" : [ "JobList" ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "application//json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/jobList"
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "not acceptable",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "internal server error",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/processes/{processID}/execution" : {
+      "post" : {
+        "description" : "execute a process",
+        "operationId" : "execute",
+        "tags" : [ "Execute" ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "processID",
+          "schema" : {
+            "type" : "string"
+          },
+          "required" : true,
+          "description" : "ID of the process to execute"
+        } ],
+        "requestBody" : {
+          "description" : "Mandatory execute request JSON",
+          "required" : true,
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "integer"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/statusInfo"
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "not acceptable",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "internal server error",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        },
+        "callbacks" : {
+          "jobCompleted" : {
+            "{$request.body#/subscriber/successUri}" : {
+              "post" : {
+                "requestBody" : {
+                  "content" : {
+                    "application/json" : {
+                      "schema" : {
+                        "additionalProperties" : {
+                          "$ref" : "#/components/schemas/inlineOrRefData"
+                        }
+                      }
+                    }
+                  }
+                },
+                "responses" : {
+                  "200" : {
+                    "description" : "Results received successfully"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{jobID}" : {
+      "get" : {
+        "description" : "retrieve the status of a specific job",
+        "operationId" : "getStatus",
+        "tags" : [ "Status" ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "jobID",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true,
+          "description" : "numeric ID of the user to get"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/statusInfo"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "not found",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "406" : {
+            "description" : "not acceptable",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "internal server error",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "description" : "dismiss a specific job",
+        "operationId" : "dismiss",
+        "tags" : [ "Dismiss" ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "jobID",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true,
+          "description" : "numeric ID of the user to get"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/statusInfo"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "not found",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "internal server error",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{jobID}/results" : {
+      "get" : {
+        "description" : "retrieve the result(s) of a specific job",
+        "operationId" : "getResult",
+        "tags" : [ "Result" ],
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "jobID",
+          "schema" : {
+            "type" : "integer"
+          },
+          "required" : true,
+          "description" : "numeric ID of the user to get"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "ok",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "not found",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "internal server error",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "processSummary" : {
+        "allOf" : [ {
+          "$ref" : "#/components/schemas/descriptionType"
+        }, {
+          "type" : "object",
+          "required" : [ "id", "version" ],
+          "properties" : {
+            "id" : {
+              "type" : "string"
+            },
+            "version" : {
+              "type" : "string"
+            },
+            "jobControlOptions" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/jobControlOptions"
+              }
+            },
+            "outputTransmission" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/transmissionMode"
+              }
+            },
+            "links" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/components/schemas/link"
+              }
+            }
+          }
+        } ]
+      },
+      "link" : {
+        "type" : "object",
+        "required" : [ "href" ],
+        "properties" : {
+          "href" : {
+            "type" : "string"
+          },
+          "rel" : {
+            "type" : "string",
+            "example" : "service"
+          },
+          "type" : {
+            "type" : "string",
+            "example" : "application/json"
+          },
+          "hreflang" : {
+            "type" : "string",
+            "example" : "en"
+          },
+          "title" : {
+            "type" : "string"
+          }
+        }
+      },
+      "statusInfo" : {
+        "type" : "object",
+        "required" : [ "jobID", "status", "type" ],
+        "properties" : {
+          "processID" : {
+            "type" : "string"
+          },
+          "type" : {
+            "type" : "string",
+            "enum" : [ "process" ]
+          },
+          "jobID" : {
+            "type" : "string"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/statusCode"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "created" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "started" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "finished" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "updated" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "progress" : {
+            "type" : "integer",
+            "minimum" : 0,
+            "maximum" : 100
+          },
+          "links" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/link"
+            }
+          }
+        }
+      },
+      "jobList" : {
+        "type" : "object",
+        "required" : [ "jobs", "links" ],
+        "properties" : {
+          "jobs" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/statusInfo"
+            }
+          },
+          "links" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/link"
+            }
+          }
+        }
+      },
+      "processList" : {
+        "type" : "object",
+        "required" : [ "processes", "links" ],
+        "properties" : {
+          "processes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/processSummary"
+            }
+          },
+          "links" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/link"
+            }
+          }
+        }
+      },
+      "confClasses" : {
+        "type" : "object",
+        "required" : [ "conformsTo" ],
+        "properties" : {
+          "conformsTo" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "example" : "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core"
+            }
+          }
+        }
+      },
+      "landingPage" : {
+        "type" : "object",
+        "required" : [ "links" ],
+        "properties" : {
+          "title" : {
+            "type" : "string",
+            "example" : "Example processing server"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "Example server implementing the OGC API - Processes 1.0 Standard"
+          },
+          "links" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/link"
+            }
+          }
+        }
+      },
+      "statusCode" : {
+        "type" : "string",
+        "nullable" : false,
+        "enum" : [ "accepted", "running", "successful", "failed", "dismissed" ]
+      },
+      "jobControlOptions" : {
+        "type" : "string",
+        "enum" : [ "sync-execute", "async-execute", "dismiss" ]
+      },
+      "transmissionMode" : {
+        "type" : "string",
+        "enum" : [ "value", "reference" ]
+      },
+      "descriptionType" : {
+        "type" : "object",
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "keywords" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "metadata" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/metadata"
+            }
+          },
+          "additionalParameters" : {
+            "allOf" : [ {
+              "$ref" : "#/components/schemas/metadata"
+            }, {
+              "type" : "object",
+              "properties" : {
+                "parameters" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/additionalParameter"
+                  }
+                }
+              }
+            } ]
+          }
+        }
+      },
+      "inputValueNoObject" : {
+        "oneOf" : [ {
+          "type" : "string"
+        }, {
+          "type" : "number"
+        }, {
+          "type" : "integer"
+        }, {
+          "type" : "boolean"
+        }, {
+          "type" : "array"
+        }, {
+          "$ref" : "binaryInputValue.yaml"
+        }, {
+          "$ref" : "bbox.yaml"
+        } ]
+      },
+      "qualifiedInputValue" : {
+        "allOf" : [ {
+          "$ref" : "format.yaml"
+        }, {
+          "type" : "object",
+          "required" : [ "value" ],
+          "properties" : {
+            "value" : {
+              "$ref" : "inputValue.yaml"
+            }
+          }
+        } ]
+      },
+      "inlineOrRefData" : {
+        "oneOf" : [ {
+          "$ref" : "#/components/schemas/inputValueNoObject"
+        }, {
+          "$ref" : "#/components/schemas/qualifiedInputValue"
+        }, {
+          "$ref" : "#/components/schemas/link"
+        } ]
+      },
+      "additionalParameter" : {
+        "type" : "object",
+        "required" : [ "name", "value" ],
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "array",
+            "items" : {
+              "oneOf" : [ {
+                "type" : "string"
+              }, {
+                "type" : "number"
+              }, {
+                "type" : "integer"
+              }, {
+                "type" : "array",
+                "items" : { }
+              }, {
+                "type" : "object"
+              } ]
+            }
+          }
+        }
+      },
+      "metadata" : {
+        "type" : "object",
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "role" : {
+            "type" : "string"
+          },
+          "href" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+}

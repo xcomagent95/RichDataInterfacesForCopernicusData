@@ -12,16 +12,22 @@
 		"title": "This document as HTML"
 	},
 	{
-		"href": "tbd",
+		"href": "localhost:5000/api?f=application/json",
 		"rel": "service-desc",
 		"type": "application/json",
 		"title": "API definition for this endpoint as JSON"
 	},
 	{
-		"href": "tbd",
+		"href": "localhost:5000/api?f=text/html",
 		"rel": "service-desc",
 		"type": "text/html",
 		"title": "API definition for this endpoint as HTML"
+	},
+	{
+		"href": "https://app.swaggerhub.com/apis-docs/RDIForCopernicusData/RichDataInterfaceForCopernicusData/1.0.0",
+		"rel": "service-desc",
+		"type": "text/html",
+		"title": "API definition for this endpoint as OpenAPI"
 	},
 	{
 		"href": "localhost:5000/conformance?f=application/json",
