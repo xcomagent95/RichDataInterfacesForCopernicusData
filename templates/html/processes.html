@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		{% block body %}
+		<p>
+            {% for process in processes %}
+            <b>Title:</b> {{process.title}}<br>
+			<b>processID: </b>{{process.id}}<br>
+			Description: {{process.description}}<br>
+			Version: {{process.version}}<br>
+			Job control options: {{process.jobControlOptions}}<br>
+			Output transmission: {{process.outputTransmission}}<br>
+			<p>
+				<b>links: </b><br>
+					href: <a href=localhost:5000/processes/{{process.id}}/execution?input=test>localhost:5000/processes/{{process["id"]}}/execution?input=test</a><br>
+					title: Execute endpoint</p>
+			</p>
+            {% endfor %}
+		</p>
+    	{% endblock %}
+		<p><b>links:</b><br>
+			href:<a href="localhost:5000/processes?f=text/html">localhost:5000/processes?f=text/html</a><br>
+			rel: self,<br>
+			type: text/html,<br>
+			title: This document<br>
+			<br>
+			href:<a href="localhost:5000/processes?f=application/json">localhost:5000/processes?f=application/json</a><br>
+			rel: alternate,<br>
+			type: application/json,<br>
+			title: This document as JSON<br>
+		</p>
+	</body>
+</html>

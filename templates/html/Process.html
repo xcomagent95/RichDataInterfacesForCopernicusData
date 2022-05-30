@@ -2,33 +2,25 @@
 <html>
 	<body>
 			<p>
-				<b>id:</b> {{processID}}<br>
-				<b>title:</b> {{title}}<br>
-				<b>description:</b> {{description}}<br>
-				<b>version:</b> {{version}}<br>
-				<b>jobControlOptions:</b> {{jobControlOptions}}<br>
-				<b>outputTransmission:</b> {{outputTransmission}}
-			</p>
-			<p>
-			<b>inputs:</b><br>
-			{{inputs}}	
-			</p>
-			<p>
-			<b>outputs:</b><br>
-			{{outputs}}	
+				<b>id:</b> {{process.id}}<br>
+				<b>title:</b> {{process.title}}<br>
+				<b>description:</b> {{process.description}}<br>
+				<b>version:</b> {{process.version}}<br>
+				<b>jobControlOptions:</b> {{process.jobControlOptions}}<br>
+				<b>outputTransmission:</b> {{process.outputTransmission}}
 			</p>
 			<p>
 			<b>links:</b><br>
-			href:<a href="localhost:5000/processes/{{processID}}/excecution?input=test">localhost:5000/processes/{{processID}}/execution?input=test</a><br>
+			href:<a href="localhost:5000/processes/{{process.processID}}/excecution?input=test">localhost:5000/processes/{{process.processID}}/execution?input=test</a><br>
 			rel: execution<br>
 			title: Execute endpoint with text input<br>
 			<br>
-			href:<a href="localhost:5000/processes/{{processID}}?f=text/html">localhost:5000/processes/{{processID}}?f=text/html</a><br>
+			href:<a href="localhost:5000/processes/{{process.processID}}?f=text/html">localhost:5000/processes/{{process.processID}}?f=text/html</a><br>
 			rel: self<br>
 			type: text/html,<br>
 			title: This document as HTML<br>
 			<br>
-			href:<a href="localhost:5000/processes/{{processID}}?f=application/json">localhost:5000/processes/{{processID}}?f=application/json</a><br>
+			href:<a href="localhost:5000/processes/{{process.processID}}?f=application/json">localhost:5000/processes/{{process.processID}}?f=application/json</a><br>
 			rel: alternate<br>
 			type: application/json,<br>
 			title: This document as JSON

@@ -2,17 +2,18 @@
 <html>
 	<body>
 		<p>
-		<b>jobID: {{jobID}}</b><br>
-		Status: {{status}}<br>
-		Message: {{message}}<br>
-		progress: {{progress}}<br>
-		created: {{created}}<br><br>
+		<b>jobID: {{job.jobID}}</b><br>
+		Status: {{job.status}}<br>
+		Message: {{job.message}}<br>
+		progress: {{job.progress}}<br>
+		created: {{job.created}}<br>
+		started: {{job.started}}<br><br>
 		<b>links:</b>
-		<br>href: <a href="localhost:5000/jobs/0560b274-5061-4be9-b666-79d8cafb950c?f=text/html">localhost:5000/jobs/{{jobID}}?f=text/html</a>
+		<br>href: <a href="localhost:5000/jobs/{{job.jobID}}?f=text/html">localhost:5000/jobs/{{job.jobID}}?f=text/html</a>
 		<br>rel: status
 		<br>title: Job Status
 		<br> type: text/html<br>
-		<br>href: <a href="localhost:5000/jobs/0560b274-5061-4be9-b666-79d8cafb950c?f=application/json">localhost:5000/jobs/{{jobID}}?f=application/json</a>
+		<br>href: <a href="localhost:5000/jobs/{{job.jobID}}?f=application/json">localhost:5000/jobs/{{job.jobID}}?f=application/json</a>
 		<br>rel: status<br>title: Job Status
 		<br>type: application/json
 		</p>

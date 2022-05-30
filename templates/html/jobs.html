@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		{% block body %}
+		<p>
+            {% for status in status %}
+            <b>jobID:</b> {{status.jobID}}<br>
+                Type: {{status.type}}<br>
+                Status: {{status.status}}<br>
+                Message: {{status.message}}<br>
+                Progress: {{status.progress}}<br>
+                Created: {{status.created}}<br>
+                Started: {{status.started}}
+			<p>
+				<b>links: </b><br>
+                    href:<a href="localhost:5000/jobs/{{status.jobID}}?f=text/html">localhost:5000/jobs/{{status.jobID}}?f=text/html</a><br>
+                    rel: status<br>
+                    type: text/html,<br>
+                    title: status as HTML<br>
+                    <br>
+                    href:<a href="localhost:5000/jobs/{{status.jobID}}?f=application/json">localhost:5000/jobs/{{status.jobID}}?f=application/json</a><br>
+                    rel: status<br>
+                    type: application/json,<br>
+                    title: status as JSON<br>
+			</p>
+            {% endfor %}
+		</p>
+    	{% endblock %}
+		<p><b>links:</b><br>
+			href:<a href="localhost:5000/jobs?f=text/html">localhost:5000/jobs?f=text/html</a><br>
+			rel: self,<br>
+			type: text/html,<br>
+			title: This document<br>
+			<br>
+			href:<a href="localhost:5000/jobs?f=application/json">localhost:5000/jobs?f=application/json</a><br>
+			rel: alternate,<br>
+			type: application/json,<br>
+			title: This document as JSON<br>
+		</p>
+	</body>
+</html>

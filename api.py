@@ -14,10 +14,10 @@ app = Flask(__name__) #define flask app
 def getLandingPage():
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
-            response = render_template('html/LandingPage.html') #render static landing page
+            response = render_template('html/landingPage.html') #render static landing page
             return response, 200, {"link": "localhost:5000/?f=text/html"} #return response and ok
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
-            file = open('templates/json/LandingPage.json',) #open LandingPage.json
+            file = open('templates/json/landingPage.json',) #open LandingPage.json
             payload = json.load(file) #create response
             file.close() #close LandingPage.json
             response = jsonify(payload) #create response
@@ -34,10 +34,10 @@ def getLandingPage():
 def getConformance():
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
-            response = render_template('html/ConfClasses.html') #render static conformance page
+            response = render_template('html/confClasses.html') #render static conformance page
             return response, 200, {"link": "localhost:5000/conformance?f=text/html"} #return response and ok
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
-            file = open('templates/json/ConfClasses.json',) #open ConfClasses.json
+            file = open('templates/json/confClasses.json',) #open ConfClasses.json
             payload = json.load(file) #create response
             file.close() #close ConfClasses.json
             response = jsonify(payload) #create response
@@ -55,7 +55,7 @@ def getAPIDefinition():
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
             response = render_template('html/api/index.html') #render api definition
-            return response
+            return response, 200, {'link':'localhost:5000/apiDefinition?f=text/html'}
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
             file = open('templates/json/apiDefinition.json',) #open ConfClasses.json
             payload = json.load(file) #create response
@@ -78,7 +78,8 @@ def getProcesses():
     else:
         limit = int(request.args.get('limit')) #get limit from request
     try:
-        if(request.content_type == "text/html" or request.args.get('f')=="text/html"):  #check requested content-type
+        if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
+                processList = []
                 processDescriptions = os.listdir("templates/json/processes") #list registered processes
                 response = "<!DOCTYPE html><html><body><h1>Processes:</h1>" #initialize HTML document
                 counter = 0 #initialize counter
@@ -86,32 +87,11 @@ def getProcesses():
                     file = open('templates/json/processes/' + i,) #open process descriptions
                     process = json.load(file) #load the data from .json file
                     file.close() #close file
-                    #create process description as HTML
-                    processHTML = ("<p><b>id: " + process["id"] + "</b><br>title: " 
-                                   + process["title"] + "<br>description: " 
-                                   + process["description"] + "<br>version: " 
-                                   + process["version"] + "<br>jobControlOptions: " 
-                                   + str(process["jobControlOptions"]) + "<br>outputTransmission: " 
-                                   + str(process["outputTransmission"]) + "</p>links:<br> href: <a href=localhost:5000/processes/"
-                                   + process["id"] + "/execution?input=test>localhost:5000/processes/" 
-                                   + process["id"] + "/execution?input=test</a><br>title: Execute endpoint</p>")
-                    response += processHTML #add process as HTML to response
-                    counter += 1 #increment counter
+                    processList.append(process)
                     if(counter == limit): #check if counter has reached request limit
                         break 
-                #add links to response
-                response += """<p><b>links:</b><br>
-                        	href:<a href="localhost:5000/processes?f=text/html">localhost:5000/processes?f=text/html,</a><br>
-                        	rel: self,<br>
-                            type: text/html,<br>
-                        	title: This document<br>
-                            <br>
-                            href:<a href="localhost:5000/processes?f=application/json">localhost:5000/processes?f=application/json,</a><br>
-                        	rel: alternate,<br>
-                            type: application/json,<br>
-                        	title: This document as JSON<br>
-                            </body></html>"""
-                return response, 200, {'link':'localhost:5000/processes?f=text/html'} #return response and ok
+                response = render_template('html/processes.html', processes=processList) #render static conformance page
+                return response, 200, {"link": "localhost:5000/processes?f=text/html"} #return response and ok
         elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
             processDescriptions = os.listdir("templates/json/processes")  #list registered processes
             processesArray = [] #initialize process array                        
@@ -139,7 +119,8 @@ def getProcesses():
             return response #return response and ok
         else:
             return "HTTP status code 406: not acceptable", 406 #not acceptable 
-    except:
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #internal server error
   
 #process endpoint
@@ -151,7 +132,7 @@ def getProcess(processID):
                 file = open('templates/json/processes/' + str(processID) + 'ProcessDescription.json',) #open ProcessDescription.json
                 process = json.load(file) #create response   
                 file.close() #close ProcessDescription.json
-                response = render_template("html/Process.html", processID=process["id"], title=process["title"], description=process["description"], version=process["version"], jobControlOptions=process["jobControlOptions"], inputs=process["inputs"], outputs=process["outputs"])
+                response = render_template("html/Process.html", process=process)
                 return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html"} #return response and ok
             else:
                 return "HTTP status code 404: not found", 404 #not found
@@ -253,8 +234,8 @@ def getJobs():
     try:
         if(request.content_type == "text/html" or request.args.get('f')=="text/html"):
             jobs = os.listdir("jobs/")
-            response = "<!DOCTYPE html><html><body><h1>Jobs:</h1>"
-            counter = 0                  
+            counter = 0    
+            jobList = []              
             for i in jobs:
                 file = open('jobs/' + i + "/status.json",)
                 status = json.load(file)
@@ -271,33 +252,11 @@ def getJobs():
                 maxDurationParam = durationParams[1]
                 
                 if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True and minDurationParam == True and maxDurationParam == True):
-                    jobHTML = ("<p><b>jobID</b>: " + status["jobID"] + "<br><b>processID:</b> " 
-                               + job["processID"] + "<br>type: "
-                               + status["type"] + "<br>status: " 
-                               + status["status"] + "<br>message: " 
-                               + status["message"] + "<br>created: " 
-                               + status["created"] + "<br><br><b>links:</b><br>href: <a href=localhost:5000/jobs/"
-                               + status["jobID"] + "?f=application/json>localhost:5000/jobs/" 
-                               + status["jobID"] + "?f=application/json</a><br>rel: status as JSON<br>title: Job Status<br> type: application/json<br>href: <a href=localhost:5000/jobs/"
-                               + status["jobID"] + "?f=text/html>localhost:5000/jobs/" 
-                               + status["jobID"] + "?f=text/html</a><br>rel: status as JSON<br>title: Job Status<br> type: text/html</p>")
-            
-                    response += jobHTML
+                    jobList.append(status)
                     counter += 1
                     if(counter == limit):
                         break
-                    
-            response += """<p><b>links:</b><br>
-                        href:<a href="localhost:5000/jobs?f=text/html">localhost:5000/jobs?f=text/html</a><br>
-                        rel: self<br>
-                        type: text/html<br>
-                        title: This document<br>
-                        <br>
-                        href:<a href="localhost:5000/jobs?f=application/json">localhost:5000/jobs?f=application/json</a><br>
-                        rel: alternate<br>
-                        type: application/json<br>
-                        title: This document as JSON<br>
-                        </body></html>"""
+            response = render_template('html/jobs.html', status=jobList)
             return response, 200, {"link": "localhost:5000/jobs?f=text/html"}
         
         
@@ -322,7 +281,6 @@ def getJobs():
                 maxDurationParam = durationParams[1]
                 
                 if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True and minDurationParam == True and maxDurationParam == True):
-                    print(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True)
                     job = {"jobID": status["jobID"],
                            "processID": job["processID"],
                            "type": status["type"],
@@ -376,7 +334,6 @@ def getJob(jobID):
                     file = open('jobs/' + str(jobID) + '/status.json') #open status.json
                     data = json.load(file) #create response   
                     file.close() #close status.json
-                    
                     response = jsonify(data)
                     response.headers['link'] = "localhost:5000/jobs/" + str(jobID) + "?f=application/json"
                     response.status_code = 200
@@ -392,7 +349,7 @@ def getJob(jobID):
                     job = json.load(file) #create response   
                     print(job)
                     file.close() #close status.json
-                    response = render_template("html/Job.html", jobID=job["jobID"], status=job["status"], message=job["message"], progress=job["progress"], created=job["created"])
+                    response = render_template("html/Job.html", job=job)
                     return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html"} #return response and ok
                 except:
                     return "HTTP status code 500: internal server error", 500 #internal server error
@@ -412,8 +369,7 @@ def getJob(jobID):
                         f.close()
                         with open('jobs/' + str(jobID) + '/status.json', "w") as f:
                             json.dump(file, f)
-                            f.close()
-                        
+                            f.close()                       
                         file = open('jobs/' + str(jobID) + '/status.json') #open status.json
                         data = json.load(file) #create response   
                         file.close() #close status.json
