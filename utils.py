@@ -99,20 +99,20 @@ def checkCreationDate(creationDate, request):
         datetimeParam = True
     elif(request.args.get('datetime').startswith('[')):
         lowerBound = request.args.get('datetime')[9:]
-        lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
-        if(jobCreationDate < lowerDate):
+        lowerDate = convertRFC3339ToDatetime(lowerBound)
+        if(creationDate < lowerDate):
             datetimeParam = True
     elif(request.args.get('datetime').endswith(']')):
         upperBound = request.args.get('datetime')[0:29]
-        upperDate = utils.convertRFC3339ToDatetime(upperBound)
-        if(jobCreationDate > upperDate):
+        upperDate = convertRFC3339ToDatetime(upperBound)
+        if(creationDate > upperDate):
             datetimeParam = True
     else:
         upperBound = request.args.get('datetime')[0:29]
-        upperDate = utils.convertRFC3339ToDatetime(upperBound)
+        upperDate = convertRFC3339ToDatetime(upperBound)
         lowerBound = request.args.get('datetime')[32:]
-        lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
-        if(jobCreationDate < lowerDate and jobCreationDate > upperDate):
+        lowerDate = convertRFC3339ToDatetime(lowerBound)
+        if(creationDate < lowerDate and creationDate > upperDate):
             datetimeParam = True
     return datetimeParam
 
@@ -156,3 +156,16 @@ def checkDuration(status, request):
         maxDurationParam = True
     
     return [minDurationParam, maxDurationParam]
+
+def parseInput(processID, data):
+    response = None
+    if(processID == "Echo"):
+        file = open('templates/json/processes/' + processID + 'ProcessDescription.json',) #open ProcessDescription.json
+        process = json.load(file) #create response   
+        file.close() #close ProcessDescription.json      
+        if(data["outputs"]["format"]["schema"]["type"] == process["outputs"]["complexObjectOutput"]["schema"]["type"] and
+           data["outputs"]["transmissionMode"] in process["outputTransmission"]):
+            response = [data["inputs"]["inputValue"]]
+        else:
+            response = False
+    return response

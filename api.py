@@ -13,10 +13,13 @@ app = Flask(__name__) #define flask app
 @app.route('/',  methods = ['GET']) #allowed methods: GET
 def getLandingPage():
     try:
-        if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
+        if(request.content_type == "text/html" or 
+           request.args.get('f')=="text/html"): #check requested content-type
             response = render_template('html/landingPage.html') #render static landing page
             return response, 200, {"link": "localhost:5000/?f=text/html"} #return response and ok
-        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
+        elif(request.content_type == "application/json" or 
+             request.content_type == "application/vnd.oai.openapi+json;version=3.0" or 
+             request.args.get('f')=="application/json"): #check requested content-type
             file = open('templates/json/landingPage.json',) #open LandingPage.json
             payload = json.load(file) #create response
             file.close() #close LandingPage.json
@@ -33,10 +36,12 @@ def getLandingPage():
 @app.route('/conformance',  methods = ['GET']) #allowed methods: GET
 def getConformance():
     try:
-        if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
+        if(request.content_type == "text/html" or 
+           request.args.get('f')=="text/html"): #check requested content-type
             response = render_template('html/confClasses.html') #render static conformance page
             return response, 200, {"link": "localhost:5000/conformance?f=text/html"} #return response and ok
-        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
+        elif(request.content_type == "application/json" or 
+             request.args.get('f')=="application/json"): #check requested content-type
             file = open('templates/json/confClasses.json',) #open ConfClasses.json
             payload = json.load(file) #create response
             file.close() #close ConfClasses.json
@@ -53,10 +58,12 @@ def getConformance():
 @app.route('/api',  methods = ['GET']) #allowed methods: GET
 def getAPIDefinition():
     try:
-        if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
+        if(request.content_type == "text/html" or 
+           request.args.get('f')=="text/html"): #check requested content-type
             response = render_template('html/api/index.html') #render api definition
             return response, 200, {'link':'localhost:5000/apiDefinition?f=text/html'}
-        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
+        elif(request.content_type == "application/json" or 
+             request.args.get('f')=="application/json"): #check requested content-type
             file = open('templates/json/apiDefinition.json',) #open ConfClasses.json
             payload = json.load(file) #create response
             file.close() #close ConfClasses.json
@@ -73,12 +80,15 @@ def getAPIDefinition():
 #processes endpoint
 @app.route('/processes', methods = ['GET']) #allowed methods: GET
 def getProcesses():
-    if(request.args.get('limit') == None or int(request.args.get('limit')) <= 0 or int(request.args.get('limit')) > 1000): #if no limit is set
+    if(request.args.get('limit') == None or 
+       int(request.args.get('limit')) <= 0 or 
+       int(request.args.get('limit')) > 1000): #if no limit is set
         limit = 10 #default value
     else:
         limit = int(request.args.get('limit')) #get limit from request
     try:
-        if(request.content_type == "text/html" or request.args.get('f')=="text/html"): #check requested content-type
+        if(request.content_type == "text/html" or 
+           request.args.get('f')=="text/html"): #check requested content-type
                 processList = []
                 processDescriptions = os.listdir("templates/json/processes") #list registered processes
                 response = "<!DOCTYPE html><html><body><h1>Processes:</h1>" #initialize HTML document
@@ -92,7 +102,8 @@ def getProcesses():
                         break 
                 response = render_template('html/processes.html', processes=processList) #render static conformance page
                 return response, 200, {"link": "localhost:5000/processes?f=text/html"} #return response and ok
-        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type
+        elif(request.content_type == "application/json" or 
+             request.args.get('f')=="application/json"): #check requested content-type
             processDescriptions = os.listdir("templates/json/processes")  #list registered processes
             processesArray = [] #initialize process array                        
             for i in processDescriptions: #iterate over registered processes
@@ -127,7 +138,8 @@ def getProcesses():
 @app.route('/processes/<processID>', methods = ['GET']) #allowed methods: GET
 def getProcess(processID):
     try:
-        if(request.content_type == "text/html" or request.args.get('f')=="text/html"):  #check requested content-type
+        if(request.content_type == "text/html" or 
+           request.args.get('f')=="text/html"):  #check requested content-type
             if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):
                 file = open('templates/json/processes/' + str(processID) + 'ProcessDescription.json',) #open ProcessDescription.json
                 process = json.load(file) #create response   
@@ -136,7 +148,8 @@ def getProcess(processID):
                 return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html"} #return response and ok
             else:
                 return "HTTP status code 404: not found", 404 #not found
-        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"):  #check requested content-type
+        elif(request.content_type == "application/json" or 
+             request.args.get('f')=="application/json"):  #check requested content-type
             if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):
                 file = open('templates/json/processes/' + str(processID) + 'ProcessDescription.json',) #open ProcessDescription.json
                 payload = json.load(file) #create response   
@@ -157,8 +170,13 @@ def getProcess(processID):
 @app.route('/processes/<processID>/execution', methods = ['POST']) #allowed methods: POST
 def executeProcess(processID):
     try:
-        if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):                
-            input = request.args.get('input')
+        if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):  
+            data = json.loads(request.data.decode('utf8').replace("'", '"'))
+            inputs = utils.parseInput(processID, data)
+            
+            if(inputs == False):
+                return "HTTP status code 400: bad request", 400 #bad request
+                
             jobID = str(uuid.uuid4()) #generate jobID
             #create job directories        
             os.mkdir("jobs/" + jobID) #directory for current job
@@ -167,7 +185,7 @@ def executeProcess(processID):
             #create job.json
             job_file = {"jobID": str(jobID), 
                         "processID": str(processID), 
-                        "input": [input],
+                        "input": inputs,
                         "path": "jobs/" + jobID,
                         "results": "jobs/" + jobID + "/results/",
                         "downloads": "jobs/" + jobID + "/downloads/"}
@@ -205,13 +223,16 @@ def executeProcess(processID):
             return response #return response and ok and files created
         else:
             return "HTTP status code 404: not found - No such process", 404 #not found
-    except:
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #internal server error
 
 #jobs endpoint    
 @app.route('/jobs', methods = ['GET'])
 def getJobs():
-    if(request.args.get('limit') == None or int(request.args.get('limit')) <= 0 or int(request.args.get('limit')) > 1000):
+    if(request.args.get('limit') == None or 
+       int(request.args.get('limit')) <= 0 or 
+       int(request.args.get('limit')) > 1000):
         limit = 10 #default value
     else:
         limit = int(request.args.get('limit'))   
@@ -232,7 +253,8 @@ def getJobs():
         stati = request.args.get('status')
         
     try:
-        if(request.content_type == "text/html" or request.args.get('f')=="text/html"):
+        if(request.content_type == "text/html" or 
+           request.args.get('f')=="text/html"):
             jobs = os.listdir("jobs/")
             counter = 0    
             jobList = []              
@@ -251,7 +273,12 @@ def getJobs():
                 minDurationParam = durationParams[0]
                 maxDurationParam = durationParams[1]
                 
-                if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True and minDurationParam == True and maxDurationParam == True):
+                if(status["type"] in type and 
+                   job["processID"] in processes and 
+                   status["status"] in stati and 
+                   datetimeParam == True and 
+                   minDurationParam == True and 
+                   maxDurationParam == True):
                     jobList.append(status)
                     counter += 1
                     if(counter == limit):
@@ -260,7 +287,8 @@ def getJobs():
             return response, 200, {"link": "localhost:5000/jobs?f=text/html"}
         
         
-        elif(request.content_type == "application/json" or request.args.get('f')=="application/json"):
+        elif(request.content_type == "application/json" or 
+             request.args.get('f')=="application/json"):
             jobList = os.listdir('jobs/')
             jobArray = []
             count = 0
@@ -280,7 +308,12 @@ def getJobs():
                 minDurationParam = durationParams[0]
                 maxDurationParam = durationParams[1]
                 
-                if(status["type"] in type and job["processID"] in processes and status["status"] in stati and datetimeParam == True and minDurationParam == True and maxDurationParam == True):
+                if(status["type"] in type and 
+                   job["processID"] in processes and 
+                   status["status"] in stati and 
+                   datetimeParam == True and 
+                   minDurationParam == True and 
+                   maxDurationParam == True):
                     job = {"jobID": status["jobID"],
                            "processID": job["processID"],
                            "type": status["type"],
@@ -328,7 +361,8 @@ def getJobs():
 @app.route('/jobs/<jobID>', methods = ['GET', 'DELETE'])
 def getJob(jobID):
     if(request.method == 'GET'):
-        if(request.content_type == "application/json" or request.args.get('f')=="application/json"):
+        if(request.content_type == "application/json" or 
+           request.args.get('f')=="application/json"):
             if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
                 try:
                     file = open('jobs/' + str(jobID) + '/status.json') #open status.json
@@ -342,7 +376,8 @@ def getJob(jobID):
                     return "HTTP status code 500: internal server error", 500 #internal server error
             else:
                 return "HTTP status code 404: not found", 404 #not found
-        elif(request.content_type == "text/html" or request.args.get('f')=="text/html"):
+        elif(request.content_type == "text/html" or 
+             request.args.get('f')=="text/html"):
             if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
                 try:
                     file = open('jobs/' + str(jobID) + '/status.json') #open status.json

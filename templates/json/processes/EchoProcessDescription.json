@@ -11,7 +11,7 @@
   ],
   "inputs": {
     "stringInput": {
-      "title": "input",
+      "title": "inputValue",
       "description": "The input value",
       "schema": {
         "type": "string"
