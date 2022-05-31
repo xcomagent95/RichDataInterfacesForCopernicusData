@@ -22,7 +22,7 @@ def getLandingPage():
         if(request.content_type == "text/html" or 
            request.args.get('f')=="text/html"): #check requested content-type
             response = render_template('html/landingPage.html') #render static landing page
-            return response, 200, {"link": "localhost:5000/?f=text/html"} #return response and ok
+            return response, 200, {"link": "localhost:5000/?f=text/html", "resource": "landingPage"} #return response and ok
         elif(request.content_type == "application/json" or 
              request.content_type == "application/vnd.oai.openapi+json;version=3.0" or 
              request.args.get('f')=="application/json"): #check requested content-type
@@ -30,9 +30,8 @@ def getLandingPage():
             payload = json.load(file) #create response
             file.close() #close LandingPage.json
             response = jsonify(payload) #create response
-            response.headers['link'] = "localhost:5000/?f=application/json"
             response.status_code = 200 #set response code
-            return response #return response and ok
+            return response, {"link": "localhost:5000/?f=application/json", "resource": "landingPage"} #return response and ok
         else:
                 return "HTTP status code 406: not acceptable", 406 #not acceptable 
     except:
@@ -69,16 +68,15 @@ def getAPIDefinition():
         if(request.content_type == "text/html" or 
            request.args.get('f')=="text/html"): #check requested content-type
             response = render_template('html/api/index.html') #render api definition
-            return response, 200, {'link':'localhost:5000/apiDefinition?f=text/html'}
+            return response, 200, {"link": "localhost:5000/apiDefinition?f=text/html", "resource": "api"}
         elif(request.content_type == "application/json" or 
              request.args.get('f')=="application/json"): #check requested content-type
             file = open('templates/json/apiDefinition.json',) #open ConfClasses.json
             payload = json.load(file) #create response
             file.close() #close ConfClasses.json
             response = jsonify(payload) #create response
-            response.headers['link'] = "localhost:5000/apiDefinition?f=application/json"
             response.status_code = 200 #set response code
-            return response #return response and ok
+            return response, {"link": "localhost:5000/api?f=application/json", "resource": "api"} #return response and ok
         else:
                 return "HTTP status code 406: not acceptable", 406 #not acceptable 
     except Exception:

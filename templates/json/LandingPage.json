@@ -25,7 +25,7 @@
 	},
 	{
 		"href": "https://app.swaggerhub.com/apis-docs/RDIForCopernicusData/RichDataInterfaceForCopernicusData/1.0.0",
-		"rel": "service-desc",
+		"rel": "service-doc",
 		"type": "text/html",
 		"title": "API definition for this endpoint as OpenAPI"
 	},
