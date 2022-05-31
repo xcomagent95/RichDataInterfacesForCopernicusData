@@ -5,6 +5,11 @@ import uuid
 import datetime
 import utils
 import traceback
+import logging
+
+logging.basicConfig(filename = 'apiLog.log', 
+                    level=logging.INFO, 
+                    format = f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
 #initialize app
 app = Flask(__name__) #define flask app
@@ -12,6 +17,7 @@ app = Flask(__name__) #define flask app
 #landingpage endpoint
 @app.route('/',  methods = ['GET']) #allowed methods: GET
 def getLandingPage():
+    app.logger.info('/')
     try:
         if(request.content_type == "text/html" or 
            request.args.get('f')=="text/html"): #check requested content-type
@@ -35,6 +41,7 @@ def getLandingPage():
 #conformance endpoint
 @app.route('/conformance',  methods = ['GET']) #allowed methods: GET
 def getConformance():
+    app.logger.info('/conformance')
     try:
         if(request.content_type == "text/html" or 
            request.args.get('f')=="text/html"): #check requested content-type
@@ -57,6 +64,7 @@ def getConformance():
 #api endpoint
 @app.route('/api',  methods = ['GET']) #allowed methods: GET
 def getAPIDefinition():
+    app.logger.info('/api')
     try:
         if(request.content_type == "text/html" or 
            request.args.get('f')=="text/html"): #check requested content-type
@@ -80,6 +88,7 @@ def getAPIDefinition():
 #processes endpoint
 @app.route('/processes', methods = ['GET']) #allowed methods: GET
 def getProcesses():
+    app.logger.info('/processes')
     if(request.args.get('limit') == None or 
        int(request.args.get('limit')) <= 0 or 
        int(request.args.get('limit')) > 1000): #if no limit is set
@@ -137,6 +146,7 @@ def getProcesses():
 #process endpoint
 @app.route('/processes/<processID>', methods = ['GET']) #allowed methods: GET
 def getProcess(processID):
+    app.logger.info('/processes/' + processID)
     try:
         if(request.content_type == "text/html" or 
            request.args.get('f')=="text/html"):  #check requested content-type
@@ -169,6 +179,7 @@ def getProcess(processID):
 #execute endpoint
 @app.route('/processes/<processID>/execution', methods = ['POST']) #allowed methods: POST
 def executeProcess(processID):
+    app.logger.info('/processes/' + processID + '/execution')
     try:
         if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):  
             data = json.loads(request.data.decode('utf8').replace("'", '"'))
@@ -230,6 +241,7 @@ def executeProcess(processID):
 #jobs endpoint    
 @app.route('/jobs', methods = ['GET'])
 def getJobs():
+    app.logger.info('/jobs')
     if(request.args.get('limit') == None or 
        int(request.args.get('limit')) <= 0 or 
        int(request.args.get('limit')) > 1000):
@@ -360,6 +372,7 @@ def getJobs():
 #job endpoint for status and dismiss
 @app.route('/jobs/<jobID>', methods = ['GET', 'DELETE'])
 def getJob(jobID):
+    app.logger.info('/jobs/' + jobID)
     if(request.method == 'GET'):
         if(request.content_type == "application/json" or 
            request.args.get('f')=="application/json"):
@@ -422,6 +435,7 @@ def getJob(jobID):
 
 @app.route('/jobs/<jobID>/results', methods = ["GET"])
 def getResults(jobID):
+    app.logger.info('/jobs/' + jobID + '/results')
     if(os.path.exists('jobs/' + str(jobID))):
         try:
             file = open('jobs/' + str(jobID) + "/status.json",)

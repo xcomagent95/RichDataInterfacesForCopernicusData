@@ -1,0 +1,62 @@
+2022-05-31 12:24:27,290 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-05-31 12:24:28,847 INFO api Thread-9 : /
+2022-05-31 12:24:28,848 INFO werkzeug Thread-9 : 127.0.0.1 - - [31/May/2022 12:24:28] "GET /?f=text/html HTTP/1.1" 200 -
+2022-05-31 12:24:29,995 INFO api Thread-10 : /
+2022-05-31 12:24:29,995 INFO werkzeug Thread-10 : 127.0.0.1 - - [31/May/2022 12:24:29] "GET /?f=text/html HTTP/1.1" 200 -
+2022-05-31 12:24:31,620 INFO api Thread-11 : /api
+2022-05-31 12:24:31,648 INFO werkzeug Thread-11 : 127.0.0.1 - - [31/May/2022 12:24:31] "GET /api?f=application/json HTTP/1.1" 200 -
+2022-05-31 12:24:33,594 INFO api Thread-12 : /api
+2022-05-31 12:24:33,631 INFO werkzeug Thread-12 : 127.0.0.1 - - [31/May/2022 12:24:33] "GET /api?f=text/html HTTP/1.1" 200 -
+2022-05-31 12:24:35,337 INFO api Thread-13 : /conformance
+2022-05-31 12:24:35,365 INFO werkzeug Thread-13 : 127.0.0.1 - - [31/May/2022 12:24:35] "GET /conformance?f=application/json HTTP/1.1" 200 -
+2022-05-31 12:24:36,284 INFO api Thread-14 : /conformance
+2022-05-31 12:24:36,288 INFO werkzeug Thread-14 : 127.0.0.1 - - [31/May/2022 12:24:36] "GET /conformance?f=text/html HTTP/1.1" 200 -
+2022-05-31 12:24:37,269 INFO api Thread-15 : /processes
+2022-05-31 12:24:37,272 INFO werkzeug Thread-15 : 127.0.0.1 - - [31/May/2022 12:24:37] "GET /processes?f=application/json HTTP/1.1" 200 -
+2022-05-31 12:24:38,613 INFO api Thread-16 : /processes
+2022-05-31 12:24:38,687 INFO werkzeug Thread-16 : 127.0.0.1 - - [31/May/2022 12:24:38] "GET /processes?f=text/html HTTP/1.1" 200 -
+2022-05-31 12:33:42,554 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-05-31 12:34:33,415 INFO api Thread-9 : /processes/Echo/execution
+2022-05-31 12:34:33,419 INFO werkzeug Thread-9 : 127.0.0.1 - - [31/May/2022 12:34:33] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-05-31 12:34:34,581 INFO api Thread-10 : /processes/Echo/execution
+2022-05-31 12:34:34,609 INFO werkzeug Thread-10 : 127.0.0.1 - - [31/May/2022 12:34:34] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-05-31 12:34:35,058 INFO api Thread-11 : /processes/Echo/execution
+2022-05-31 12:34:35,087 INFO werkzeug Thread-11 : 127.0.0.1 - - [31/May/2022 12:34:35] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-05-31 12:34:41,724 INFO api Thread-12 : /processes/Echo/execution
+2022-05-31 12:34:41,754 INFO werkzeug Thread-12 : 127.0.0.1 - - [31/May/2022 12:34:41] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-05-31 12:34:42,849 INFO api Thread-13 : /processes/Echo/execution
+2022-05-31 12:34:42,880 INFO werkzeug Thread-13 : 127.0.0.1 - - [31/May/2022 12:34:42] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-05-31 12:34:43,520 INFO api Thread-14 : /processes/Echo/execution
+2022-05-31 12:34:43,551 INFO werkzeug Thread-14 : 127.0.0.1 - - [31/May/2022 12:34:43] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-05-31 12:34:57,251 INFO root MainThread : --> checking jobs
+2022-05-31 12:34:57,294 INFO root MainThread : --> running job: ee6b84e1-7d3a-426a-a2a4-5d5a57cc03fa
+2022-05-31 12:35:02,341 INFO root MainThread : --> finished job: ee6b84e1-7d3a-426a-a2a4-5d5a57cc03fa
+2022-05-31 12:35:02,351 INFO root MainThread : --> checking jobs
+2022-05-31 12:35:02,356 INFO root MainThread : --> running job: a49595bd-b662-4758-94a2-31da364b2db8
+2022-05-31 12:35:07,402 INFO root MainThread : --> finished job: a49595bd-b662-4758-94a2-31da364b2db8
+2022-05-31 12:35:07,410 INFO root MainThread : --> checking jobs
+2022-05-31 12:35:07,412 INFO root MainThread : --> running job: 6ae1fbe4-039c-44c1-98b2-cba4c231b920
+2022-05-31 12:35:12,468 INFO root MainThread : --> finished job: 6ae1fbe4-039c-44c1-98b2-cba4c231b920
+2022-05-31 12:35:12,468 INFO root MainThread : --> checking jobs
+2022-05-31 12:36:48,061 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-05-31 12:36:52,041 INFO api Thread-9 : /processes/Echo/execution
+2022-05-31 12:36:52,073 INFO werkzeug Thread-9 : 127.0.0.1 - - [31/May/2022 12:36:52] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-05-31 12:36:53,058 INFO api Thread-10 : /processes/Echo/execution
+2022-05-31 12:36:53,086 INFO werkzeug Thread-10 : 127.0.0.1 - - [31/May/2022 12:36:53] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-05-31 12:36:53,723 INFO api Thread-11 : /processes/Echo/execution
+2022-05-31 12:36:53,753 INFO werkzeug Thread-11 : 127.0.0.1 - - [31/May/2022 12:36:53] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-05-31 12:36:54,828 INFO api Thread-12 : /processes/Echo/execution
+2022-05-31 12:36:54,860 INFO werkzeug Thread-12 : 127.0.0.1 - - [31/May/2022 12:36:54] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-05-31 12:37:00,573 INFO root MainThread : --> checking jobs
+2022-05-31 12:37:00,601 INFO root MainThread : --> running job: 092ec439-c2f2-4b00-86fd-a039fc519d0e
+2022-05-31 12:37:05,663 INFO root MainThread : --> finished job: 092ec439-c2f2-4b00-86fd-a039fc519d0e
+2022-05-31 12:37:05,668 INFO root MainThread : --> checking jobs
+2022-05-31 12:37:05,681 INFO root MainThread : --> running job: 73e1b185-58f4-407f-b299-2dc0ac057523
+2022-05-31 12:37:10,737 INFO root MainThread : --> finished job: 73e1b185-58f4-407f-b299-2dc0ac057523
+2022-05-31 12:37:10,744 INFO root MainThread : --> checking jobs
+2022-05-31 12:37:10,746 INFO root MainThread : --> running job: aff63e14-e929-4928-b9a8-47331ff5ac93
+2022-05-31 12:37:15,776 INFO root MainThread : --> finished job: aff63e14-e929-4928-b9a8-47331ff5ac93
+2022-05-31 12:37:15,782 INFO root MainThread : --> checking jobs
+2022-05-31 12:37:15,784 INFO root MainThread : --> running job: eb597eb2-503f-4a95-9e60-a91d9bfe107c
+2022-05-31 12:37:20,817 INFO root MainThread : --> finished job: eb597eb2-503f-4a95-9e60-a91d9bfe107c
+2022-05-31 12:37:20,826 INFO root MainThread : --> checking jobs

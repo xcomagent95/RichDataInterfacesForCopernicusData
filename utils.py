@@ -30,7 +30,7 @@ def echoProcess(job):
     
     try:
         input = job.input[0]
-        time.sleep(10)
+        time.sleep(5)
     except:
         updateStatus(job.path + '/status.json', "failed", "The job has failed", "-")
     

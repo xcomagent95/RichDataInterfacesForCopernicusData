@@ -3,12 +3,17 @@ import os
 import json
 import time
 import utils
+import logging
+
+logging.basicConfig(filename='processingLog.log', 
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                    level=logging.DEBUG)
 
 def processingChain():
+    logging.info("--> checking jobs")
     jobs = os.listdir('jobs/') #list all created jobs
-    
-    
     processing_list = [] #initialize processing list
+    
     for i in jobs: #iterate over created jobs
         job = os.listdir('jobs/' + i) #list items in job directory
         file = open('jobs/' + i + '/status.json') #read status.json
@@ -20,7 +25,8 @@ def processingChain():
     processing_list.sort(key = lambda x: x[1]) #sort processing list by created timestamp
 
     if(len(processing_list) > 0): #check if there are unprocesses jobs
-        oldest_job = processing_list[0][0] #retrieve the oldest job        
+        oldest_job = processing_list[0][0] #retrieve the oldest job
+        logging.info("--> running job: " + oldest_job)        
         with open('jobs/' + oldest_job + '/status.json', "r") as f: #open status file
             data = json.load(f) #load data from .json
             data["status"] = "running" #set status to running
@@ -35,8 +41,9 @@ def processingChain():
         if(data["processID"] == 'Echo'): #if job is running an Echo process
            job = utils.readJob('jobs/' + oldest_job + '/job.json') #create job object
            utils.echoProcess(job) #run echo process
+        logging.info("--> finished job: " + oldest_job)   
         processingChain() #restart processing chain
 
 while(True): #run           
     processingChain() #processing chain
-    time.sleep(300) #every five minutes
+    time.sleep(10) #every five minutes

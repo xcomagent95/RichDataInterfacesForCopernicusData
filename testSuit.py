@@ -1,6 +1,7 @@
 import pycurl
 import unittest
 from io import BytesIO
+import requests
 
 class TestStringMethods(unittest.TestCase):
       
@@ -9,7 +10,8 @@ class TestStringMethods(unittest.TestCase):
      
     #Test Landing Page "/"
     #Abstract Test A.1
-    def test_a1(self):        
+    def test_a1(self):  
+        #print(r.text)
         self.assertEqual( 'a'*4, 'aaaa')
     #Abstract Test A.2
     def test_a2(self):        
