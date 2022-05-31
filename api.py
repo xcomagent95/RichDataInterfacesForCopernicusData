@@ -45,16 +45,15 @@ def getConformance():
         if(request.content_type == "text/html" or 
            request.args.get('f')=="text/html"): #check requested content-type
             response = render_template('html/confClasses.html') #render static conformance page
-            return response, 200, {"link": "localhost:5000/conformance?f=text/html"} #return response and ok
+            return response, 200, {"link": "localhost:5000/conformance?f=text/html", "resource": "conformance"} #return response and ok
         elif(request.content_type == "application/json" or 
              request.args.get('f')=="application/json"): #check requested content-type
             file = open('templates/json/confClasses.json',) #open ConfClasses.json
             payload = json.load(file) #create response
             file.close() #close ConfClasses.json
             response = jsonify(payload) #create response
-            response.headers['link'] = "localhost:5000/conformance?f=application/json"
             response.status_code = 200 #set response code
-            return response #return response and ok
+            return response, {"link": "localhost:5000/conformance?f=application/json", "resource": "conformance"} #return response and ok
         else:
                 return "HTTP status code 406: not acceptable", 406 #not acceptable 
     except:
@@ -108,7 +107,7 @@ def getProcesses():
                     if(counter == limit): #check if counter has reached request limit
                         break 
                 response = render_template('html/processes.html', processes=processList) #render static conformance page
-                return response, 200, {"link": "localhost:5000/processes?f=text/html"} #return response and ok
+                return response, 200, {"link": "localhost:5000/processes?f=text/html", "resource": "processes"} #return response and ok
         elif(request.content_type == "application/json" or 
              request.args.get('f')=="application/json"): #check requested content-type
             processDescriptions = os.listdir("templates/json/processes")  #list registered processes
@@ -132,8 +131,7 @@ def getProcesses():
                             }
                             ]}
             response = jsonify(processes) #create response
-            response.headers['link'] = "localhost:5000/processes?f=application/json"
-            response.status_code = 200 #set response code
+            response.status_code = 200, {"link": "localhost:5000/processes?f=application/json", "resource": "processes"} #set response code
             return response #return response and ok
         else:
             return "HTTP status code 406: not acceptable", 406 #not acceptable 
@@ -294,7 +292,7 @@ def getJobs():
                     if(counter == limit):
                         break
             response = render_template('html/jobs.html', status=jobList)
-            return response, 200, {"link": "localhost:5000/jobs?f=text/html"}
+            return response, 200, {"link": "localhost:5000/jobs?f=text/html", "resource": "jobs"}
         
         
         elif(request.content_type == "application/json" or 
@@ -359,8 +357,7 @@ def getJobs():
                                    "title": "this document as HTML"}
                              ]}
             response = jsonify(jobs) 
-            response.headers['link'] = "localhost:5000/jobs?f=application/json"
-            response.status_code = 200
+            response.status_code = 200, {"link": "localhost:5000/jobs?f=application/json", "resource": "jobs"}
             return response #return response and ok and files created  
         else:
             return "HTTP status code 406: not acceptable", 406
