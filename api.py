@@ -37,7 +37,7 @@ def getLandingPage():
         else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except:
-        return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
+        return "HTTP status code 500: internal server error", 500 #retrurn internal server error if something went wrong
 
 #conformance endpoint
 @app.route('/conformance',  methods = ['GET']) #allowed methods: GET
@@ -306,7 +306,7 @@ def getJobs():
                 file = open('jobs/' + i + "/status.json",) #open status.sjon
                 status = json.load(file) #load the data from .json file
                 file.close() #close .json file
-                file = open('jobs/' + i + "/job.json",)
+                file = open('jobs/' + i + "/job.json",) #open job.json
                 job = json.load(file) #load the data from .json file
                 file.close() #close .json file 
                 
@@ -367,96 +367,88 @@ def getJobs():
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 
 #job endpoint for status and dismiss
-@app.route('/jobs/<jobID>', methods = ['GET', 'DELETE'])
+@app.route('/jobs/<jobID>', methods = ['GET', 'DELETE']) #allowed methods: GET, DELETE
 def getJob(jobID):
-    app.logger.info('[GET] /jobs/' + jobID) #add log entry when endpoint is called
-    if(request.method == 'GET'):
-        if(request.content_type == "application/json" or 
-           request.args.get('f')=="application/json"):
-            if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
-                try:
+    if(request.method == 'GET'): #if get request is recieved
+        app.logger.info('[GET] /jobs/' + jobID) #add log entry when endpoint is called
+        try:
+            if(request.content_type == "application/json" or #check requested content-type from request body
+               request.args.get('f')=="application/json"): #check requested content-type from inline request
+                if(os.path.exists('jobs/' + str(jobID) + '/status.json')): #check if requested job exists
                     file = open('jobs/' + str(jobID) + '/status.json') #open status.json
                     data = json.load(file) #create response   
-                    file.close() #close status.json
-                    response = jsonify(data)
-                    response.headers['link'] = "localhost:5000/jobs/" + str(jobID) + "?f=application/json"
-                    response.status_code = 200
-                    return  response #return response and ok
-                except:
-                    return "HTTP status code 500: internal server error", 500 #internal server error
-            else:
-                return "HTTP status code 404: not found", 404 #not found
-        elif(request.content_type == "text/html" or 
-             request.args.get('f')=="text/html"):
-            if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
-                try:
+                    file.close() #close status.josn
+                    response = jsonify(data) #create response
+                    return  response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job"} #return response and ok with link und resource header
+                else:
+                    return "HTTP status code 404: not found", 404 #return not found if requested job is not found
+            elif(request.content_type == "text/html" or #check requested content-type from request body
+                 request.args.get('f')=="text/html"): #check requested content-type from inline request
+                if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
                     file = open('jobs/' + str(jobID) + '/status.json') #open status.json
                     job = json.load(file) #create response   
-                    print(job)
                     file.close() #close status.json
-                    response = render_template("html/Job.html", job=job)
+                    response = render_template("html/Job.html", job=job) #render dynamic job
                     return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html"} #return response and ok
-                except:
-                    return "HTTP status code 500: internal server error", 500 #internal server error
+                else:
+                    return "HTTP status code 404: not found", 404 #return not found if requested job is not found
             else:
-                return "HTTP status code 404: not found", 404 #not found
-        else:
-            return "HTTP status code 406: not acceptable", 406 #not acceptable
+                return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
+        except:
+            return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
         
     if(request.method == 'DELETE'):
         app.logger.info('[DELETE] /jobs/' + jobID) #add log entry when endpoint is called
         try:       
-            if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
-                with open('jobs/' + str(jobID) + '/status.json', "r") as f:
-                    file = json.load(f)
-                    if(file["status"] != "dismissed"):
-                        file["status"] = "dismissed"
-                        file["message"] = "job dismissed"
-                        f.close()
-                        with open('jobs/' + str(jobID) + '/status.json', "w") as f:
-                            json.dump(file, f)
-                            f.close()                       
+            if(os.path.exists('jobs/' + str(jobID) + '/status.json')): #check if jobID exists
+                with open('jobs/' + str(jobID) + '/status.json', "r") as f: #open status.json
+                    file = json.load(f) #load data from status.json
+                    if(file["status"] != "dismissed"): #if job is not dismissed
+                        file["status"] = "dismissed" #set status to dismissed
+                        file["message"] = "job dismissed" #set emssage to dismissed
+                        f.close() #close status.json
+                        with open('jobs/' + str(jobID) + '/status.json', "w") as f: #write status.json
+                            json.dump(file, f) #dump content
+                            f.close() #close status.json                    
                         file = open('jobs/' + str(jobID) + '/status.json') #open status.json
-                        data = json.load(file) #create response   
+                        data = json.load(file) #load data from status.json 
                         file.close() #close status.json
                         
-                        response = jsonify(data)
-                        response.headers['link'] = "localhost:5000/jobs/" + str(jobID) + "?f=application/json"
-                        response.status_code = 200
-                        return  response #return response and ok
+                        response = jsonify(data) #create response
+                        return  response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job"} #return response and ok with link und resource header
                     else:
-                        return "HTTP Status Code 200: ok", 200
+                        return "HTTP Status Code 200: ok", 200 #return ok when job was already dismissed
             else:
-                return "HTTP status code 404: not found", 404 #not found
+                return "HTTP status code 404: not found", 404 #return not found if requested job is not found
         except:            
-            return "HTTP status code 500: internal server error", 500 #internal server error
+            return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
 
-@app.route('/jobs/<jobID>/results', methods = ["GET"])
+@app.route('/jobs/<jobID>/results', methods = ["GET"]) #allowed methods: GET
 def getResults(jobID):
     app.logger.info('/jobs/' + jobID + '/results') #add log entry when endpoint is called
     if(os.path.exists('jobs/' + str(jobID))):
-        try:
-            file = open('jobs/' + str(jobID) + "/status.json",)
-            status = json.load(file)
-            file.close() 
-            file = open('jobs/' + str(jobID) + "/job.json",)
-            job = json.load(file)
-            file.close() 
+        try:            
+            file = open('jobs/' + str(jobID) + "/status.json",) #open status.json
+            status = json.load(file) #load the data from .json file
+            file.close() #close .json file
+            file = open('jobs/' + str(jobID) + "/job.json",) #open job.json
+            job = json.load(file) #load the data from .json file
+            file.close() #close .json file  
             
-            if(job["processID"] == "Echo"):
-                if(status["status"] == "successful"):
-                    if(job["responseType"] == "raw"):
+            if(job["processID"] == "Echo"): #check processID
+                if(status["status"] == "successful"): #check if job is successful
+                    if(job["responseType"] == "raw"): #check if response type is raw
                         return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200
-                    else:
+                    else: #check if response type is document
                         return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200
-                elif(status["status"] == "failed"):
-                    return "HTTP status code 404: not found - job failed", 404 #not found
+                elif(status["status"] == "failed"): #check if job failed
+                    return "HTTP status code 404: not found - job failed", 404 #return not found if requested jobfailed
                 else:
-                    return "HTTP status code 404: not found - result not ready", 404 #not found
+                    return "HTTP status code 404: not found - result not ready", 404 #return not found if requested result is not found
         except:
-            return "HTTP status code 500: internal server error", 500 #internal server error
+            return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
     else:
-        return "HTTP status code 404: not found - no such job", 404 #not found
+        return "HTTP status code 404: not found - no such job", 404 #return not found if requested job is not found
 
          
 #run application
