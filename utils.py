@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 import json
 from shutil import make_archive

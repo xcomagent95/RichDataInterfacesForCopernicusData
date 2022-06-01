@@ -5,9 +5,10 @@ import time
 import utils
 import logging
 
-logging.basicConfig(filename='processingLog.log', 
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    level=logging.DEBUG)
+#set logging options
+logging.basicConfig(filename='processingLog.log', #set logfile 
+                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s', #set logging format
+                    level=logging.DEBUG) #set loglevel
 
 def processingChain():
     logging.info("--> checking jobs")
