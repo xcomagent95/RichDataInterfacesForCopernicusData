@@ -11,7 +11,7 @@
   ],
   "inputs": {
     "stringInput": {
-      "title": "input",
+      "title": "inputValue",
       "description": "The input value",
       "schema": {
         "type": "string"
@@ -20,8 +20,11 @@
   },
   "outputs": {
    "complexObjectOutput": {
+      "title": "ouptputDocument",
+      "description": "The output document",
       "schema": {
         "type": "object",
+        "contentMediaType": "application/json",
         "required": [
           "result",
           "message"

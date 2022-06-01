@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import time
 import json
 from shutil import make_archive
@@ -30,7 +31,7 @@ def echoProcess(job):
     
     try:
         input = job.input[0]
-        time.sleep(10)
+        time.sleep(5)
     except:
         updateStatus(job.path + '/status.json', "failed", "The job has failed", "-")
     
@@ -99,20 +100,20 @@ def checkCreationDate(creationDate, request):
         datetimeParam = True
     elif(request.args.get('datetime').startswith('[')):
         lowerBound = request.args.get('datetime')[9:]
-        lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
-        if(jobCreationDate < lowerDate):
+        lowerDate = convertRFC3339ToDatetime(lowerBound)
+        if(creationDate < lowerDate):
             datetimeParam = True
     elif(request.args.get('datetime').endswith(']')):
         upperBound = request.args.get('datetime')[0:29]
-        upperDate = utils.convertRFC3339ToDatetime(upperBound)
-        if(jobCreationDate > upperDate):
+        upperDate = convertRFC3339ToDatetime(upperBound)
+        if(creationDate > upperDate):
             datetimeParam = True
     else:
         upperBound = request.args.get('datetime')[0:29]
-        upperDate = utils.convertRFC3339ToDatetime(upperBound)
+        upperDate = convertRFC3339ToDatetime(upperBound)
         lowerBound = request.args.get('datetime')[32:]
-        lowerDate = utils.convertRFC3339ToDatetime(lowerBound)
-        if(jobCreationDate < lowerDate and jobCreationDate > upperDate):
+        lowerDate = convertRFC3339ToDatetime(lowerBound)
+        if(creationDate < lowerDate and creationDate > upperDate):
             datetimeParam = True
     return datetimeParam
 
@@ -156,3 +157,37 @@ def checkDuration(status, request):
         maxDurationParam = True
     
     return [minDurationParam, maxDurationParam]
+
+def parseInput(processID, data):
+    responseType = None
+    #set response Type
+    if("response" in data):
+        if(data["response"] not in ["document", "raw"]):
+            responseType = "raw"
+        else:
+            responseType = data["response"]
+            
+    if(processID == "Echo"):
+        inputs = [data["inputs"]["inputValue"]]
+        outputs = [data["outputs"]["complexObjectOutput"]]
+        response = [inputs, responseType]
+        
+        #check transmission mode
+        file = open('templates/json/processes/' + processID + 'ProcessDescription.json',) #open ProcessDescription.json
+        process = json.load(file) #create response   
+        file.close() #close ProcessDescription.json
+        
+        if("response" in data):
+            if(data["outputs"]["complexObjectOutput"]["transmissionMode"] not in process["outputTransmission"]):
+                response = False
+
+        if("format" in data["outputs"]["complexObjectOutput"]):
+            if(data["outputs"]["complexObjectOutput"]["format"]["mediaType"] != process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"]):
+                response = False
+            else:
+                response.append(data["outputs"]["complexObjectOutput"]["format"]["mediaType"])
+        else:
+            response.append(process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"])
+                
+                    
+    return response
