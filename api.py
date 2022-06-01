@@ -144,32 +144,30 @@ def getProcesses():
 def getProcess(processID):
     app.logger.info('/processes/' + processID) #add log entry when endpoint is called
     try:
-        if(request.content_type == "text/html" or 
-           request.args.get('f')=="text/html"):  #check requested content-type
-            if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):
-                file = open('templates/json/processes/' + str(processID) + 'ProcessDescription.json',) #open ProcessDescription.json
-                process = json.load(file) #create response   
-                file.close() #close ProcessDescription.json
-                response = render_template("html/Process.html", process=process)
-                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html"} #return response and ok
+        if(request.content_type == "text/html" or #check requested content-type from request body 
+           request.args.get('f')=="text/html"): #check requested content-type from inline request
+            if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')): #if process description exists
+                file = open('templates/json/processes/' + str(processID) + 'ProcessDescription.json',) #open processDescription.json
+                process = json.load(file) #load the data from .json file
+                file.close() #close processDescription.json
+                response = render_template("html/Process.html", process=process) #render dynamic process
+                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html"} #return response and ok with link and resource header
             else:
-                return "HTTP status code 404: not found", 404 #not found
-        elif(request.content_type == "application/json" or 
-             request.args.get('f')=="application/json"):  #check requested content-type
-            if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):
+                return "HTTP status code 404: not found", 404 #return not found if requested process is not found
+        elif(request.content_type == "application/json" or #check requested content-type from request body 
+             request.args.get('f')=="application/json"): #check requested content-type from inline request
+            if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')): #if process description exists
                 file = open('templates/json/processes/' + str(processID) + 'ProcessDescription.json',) #open ProcessDescription.json
-                payload = json.load(file) #create response   
+                payload = json.load(file) #load the data from .json file
                 file.close() #close ProcessDescription.json
-                response = jsonify(payload)
-                response.headers['link'] = "localhost:5000/processes/" + str(processID) + "?f=application/json"
-                response.status_code = 200
-                return response #return response and ok
+                response = jsonify(payload) #create response
+                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=application/json"} #return response and ok with link and resource header
             else:
-                return "HTTP status code 404: not found", 404 #not found
+                return "HTTP status code 404: not found", 404 #return not found if requested process is not found
         else:
-            return "HTTP status code 406: not acceptable", 406 #not acceptable
+            return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except:
-        return "HTTP status code 500: internal server error", 500 #internal server error    
+        return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 
 #execute endpoint
 @app.route('/processes/<processID>/execution', methods = ['POST']) #allowed methods: POST
