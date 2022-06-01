@@ -158,14 +158,35 @@ def checkDuration(status, request):
     return [minDurationParam, maxDurationParam]
 
 def parseInput(processID, data):
-    response = None
+    responseType = None
+    #set response Type
+    if("response" in data):
+        if(data["response"] not in ["document", "raw"]):
+            responseType = "raw"
+        else:
+            responseType = data["response"]
+            
     if(processID == "Echo"):
+        inputs = [data["inputs"]["inputValue"]]
+        outputs = [data["outputs"]["complexObjectOutput"]]
+        response = [inputs, responseType]
+        
+        #check transmission mode
         file = open('templates/json/processes/' + processID + 'ProcessDescription.json',) #open ProcessDescription.json
         process = json.load(file) #create response   
-        file.close() #close ProcessDescription.json      
-        if(data["outputs"]["format"]["schema"]["type"] == process["outputs"]["complexObjectOutput"]["schema"]["type"] and
-           data["outputs"]["transmissionMode"] in process["outputTransmission"]):
-            response = [data["inputs"]["inputValue"]]
+        file.close() #close ProcessDescription.json
+        
+        if("response" in data):
+            if(data["outputs"]["complexObjectOutput"]["transmissionMode"] not in process["outputTransmission"]):
+                response = False
+
+        if("format" in data["outputs"]["complexObjectOutput"]):
+            if(data["outputs"]["complexObjectOutput"]["format"]["mediaType"] != process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"]):
+                response = False
+            else:
+                response.append(data["outputs"]["complexObjectOutput"]["format"]["mediaType"])
         else:
-            response = False
+            response.append(process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"])
+                
+                    
     return response

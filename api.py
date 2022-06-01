@@ -168,8 +168,7 @@ def getProcess(processID):
                 return "HTTP status code 404: not found", 404 #not found
         else:
             return "HTTP status code 406: not acceptable", 406 #not acceptable
-    except Exception:
-        traceback.print_exc()
+    except:
         return "HTTP status code 500: internal server error", 500 #internal server error    
 
 #execute endpoint
@@ -179,9 +178,10 @@ def executeProcess(processID):
     try:
         if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')):  
             data = json.loads(request.data.decode('utf8').replace("'", '"'))
-            inputs = utils.parseInput(processID, data)
+            inputParameters = utils.parseInput(processID, data)
+            print(inputParameters)
             
-            if(inputs == False):
+            if(inputParameters == False):
                 return "HTTP status code 400: bad request", 400 #bad request
                 
             jobID = str(uuid.uuid4()) #generate jobID
@@ -192,7 +192,9 @@ def executeProcess(processID):
             #create job.json
             job_file = {"jobID": str(jobID), 
                         "processID": str(processID), 
-                        "input": inputs,
+                        "input": inputParameters[0],
+                        "responseType": inputParameters[1],
+                        "resultMediaType": inputParameters[2],
                         "path": "jobs/" + jobID,
                         "results": "jobs/" + jobID + "/results/",
                         "downloads": "jobs/" + jobID + "/downloads/"}
@@ -230,7 +232,7 @@ def executeProcess(processID):
             return response #return response and ok and files created
         else:
             return "HTTP status code 404: not found - No such process", 404 #not found
-    except Exception:
+    except:
         traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #internal server error
 
@@ -425,7 +427,7 @@ def getJob(jobID):
                         return "HTTP Status Code 200: ok", 200
             else:
                 return "HTTP status code 404: not found", 404 #not found
-        except:
+        except:            
             return "HTTP status code 500: internal server error", 500 #internal server error
 
 @app.route('/jobs/<jobID>/results', methods = ["GET"])
@@ -442,13 +444,18 @@ def getResults(jobID):
             
             if(job["processID"] == "Echo"):
                 if(status["status"] == "successful"):
-                    return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype='application/json'), 200
+                    if(job["responseType"] == "raw"):
+                        return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200
+                    else:
+                        return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200
+                elif(status["status"] == "failed"):
+                    return "HTTP status code 404: not found - job failed", 404 #not found
                 else:
-                    return "HTTP status code 404: not found - Result not ready", 404 #not found
+                    return "HTTP status code 404: not found - result not ready", 404 #not found
         except:
             return "HTTP status code 500: internal server error", 500 #internal server error
     else:
-        return "HTTP status code 404: not found - No such job", 404 #not found
+        return "HTTP status code 404: not found - no such job", 404 #not found
 
          
 #run application
