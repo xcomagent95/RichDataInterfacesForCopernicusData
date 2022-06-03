@@ -1,0 +1,71 @@
+2022-06-03 18:09:23,118 INFO root MainThread : ------------------> new test run <------------------
+2022-06-03 18:09:23,121 INFO root MainThread : --> abstract test a1 started
+2022-06-03 18:09:27,177 INFO root MainThread : --> abstract test a1 passed
+2022-06-03 18:09:27,180 INFO root MainThread : --> abstract test a8 & a10 started
+2022-06-03 18:09:31,269 INFO root MainThread : --> abstract test a8 & a10 passed
+2022-06-03 18:09:31,270 INFO root MainThread : --> abstract test a13 & a14 started
+2022-06-03 18:09:35,338 INFO root MainThread : --> abstract test a13 & a14 passed
+2022-06-03 18:09:35,339 INFO root MainThread : --> abstract test a15 started
+2022-06-03 18:09:39,447 INFO root MainThread : --> abstract test a15 passed
+2022-06-03 18:09:39,450 INFO root MainThread : --> abstract test a2 started
+2022-06-03 18:09:43,531 INFO root MainThread : --> abstract test a2 passed
+2022-06-03 18:09:43,534 INFO root MainThread : --> abstract test a3 started
+2022-06-03 18:09:47,626 INFO root MainThread : --> abstract test a3 passed
+2022-06-03 18:09:47,629 INFO root MainThread : --> abstract test a34 started
+2022-06-03 18:09:49,726 INFO root MainThread : --> abstract test a34 passed
+2022-06-03 18:09:49,729 INFO root MainThread : --> abstract test a35 & a36 started
+2022-06-03 18:09:53,815 INFO root MainThread : --> abstract test a35 & a36 passed
+2022-06-03 18:09:53,817 INFO root MainThread : --> abstract test a37 started
+2022-06-03 18:09:57,890 INFO root MainThread : --> abstract test a37 passed
+2022-06-03 18:09:57,891 INFO root MainThread : --> abstract test a38 started
+2022-06-03 18:09:59,948 INFO root MainThread : --> abstract test a38 passed
+2022-06-03 18:09:59,949 INFO root MainThread : --> abstract test a4 started
+2022-06-03 18:10:04,033 INFO root MainThread : --> abstract test a4 passed
+2022-06-03 18:10:04,035 INFO root MainThread : --> abstract test a38 started
+2022-06-03 18:10:06,078 INFO root MainThread : --> abstract test a45 passed
+2022-06-03 18:10:06,080 INFO root MainThread : --> abstract test a46 started
+2022-06-03 18:10:08,116 INFO root MainThread : --> abstract test a46 passed
+2022-06-03 18:10:08,119 INFO root MainThread : --> abstract test a47 started
+2022-06-03 18:10:10,164 INFO root MainThread : --> abstract test a47 passed
+2022-06-03 18:10:10,165 INFO root MainThread : --> abstract test a55 started
+2022-06-03 18:10:26,463 INFO root MainThread : --> abstract test a55 passed
+2022-06-03 18:10:26,464 INFO root MainThread : --> abstract test a7 started
+2022-06-03 18:10:28,517 INFO root MainThread : --> abstract test a7 passed
+2022-06-03 18:10:28,524 INFO root MainThread : --> abstract test a81 & a82 started
+2022-06-03 18:10:30,577 INFO root MainThread : --> abstract test a81 & a82 passed
+2022-06-03 18:13:18,532 INFO root MainThread : ------------------> new test run <------------------
+2022-06-03 18:13:18,535 INFO root MainThread : --> abstract test a1 started
+2022-06-03 18:13:22,606 INFO root MainThread : --> abstract test a1 passed
+2022-06-03 18:13:22,607 INFO root MainThread : --> abstract test a8 & a10 started
+2022-06-03 18:13:26,667 INFO root MainThread : --> abstract test a8 & a10 passed
+2022-06-03 18:13:26,668 INFO root MainThread : --> abstract test a13 & a14 started
+2022-06-03 18:13:30,726 INFO root MainThread : --> abstract test a13 & a14 passed
+2022-06-03 18:13:30,727 INFO root MainThread : --> abstract test a15 started
+2022-06-03 18:13:34,810 INFO root MainThread : --> abstract test a15 passed
+2022-06-03 18:13:34,811 INFO root MainThread : --> abstract test a2 started
+2022-06-03 18:13:38,884 INFO root MainThread : --> abstract test a2 passed
+2022-06-03 18:13:38,885 INFO root MainThread : --> abstract test a3 started
+2022-06-03 18:13:42,969 INFO root MainThread : --> abstract test a3 passed
+2022-06-03 18:13:42,970 INFO root MainThread : --> abstract test a34 started
+2022-06-03 18:13:45,029 INFO root MainThread : --> abstract test a34 passed
+2022-06-03 18:13:45,029 INFO root MainThread : --> abstract test a35 & a36 started
+2022-06-03 18:13:49,087 INFO root MainThread : --> abstract test a35 & a36 passed
+2022-06-03 18:13:49,088 INFO root MainThread : --> abstract test a37 started
+2022-06-03 18:13:53,178 INFO root MainThread : --> abstract test a37 passed
+2022-06-03 18:13:53,179 INFO root MainThread : --> abstract test a38 started
+2022-06-03 18:13:55,213 INFO root MainThread : --> abstract test a38 passed
+2022-06-03 18:13:55,214 INFO root MainThread : --> abstract test a4 started
+2022-06-03 18:13:59,296 INFO root MainThread : --> abstract test a4 passed
+2022-06-03 18:13:59,299 INFO root MainThread : --> abstract test a38 started
+2022-06-03 18:14:01,346 INFO root MainThread : --> abstract test a45 passed
+2022-06-03 18:14:01,347 INFO root MainThread : --> abstract test a46 started
+2022-06-03 18:14:03,393 INFO root MainThread : --> abstract test a46 passed
+2022-06-03 18:14:03,394 INFO root MainThread : --> abstract test a47 started
+2022-06-03 18:14:05,444 INFO root MainThread : --> abstract test a47 passed
+2022-06-03 18:14:05,444 INFO root MainThread : --> abstract test a55 started
+2022-06-03 18:14:21,791 INFO root MainThread : --> abstract test a55 passed
+2022-06-03 18:14:21,791 INFO root MainThread : --> abstract test a7 started
+2022-06-03 18:14:23,871 INFO root MainThread : --> abstract test a81 & a82 started
+2022-06-03 18:14:25,924 INFO root MainThread : --> abstract test a81 & a82 passed
+2022-06-03 18:23:30,508 INFO root MainThread : ------------------> new test run <------------------
+2022-06-03 18:23:30,512 INFO root MainThread : --> abstract test a1 started
