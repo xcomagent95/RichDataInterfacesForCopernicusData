@@ -1,9 +1,0 @@
-2022-06-01 16:30:03,094 INFO root MainThread : ------------------> new test run <------------------
-2022-06-01 16:30:03,100 INFO root MainThread : --> abstract test a1 started
-2022-06-01 16:30:07,169 INFO root MainThread : --> abstract test a1 passed
-2022-06-01 16:30:07,169 INFO root MainThread : --> abstract test a2 started
-2022-06-01 16:30:11,262 INFO root MainThread : --> abstract test a2 passed
-2022-06-01 16:30:11,262 INFO root MainThread : --> abstract test a3 started
-2022-06-01 16:30:15,372 INFO root MainThread : --> abstract test a3 passed
-2022-06-01 16:30:15,372 INFO root MainThread : --> abstract test a4 started
-2022-06-01 16:30:19,444 INFO root MainThread : --> abstract test a4 passed

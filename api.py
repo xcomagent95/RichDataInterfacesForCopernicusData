@@ -152,10 +152,10 @@ def getProcess(processID):
                 process = json.load(file) #load the data from .json file
                 file.close() #close processDescription.json
                 response = render_template("html/Process.html", process=process) #render dynamic process
-                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html"} #return response and ok with link and resource header
+                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html", "resource": str(processID)} #return response and ok with link and resource header
             else:
                 exception = render_template('html/exception.html', title="No such process exception", description="No process with the requested processID could be found", type="no-such-process")
-                return exception, 404 #return not found if requested process is not found
+                return exception, 404, {"resource": "no-such-process"} #return not found if requested process is not found
         elif(request.content_type == "application/json" or #check requested content-type from request body 
              request.args.get('f')=="application/json"): #check requested content-type from inline request
             if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')): #check if process description exists
@@ -163,10 +163,10 @@ def getProcess(processID):
                 payload = json.load(file) #load the data from .json file
                 file.close() #close ProcessDescription.json
                 response = jsonify(payload) #create response
-                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=application/json"} #return response and ok with link and resource header
+                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=application/json", "resource": str(processID)} #return response and ok with link and resource header
             else:
                 exception = {"title": "No such process exception", "description": "No process with the requested processID could be found", "type": "no-such-process"}
-                return exception, 404 #return not found if requested process is not found 
+                return exception, 404, {"resource": "no-such-process"} #return not found if requested process is not found 
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except:
@@ -385,7 +385,7 @@ def getJob(jobID):
                     return  response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job"} #return response and ok with link und resource header
                 else:
                     exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
-                    return exception, 404 #return not found if requested job is not found 
+                    return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
             elif(request.content_type == "text/html" or #check requested content-type from request body
                  request.args.get('f')=="text/html"): #check requested content-type from inline request
                 if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
@@ -393,10 +393,10 @@ def getJob(jobID):
                     job = json.load(file) #create response   
                     file.close() #close status.json
                     response = render_template("html/Job.html", job=job) #render dynamic job
-                    return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html"} #return response and ok
+                    return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job"} #return response and ok
                 else:
                     exception = render_template('html/exception.html', title="No such job exception", description="No job with the requested jobID could be found", type="no-such-job")
-                    return exception, 404 #return not found if requested job is not found
+                    return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found
             else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
         except:
@@ -449,15 +449,15 @@ def getResults(jobID):
                         return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200
                 elif(status["status"] == "failed"): #check if job failed
                     exception = {"title": "Job failed exception", "description": status["message"], "type": "job-results-failed"}
-                    return exception, 404 #return not found if requested job is failed
+                    return exception, 404, {"resource": "job-failed"} #return not found if requested job is failed
                 else:
                     exception = {"title": "Results not ready exception", "description": "The results with the requested jobID are not ready", "type": "result-not-ready"}
-                    return exception, 404 #return not found if requested job results are not ready
+                    return exception, 404, {"resource": "results-not-ready"} #return not found if requested job results are not ready
         except:
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
     else:
         exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
-        return exception, 404 #return not found if requested job is not found 
+        return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
 
          
 #run application
