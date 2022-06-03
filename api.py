@@ -154,7 +154,8 @@ def getProcess(processID):
                 response = render_template("html/Process.html", process=process) #render dynamic process
                 return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html"} #return response and ok with link and resource header
             else:
-                return "HTTP status code 404: not found", 404 #return not found if requested process is not found
+                exception = render_template('html/exception.html', title="No such process exception", description="No process with the requested processID could be found", type="no-such-process")
+                return exception, 404 #return not found if requested process is not found
         elif(request.content_type == "application/json" or #check requested content-type from request body 
              request.args.get('f')=="application/json"): #check requested content-type from inline request
             if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')): #check if process description exists
@@ -164,7 +165,8 @@ def getProcess(processID):
                 response = jsonify(payload) #create response
                 return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=application/json"} #return response and ok with link and resource header
             else:
-                return "HTTP status code 404: not found", 404 #return not found if requested process is not found
+                exception = {"title": "No such process exception", "description": "No process with the requested processID could be found", "type": "no-such-process"}
+                return exception, 404 #return not found if requested process is not found 
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except:
@@ -231,7 +233,8 @@ def executeProcess(processID):
             response = jsonify(status_file) #create response
             return response, 201, {"location": "localhost:5000/jobs/" + jobID + "?f=application/json"} #return response and ok and files created with location header
         else:
-            return "HTTP status code 404: not found - No such process", 404 #return not found if requested process is not found
+            exception = {"title": "No such process exception", "description": "No process with the requested processID could be found", "type": "no-such-process"}
+            return exception, 404 #return not found if requested process is not found 
     except:
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 
@@ -381,7 +384,8 @@ def getJob(jobID):
                     response = jsonify(data) #create response
                     return  response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job"} #return response and ok with link und resource header
                 else:
-                    return "HTTP status code 404: not found", 404 #return not found if requested job is not found
+                    exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
+                    return exception, 404 #return not found if requested job is not found 
             elif(request.content_type == "text/html" or #check requested content-type from request body
                  request.args.get('f')=="text/html"): #check requested content-type from inline request
                 if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
@@ -391,7 +395,8 @@ def getJob(jobID):
                     response = render_template("html/Job.html", job=job) #render dynamic job
                     return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html"} #return response and ok
                 else:
-                    return "HTTP status code 404: not found", 404 #return not found if requested job is not found
+                    exception = render_template('html/exception.html', title="No such job exception", description="No job with the requested jobID could be found", type="no-such-job")
+                    return exception, 404 #return not found if requested job is not found
             else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
         except:
@@ -419,7 +424,8 @@ def getJob(jobID):
                     else:
                         return "HTTP Status Code 200: ok", 200 #return ok when job was already dismissed
             else:
-                return "HTTP status code 404: not found", 404 #return not found if requested job is not found
+                exception = {"title": "No such job exception", "description": "No job with the requested processID could be found", "type": "no-such-job"}
+                return exception, 404 #return not found if requested job is not found 
         except:            
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
 
@@ -442,13 +448,16 @@ def getResults(jobID):
                     else: #check if response type is document
                         return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200
                 elif(status["status"] == "failed"): #check if job failed
-                    return "HTTP status code 404: not found - job failed", 404 #return not found if requested jobfailed
+                    exception = {"title": "Job failed exception", "description": status["message"], "type": "job-results-failed"}
+                    return exception, 404 #return not found if requested job is failed
                 else:
-                    return "HTTP status code 404: not found - result not ready", 404 #return not found if requested result is not found
+                    exception = {"title": "Results not ready exception", "description": "The results with the requested jobID are not ready", "type": "result-not-ready"}
+                    return exception, 404 #return not found if requested job results are not ready
         except:
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
     else:
-        return "HTTP status code 404: not found - no such job", 404 #return not found if requested job is not found
+        exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
+        return exception, 404 #return not found if requested job is not found 
 
          
 #run application
