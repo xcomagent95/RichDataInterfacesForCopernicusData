@@ -3,6 +3,7 @@ from io import BytesIO
 import requests
 import logging
 import subprocess
+import json
 
 logging.basicConfig(filename = 'testSuitLog.log', 
                     level=logging.INFO, 
@@ -83,10 +84,10 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(status_code, 200)
         logging.info("--> abstract test a5 passed")   
     
-    #Test "/processList"
-    #Abstract Test A.10
+    #Test "/processList"    
+    #Abstract Test A.8 & A.10
     def test_a10(self):   
-        logging.info("--> abstract test a10 started")   
+        logging.info("--> abstract test a8 & a10 started")   
         request = requests.get('http://localhost:5000/processes?f=application/json')
         status_code = request.status_code
         resource = request.headers["resource"]
@@ -102,7 +103,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(content_type, "text/html; charset=utf-8")
         self.assertEqual(resource, 'processes')
         self.assertEqual(status_code, 200)
-        logging.info("--> abstract test a10 passed")   
+        logging.info("--> abstract test a8 & a10 passed")   
         
     #Abstract Test A.13 & A.14
     def test_a13_14(self):   
@@ -145,6 +146,14 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(resource, 'no-such-process')
         self.assertEqual(status_code, 404)
         logging.info("--> abstract test a15 passed")
+     
+    #Abstract Test A.34
+    def test_a34(self):
+        logging.info("--> abstract test a34 started")  
+        request = requests.post('http://localhost:5000/processes/Echo/execution', json={'inputs':{'inputValue':'test'}, 'outputs':{'complexObjectOutput': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'})
+        status_code = request.status_code
+        self.assertEqual(status_code, 201)
+        logging.info("--> abstract test a34 passed")        
         
     #Abstract Test A.35 & A.36
     def test_a35_36(self):
@@ -186,6 +195,14 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(status_code, 404)
         logging.info("--> abstract test a37 passed")
         
+    #Abstract Test A.38
+    def test_a38(self):
+        logging.info("--> abstract test a38 started")  
+        request = requests.get('http://localhost:5000/jobs/test/results?f=application/json')
+        status_code = request.status_code
+        self.assertEqual(status_code, 200)
+        logging.info("--> abstract test a38 passed")
+        
     #Abstract Test A.45
     def test_a45(self):
         logging.info("--> abstract test a38 started")  
@@ -221,6 +238,63 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(resource, 'job-failed')
         self.assertEqual(status_code, 404)
         logging.info("--> abstract test a47 passed")
+        
+    #Abstract Test A.55
+    def test_a55(self):
+        logging.info("--> abstract test a55 started") 
+        
+        request = requests.get('http://localhost:5000/?f=application/json')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "application/json")
+        
+        request = requests.get('http://localhost:5000/api?f=application/json')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "application/json")
+        
+        request = requests.get('http://localhost:5000/conformance?f=application/json')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "application/json")
+        
+        request = requests.get('http://localhost:5000/processes?f=application/json')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "application/json")
+        
+        request = requests.get('http://localhost:5000/processes/Echo?f=application/json')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "application/json")
+        
+        request = requests.get('http://localhost:5000/jobs?f=application/json')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "application/json")
+        
+        request = requests.get('http://localhost:5000/jobs/test?f=application/json')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "application/json")
+        
+        request = requests.get('http://localhost:5000/jobs/test/results?f=application/json')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "application/json")
+        
+        logging.info("--> abstract test a55 passed")   
+    
+    #Abstract Test A.81 & A.82
+    def test_a81_82(self):
+        with open('jobs/testDismissed/status.json', "r") as f:
+                data = json.load(f)
+                data["status"] = "created"
+                f.close()
+                with open('jobs/testDismissed/status.json', "w") as f:
+                    json.dump(data, f) 
+        
+        
+        logging.info("--> abstract test a81 & a82 started")  
+        request = requests.delete('http://localhost:5000/jobs/testDismissed')
+        status_code = request.status_code
+        resource = request.headers["resource"]
+        self.assertEqual(resource, 'job-dismissed')
+        self.assertEqual(status_code, 200)
+        logging.info("--> abstract test a81 & a82 passed")
+        
     
 if __name__ == '__main__':
     unittest.main()

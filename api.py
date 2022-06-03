@@ -420,9 +420,12 @@ def getJob(jobID):
                         file.close() #close status.json
                         
                         response = jsonify(data) #create response
-                        return  response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job"} #return response and ok with link und resource header
+                        return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return response and ok with link und resource header
                     else:
-                        return "HTTP Status Code 200: ok", 200 #return ok when job was already dismissed
+                        data = json.load(file) #load data from status.json 
+                        file.close() #close status.json
+                        response = jsonify(data) #create response
+                        return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return ok when job was already dismissed
             else:
                 exception = {"title": "No such job exception", "description": "No job with the requested processID could be found", "type": "no-such-job"}
                 return exception, 404 #return not found if requested job is not found 
