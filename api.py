@@ -210,6 +210,7 @@ def executeProcess(processID):
 
             #create status.json
             status_file = {"jobID": str(jobID), #set jobID
+                           "processID": str(processID), #set processID
                            "status": "accepted", #set initial status
                            "message": "Step 0/1", #set initial message
                            "type": "process", #set type of job
@@ -279,9 +280,6 @@ def getJobs():
                 file = open('jobs/' + i + "/status.json",) #open status.sjon
                 status = json.load(file) #load the data from .json file
                 file.close() #close .json file
-                file = open('jobs/' + i + "/job.json",)
-                job = json.load(file) #load the data from .json file
-                file.close() #close .json file 
                 
                 jobCreationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") #retrieve job creation date and covert to correct format
                 datetimeParam = utils.checkCreationDate(jobCreationDate, request) #check creation date with request
@@ -292,7 +290,7 @@ def getJobs():
                 
                 #check if job conforms to reuqest parameters
                 if(status["type"] in type and #check type
-                   job["processID"] in processes and #check processID
+                   status["processID"] in processes and #check processID
                    status["status"] in stati and #check status
                    datetimeParam == True and #check datetime
                    minDurationParam == True and #check min duration
@@ -314,9 +312,6 @@ def getJobs():
                 file = open('jobs/' + i + "/status.json",) #open status.sjon
                 status = json.load(file) #load the data from .json file
                 file.close() #close .json file
-                file = open('jobs/' + i + "/job.json",) #open job.json
-                job = json.load(file) #load the data from .json file
-                file.close() #close .json file 
                 
                 jobCreationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") #retrieve job creation date and covert to correct format
                 datetimeParam = utils.checkCreationDate(jobCreationDate, request) #check creation date with request
@@ -326,14 +321,14 @@ def getJobs():
                 maxDurationParam = durationParams[1] #set max duration
                 
                 if(status["type"] in type and #check type
-                  job["processID"] in processes and #check processID
+                  status["processID"] in processes and #check processID
                   status["status"] in stati and #check status
                   datetimeParam == True and #check datetime
                   minDurationParam == True and #check min duration
                   maxDurationParam == True): #check max duration
                     #create job entry
                     job = {"jobID": status["jobID"], #set jobID
-                           "processID": job["processID"], #set processID
+                           "processID": status["processID"], #set processID
                            "type": status["type"], #set type
                            "status": status["status"], #set status
                            "message": status["message"], #set message

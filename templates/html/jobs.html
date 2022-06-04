@@ -5,6 +5,7 @@
 		<p>
             {% for status in status %}
             <b>jobID:</b> {{status.jobID}}<br>
+				processID: {{status.processID}}<br>
                 Type: {{status.type}}<br>
                 Status: {{status.status}}<br>
                 Message: {{status.message}}<br>

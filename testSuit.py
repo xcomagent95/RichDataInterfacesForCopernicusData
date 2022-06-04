@@ -10,8 +10,8 @@ logging.basicConfig(filename = 'testSuitLog.log',
                     level=logging.INFO, 
                     format = f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
-api = subprocess.Popen(['python', 'api.py']) #start the api in a subprocess
-print("API running...")
+#api = subprocess.Popen(['python', 'api.py']) #start the api in a subprocess
+#print("API running...")
 
 class TestStringMethods(unittest.TestCase):
     def setUp(self):
@@ -86,13 +86,30 @@ class TestStringMethods(unittest.TestCase):
         logging.info("--> abstract test a5 passed")
     
     #Abstract Test A.7
-    """
-    def test_a6(self):   
+    def test_a7(self):   
         logging.info("--> abstract test a7 started")   
-        response = requests.get("http://localhost:5000/?f=application/json", timeout=60, verify=False)
+        response = requests.get("http://localhost:5000/?f=application/json")
+        self.assertEqual(response.raw.version, 11)
+        
+        response = requests.get("http://localhost:5000/conformance?f=application/json")
+        self.assertEqual(response.raw.version, 11)
+        
+        response = requests.get("http://localhost:5000/api?f=application/json")
         self.assertEqual(response.raw.version, 11)
         logging.info("--> abstract test a7 passed") 
-    """
+        
+        response = requests.get("http://localhost:5000/processes?f=application/json")
+        self.assertEqual(response.raw.version, 11)
+        
+        response = requests.get("http://localhost:5000/jobs?f=application/json")
+        self.assertEqual(response.raw.version, 11)
+        
+        response = requests.get("http://localhost:5000/jobs/test?f=application/json")
+        self.assertEqual(response.raw.version, 11)
+        
+        response = requests.get("http://localhost:5000/processes/Echo?f=application/json")
+        self.assertEqual(response.raw.version, 11)
+        logging.info("--> abstract test a7 passed")   
     
     #Test "/processList"    
     #Abstract Test A.8 & A.10
@@ -115,9 +132,9 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(status_code, 200)
         logging.info("--> abstract test a8 & a10 passed") 
  
-    #Abstract Test A.12
+    #Abstract Test A.9 & A.12
     def test_a12(self):   
-        logging.info("--> abstract test a12 started")   
+        logging.info("--> abstract test a9 & a12 started")   
         
         #Test Echo process
         request = requests.get('http://localhost:5000/processes?f=application/json&limit=1')
@@ -131,7 +148,7 @@ class TestStringMethods(unittest.TestCase):
         request = requests.get('http://localhost:5000/processes?f=application/json&limit=-1')
         limit = len(request.json()["processes"])
         self.assertEqual(True, limit <= 1000 and limit <= 10)
-        logging.info("--> abstract test a12 passed")  
+        logging.info("--> abstract test a9 & a12 passed")  
   
     #Abstract Test A.13 & A.14
     def test_a13_14(self):   
@@ -299,29 +316,88 @@ class TestStringMethods(unittest.TestCase):
         content_type = request.headers["Content-Type"]
         self.assertEqual(content_type, "application/json")
         
-        request = requests.get('http://localhost:5000/jobs/test/results?f=application/json')
+        logging.info("--> abstract test a55 passed")  
+        
+    #Abstract Test A.57
+    def test_a57(self):
+        logging.info("--> abstract test a57 started") 
+        
+        request = requests.get('http://localhost:5000/?f=text/html')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "text/html; charset=utf-8")
+        
+        request = requests.get('http://localhost:5000/api?f=text/html')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "text/html; charset=utf-8")
+        
+        request = requests.get('http://localhost:5000/conformance?f=text/html')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "text/html; charset=utf-8")
+        
+        request = requests.get('http://localhost:5000/processes?f=text/html')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "text/html; charset=utf-8")
+        
+        request = requests.get('http://localhost:5000/processes/Echo?f=text/html')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "text/html; charset=utf-8")
+        
+        request = requests.get('http://localhost:5000/jobs?f=text/html')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "text/html; charset=utf-8")
+        
+        request = requests.get('http://localhost:5000/jobs/test?f=text/html')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "text/html; charset=utf-8")
+        
+        logging.info("--> abstract test a57 passed")   
+        
+    #Abstract Test A.60
+    def test_a60(self):
+        logging.info("--> abstract test a60 started") 
+        
+        request = requests.get('http://localhost:5000/api?f=text/html')
+        content_type = request.headers["Content-Type"]
+        self.assertEqual(content_type, "text/html; charset=utf-8")
+        
+        request = requests.get('http://localhost:5000/api?f=application/json')
         content_type = request.headers["Content-Type"]
         self.assertEqual(content_type, "application/json")
         
-        logging.info("--> abstract test a55 passed")   
+        
+        logging.info("--> abstract test a60 passed")   
     
-    #Abstract Test A.70
-    def test_a12(self):   
-        logging.info("--> abstract test a70 started")   
+    #Abstract Test A.70 & A79
+    def test_a70_a79(self):   
+        logging.info("--> abstract test a70 & a79 started")   
         
         #Test Echo process
         request = requests.get('http://localhost:5000/jobs?f=application/json&limit=1')
-        limit = len(request.json()["processes"])
+        limit = len(request.json()["jobs"])
         self.assertEqual(limit, 1)
         
         request = requests.get('http://localhost:5000/jobs?f=application/json&limit=-1')
-        limit = len(request.json()["processes"])
+        limit = len(request.json()["jobs"])
         self.assertEqual(True, limit >= 0 and limit <= 10)
         
         request = requests.get('http://localhost:5000/jobs?f=application/json&limit=-1')
-        limit = len(request.json()["processes"])
+        limit = len(request.json()["jobs"])
         self.assertEqual(True, limit <= 1000 and limit <= 10)
-        logging.info("--> abstract test a70 passed") 
+        logging.info("--> abstract test a70 & a79 passed") 
+        
+    #Abstract Test A.71
+    def test_a71(self):   
+        logging.info("--> abstract test a71 started")   
+        
+        request = requests.get('http://localhost:5000/jobs?f=application/json')
+        status_code = request.status_code
+        self.assertEqual(status_code, 200)
+        
+        request = requests.get('http://localhost:5000/jobs?f=text/html')
+        status_code = request.status_code
+        self.assertEqual(status_code, 200)
+        
+        logging.info("--> abstract test a71 passed") 
         
     #Abstract Test A.81 & A.82
     def test_a81_82(self):
