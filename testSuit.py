@@ -385,19 +385,23 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(True, limit <= 1000 and limit <= 10)
         logging.info("--> abstract test a70 & a79 passed") 
         
-    #Abstract Test A.71
-    def test_a71(self):   
-        logging.info("--> abstract test a71 started")   
+    #Abstract Test A.64 & A.71
+    def test_a64_a71(self):   
+        logging.info("--> abstract test a64 & a71 started")   
         
         request = requests.get('http://localhost:5000/jobs?f=application/json')
         status_code = request.status_code
+        resource = request.headers["resource"]
         self.assertEqual(status_code, 200)
+        self.assertEqual(resource, "job")
         
         request = requests.get('http://localhost:5000/jobs?f=text/html')
         status_code = request.status_code
+        resource = request.headers["resource"]
         self.assertEqual(status_code, 200)
+        self.assertEqual(resource, "job")
         
-        logging.info("--> abstract test a71 passed") 
+        logging.info("--> abstract test a64 & a71 passed") 
         
     #Abstract Test A.81 & A.82
     def test_a81_82(self):

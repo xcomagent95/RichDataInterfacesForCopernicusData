@@ -197,7 +197,7 @@
                   "type" : "string"
                 }
               },
-              "applicaltion/json" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/exception"
                 }
@@ -404,7 +404,7 @@
                   "type" : "string"
                 }
               },
-              "applicaltion/json" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/exception"
                 }
@@ -470,7 +470,7 @@
                   "type" : "string"
                 }
               },
-              "applicaltion/json" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/exception"
                 }
@@ -523,7 +523,7 @@
                   "type" : "string"
                 }
               },
-              "applicaltion/json" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/exception"
                 }

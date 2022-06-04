@@ -169,7 +169,7 @@ def parseInput(processID, data):
             
     if(processID == "Echo"):
         inputs = [data["inputs"]["inputValue"]]
-        outputs = [data["outputs"]["complexObjectOutput"]]
+        #outputs = [data["outputs"]["complexObjectOutput"]]
         response = [inputs, responseType]
         
         #check transmission mode

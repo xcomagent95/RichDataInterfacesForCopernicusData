@@ -454,7 +454,7 @@ def getResults(jobID):
                     exception = {"title": "Job failed exception", "description": status["message"], "type": "job-results-failed"}
                     return exception, 404, {"resource": "job-failed"} #return not found if requested job is failed
                 else:
-                    exception = {"title": "Results not ready exception", "description": "The results with the requested jobID are not ready", "type": "result-not-ready"}
+                    exception = {"title": "Results not ready exception", "description": "The results with the requested jobID are not ready", "type": "result-not-ready"} 
                     return exception, 404, {"resource": "results-not-ready"} #return not found if requested job results are not ready
         except:
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
