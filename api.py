@@ -9,6 +9,11 @@ import utils
 import traceback
 import logging
 
+from werkzeug.serving import WSGIRequestHandler
+from werkzeug.serving import BaseWSGIServer
+WSGIRequestHandler.protocol_version = "HTTP/1.1"
+BaseWSGIServer.protocol_version = "HTTP/1.1"
+
 #set logging options
 logging.basicConfig(filename = 'apiLog.log', #set logfile
                     level=logging.INFO, #set loglevel
@@ -25,7 +30,7 @@ def getLandingPage():
         if(request.content_type == "text/html" or #check requested content-type from request body
            request.args.get('f')=="text/html"): #check requested content-type from inline request
             response = render_template('html/landingPage.html') #render static landing page
-            return response, 200, {"link": "localhost:5000/?f=text/html", "resource": "landingPage"} #return response and okay with link and resource header
+            return response, 200, {"link": "localhost:5000/?f=text/html", "resource": "landingPage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and okay with link and resource header
         elif(request.content_type == "application/json" or #check requested content-type from request body
              request.args.get('f')=="application/json"): #check requested content-type from inline request
             file = open('templates/json/landingPage.json',) #open landingPage.json
@@ -33,7 +38,7 @@ def getLandingPage():
             file.close() #close landingPage.json
             response = jsonify(payload) #create response
             response.status_code = 200 #set response code ok
-            return response, {"link": "localhost:5000/?f=application/json", "resource": "landingPage"} #return response and okay with link and resource header
+            return response, {"link": "localhost:5000/?f=application/json", "resource": "landingPage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and okay with link and resource header
         else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except:
@@ -47,7 +52,7 @@ def getConformance():
         if(request.content_type == "text/html" or #check requested content-type from request body
            request.args.get('f')=="text/html"): #check requested content-type from inline request
             response = render_template('html/confClasses.html') #render static conformance page
-            return response, 200, {"link": "localhost:5000/conformance?f=text/html", "resource": "conformance"} #return response and okay with link and resource header
+            return response, 200, {"link": "localhost:5000/conformance?f=text/html", "resource": "conformance", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and okay with link and resource header
         elif(request.content_type == "application/json" or #check requested content-type from request body
              request.args.get('f')=="application/json"): #check requested content-type from inline request
             file = open('templates/json/confClasses.json',) #open ConfClasses.json
@@ -55,7 +60,7 @@ def getConformance():
             file.close() #close ConfClasses.json
             response = jsonify(payload) #create response
             response.status_code = 200 #set response code
-            return response, {"link": "localhost:5000/conformance?f=application/json", "resource": "conformance"} #return response and okay with link and resource header
+            return response, {"link": "localhost:5000/conformance?f=application/json", "resource": "conformance", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and okay with link and resource header
         else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except:
@@ -69,7 +74,7 @@ def getAPIDefinition():
         if(request.content_type == "text/html" or #check requested content-type from request body 
            request.args.get('f')=="text/html"): #check requested content-type from inline request
             response = render_template('html/api/index.html') #render static api definition page
-            return response, 200, {"link": "localhost:5000/apiDefinition?f=text/html", "resource": "api"} #return response and okay with link and resource header
+            return response, 200, {"link": "localhost:5000/apiDefinition?f=text/html", "resource": "api", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and okay with link and resource header
         elif(request.content_type == "application/json" or #check requested content-type from request body 
              request.args.get('f')=="application/json"): #check requested content-type from inline request
             file = open('templates/json/apiDefinition.json',) #open apiDefinition.json
@@ -77,7 +82,7 @@ def getAPIDefinition():
             file.close() #close apiDefinition.json
             response = jsonify(payload) #create response
             response.status_code = 200 #set response code
-            return response, {"link": "localhost:5000/api?f=application/json", "resource": "api"} #return response and okay with link and resource header
+            return response, {"link": "localhost:5000/api?f=application/json", "resource": "api", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and okay with link and resource header
         else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except Exception:
@@ -109,7 +114,7 @@ def getProcesses():
                     if(counter == limit): #check if counter has reached limit value
                         break #if limit is reached break loop
                 response = render_template('html/processes.html', processes=processList) #render dynamic process list 
-                return response, 200, {"link": "localhost:5000/processes?f=text/html", "resource": "processes"} #return response and ok with link and resource header
+                return response, 200, {"link": "localhost:5000/processes?f=text/html", "resource": "processes", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link and resource header
 
         elif(request.content_type == "application/json" or #check requested content-type from request body 
              request.args.get('f')=="application/json"): #check requested content-type from inline request
@@ -134,7 +139,7 @@ def getProcesses():
                                 }
                             ]}
             response = jsonify(processes) #create response
-            return response, 200, {"link": "localhost:5000/processes?f=application/json", "resource": "processes"} #return response and ok with link and resource header
+            return response, 200, {"link": "localhost:5000/processes?f=application/json", "resource": "processes", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link and resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except:
@@ -152,9 +157,10 @@ def getProcess(processID):
                 process = json.load(file) #load the data from .json file
                 file.close() #close processDescription.json
                 response = render_template("html/Process.html", process=process) #render dynamic process
-                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html"} #return response and ok with link and resource header
+                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html", "resource": str(processID), "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link and resource header
             else:
-                return "HTTP status code 404: not found", 404 #return not found if requested process is not found
+                exception = render_template('html/exception.html', title="No such process exception", description="No process with the requested processID could be found", type="no-such-process")
+                return exception, 404, {"resource": "no-such-process"} #return not found if requested process is not found
         elif(request.content_type == "application/json" or #check requested content-type from request body 
              request.args.get('f')=="application/json"): #check requested content-type from inline request
             if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')): #check if process description exists
@@ -162,9 +168,10 @@ def getProcess(processID):
                 payload = json.load(file) #load the data from .json file
                 file.close() #close ProcessDescription.json
                 response = jsonify(payload) #create response
-                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=application/json"} #return response and ok with link and resource header
+                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=application/json", "resource": str(processID), "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link and resource header
             else:
-                return "HTTP status code 404: not found", 404 #return not found if requested process is not found
+                exception = {"title": "No such process exception", "description": "No process with the requested processID could be found", "type": "no-such-process"}
+                return exception, 404, {"resource": "no-such-process"} #return not found if requested process is not found 
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except:
@@ -203,6 +210,7 @@ def executeProcess(processID):
 
             #create status.json
             status_file = {"jobID": str(jobID), #set jobID
+                           "processID": str(processID), #set processID
                            "status": "accepted", #set initial status
                            "message": "Step 0/1", #set initial message
                            "type": "process", #set type of job
@@ -229,9 +237,10 @@ def executeProcess(processID):
             f.close() #close file
 
             response = jsonify(status_file) #create response
-            return response, 201, {"location": "localhost:5000/jobs/" + jobID + "?f=application/json"} #return response and ok and files created with location header
+            return response, 201, {"location": "localhost:5000/jobs/" + jobID + "?f=application/json", "resource": "job", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok and files created with location header
         else:
-            return "HTTP status code 404: not found - No such process", 404 #return not found if requested process is not found
+            exception = {"title": "No such process exception", "description": "No process with the requested processID could be found", "type": "no-such-process"}
+            return exception, 404 #return not found if requested process is not found 
     except:
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 
@@ -271,9 +280,6 @@ def getJobs():
                 file = open('jobs/' + i + "/status.json",) #open status.sjon
                 status = json.load(file) #load the data from .json file
                 file.close() #close .json file
-                file = open('jobs/' + i + "/job.json",)
-                job = json.load(file) #load the data from .json file
-                file.close() #close .json file 
                 
                 jobCreationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") #retrieve job creation date and covert to correct format
                 datetimeParam = utils.checkCreationDate(jobCreationDate, request) #check creation date with request
@@ -284,7 +290,7 @@ def getJobs():
                 
                 #check if job conforms to reuqest parameters
                 if(status["type"] in type and #check type
-                   job["processID"] in processes and #check processID
+                   status["processID"] in processes and #check processID
                    status["status"] in stati and #check status
                    datetimeParam == True and #check datetime
                    minDurationParam == True and #check min duration
@@ -294,7 +300,7 @@ def getJobs():
                     if(counter == limit): #check if counter has reached limit value
                         break #if limit is reached break loop
             response = render_template('html/jobs.html', status=jobList) #render dynamic job list 
-            return response, 200, {"link": "localhost:5000/jobs?f=text/html", "resource": "jobs"} #return response and ok with link and resource header
+            return response, 200, {"link": "localhost:5000/jobs?f=text/html", "resource": "jobs", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link and resource header
         
         
         elif(request.content_type == "application/json" or #check requested content-type from request body 
@@ -306,9 +312,6 @@ def getJobs():
                 file = open('jobs/' + i + "/status.json",) #open status.sjon
                 status = json.load(file) #load the data from .json file
                 file.close() #close .json file
-                file = open('jobs/' + i + "/job.json",) #open job.json
-                job = json.load(file) #load the data from .json file
-                file.close() #close .json file 
                 
                 jobCreationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") #retrieve job creation date and covert to correct format
                 datetimeParam = utils.checkCreationDate(jobCreationDate, request) #check creation date with request
@@ -318,14 +321,14 @@ def getJobs():
                 maxDurationParam = durationParams[1] #set max duration
                 
                 if(status["type"] in type and #check type
-                  job["processID"] in processes and #check processID
+                  status["processID"] in processes and #check processID
                   status["status"] in stati and #check status
                   datetimeParam == True and #check datetime
                   minDurationParam == True and #check min duration
                   maxDurationParam == True): #check max duration
                     #create job entry
                     job = {"jobID": status["jobID"], #set jobID
-                           "processID": job["processID"], #set processID
+                           "processID": status["processID"], #set processID
                            "type": status["type"], #set type
                            "status": status["status"], #set status
                            "message": status["message"], #set message
@@ -359,7 +362,7 @@ def getJobs():
                                    "title": "this document as HTML"}
                              ]}
             response = jsonify(jobs) #create response 
-            return response, 200, {"link": "localhost:5000/jobs?f=application/json", "resource": "jobs"} #return response and ok with link and resource header
+            return response, 200, {"link": "localhost:5000/jobs?f=application/json", "resource": "jobs", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link and resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except:
@@ -379,9 +382,10 @@ def getJob(jobID):
                     data = json.load(file) #create response   
                     file.close() #close status.josn
                     response = jsonify(data) #create response
-                    return  response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job"} #return response and ok with link und resource header
+                    return  response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
                 else:
-                    return "HTTP status code 404: not found", 404 #return not found if requested job is not found
+                    exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
+                    return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
             elif(request.content_type == "text/html" or #check requested content-type from request body
                  request.args.get('f')=="text/html"): #check requested content-type from inline request
                 if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
@@ -389,9 +393,10 @@ def getJob(jobID):
                     job = json.load(file) #create response   
                     file.close() #close status.json
                     response = render_template("html/Job.html", job=job) #render dynamic job
-                    return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html"} #return response and ok
+                    return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok
                 else:
-                    return "HTTP status code 404: not found", 404 #return not found if requested job is not found
+                    exception = render_template('html/exception.html', title="No such job exception", description="No job with the requested jobID could be found", type="no-such-job")
+                    return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found
             else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
         except:
@@ -415,11 +420,15 @@ def getJob(jobID):
                         file.close() #close status.json
                         
                         response = jsonify(data) #create response
-                        return  response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job"} #return response and ok with link und resource header
+                        return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
                     else:
-                        return "HTTP Status Code 200: ok", 200 #return ok when job was already dismissed
+                        data = json.load(file) #load data from status.json 
+                        file.close() #close status.json
+                        response = jsonify(data) #create response
+                        return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return gone when job was already dismissed
             else:
-                return "HTTP status code 404: not found", 404 #return not found if requested job is not found
+                exception = {"title": "No such job exception", "description": "No job with the requested processID could be found", "type": "no-such-job"}
+                return exception, 404 #return not found if requested job is not found 
         except:            
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
 
@@ -442,14 +451,18 @@ def getResults(jobID):
                     else: #check if response type is document
                         return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200
                 elif(status["status"] == "failed"): #check if job failed
-                    return "HTTP status code 404: not found - job failed", 404 #return not found if requested jobfailed
+                    exception = {"title": "Job failed exception", "description": status["message"], "type": "job-results-failed"}
+                    return exception, 404, {"resource": "job-failed"} #return not found if requested job is failed
                 else:
-                    return "HTTP status code 404: not found - result not ready", 404 #return not found if requested result is not found
+                    exception = {"title": "Results not ready exception", "description": "The results with the requested jobID are not ready", "type": "result-not-ready"} 
+                    return exception, 404, {"resource": "results-not-ready"} #return not found if requested job results are not ready
         except:
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
     else:
-        return "HTTP status code 404: not found - no such job", 404 #return not found if requested job is not found
+        exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
+        return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
 
          
 #run application
-app.run(debug=True, use_reloader=False) 
+if __name__ == '__main__':
+    app.run(port=5000, debug=True, use_reloader=False) 

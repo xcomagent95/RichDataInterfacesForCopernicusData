@@ -3,6 +3,7 @@
 	<body>
 		<p>
 		<b>jobID: {{job.jobID}}</b><br>
+		processID: {{job.processID}}<br>
 		Status: {{job.status}}<br>
 		Message: {{job.message}}<br>
 		progress: {{job.progress}}<br>
@@ -10,11 +11,12 @@
 		started: {{job.started}}<br><br>
 		<b>links:</b>
 		<br>href: <a href="localhost:5000/jobs/{{job.jobID}}?f=text/html">localhost:5000/jobs/{{job.jobID}}?f=text/html</a>
-		<br>rel: status
+		<br>rel: self
 		<br>title: Job Status
 		<br> type: text/html<br>
 		<br>href: <a href="localhost:5000/jobs/{{job.jobID}}?f=application/json">localhost:5000/jobs/{{job.jobID}}?f=application/json</a>
-		<br>rel: status<br>title: Job Status
+		<br>rel: alternate
+		<br>title: Job Status
 		<br>type: application/json
 		</p>
 	</body>

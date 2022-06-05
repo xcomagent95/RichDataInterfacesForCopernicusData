@@ -5,6 +5,7 @@
 		<p>
             {% for status in status %}
             <b>jobID:</b> {{status.jobID}}<br>
+				processID: {{status.processID}}<br>
                 Type: {{status.type}}<br>
                 Status: {{status.status}}<br>
                 Message: {{status.message}}<br>
@@ -28,13 +29,13 @@
     	{% endblock %}
 		<p><b>links:</b><br>
 			href:<a href="localhost:5000/jobs?f=text/html">localhost:5000/jobs?f=text/html</a><br>
-			rel: self,<br>
-			type: text/html,<br>
+			rel: self<br>
+			type: text/html<br>
 			title: This document<br>
 			<br>
 			href:<a href="localhost:5000/jobs?f=application/json">localhost:5000/jobs?f=application/json</a><br>
-			rel: alternate,<br>
-			type: application/json,<br>
+			rel: alternate<br>
+			type: application/json<br>
 			title: This document as JSON<br>
 		</p>
 	</body>
