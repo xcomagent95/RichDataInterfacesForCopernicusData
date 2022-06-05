@@ -794,6 +794,10 @@ INPUT ./Kapitel/Evaluation.tex
 INPUT Kapitel/Evaluation.tex
 INPUT ./Kapitel/Evaluation.tex
 INPUT Kapitel/Evaluation.tex
+INPUT ./Kapitel/Ausblick.tex
+INPUT Kapitel/Ausblick.tex
+INPUT ./Kapitel/Ausblick.tex
+INPUT Kapitel/Ausblick.tex
 INPUT ./Kapitel/Literatur.tex
 INPUT Kapitel/Literatur.tex
 INPUT ./Kapitel/Literatur.tex
