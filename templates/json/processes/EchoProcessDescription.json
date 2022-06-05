@@ -20,7 +20,7 @@
   },
   "outputs": {
    "complexObjectOutput": {
-      "title": "ouptputDocument",
+      "title": "outputDocument",
       "description": "The output document",
       "schema": {
         "type": "object",
@@ -37,8 +37,8 @@
             "type": "string"
           }
         }
-        }
       }
+    }
   },
   "links": [
     {
@@ -46,17 +46,17 @@
       "rel": "execute",
       "title": "Execute endpoint with test input"
     },
-	  {
-		  "href": "localhost:5000/processes/Echo?f=application/json",
-		  "rel": "self",
-		  "type": "application/json",
-		  "title": "This document"
-	  },
-	  {
-		  "href": "localhost:5000/processes/Echo?f=text/html",
-		  "rel": "alternate",
-		  "type": "text/html",
-		  "title": "This document as HTML"
-	  }
+	{
+		"href": "localhost:5000/processes/Echo?f=application/json",
+		"rel": "self",
+		"type": "application/json",
+		"title": "This document"
+	},
+	{
+		"href": "localhost:5000/processes/Echo?f=text/html",
+		"rel": "alternate",
+		"type": "text/html",
+		"title": "This document as HTML"
+	}
   ]
 }

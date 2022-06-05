@@ -10,8 +10,8 @@ logging.basicConfig(filename = 'testSuitLog.log',
                     level=logging.INFO, 
                     format = f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
 
-#api = subprocess.Popen(['python', 'api.py']) #start the api in a subprocess
-#print("API running...")
+api = subprocess.Popen(['python', 'api.py']) #start the api in a subprocess
+print("API running...")
 
 class TestStringMethods(unittest.TestCase):
     def setUp(self):
@@ -393,15 +393,66 @@ class TestStringMethods(unittest.TestCase):
         status_code = request.status_code
         resource = request.headers["resource"]
         self.assertEqual(status_code, 200)
-        self.assertEqual(resource, "job")
+        self.assertEqual(resource, "jobs")
         
         request = requests.get('http://localhost:5000/jobs?f=text/html')
         status_code = request.status_code
         resource = request.headers["resource"]
         self.assertEqual(status_code, 200)
-        self.assertEqual(resource, "job")
+        self.assertEqual(resource, "jobs")
         
         logging.info("--> abstract test a64 & a71 passed") 
+    
+    #Abstract Test A.65 & A.73
+    def test_a65_a73(self):
+        logging.info("--> abstract test a65 & a73 started")   
+        type_validation = True
+        requested_type = "process"
+        request = requests.get('http://localhost:5000/jobs?f=application/json&type=' + requested_type).json()
+        jobs = request["jobs"]
+        print()
+        for i in jobs:
+            if(requested_type != i["type"]):
+                type_validation = False
+        
+        self.assertEqual(type_validation, True)
+        
+        
+        logging.info("--> abstract test a65 & a73 passed") 
+        
+    #Abstract Test A.66 & A.74 & A.75
+    def test_a66_a74_a75(self):
+        logging.info("--> abstract test a66 & a74 & a75 started")   
+        type_validation = True
+        requested_process = "Echo"
+        request = requests.get('http://localhost:5000/jobs?f=application/json&processID=' + requested_process).json()
+        jobs = request["jobs"]
+        print()
+        for i in jobs:
+            if(requested_process != i["processID"]):
+                type_validation = False
+        
+        self.assertEqual(type_validation, True)
+        
+        
+        logging.info("--> abstract test a66 & a74 & a75 passed") 
+        
+    #Abstract Test A.67 & A.76
+    def test_a67_a76(self):
+        logging.info("--> abstract test a67 & a76 started")   
+        type_validation = True
+        requested_status = "created"
+        request = requests.get('http://localhost:5000/jobs?f=application/json&status=' + requested_status).json()
+        jobs = request["jobs"]
+        print()
+        for i in jobs:
+            if(requested_status != i["status"]):
+                type_validation = False
+        
+        self.assertEqual(type_validation, True)
+        
+        
+        logging.info("--> abstract test a67 & a76 passed")
         
     #Abstract Test A.81 & A.82
     def test_a81_82(self):
