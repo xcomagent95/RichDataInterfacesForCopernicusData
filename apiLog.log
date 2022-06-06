@@ -1,0 +1,6 @@
+2022-06-06 13:31:36,677 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-06-06 13:31:41,247 INFO api Thread-1 : /processes/FloodMonitoring/execution
+2022-06-06 13:31:41,262 INFO werkzeug Thread-1 : 127.0.0.1 - - [06/Jun/2022 13:31:41] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 201 -
+2022-06-06 13:42:10,165 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-06-06 13:42:11,593 INFO api Thread-1 : /processes/FloodMonitoring/execution
+2022-06-06 13:42:11,607 INFO werkzeug Thread-1 : 127.0.0.1 - - [06/Jun/2022 13:42:11] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 201 -

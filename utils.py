@@ -42,6 +42,19 @@ def floodMonitoringProcess(job):
         json.dump(footprint, f)
         f.close()
 
+    pre_date_t0 = datetime.date(int(job.input[0][0:4]), int(job.input[0][4:6]), int(job.input[0][6:]))
+    pre_date_t1 = pre_date_t0 + datetime.timedelta(days=1)
+    post_date_t0 = datetime.date(int(job.input[1][0:4]), int(job.input[1][4:6]), int(job.input[1][6:]))
+    post_date_t1 = post_date_t0 + datetime.timedelta(days=1)
+        
+    api = loginCopernicusHub(job)
+    
+    pre_product = getProduct(api, job, pre_date_t0, pre_date_t1)
+    retrieveProduct(api, pre_product[0], job.downloads)
+    
+    post_product = getProduct(api, job, post_date_t0, post_date_t1)
+    retrieveProduct(api, post_product[0], job.downloads)
+
 def echoProcess(job):
     if(checkForDismissal(job.path + '/status.json') == True):
         return
@@ -236,6 +249,28 @@ def parseInput(processID, data):
                 response.append(data["outputs"]["complexObjectOutput"]["format"]["mediaType"])
         else:
             response.append(process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"])
-                
-                    
     return response
+
+def loginCopernicusHub(job):
+    api = SentinelAPI(job.input[2], job.input[3]) #create api object
+    return api #return api object
+
+def getProduct(api, job, t0, t1):
+    #footprint = geojson_to_wkt(read_geojson(footprint))
+    product_list = api.query(geojson_to_wkt(read_geojson(job.path + "/footprint.geojson")), platformname='Sentinel-1', date=(t0, t1), producttype='GRD', sensoroperationalmode='IW', polarisationmode='VV VH') 
+
+    product = product_list.get(list(product_list.keys())[0])
+    product_id = product.get("uuid")
+    product_title = product.get("title")
+
+    return (product_id, product_title) #return a tuple containing the product id and the product title
+
+def retrieveProduct(api, product_id, downloads_path):
+    #tiff_filter = products.make_path_filter("*/measurement/*-iw-grd-vv-*-*-*-*-*.tiff") #define .tiff filter
+    #noise_filter = products.make_path_filter("*/annotation/calibration/calibration-*-*-*-vv-*-*-*-*-*.xml") #define .xml filter
+    #sigma_filter = products.make_path_filter("*/annotation/calibration/noise-*-*-*-vv-*-*-*-*-*.xml") #define .xml filter
+    
+    #api.download(product_id, directory_path=downloads_path, checksum=False, nodefilter=tiff_filter) #download vv polarized .tiff
+    #api.download(product_id, directory_path=downloads_path, checksum=False, nodefilter=noise_filter) #download calibration .xml
+    #api.download(product_id, directory_path=downloads_path, checksum=False, nodefilter=sigma_filter) #download noise .xml
+    api.download(product_id, directory_path=downloads_path, checksum=False) #download full product
