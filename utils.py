@@ -5,6 +5,7 @@ from shutil import make_archive
 from zipfile import ZipFile
 import os
 import datetime
+from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt, products
 
 class job:
     def __init__(self, id, process, job_path, results_path, downloads_path, input):
@@ -22,6 +23,24 @@ def readJob(jobFile):
     jobObject = job(data["jobID"], data["processID"], data["path"], data["results"], data["downloads"], data["input"]) #create job object
         
     return jobObject #return job object
+
+def floodMonitoringProcess(job):
+    footprint ={"type": "FeatureCollection","features": [{
+                    "type": "Feature",
+                    "properties": {},
+                    "geometry": {
+                        "type": "Polygon",
+                            "coordinates": [[
+                                [float(job.input[4]),float(job.input[5])],
+                                [float(job.input[6]),float(job.input[5])],
+                                [float(job.input[6]),float(job.input[7])],
+                                [float(job.input[4]),float(job.input[7])],
+                                [float(job.input[4]),float(job.input[5])]
+                            ]]}}]}
+    json.dumps(footprint, indent=4)
+    with open(job.path + "/footprint.geojson", 'w') as f:
+        json.dump(footprint, f)
+        f.close()
 
 def echoProcess(job):
     if(checkForDismissal(job.path + '/status.json') == True):
@@ -46,7 +65,6 @@ def echoProcess(job):
         f.close() #close file
     updateStatus(job.path + '/status.json', "successful", "Step 1 of 1 completed", "100")
     setFinished(job.path + '/status.json')
-
 
 def checkForDismissal(path):
     with open(path, "r") as f:
@@ -169,6 +187,36 @@ def parseInput(processID, data):
             
     if(processID == "Echo"):
         inputs = [data["inputs"]["inputValue"]]
+        #outputs = [data["outputs"]["complexObjectOutput"]]
+        response = [inputs, responseType]
+        
+        #check transmission mode
+        file = open('templates/json/processes/' + processID + 'ProcessDescription.json',) #open ProcessDescription.json
+        process = json.load(file) #create response   
+        file.close() #close ProcessDescription.json
+        
+        if("response" in data):
+            if(data["outputs"]["complexObjectOutput"]["transmissionMode"] not in process["outputTransmission"]):
+                response = False
+
+        if("format" in data["outputs"]["complexObjectOutput"]):
+            if(data["outputs"]["complexObjectOutput"]["format"]["mediaType"] != process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"]):
+                response = False
+            else:
+                response.append(data["outputs"]["complexObjectOutput"]["format"]["mediaType"])
+        else:
+            response.append(process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"])
+            
+    if(processID == "FloodMonitoring"):
+        inputs = [data["inputs"]["preDate"],
+                  data["inputs"]["postDate"],
+                  data["inputs"]["username"],
+                  data["inputs"]["password"],
+                  data["inputs"]["ulx"],
+                  data["inputs"]["uly"],
+                  data["inputs"]["lrx"],
+                  data["inputs"]["lry"]]
+        
         #outputs = [data["outputs"]["complexObjectOutput"]]
         response = [inputs, responseType]
         

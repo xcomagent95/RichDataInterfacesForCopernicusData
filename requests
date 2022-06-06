@@ -11,6 +11,9 @@ curl -X GET -H "Content-Type:text/html" "localhost:5000/processes/Echo"
 curl -X GET -H "Content-Type:application/json" "localhost:5000/processes/Echo" 
 
 curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'inputValue':'test'}, 'outputs':{'complexObjectOutput': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/Echo/execution"
+curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'preDate':20220130, 'postDate':20220226, 'username':'xcomagent95', 'password':'alex@copernicus95','ulx':8.380851745605469, 'uly':53.97446465056279, 'lrx':8.56109619140625, 'lry':53.89098663140719}, 'outputs':{'complexObjectOutput': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
+
+
 
 curl -X GET -H "Content-Type:text/html" "localhost:5000/jobs/96a1ec6f-a5ad-4181-a2c9-e2a1b14dbf83" 
 curl -X GET -H "Content-Type:application/json" "localhost:5000/jobs/96a1ec6f-a5ad-4181-a2c9-e2a1b14dbf83" 

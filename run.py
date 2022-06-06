@@ -12,5 +12,5 @@ print("Processing running...")
 
 #create test suite subprocess
 
-test = subprocess.Popen(['python', 'testSuit.py']) #start the test suit
-print("Test suit running running...")
+#test = subprocess.Popen(['python', 'testSuit.py']) #start the test suit
+#print("Test suit running running...")
