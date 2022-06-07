@@ -1,0 +1,20 @@
+2022-06-07 10:23:56,253 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-06-07 10:24:01,999 INFO api Thread-1 : /
+2022-06-07 10:24:02,005 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:24:02] "GET /?f=text/html HTTP/1.1" 200 -
+2022-06-07 10:24:09,531 INFO api Thread-1 : /jobs
+2022-06-07 10:24:09,548 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:24:09] "GET /jobs?f=text/html HTTP/1.1" 200 -
+2022-06-07 10:25:13,776 INFO api Thread-2 : /processes/Echo/execution
+2022-06-07 10:25:13,781 INFO werkzeug Thread-2 : 127.0.0.1 - - [07/Jun/2022 10:25:13] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-06-07 10:25:28,768 INFO api Thread-3 : /processes/Echo/execution
+2022-06-07 10:25:28,769 INFO werkzeug Thread-3 : 127.0.0.1 - - [07/Jun/2022 10:25:28] "[31m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 400 -
+2022-06-07 10:25:45,420 INFO api Thread-4 : /processes/Echo/execution
+2022-06-07 10:25:45,433 INFO werkzeug Thread-4 : 127.0.0.1 - - [07/Jun/2022 10:25:45] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
+2022-06-07 10:25:52,583 INFO api Thread-1 : /jobs
+2022-06-07 10:25:52,587 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:25:52] "GET /jobs?f=text/html HTTP/1.1" 200 -
+2022-06-07 10:26:02,450 INFO api Thread-1 : /jobs
+2022-06-07 10:26:02,451 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:26:02] "GET /jobs?f=text/html HTTP/1.1" 200 -
+2022-06-07 10:26:06,448 INFO api Thread-1 : [GET] /jobs/c7b032ed-b8af-4f51-8acc-50a0d7603580
+2022-06-07 10:26:06,465 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:26:06] "GET /jobs/c7b032ed-b8af-4f51-8acc-50a0d7603580?f=text/html HTTP/1.1" 200 -
+2022-06-07 10:26:15,230 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:26:15] "[33mGET /jobs/c7b032ed-b8af-4f51-8acc-50a0d7603580/result?f=text/html HTTP/1.1[0m" 404 -
+2022-06-07 10:26:19,932 INFO api Thread-1 : /jobs/c7b032ed-b8af-4f51-8acc-50a0d7603580/results
+2022-06-07 10:26:19,933 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:26:19] "GET /jobs/c7b032ed-b8af-4f51-8acc-50a0d7603580/results?f=text/html HTTP/1.1" 200 -
