@@ -33,3 +33,48 @@
 2022-06-07 11:15:04,355 INFO root MainThread : --> checking jobs
 2022-06-07 11:15:04,356 INFO root MainThread : --> running job: 03e8ca54-de25-4fb0-a414-2e33d0c2c2b1
 2022-06-07 11:15:05,824 INFO sentinelsat.SentinelAPI MainThread : Found 1 products
+2022-06-07 11:53:01,718 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-06-07 11:53:35,432 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:53:35,433 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:53:35] "[33mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 404 -
+2022-06-07 11:55:19,746 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:55:19,748 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:19] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:55:19,841 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:19] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2022-06-07 11:55:20,825 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:55:20,827 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:20] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:55:27,188 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-06-07 11:55:29,096 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:55:29,097 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:29] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:55:29,792 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:55:29,793 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:29] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:55:30,254 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:55:30,255 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:30] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:55:30,667 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:55:30,668 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:30] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:55:31,015 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:55:31,016 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:31] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:55:31,379 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:55:31,380 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:31] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:55:55,442 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-06-07 11:55:56,987 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:55:56,988 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:56] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:56:43,131 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-06-07 11:56:45,272 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:56:45,273 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:56:45] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:56:46,818 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:56:46,819 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:56:46] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:56:48,322 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:56:48,323 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:56:48] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:57:01,058 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-06-07 11:57:02,167 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:57:02,168 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:57:02] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:57:03,802 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:57:03,803 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:57:03] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:57:04,402 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:57:04,403 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:57:04] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:57:04,837 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:57:04,838 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:57:04] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:57:55,902 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2022-06-07 11:57:58,802 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:57:58,803 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:57:58] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+2022-06-07 11:58:00,193 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
+2022-06-07 11:58:00,194 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:58:00] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
