@@ -255,10 +255,10 @@ def parseInput(processID, data):
                   data["inputs"]["postDate"],
                   data["inputs"]["username"],
                   data["inputs"]["password"],
-                  data["inputs"]["ulx"],
-                  data["inputs"]["uly"],
-                  data["inputs"]["lrx"],
-                  data["inputs"]["lry"]]
+                  data["inputs"]["boundingBoxInput"]["bbox"][3],
+                  data["inputs"]["boundingBoxInput"]["bbox"][2],
+                  data["inputs"]["boundingBoxInput"]["bbox"][1],
+                  data["inputs"]["boundingBoxInput"]["bbox"][0]]
         
         #outputs = [data["outputs"]["complexObjectOutput"]]
         response = [inputs, responseType]
@@ -269,16 +269,16 @@ def parseInput(processID, data):
         file.close() #close ProcessDescription.json
         
         if("response" in data):
-            if(data["outputs"]["complexObjectOutput"]["transmissionMode"] not in process["outputTransmission"]):
+            if(data["outputs"]["imageOutput"]["transmissionMode"] not in process["outputTransmission"]):
                 response = False
 
-        if("format" in data["outputs"]["complexObjectOutput"]):
-            if(data["outputs"]["complexObjectOutput"]["format"]["mediaType"] != process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"]):
+        if("format" in data["outputs"]["imageOutput"]):
+            if(data["outputs"]["imageOutput"]["format"]["mediaType"] != process["outputs"]["imagesOutput"]["schema"]["contentMediaType"]):
                 response = False
             else:
-                response.append(data["outputs"]["complexObjectOutput"]["format"]["mediaType"])
+                response.append(data["outputs"]["imageOutput"]["format"]["mediaType"])
         else:
-            response.append(process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"])
+            response.append(process["outputs"]["imagesOutput"]["schema"]["contentMediaType"])
     return response
 
 def loginCopernicusHub(job):
