@@ -262,7 +262,7 @@ def getJobs():
         type = request.args.get('type') #set type parameter to passed value
         
     if(request.args.get('processID') == None): #if no processID parameter is passed
-        processes = ["Echo"] #set processID parameter to default
+        processes = ["Echo", "FloodMonitoring"] #set processID parameter to default
     else: #if processID parameter is passed
         processes = request.args.get('processID') #set processID parameter to passed value
         
@@ -274,7 +274,8 @@ def getJobs():
     try:
         if(request.content_type == "text/html" or #check requested content-type from request body 
            request.args.get('f')=="text/html"): #check requested content-type from inline request
-            jobs = os.listdir("jobs/") #list created jobs           
+            jobs = os.listdir("jobs/") #list created jobs 
+            print(jobs)
             counter = 0 #initialize counter  
             jobList = [] #initialize list of jobs      
             for i in jobs: #iterate over created jobs
