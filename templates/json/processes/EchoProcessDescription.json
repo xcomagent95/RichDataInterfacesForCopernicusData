@@ -10,8 +10,8 @@
     "value"
   ],
   "inputs": {
-    "stringInput": {
-      "title": "inputValue",
+    "echo": {
+      "title": "Value to be echoed",
       "description": "The input value",
       "schema": {
         "type": "string"

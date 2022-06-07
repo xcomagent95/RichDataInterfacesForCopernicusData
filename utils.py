@@ -229,7 +229,7 @@ def parseInput(processID, data):
             responseType = data["response"]
             
     if(processID == "Echo"):
-        inputs = [data["inputs"]["inputValue"]]
+        inputs = [data["inputs"]["echo"]]
         #outputs = [data["outputs"]["complexObjectOutput"]]
         response = [inputs, responseType]
         
@@ -251,14 +251,15 @@ def parseInput(processID, data):
             response.append(process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"])
             
     if(processID == "FloodMonitoring"):
+        
         inputs = [data["inputs"]["preDate"],
                   data["inputs"]["postDate"],
                   data["inputs"]["username"],
                   data["inputs"]["password"],
-                  data["inputs"]["boundingBoxInput"]["bbox"][3],
-                  data["inputs"]["boundingBoxInput"]["bbox"][2],
-                  data["inputs"]["boundingBoxInput"]["bbox"][1],
-                  data["inputs"]["boundingBoxInput"]["bbox"][0]]
+                  data["inputs"]["bbox"]["bbox"][3],
+                  data["inputs"]["bbox"]["bbox"][2],
+                  data["inputs"]["bbox"]["bbox"][1],
+                  data["inputs"]["bbox"]["bbox"][0]]
         
         #outputs = [data["outputs"]["complexObjectOutput"]]
         response = [inputs, responseType]

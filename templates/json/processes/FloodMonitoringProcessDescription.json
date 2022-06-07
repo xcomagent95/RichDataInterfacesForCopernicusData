@@ -11,28 +11,28 @@
   ],
   "inputs": {
     "preDate": {
-      "title": "inputValue",
+      "title": "preDate",
       "description": "The input value",
       "schema": {
         "type": "string"
       }
 	},
 	"postDate": {
-      "title": "inputValue",
+      "title": "postDate",
       "description": "The input value",
       "schema": {
         "type": "string"
       }
 	},
 	"username": {
-      "title": "inputValue",
+      "title": "username",
       "description": "The input value",
       "schema": {
         "type": "string"
       }
 	},
 	"password": {
-      "title": "inputValue",
+      "title": "password",
       "description": "The input value",
       "schema": {
         "type": "string"
@@ -81,7 +81,7 @@
       "schema": {
 			"type": "string",
 			"contentEncoding": "binary",
-			"contentMediaType": "application/tiff; application=geotiff"
+			"contentMediaType": "application=geotiff"
       }
     }
   },

@@ -241,7 +241,7 @@ def executeProcess(processID):
         else:
             exception = {"title": "No such process exception", "description": "No process with the requested processID could be found", "type": "no-such-process"}
             return exception, 404 #return not found if requested process is not found 
-    except:
+    except Exception:
         traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 

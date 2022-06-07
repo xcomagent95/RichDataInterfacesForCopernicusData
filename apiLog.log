@@ -1,80 +1,19 @@
-2022-06-07 10:23:56,253 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-2022-06-07 10:24:01,999 INFO api Thread-1 : /
-2022-06-07 10:24:02,005 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:24:02] "GET /?f=text/html HTTP/1.1" 200 -
-2022-06-07 10:24:09,531 INFO api Thread-1 : /jobs
-2022-06-07 10:24:09,548 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:24:09] "GET /jobs?f=text/html HTTP/1.1" 200 -
-2022-06-07 10:25:13,776 INFO api Thread-2 : /processes/Echo/execution
-2022-06-07 10:25:13,781 INFO werkzeug Thread-2 : 127.0.0.1 - - [07/Jun/2022 10:25:13] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
-2022-06-07 10:25:28,768 INFO api Thread-3 : /processes/Echo/execution
-2022-06-07 10:25:28,769 INFO werkzeug Thread-3 : 127.0.0.1 - - [07/Jun/2022 10:25:28] "[31m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 400 -
-2022-06-07 10:25:45,420 INFO api Thread-4 : /processes/Echo/execution
-2022-06-07 10:25:45,433 INFO werkzeug Thread-4 : 127.0.0.1 - - [07/Jun/2022 10:25:45] "[35m[1mPOST /processes/Echo/execution HTTP/1.1[0m" 201 -
-2022-06-07 10:25:52,583 INFO api Thread-1 : /jobs
-2022-06-07 10:25:52,587 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:25:52] "GET /jobs?f=text/html HTTP/1.1" 200 -
-2022-06-07 10:26:02,450 INFO api Thread-1 : /jobs
-2022-06-07 10:26:02,451 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:26:02] "GET /jobs?f=text/html HTTP/1.1" 200 -
-2022-06-07 10:26:06,448 INFO api Thread-1 : [GET] /jobs/c7b032ed-b8af-4f51-8acc-50a0d7603580
-2022-06-07 10:26:06,465 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:26:06] "GET /jobs/c7b032ed-b8af-4f51-8acc-50a0d7603580?f=text/html HTTP/1.1" 200 -
-2022-06-07 10:26:15,230 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:26:15] "[33mGET /jobs/c7b032ed-b8af-4f51-8acc-50a0d7603580/result?f=text/html HTTP/1.1[0m" 404 -
-2022-06-07 10:26:19,932 INFO api Thread-1 : /jobs/c7b032ed-b8af-4f51-8acc-50a0d7603580/results
-2022-06-07 10:26:19,933 INFO werkzeug Thread-1 : 127.0.0.1 - - [07/Jun/2022 10:26:19] "GET /jobs/c7b032ed-b8af-4f51-8acc-50a0d7603580/results?f=text/html HTTP/1.1" 200 -
-2022-06-07 11:00:31,137 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-2022-06-07 11:00:37,871 INFO api Thread-11 : /processes/FloodMonitoring/execution
-2022-06-07 11:00:37,873 INFO werkzeug Thread-11 : 127.0.0.1 - - [07/Jun/2022 11:00:37] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
-2022-06-07 11:01:25,880 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-2022-06-07 11:01:28,334 INFO api Thread-12 : /processes/FloodMonitoring/execution
-2022-06-07 11:01:28,353 INFO werkzeug Thread-12 : 127.0.0.1 - - [07/Jun/2022 11:01:28] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
-2022-06-07 11:10:54,195 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-2022-06-07 11:10:56,553 INFO api Thread-13 : /processes/FloodMonitoring/execution
-2022-06-07 11:10:56,555 INFO werkzeug Thread-13 : 127.0.0.1 - - [07/Jun/2022 11:10:56] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
-2022-06-07 11:14:52,479 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-2022-06-07 11:14:54,764 INFO api Thread-14 : /processes/FloodMonitoring/execution
-2022-06-07 11:14:54,780 INFO werkzeug Thread-14 : 127.0.0.1 - - [07/Jun/2022 11:14:54] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 201 -
-2022-06-07 11:15:04,355 INFO root MainThread : --> checking jobs
-2022-06-07 11:15:04,356 INFO root MainThread : --> running job: 03e8ca54-de25-4fb0-a414-2e33d0c2c2b1
-2022-06-07 11:15:05,824 INFO sentinelsat.SentinelAPI MainThread : Found 1 products
-2022-06-07 11:53:01,718 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-2022-06-07 11:53:35,432 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:53:35,433 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:53:35] "[33mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 404 -
-2022-06-07 11:55:19,746 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:55:19,748 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:19] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:55:19,841 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:19] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
-2022-06-07 11:55:20,825 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:55:20,827 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:20] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:55:27,188 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-2022-06-07 11:55:29,096 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:55:29,097 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:29] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:55:29,792 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:55:29,793 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:29] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:55:30,254 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:55:30,255 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:30] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:55:30,667 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:55:30,668 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:30] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:55:31,015 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:55:31,016 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:31] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:55:31,379 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:55:31,380 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:31] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:55:55,442 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-2022-06-07 11:55:56,987 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:55:56,988 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:55:56] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:56:43,131 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-2022-06-07 11:56:45,272 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:56:45,273 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:56:45] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:56:46,818 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:56:46,819 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:56:46] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:56:48,322 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:56:48,323 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:56:48] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:57:01,058 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-2022-06-07 11:57:02,167 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:57:02,168 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:57:02] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:57:03,802 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:57:03,803 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:57:03] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:57:04,402 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:57:04,403 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:57:04] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:57:04,837 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:57:04,838 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:57:04] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:57:55,902 INFO werkzeug MainThread :  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-2022-06-07 11:57:58,802 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:57:58,803 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:57:58] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
-2022-06-07 11:58:00,193 INFO api Thread-16 : /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results
-2022-06-07 11:58:00,194 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 11:58:00] "[35m[1mGET /jobs/9820cf57-eb12-4db2-a16f-99fbac3e66bd/results HTTP/1.1[0m" 500 -
+
+2022-06-07 15:17:19,586 INFO api Thread-8 : /processes/FloodMonitoring/execution
+2022-06-07 15:17:19,596 INFO werkzeug Thread-8 : 127.0.0.1 - - [07/Jun/2022 15:17:19] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
+2022-06-07 15:17:21,425 INFO api Thread-9 : /processes/FloodMonitoring/execution
+2022-06-07 15:17:21,425 INFO werkzeug Thread-9 : 127.0.0.1 - - [07/Jun/2022 15:17:21] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
+2022-06-07 15:19:30,761 INFO api Thread-10 : /processes/FloodMonitoring/execution
+2022-06-07 15:19:30,763 INFO werkzeug Thread-10 : 127.0.0.1 - - [07/Jun/2022 15:19:30] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
+2022-06-07 15:20:36,748 INFO api Thread-11 : /processes/FloodMonitoring/execution
+2022-06-07 15:20:36,749 INFO werkzeug Thread-11 : 127.0.0.1 - - [07/Jun/2022 15:20:36] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
+2022-06-07 15:22:40,109 INFO api Thread-12 : /processes/FloodMonitoring/execution
+2022-06-07 15:22:40,110 INFO werkzeug Thread-12 : 127.0.0.1 - - [07/Jun/2022 15:22:40] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
+2022-06-07 15:23:06,991 INFO api Thread-13 : /processes/FloodMonitoring/execution
+2022-06-07 15:23:06,992 INFO werkzeug Thread-13 : 127.0.0.1 - - [07/Jun/2022 15:23:06] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
+2022-06-07 15:23:08,978 INFO api Thread-14 : /processes/FloodMonitoring/execution
+2022-06-07 15:23:08,978 INFO werkzeug Thread-14 : 127.0.0.1 - - [07/Jun/2022 15:23:08] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
+2022-06-07 15:23:25,925 INFO api Thread-15 : /processes/FloodMonitoring/execution
+2022-06-07 15:23:25,926 INFO werkzeug Thread-15 : 127.0.0.1 - - [07/Jun/2022 15:23:25] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
+2022-06-07 15:23:27,621 INFO api Thread-16 : /processes/FloodMonitoring/execution
+2022-06-07 15:23:27,622 INFO werkzeug Thread-16 : 127.0.0.1 - - [07/Jun/2022 15:23:27] "[35m[1mPOST /processes/FloodMonitoring/execution HTTP/1.1[0m" 500 -
