@@ -42,6 +42,10 @@ def processingChain():
         if(data["processID"] == 'Echo'): #if job is running an Echo process
            job = utils.readJob('jobs/' + oldest_job + '/job.json') #create job object
            utils.echoProcess(job) #run echo process
+           
+        if(data["processID"] == 'FloodMonitoring'):
+            job = utils.readJob('jobs/' + oldest_job + '/job.json') #create job object
+            utils.floodMonitoringProcess(job) #run flood monitoring process
         logging.info("--> finished job: " + oldest_job)   
         processingChain() #restart processing chain
 

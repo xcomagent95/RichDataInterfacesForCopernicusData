@@ -241,7 +241,8 @@ def executeProcess(processID):
         else:
             exception = {"title": "No such process exception", "description": "No process with the requested processID could be found", "type": "no-such-process"}
             return exception, 404 #return not found if requested process is not found 
-    except:
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 
 #jobs endpoint    
@@ -447,7 +448,7 @@ def getResults(jobID):
             if(job["processID"] == "Echo"): #check processID
                 if(status["status"] == "successful"): #check if job is successful
                     if(job["responseType"] == "raw"): #check if response type is raw
-                        return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200
+                        return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200 #send raw file
                     else: #check if response type is document
                         return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200
                 elif(status["status"] == "failed"): #check if job failed
@@ -456,7 +457,21 @@ def getResults(jobID):
                 else:
                     exception = {"title": "Results not ready exception", "description": "The results with the requested jobID are not ready", "type": "result-not-ready"} 
                     return exception, 404, {"resource": "results-not-ready"} #return not found if requested job results are not ready
+                
+            elif(job["processID"] == "FloodMonitoring"): #check processID
+                if(status["status"] == "successful"): #check if job is successful
+                    if(job["responseType"] == "raw"): #check if response type is raw
+                        return send_file('jobs/' + str(jobID) + '/results/bin.tiff', mimetype=job["resultMediaType"]), 200 #send raw file
+                    else: #check if response type is document
+                        return send_file('jobs/' + str(jobID) + '/results/bin.tiff', mimetype=job["resultMediaType"]), 200 #send raw file
+                elif(status["status"] == "failed"): #check if job failed
+                    exception = {"title": "Job failed exception", "description": status["message"], "type": "job-results-failed"}
+                    return exception, 404, {"resource": "job-failed"} #return not found if requested job is failed
+                else:
+                    exception = {"title": "Results not ready exception", "description": "The results with the requested jobID are not ready", "type": "result-not-ready"} 
+                    return exception, 404, {"resource": "results-not-ready"} #return not found if requested job results are not ready
         except:
+            traceback.print_exc()
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
     else:
         exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
