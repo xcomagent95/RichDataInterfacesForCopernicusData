@@ -276,7 +276,8 @@ def getJobs():
            request.args.get('f')=="text/html"): #check requested content-type from inline request
             jobs = os.listdir("jobs/") #list created jobs           
             counter = 0 #initialize counter  
-            jobList = [] #initialize list of jobs      
+            jobList = [] #initialize list of jobs   
+            print(jobs)
             for i in jobs: #iterate over created jobs
                 file = open('jobs/' + i + "/status.json",) #open status.sjon
                 status = json.load(file) #load the data from .json file
@@ -367,7 +368,6 @@ def getJobs():
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except:
-        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 
 #job endpoint for status and dismiss

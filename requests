@@ -24,7 +24,8 @@ curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d
 #Demydow
 curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'preDate':'20220102', 'postDate':'20220604', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [50.68209876799218, 30.373870053936805, 50.75296226636879, 30.29868237792831]}}, 'outputs':{'imageOutput': {'format': {'mediaType': 'application=geotiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
 																																																					
-
+#Venedig
+curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'imageOutput': {'format': {'mediaType': 'application=geotiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
 
 curl -X GET -H "Content-Type:text/html" "localhost:5000/jobs/96a1ec6f-a5ad-4181-a2c9-e2a1b14dbf83" 
 curl -X GET -H "Content-Type:application/json" "localhost:5000/jobs/96a1ec6f-a5ad-4181-a2c9-e2a1b14dbf83" 

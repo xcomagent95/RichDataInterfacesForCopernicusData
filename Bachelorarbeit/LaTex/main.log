@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.14)  5 JUN 2022 20:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.14)  7 JUN 2022 18:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -462,12 +462,12 @@ LaTeX Info: Redefining \nameref on input line 27.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Bilder/wwu_logo.png, id=112, 2276.2641pt x 768.2301pt>
+<Bilder/wwu_logo.png, id=116, 2276.2641pt x 768.2301pt>
 File: Bilder/wwu_logo.png Graphic file (type png)
 <use Bilder/wwu_logo.png>
 Package pdftex.def Info: Bilder/wwu_logo.png  used on input line 31.
 (pdftex.def)             Requested size: 170.71652pt x 57.61476pt.
-<Bilder/ifgi_logo.png, id=114, 359.7075pt x 133.0425pt>
+<Bilder/ifgi_logo.png, id=118, 359.7075pt x 133.0425pt>
 File: Bilder/ifgi_logo.png Graphic file (type png)
 <use Bilder/ifgi_logo.png>
 Package pdftex.def Info: Bilder/ifgi_logo.png  used on input line 32.
@@ -476,32 +476,32 @@ Package pdftex.def Info: Bilder/ifgi_logo.png  used on input line 32.
 
 
 {c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./Bilder/wwu_logo.png> <./Bilder/ifgi_logo.png>] (./main.toc
-LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 4.
+LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 5.
  (c:/texlive/2022/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 4.
+LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 5.
  (c:/texlive/2022/texmf-dist/tex/latex/psnfss/omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 4.
+LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 5.
  (c:/texlive/2022/texmf-dist/tex/latex/psnfss/omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 4.
+LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 5.
  (c:/texlive/2022/texmf-dist/tex/latex/psnfss/omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 4.
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 5.
  (c:/texlive/2022/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 4.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 5.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 4.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 5.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 4.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 5.
 )
 \tf@toc=\write4
 \openout4 = `main.toc'.
@@ -517,15 +517,17 @@ LaTeX Warning: Hyper reference `acro:API' on page 4 undefined on input line 5.
 
 LaTeX Warning: Hyper reference `acro:API' on page 4 undefined on input line 5.
 
-) (./Kapitel/Einleitung.tex [4]) (./Kapitel/Grundlagen.tex [5
+) (./Kapitel/Einleitung.tex [4]) (./Kapitel/Fragestellung.tex [5
 
-]) (./Kapitel/Implementierung.tex [6
+]) (./Kapitel/Grundlagen.tex [6
 
-]) (./Kapitel/Evaluation.tex [7
+]) (./Kapitel/Implementierung.tex [7
 
-]) (./Kapitel/Ausblick.tex [8
+]) (./Kapitel/Evaluation.tex [8
 
-]) (./Kapitel/Literatur.tex [9
+]) (./Kapitel/Ausblick.tex [9
+
+]) (./Kapitel/Literatur.tex [10
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 5--8
@@ -547,26 +549,26 @@ Underfull \hbox (badness 10000) in paragraph at lines 5--8
 \T1/ptm/m/n/12 /asset_publisher/1dO7RF5fJMbd/content/sentinel-1-product-definition (Zu-griff
  []
 
-) (./Kapitel/Abschlusserklärung.tex [10]) [11] (./main.aux)
+) (./Kapitel/Abschlusserklärung.tex [11]) [12] (./main.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: D2CFB015E11A3CE85A80E5709434C7B7;4064.
+(rerunfilecheck)             Checksum: A235B3392A2BD84A7D06387B56A0E223;4173.
  ) 
 Here is how much of TeX's memory you used:
- 13051 strings out of 478238
- 202282 string characters out of 5847939
+ 13059 strings out of 478238
+ 202436 string characters out of 5847939
  524573 words of memory out of 5000000
- 31017 multiletter control sequences out of 15000+600000
+ 31020 multiletter control sequences out of 15000+600000
  493330 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,5n,63p,462b,448s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on main.pdf (11 pages, 358965 bytes).
+Output written on main.pdf (12 pages, 359333 bytes).
 PDF statistics:
- 228 PDF objects out of 1000 (max. 8388607)
- 204 compressed objects within 3 object streams
- 48 named destinations out of 1000 (max. 500000)
- 227 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 238 PDF objects out of 1000 (max. 8388607)
+ 213 compressed objects within 3 object streams
+ 50 named destinations out of 1000 (max. 500000)
+ 235 words of extra memory for PDF output out of 10000 (max. 10000000)
 

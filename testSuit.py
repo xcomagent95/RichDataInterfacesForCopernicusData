@@ -16,6 +16,7 @@ print("API running...")
 
 class TestStringMethods(unittest.TestCase):
     def setUp(self):
+        #created folders and test Jobs
         pass
     logging.info("------------------> new test run <------------------")  
     #Test "/"

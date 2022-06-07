@@ -51,4 +51,4 @@ def processingChain():
 
 while(True): #run           
     processingChain() #processing chain
-    time.sleep(10) #every five minutes
+    time.sleep(30) #every five minutes
