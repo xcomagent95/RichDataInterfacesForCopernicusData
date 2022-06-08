@@ -225,25 +225,27 @@ def parseInput(processID, data):
     responseType = None
     #set response Type
     if("response" in data):
+        #set response type
         if(data["response"] not in ["document", "raw"]):
             responseType = "raw"
         else:
             responseType = data["response"]
-            
+     
+    #parse echo input
     if(processID == "Echo"):
         inputs = [data["inputs"]["echo"]]
-        #outputs = [data["outputs"]["complexObjectOutput"]]
         response = [inputs, responseType]
         
-        #check transmission mode
         file = open('templates/json/processes/' + processID + 'ProcessDescription.json',) #open ProcessDescription.json
         process = json.load(file) #create response   
         file.close() #close ProcessDescription.json
         
+        #check transmission mode
         if("response" in data):
             if(data["outputs"]["complexObjectOutput"]["transmissionMode"] not in process["outputTransmission"]):
                 response = False
-
+        
+        #check media type
         if("format" in data["outputs"]["complexObjectOutput"]):
             if(data["outputs"]["complexObjectOutput"]["format"]["mediaType"] != process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"]):
                 response = False
@@ -254,6 +256,9 @@ def parseInput(processID, data):
             
     if(processID == "FloodMonitoring"):
         
+        if(data["inputs"]["bbox"]["bbox"][0] > data["inputs"]["bbox"]["bbox"][2] or data["inputs"]["bbox"]["bbox"][1] < data["inputs"]["bbox"]["bbox"][3]):
+            return False
+        
         inputs = [data["inputs"]["preDate"],
                   data["inputs"]["postDate"],
                   data["inputs"]["username"],
@@ -263,7 +268,6 @@ def parseInput(processID, data):
                   data["inputs"]["bbox"]["bbox"][1],
                   data["inputs"]["bbox"]["bbox"][0]]
         
-        #outputs = [data["outputs"]["complexObjectOutput"]]
         response = [inputs, responseType]
         
         #check transmission mode
@@ -300,12 +304,6 @@ def getProduct(api, job, t0, t1):
 
 def retrieveProduct(api, product_id, downloads_path):
     #tiff_filter = products.make_path_filter("*/measurement/*-iw-grd-vv-*-*-*-*-*.tiff") #define .tiff filter
-    #noise_filter = products.make_path_filter("*/annotation/calibration/calibration-*-*-*-vv-*-*-*-*-*.xml") #define .xml filter
-    #sigma_filter = products.make_path_filter("*/annotation/calibration/noise-*-*-*-vv-*-*-*-*-*.xml") #define .xml filter
-    
-    #api.download(product_id, directory_path=downloads_path, checksum=False, nodefilter=tiff_filter) #download vv polarized .tiff
-    #api.download(product_id, directory_path=downloads_path, checksum=False, nodefilter=noise_filter) #download calibration .xml
-    #api.download(product_id, directory_path=downloads_path, checksum=False, nodefilter=sigma_filter) #download noise .xml
     api.download(product_id, directory_path=downloads_path, checksum=False) #download full product
     
 def calibrateProductSNAP(product_id, job):
