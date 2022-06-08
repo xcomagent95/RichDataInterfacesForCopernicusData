@@ -451,7 +451,18 @@ def getResults(jobID):
                     if(job["responseType"] == "raw"): #check if response type is raw
                         return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200 #send raw file
                     else: #check if response type is document
-                        return send_file('jobs/' + str(jobID) + '/results/result.json', mimetype=job["resultMediaType"]), 200
+                        file = open('jobs/' + str(jobID) + '/results/result.json',) #open apiDefinition.json
+                        payload = json.load(file) #create response
+                        file.close() #close apiDefinition.json
+                        
+                        result = {"complexObjectOutput": payload}
+                        
+                        json.dumps(result, indent=4) #dump content
+                        with open("jobs/" + jobID + "/results/resultsDocument.json", 'w') as f: #create file
+                            json.dump(result, f) #write content
+                        f.close() #close file
+                        
+                        return send_file('jobs/' + str(jobID) + '/results/resultsDocument.json', mimetype=job["resultMediaType"]), 200
                 elif(status["status"] == "failed"): #check if job failed
                     exception = {"title": "Job failed exception", "description": status["message"], "type": "job-results-failed"}
                     return exception, 404, {"resource": "job-failed"} #return not found if requested job is failed
@@ -464,7 +475,16 @@ def getResults(jobID):
                     if(job["responseType"] == "raw"): #check if response type is raw
                         return send_file('jobs/' + str(jobID) + '/results/bin.tiff', mimetype=job["resultMediaType"]), 200 #send raw file
                     else: #check if response type is document
-                        return send_file('jobs/' + str(jobID) + '/results/bin.tiff', mimetype=job["resultMediaType"]), 200 #send raw file
+                        imageBase64 = utils.encodeImageBase64('jobs/' + str(jobID) + '/results/bin.tiff')
+                        result = {"imagesOutput": [
+                                {"href": "localhost:5000/download/" + str(jobID),
+                                 "type": job["resultMediaType"]
+                                 },
+                                {"value": imageBase64,
+                                 "encoding": "base64",
+                                 "mediaType": job["resultMediaType"]}
+                            ]}
+                        return result, 200 #send raw file
                 elif(status["status"] == "failed"): #check if job failed
                     exception = {"title": "Job failed exception", "description": status["message"], "type": "job-results-failed"}
                     return exception, 404, {"resource": "job-failed"} #return not found if requested job is failed
@@ -478,6 +498,22 @@ def getResults(jobID):
         exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
         return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
 
+@app.route('/download/<jobID>', methods = ["GET"])
+def downloadFile(jobID):
+    app.logger.info('/download/' + jobID) #add log entry when endpoint is called
+    if(os.path.exists('jobs/' + str(jobID))):
+        file = open('jobs/' + str(jobID) + "/status.json",) #open status.json
+        status = json.load(file) #load the data from .json file
+        file.close() #close .json file
+        file = open('jobs/' + str(jobID) + "/job.json",) #open job.json
+        job = json.load(file) #load the data from .json file
+        file.close() #close .json file  
+        
+        if(job["processID"] == "FloodMonitoring"): #check processID
+            return send_file('jobs/' + str(jobID) + '/results/bin.tiff', mimetype=job["resultMediaType"]), 200 #send raw file
+        else:
+            return 500 #internal server error
+    
          
 #run application
 if __name__ == '__main__':

@@ -31,6 +31,8 @@ import numpy as np
 import xml.etree.cElementTree as et
 import math
 
+import base64
+
 class job:
     def __init__(self, id, process, job_path, results_path, downloads_path, input):
         self.id = id #unique id for the job
@@ -430,3 +432,7 @@ def theresholdSNAP(job):
     image_out.FlushCache() #flush the cash
     image_out = None #free output image
     dataset = None #free input image    
+    
+def encodeImageBase64(imagePath):
+    with open(imagePath, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode('utf-8')

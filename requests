@@ -10,6 +10,9 @@ curl -X GET -H "Content-Type:application/json" "localhost:5000/processes"
 curl -X GET -H "Content-Type:text/html" "localhost:5000/processes/Echo" 
 curl -X GET -H "Content-Type:application/json" "localhost:5000/processes/Echo" 
 
+#Echo raw
+curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'echo':'test'}, 'outputs':{'complexObjectOutput': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/Echo/execution"
+#Echo document
 curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'echo':'test'}, 'outputs':{'complexObjectOutput': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/Echo/execution"
 
 #Neuwerk
@@ -24,6 +27,12 @@ curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d
 #Demydow
 curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'preDate':'20220102', 'postDate':'20220604', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [50.68209876799218, 30.373870053936805, 50.75296226636879, 30.29868237792831]}}, 'outputs':{'imageOutput': {'format': {'mediaType': 'application=geotiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
 																																																					
+
+#Zakiganj
+curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'preDate':'20211220', 'postDate':'20210901', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [24.88758327590919, 92.32762841659967, 24.930683245328627, 92.25032491801463]}}, 'outputs':{'imageOutput': {'format': {'mediaType': 'application=geotiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
+
+#Oberhausen
+curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'preDate':'20220405', 'postDate':'20220412', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [51.54060265946126, 6.705732599335177, 51.59961800575529, 6.579675768733238]}}, 'outputs':{'imageOutput': {'format': {'mediaType': 'application=geotiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
 
 
 curl -X GET -H "Content-Type:text/html" "localhost:5000/jobs/96a1ec6f-a5ad-4181-a2c9-e2a1b14dbf83" 
