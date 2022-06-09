@@ -51,6 +51,10 @@ def readJob(jobFile):
     return jobObject #return job object
 
 def floodMonitoringProcess(job):
+    
+    if(checkForDismissal(job.path + '/status.json') == True):
+        return
+    
     footprint ={"type": "FeatureCollection","features": [{
                     "type": "Feature",
                     "properties": {},
@@ -67,25 +71,52 @@ def floodMonitoringProcess(job):
     with open(job.path + "/footprint.geojson", 'w') as f:
         json.dump(footprint, f)
         f.close()
+        
+    updateStatus(job.path + '/status.json', "running", "Step 1 of 10 completed", "10")
 
     pre_date_t0 = datetime.date(int(job.input[0][0:4]), int(job.input[0][4:6]), int(job.input[0][6:]))
     pre_date_t1 = pre_date_t0 + datetime.timedelta(days=1)
     post_date_t0 = datetime.date(int(job.input[1][0:4]), int(job.input[1][4:6]), int(job.input[1][6:]))
     post_date_t1 = post_date_t0 + datetime.timedelta(days=1)
-        
+     
+    updateStatus(job.path + '/status.json', "running", "Step 2 of 10 completed", "20")
+    
+    if(checkForDismissal(job.path + '/status.json') == True):
+        return
+    
     api = loginCopernicusHub(job)
+    updateStatus(job.path + '/status.json', "running", "Step 3 of 10 completed", "30")
+    if(checkForDismissal(job.path + '/status.json') == True):
+        return
     
     pre_product = getProduct(api, job, pre_date_t0, pre_date_t1)
     retrieveProduct(api, pre_product[0], job.downloads)
+    updateStatus(job.path + '/status.json', "running", "Step 4 of 10 completed", "40")
+    
     calibrateProductSNAP(pre_product[1], job)
+    updateStatus(job.path + '/status.json', "running", "Step 5 of 10 completed", "50")
+    
+    if(checkForDismissal(job.path + '/status.json') == True):
+        return
     
     post_product = getProduct(api, job, post_date_t0, post_date_t1)
     retrieveProduct(api, post_product[0], job.downloads)
+    updateStatus(job.path + '/status.json', "running", "Step 6 of 10 completed", "60")
+    
     calibrateProductSNAP(post_product[1], job)
+    updateStatus(job.path + '/status.json', "running", "Step 7 of 10 completed", "70")
+    
+    if(checkForDismissal(job.path + '/status.json') == True):
+        return
     
     ndsiSNAP(job)
+    updateStatus(job.path + '/status.json', "running", "Step 8 of 10 completed", "80")
+    
     clipProductSNAP(job)
+    updateStatus(job.path + '/status.json', "running", "Step 9 of 10 completed", "90")
+    
     theresholdSNAP(job)
+    updateStatus(job.path + '/status.json', "running", "Step 10 of 10 completed", "100")
 
 def echoProcess(job):
     if(checkForDismissal(job.path + '/status.json') == True):
