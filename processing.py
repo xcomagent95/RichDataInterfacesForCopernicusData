@@ -28,7 +28,7 @@ def processingChain():
     if(len(processing_list) > 0): #check if there are unprocesses jobs
         oldest_job = processing_list[0][0] #retrieve the oldest job
         logging.info("--> running job: " + oldest_job)        
-        utils.updateStatus("jobs" + oldest_job + '/status.json', "running", "the job has been started", "0")
+        utils.updateStatus("jobs/" + oldest_job + '/status.json', "running", "the job has been started", "0")
         
         with open('jobs/' + oldest_job + '/job.json', "r") as f: #load job.json
             data = json.load(f) #load data from .json

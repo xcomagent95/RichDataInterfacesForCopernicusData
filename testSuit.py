@@ -16,7 +16,10 @@ print("API running...")
 
 class TestStringMethods(unittest.TestCase):
     def setUp(self):
-        #created folders and test Jobs
+        #created finished job
+        #create failed job
+        #create created job
+        
         pass
     logging.info("------------------> new test run <------------------")  
     #Test "/"
@@ -196,6 +199,8 @@ class TestStringMethods(unittest.TestCase):
      
     #Abstract Test A.34
     def test_a34(self):
+        
+        #Echo execution
         logging.info("--> abstract test a34 started")  
         request = requests.post('http://localhost:5000/processes/Echo/execution', json={'inputs':{'inputValue':'test'}, 'outputs':{'complexObjectOutput': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'})
         status_code = request.status_code
