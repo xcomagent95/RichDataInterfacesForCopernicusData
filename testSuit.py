@@ -5,7 +5,8 @@ import requests
 import logging
 import subprocess
 import json
-from werkzeug.serving import WSGIRequestHandler
+import os
+import datetime
 
 logging.basicConfig(filename = 'testSuitLog.log', 
                     level=logging.INFO, 
@@ -13,6 +14,62 @@ logging.basicConfig(filename = 'testSuitLog.log',
 
 api = subprocess.Popen(['python', 'api.py']) #start the api in a subprocess
 print("API running...")
+
+def createTestJob(jobID, status, progress):
+    #create job directories        
+    os.mkdir("jobs/" + jobID) #directory for current job
+    os.mkdir("jobs/" + jobID + "/results/") #results directory for current job
+    os.mkdir("jobs/" + jobID + "/downloads/") #download directory for current job
+
+    #create job.json
+    job_file = {"jobID": jobID, #set jobID
+                "processID": "Echo", #set processID
+                "input": "successfulJobTest", #set input parameters
+                "responseType": "raw", #set response type (raw or document)
+                "resultMediaType": "ápplication", #set result mediatype
+                "path": "jobs/" + jobID, #set job path
+                "results": "jobs/" + jobID + "/results/", #set results path
+                "downloads": "jobs/" + jobID + "/downloads/"} #set downloads path
+    json.dumps(job_file, indent=4) #dump content
+    with open("jobs/" + jobID + "/job.json", 'w') as f: #create file
+        json.dump(job_file, f) #write content
+    f.close() #close file  
+
+    #create status.json
+    status_file = {"jobID": jobID, #set jobID
+                   "processID": "Echo", #set processID
+                   "status": status, #set initial status
+                   "message": "This is a test job", #set initial message
+                   "type": "process", #set type of job
+                   "progress": 100, #set unitial progress
+                   "created": str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), #set created timestamp
+                   "started": "none", #set initial started timestamp
+                   "finished": "none", #set initial finished tiestamp
+                   "links": [ #add links to self and alternate
+                       {
+                           "href": "localhost:5000/jobs/" + jobID + "?f=application/json",
+                            "rel": "self",
+                            "type": "application/json",
+                            "title": "this document as JSON"},
+                        {
+                            "href": "localhost:5000/jobs/" + jobID + "?f=text/html",
+                            "rel": "alternate",
+                            "type": "text/html",
+                            "title": "this document as HTML"
+                        }
+                        ]}
+    json.dumps(status_file, indent=4) #dump content
+    with open("jobs/" + jobID + "/status.json", 'w') as f: #create file
+        json.dump(status_file, f) #write content
+    f.close() #close file
+
+def createTestResult(jobID, input):
+    result ={"result": "input",
+             "message": "This is an echo"}
+    json.dumps(result, indent=4)
+    with open("jobs/" + jobID + "results/result.json", 'w') as f: #create file
+        json.dump(result, f) #write content
+        f.close() #close file
 
 class TestStringMethods(unittest.TestCase):
     def setUp(self):
@@ -205,12 +262,17 @@ class TestStringMethods(unittest.TestCase):
         request = requests.post('http://localhost:5000/processes/Echo/execution', json={'inputs':{'inputValue':'test'}, 'outputs':{'complexObjectOutput': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'})
         status_code = request.status_code
         self.assertEqual(status_code, 201)
-        logging.info("--> abstract test a34 passed")        
+        logging.info("--> abstract test a34 passed")   
+        
+        #Flood Monitoring Execution
         
     #Abstract Test A.35 & A.36
     def test_a35_36(self):
+        createTestJob("testJob", "created", 0)
+        
+        
         logging.info("--> abstract test a35 & a36 started")  
-        request = requests.get('http://localhost:5000/jobs/test?f=application/json')
+        request = requests.get('http://localhost:5000/jobs/testJob?f=application/json')
         status_code = request.status_code
         resource = request.headers["resource"]
         content_type = request.headers["Content-Type"]
@@ -218,7 +280,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(resource, 'job')
         self.assertEqual(status_code, 200)
         
-        request = requests.get('http://localhost:5000/jobs/test?f=text/html')
+        request = requests.get('http://localhost:5000/jobs/testJob?f=text/html')
         status_code = request.status_code
         resource = request.headers["resource"]
         content_type = request.headers["Content-Type"]
@@ -249,8 +311,15 @@ class TestStringMethods(unittest.TestCase):
         
     #Abstract Test A.38
     def test_a38(self):
-        logging.info("--> abstract test a38 started")  
-        request = requests.get('http://localhost:5000/jobs/test/results?f=application/json')
+        logging.info("--> abstract test a38 started")
+        createTestJob("successfulJob", "successful", 100)
+        createTestResult("successfulJob", "successfulJob")
+        
+        request = requests.get('http://localhost:5000/jobs/successfulJob/results?f=application/json')
+        status_code = request.status_code
+        self.assertEqual(status_code, 200)
+        
+        request = requests.get('http://localhost:5000/jobs/successfulJob/results?f=text/html')
         status_code = request.status_code
         self.assertEqual(status_code, 200)
         logging.info("--> abstract test a38 passed")
@@ -270,7 +339,9 @@ class TestStringMethods(unittest.TestCase):
     #Abstract Test A.46
     def test_a46(self):
         logging.info("--> abstract test a46 started")  
-        request = requests.get('http://localhost:5000/jobs/testNotReady/results?f=application/json')
+        
+        createTestJob("runningJob", "running", 50)
+        request = requests.get('http://localhost:5000/jobs/runningJob/results?f=application/json')
         status_code = request.status_code
         resource = request.headers["resource"]
         content_type = request.headers["Content-Type"]
@@ -282,7 +353,8 @@ class TestStringMethods(unittest.TestCase):
     #Abstract Test A.47
     def test_a47(self):
         logging.info("--> abstract test a47 started")  
-        request = requests.get('http://localhost:5000/jobs/testFailed/results?f=application/json')
+        createTestJob("failedJob", "failed", 0)
+        request = requests.get('http://localhost:5000/jobs/failedJob/results?f=application/json')
         status_code = request.status_code
         resource = request.headers["resource"]
         content_type = request.headers["Content-Type"]
