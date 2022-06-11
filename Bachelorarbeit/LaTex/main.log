@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.14)  8 JUN 2022 15:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.14)  11 JUN 2022 21:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -318,7 +318,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
 )
 \Hy@SectionHShift=\skip52
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 23.
+Package hyperref Info: Option `colorlinks' set `true' on input line 24.
  (c:/texlive/2022/texmf-dist/tex/latex/cite/cite.sty
 LaTeX Info: Redefining \cite on input line 302.
 LaTeX Info: Redefining \nocite on input line 332.
@@ -335,24 +335,24 @@ File: l3backend-pdftex.def 2022-04-10 L3 backend support: PDF output (pdfTeX)
 ) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
  (c:/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count296
@@ -413,7 +413,7 @@ File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 149.
 )
-Package hyperref Info: Link coloring ON on input line 27.
+Package hyperref Info: Link coloring ON on input line 28.
  (c:/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (c:/texlive/2022/texmf-dist/tex/latex/refcount/refcount.sty
@@ -423,9 +423,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count302
 )
-LaTeX Info: Redefining \ref on input line 27.
-LaTeX Info: Redefining \pageref on input line 27.
-LaTeX Info: Redefining \nameref on input line 27.
+LaTeX Info: Redefining \ref on input line 28.
+LaTeX Info: Redefining \pageref on input line 28.
+LaTeX Info: Redefining \nameref on input line 28.
  (./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
@@ -465,12 +465,12 @@ LaTeX Info: Redefining \nameref on input line 27.
 <Bilder/wwu_logo.png, id=124, 2276.2641pt x 768.2301pt>
 File: Bilder/wwu_logo.png Graphic file (type png)
 <use Bilder/wwu_logo.png>
-Package pdftex.def Info: Bilder/wwu_logo.png  used on input line 31.
+Package pdftex.def Info: Bilder/wwu_logo.png  used on input line 32.
 (pdftex.def)             Requested size: 170.71652pt x 57.61476pt.
 <Bilder/ifgi_logo.png, id=126, 359.7075pt x 133.0425pt>
 File: Bilder/ifgi_logo.png Graphic file (type png)
 <use Bilder/ifgi_logo.png>
-Package pdftex.def Info: Bilder/ifgi_logo.png  used on input line 32.
+Package pdftex.def Info: Bilder/ifgi_logo.png  used on input line 33.
 (pdftex.def)             Requested size: 170.71652pt x 63.14102pt.
  [1
 
@@ -517,56 +517,79 @@ LaTeX Warning: Hyper reference `acro:API' on page 4 undefined on input line 5.
 
 LaTeX Warning: Hyper reference `acro:API' on page 4 undefined on input line 5.
 
-) (./Kapitel/Einleitung.tex [4]) (./Kapitel/Grundlagen.tex [5
 
-]) (./Kapitel/Implementierung.tex [6
+LaTeX Warning: Hyper reference `acro:OGC' on page 4 undefined on input line 8.
 
-]) (./Kapitel/Evaluation.tex [7
 
-]) (./Kapitel/Ausblick.tex [8
+LaTeX Warning: Hyper reference `acro:OGC' on page 4 undefined on input line 8.
 
-]) (./Kapitel/Literatur.tex [9
+
+LaTeX Warning: Hyper reference `acro:NDSI' on page 4 undefined on input line 11.
+
+
+LaTeX Warning: Hyper reference `acro:NDSI' on page 4 undefined on input line 11.
+
+) (./Kapitel/Einleitung.tex [4] [5
+
+]) (./Kapitel/Grundlagen.tex [6]
+Overfull \hbox (19.75798pt too wide) in paragraph at lines 20--27
+ [] 
+ []
+
+[7
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 5--8
-[]\T1/ptm/m/n/12 M. Bour-bi-got, H. John-son, R. Pi-an-ta-ni-da. (2016, März
+<Bilder/SAR_Prinzip.png, id=210, 648.92438pt x 609.02531pt>
+File: Bilder/SAR_Prinzip.png Graphic file (type png)
+<use Bilder/SAR_Prinzip.png>
+Package pdftex.def Info: Bilder/SAR_Prinzip.png  used on input line 44.
+(pdftex.def)             Requested size: 341.43306pt x 320.44005pt.
+ [8 <./Bilder/SAR_Prinzip.PNG>]) (./Kapitel/Implementierung.tex [9]) (./Kapitel/Evaluation.tex [10
+
+]) (./Kapitel/Ausblick.tex [11
+
+]) (./Kapitel/Literatur.tex [12
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 6--9
+[]\T1/ptm/m/n/12 A. Mo-rei-ra, M. You-nis, P. Prats-Iraola, G. Krie-ger, I. Ha-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5--8
-\T1/ptm/m/n/12 25). Sentinel-1 Pro-duct De-fi-ni-ti-on [On-li-ne]. Ver-füg-bar un-ter:
+Underfull \hbox (badness 10000) in paragraph at lines 6--9
+\T1/ptm/m/n/12 jn-sek und K. P. Pa-patha-nas-siou (2013, April 17). A Tu-to-ri-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5--8
-\T1/ptm/m/n/12 https://sentinel.esa.int/web/sentinel/user-guides/sentinel-1-sar/document-library/-
+Underfull \hbox (badness 10000) in paragraph at lines 6--9
+\T1/ptm/m/n/12 al on Syn-the-tic Aper-ture Ra-dar [On-li-ne]. Ver-füg-bar un-ter: htt-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5--8
-\T1/ptm/m/n/12 /asset_publisher/1dO7RF5fJMbd/content/sentinel-1-product-definition (Zu-griff
+Overfull \hbox (59.8538pt too wide) in paragraph at lines 6--9
+\T1/ptm/m/n/12 ps://www.researchgate.net/publication/257008464_A_Tutorial_on_Synthetic_Aperture_Radar
  []
 
-) (./Kapitel/AbschlusserklÃ¤rung.tex [10]) [11] (./main.aux)
+) (./Kapitel/AbschlusserklÃ¤rung.tex [13]) [14] (./main.aux)
 
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: EF6C4DFD9A8E3687C8ABAC3BD2A557EC;4343.
+(rerunfilecheck)             Checksum: 21C08187AE9E948C232E52A3D4A50AD4;4343.
  ) 
 Here is how much of TeX's memory you used:
- 13057 strings out of 478238
- 202372 string characters out of 5847939
- 525576 words of memory out of 5000000
- 31020 multiletter control sequences out of 15000+600000
+ 13076 strings out of 478238
+ 202609 string characters out of 5847939
+ 525790 words of memory out of 5000000
+ 31032 multiletter control sequences out of 15000+600000
  493330 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,5n,63p,462b,448s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 60i,8n,63p,462b,448s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on main.pdf (11 pages, 359350 bytes).
+Output written on main.pdf (14 pages, 478747 bytes).
 PDF statistics:
- 244 PDF objects out of 1000 (max. 8388607)
- 220 compressed objects within 3 object streams
- 51 named destinations out of 1000 (max. 500000)
- 251 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 274 PDF objects out of 1000 (max. 8388607)
+ 245 compressed objects within 3 object streams
+ 57 named destinations out of 1000 (max. 500000)
+ 256 words of extra memory for PDF output out of 10000 (max. 10000000)
 

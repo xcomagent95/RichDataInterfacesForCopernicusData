@@ -786,6 +786,11 @@ INPUT ./Kapitel/Grundlagen.tex
 INPUT Kapitel/Grundlagen.tex
 INPUT ./Kapitel/Grundlagen.tex
 INPUT Kapitel/Grundlagen.tex
+INPUT ./Bilder/SAR_Prinzip.PNG
+INPUT ./Bilder/SAR_Prinzip.PNG
+INPUT Bilder/SAR_Prinzip.PNG
+INPUT ./Bilder/SAR_Prinzip.PNG
+INPUT ./Bilder/SAR_Prinzip.PNG
 INPUT ./Kapitel/Implementierung.tex
 INPUT Kapitel/Implementierung.tex
 INPUT ./Kapitel/Implementierung.tex
