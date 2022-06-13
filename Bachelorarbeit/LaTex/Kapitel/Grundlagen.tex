@@ -11,15 +11,17 @@ Die Radarfernerkundung gehört zu den aktiven Fernerkundungsmethoden da hier im 
 von Oberflächen reflektierte Strahlung von anderen Strahlungsquellen wie der Sonne aufgenommen wird, sondern das Fernerkundungssystem 
 selbst als Strahlungsquelle dient. Messungen können daher tageszeitunabhängig erfolgen. Dabei können die sendenden und erfangenden Komponenten 
 unterschiedlich (bi- oder multistatisches Radar) oder identisch sein (monostatitsches Radar). Bildgebende Radarsysteme werden auf mobilen Plattformen 
-montiert und blicken seitlich auf die zu beobachtende Oberfläche. Die Flugrichtung wird Azimut und die Blickrichtung als Slant Range bezeichnet. 
+montiert und blicken seitlich auf die zu beobachtende Oberfläche. Die Flugrichtung wird Azimut und die Blickrichtung als Slant Range bezeichnet \cite{tutorial_on_sar} (Abbildung 1). 
 
 Die Eigenschaften des reflektierten Signals hängen sowohl von Parametern des Aufnahmesystems als von Parametern der reflektierenden Oberfläche ab.
-So werden in der Radarfernerkundung verschiedenen Frequenzbänder verwendet, welche sich in Frequenz und Wellenlänge unterscheiden. (Warum?) 
-Mit einer größeren Wellenlänge kann ein Medium tiefer durchdrungen werden. Außerdem werden Wolken, Dunst und Rauch durchdrungen was den zusätzlich Vorteil bietet
+So werden in der Radarfernerkundung verschiedenen Frequenzbänder verwendet, welche sich in Frequenz und Wellenlänge unterscheiden. Da sich Wechselwirkung zischen Signalen 
+unterschiedlicher Frequenzbänder unterscheidet können so unterschiedliche Aspekte der beobachteten Oberfläche hervorgehoben werden. Dabei kommen in der Regel
+Wellenlängen von 0.75m bis 120m zu Einsatz (Tabelle 1).
+Mit einer größeren Wellenlänge kann ein Medium auch tiefer durchdrungen werden. Außerdem werden Wolken, Dunst und Rauch durchdrungen was den zusätzlich Vorteil bietet
 wetterunabhängig Messungen durchführen zu können \cite{einfuehrung_in_fernerkundung}.
 
 \begin{table}[htb]
-    \caption{Gängige Frequenz-Bänder in der Radarfernerkundung}
+    \caption{Gängige Frequenz-Bänder in der Radarfernerkundung \cite{tutorial_on_sar}}
 \begin{center}
     \begin{tabular}{|c|c|c|c|c|c|c|c|} 
         Frequenzband & Ka & Ku & X & C & S & L & P\\ 
@@ -29,29 +31,26 @@ wetterunabhängig Messungen durchführen zu können \cite{einfuehrung_in_fernerk
     \end{tabular}
     \label{table:1}
 \end{center}
-    \text{Quelle: }
 \end{table}
 
 Die Durchdringungstiefe hängt auch von der Dielektrizitätskonstante der reflektierenden Oberfläche ab. Ist diese groß, reflektiert die Oberfläche stark und die 
 Durchdringungstiefe ist gering. Zusätzlich ist die Polarisation der ausgesandten und empfangenen Signale bei der Messung ausschlaggebend. Sie können horizontal oder 
-vertikal polarisiert sein. Dies führt zu vier möglichen Polarisationsmodi für das Senden (transcieve) und das Empfangen (receive) nämlich HH, VV, HV und VH.
-
+vertikal polarisiert sein. Dies führt zu vier möglichen Polarisationsmodi für das Senden (transcieve) und das Empfangen (receive) nämlich HH, VV, HV und VH. Auch die 
+Polarisation sorgt für eine unterschiedliche Wiedergabe von beobachteten Objekten und kann somit verwendet werden um bestimmte Aspekte hervorzuheben \cite{einfuehrung_in_fernerkundung}. 
 Die Auflösung entlang des Azimut unterscheidet sich von der Auflösung in Blickrichtung. Die Auflösung in Azimutrichtung wird von der Antennenlänge 
 bestimmt da diese festlegt wie lange die Reflektion eines Objektes empfangen werden. Die Antennenlänge kann bauartbedingt nicht beliebig gesteigert werden.
 Die Antennenlänge bestimmt auch den Abstrahlwinkel und somit die Ausdehnung am Boden eines Impulses in Azimutrichtung. Diese nimmt mit zunehmender Entfernung
 zu, während die Auflösung abnimmt.
-
 Die Auflösung in Blickrichtung hängt vom Depressionswinkel der Antenne ab da dieser Einfluss auf die Laufzeit des Signals nimmt. Die Ausdehnung des beobachteten Gebietes hängt von der Dauer des ausgesandten Signales ab. Die bisher beschriebene System wird auch System mit realer Apertur bezeichnet und eignet sich nur für geringe
 Flughöhen da hier der Abstand zwischen Antenne und Oberfläche gering ist. 
-
 Bei Radarsystemen mit einer synthetischen Apertur wird durch die Bewegung des Sensors in Azimutrichtung die wirksame Antennenlänge rechnerisch verlängert indem 
 die reflektierten Signale eines beobachteten Objektes von verschiedenen Standpunkten und unterschiedlichen Zeitpunkten miteinander korreliert werden. So können 
-hohe Azimutauflösungen erzielt werden. Solche Systeme eigenen sich auch für den Einsatz auf Satelliten.
+hohe Azimutauflösungen erzielt werden. Solche Systeme eigenen sich auch für den Einsatz auf Satelliten \cite{einfuehrung_in_fernerkundung}.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=12cm]{Bilder/SAR_Prinzip.png}
-    \caption{Prinzip des Synthetic Aperture Radar - Quelle: \cite{tutorial_on_sar}}
+    \caption{Prinzip des Synthetic Aperture Radar \cite{tutorial_on_sar}}
     \label{fig:sar_prinzip}
 \end{figure}
 
@@ -65,8 +64,35 @@ Mittels Geocodierung kann das so entstandene Bild verortet werden. Zusätzlich k
 minimieren, die geometrischen Eigenschaften verbessern oder die Interpretation der Bilder erleichtern \cite{tutorial_on_sar}. 
 
 \subsection{Copernicus Programm}
+\subsubsection{Aufbau}
+Das Copernicus Programm ging aus dem GMES Programm hervor welches 1998 mit dem Ziel initiiert wurde um Europa zu ermöglichen eine führende Rolle bei der Lösung von 
+weltweiten Problemen im Kontext Umwelt und Klima zu verschaffen. Teil dieser Bestrebungen ist der Aufbau eines leistungsfähigen Weltraumkomponente zur Erdbeobachtung.
+2012 wird das GMES Programm zum Copernicus Programm. 2014 erfolgte der Start des ersten Erdbeobachtungssatelliten. Diese sogenannten Sentinels gehören zu fünf unterschiedlichen 
+Missionen \cite{history_of_copernicus}. 
+Sentinel-1 Satelliten sind mit bildgebenden Radarsystemen ausgerüstet und beobachten wetter und tageszeitunabhängig Land-, Wasser- und Eismassen um unter andrem das Krisenmanagement
+unterstützen. Satelliten der Sentinel-2 Mission führen hochauflösende, multspektrale Kameras mit und liefern weltweit optische Fernerkundungsdaten. Altimetrische und radioimetrische
+Daten von Land- und Wasserflächen werden von der Sentinel-3 Satellitenmission gesammelt während spectrometrische Daten zur Überwachung der Luftqualität von Sentinel-4 und 5 Satelliten 
+erfasst werden. Ozeanografische Daten werden von den Setinel-6 Satelliten geliefert \cite{sentinel_overview}. In Ergänzug zur weltraumbasierten Komponente werden von der bodenbasierten
+Komponente in-situ Daten gesammelt welche zur Korrektur oder Verifizierung der von den Satelliten erfassten Daten dienen. 
+Überdies gehören umfangreiche Infrastrukturen zu Verarbeitung und Bereitstellung der Daten zum Copernicus Programm (Zitat einfügen). 
 \subsubsection{Ziele}
 \subsubsection{Sentinel 1}
+Daten können in vier Aufnahmemodi erfasst werden die sich durch unterschiedliche geometrische und radiometrische Auflösungen sowie Streifenbreite unterscheiden.
+\begin{table}[htb]
+    \caption{Eigenschaften der Aufnamemodi der Sentinel-1 Mission \cite{sentinel_1_overview}}
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|} 
+        Parameter & Interferometric Wide-swath mode(IW) & Wave mode (WV) & Strip Map mode (SM) & Extra Wide-swath mode (EW) \\ 
+        \hline
+        Polarisation & Dual (HH+HV, VV+VH) & Single (HH, VV) & Dual (HH+HV, VV+VH) & Dual (HH+HV, VV+VH) \\ 
+        Azimut-Auflösung (m) & 20 & 5 & 5 & 40 \\
+        Rage-Auflösung (m) & 5 & 5 & 5 & 20 \\
+        Streifenbreite (km) & 250 & Vignette 20x20 & 80 & 410\\
+    \end{tabular}
+    \label{table:1}
+\end{center}
+\end{table}
+
 \subsubsection{Datenzugang}
 \subsection{Überschwemmungsmonitoring}
 \subsection{Schnittstellen}

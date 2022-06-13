@@ -1,2 +1,3 @@
 \babel@toc {ngerman}{}\relax 
-\contentsline {table}{\numberline {1}{\ignorespaces Gängige Frequenz-Bänder in der Radarfernerkundung}}{7}{table.1}%
+\contentsline {table}{\numberline {1}{\ignorespaces Gängige Frequenz-Bänder in der Radarfernerkundung \cite {tutorial_on_sar}}}{7}{table.1}%
+\contentsline {table}{\numberline {2}{\ignorespaces Eigenschaften der Aufnamemodi der Sentinel-1 Mission \cite {sentinel_1_overview}}}{10}{table.2}%
