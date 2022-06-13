@@ -117,6 +117,7 @@ def floodMonitoringProcess(job):
     
     theresholdSNAP(job)
     updateStatus(job.path + '/status.json', "running", "Step 10 of 10 completed", "100")
+    setFinished(job.path + '/status.json')
 
 def echoProcess(job):
     if(checkForDismissal(job.path + '/status.json') == True):
@@ -288,6 +289,15 @@ def parseInput(processID, data):
     if(processID == "FloodMonitoring"):
         
         if(data["inputs"]["bbox"]["bbox"][0] > data["inputs"]["bbox"]["bbox"][2] or data["inputs"]["bbox"]["bbox"][1] < data["inputs"]["bbox"]["bbox"][3]):
+            return False
+        
+        try:
+            preDate = datetime.date(int(job.input[0][0:4]), int(job.input[0][4:6]), int(job.input[0][6:]))
+            postDate = datetime.date(int(job.input[1][0:4]), int(job.input[1][4:6]), int(job.input[1][6:]))
+        except:
+            return False
+        
+        if(postDate < preDate):
             return False
         
         inputs = [data["inputs"]["preDate"],
