@@ -98,7 +98,7 @@ multispektrale Kameras mit und liefern weltweit optische Fernerkundungsdaten. Al
 Sentinel-3 Satellitenmission gesammelt während spektrometrische Daten zur Überwachung der Luftqualität von Sentinel-4 und 5 Satelliten erfasst werden. 
 Ozeanografische Daten sollen von den Setinel-6 Satelliten geliefert \cite{sentinel_overview}. \\
 
-Die In-Situ-Komponente sammelt Daten von see-, luft- und landbasierten Sensoren sowie geografische und geodätische Referenzdaten. Die harmonisierten Daten 
+Die In-Situ-Komponente sammelt Daten von See-, luft- und landbasierten Sensoren sowie geografische und geodätische Referenzdaten. Die harmonisierten Daten 
 werden verwendet um die Daten der Weltraum-Komponente zu verifizieren oder zu korrigieren. Gleichzeitig können räumliche oder thematische Lücken in der 
 Datenabdeckung gefüllt werden \cite{copernicus_regulation}\cite{what_is_copernicus}. \\
 
@@ -156,12 +156,19 @@ Nach dem Erfassen der Daten und dem Übersenden an eine Bodenstation werden dive
 Parameter einfließen. Daraus ergeben sich diverse Produkte welche sich durch Aufnahmemodus (IW, SM, EW und WV), Level-1 Produkt-Typ (SLC, GRD) sowie ihre 
 Auflösung (Full-, High-, und Medium-Resolution) unterscheiden. Single Look Complex (SLC) Produkte sind im wesentlichen Kalibrierte Rohdaten in denen Amplitude und Phase nicht
 zur Reflektivität kombiniert wurden und die geometrische Auflösung sich in Azimut- und Blickrichtung unterscheidet. Ground Rage Detected (GRD) Produkte bilden hingegen die 
-Reflektivität ab und haben eine annähern quadratische geometrische Auflösung. Die Reflektivität wird in der logarithmischen Maßeinheit Decibel (dB). Die Korrektur der Auflösung 
-in Blickrichtung erfolgt dabei erfolgt dabei durch Projektion auf einen Ellipsoiden. \cite{sentinel_1_definition}. Aus den Level-1 Produkten können die Level-2 Produkte 
-OSW, OWI und RVL abgeleitet werden.
+Reflektivität ab und haben eine annähern quadratische geometrische Auflösung. Die Reflektivität wird in der logarithmischen Maßeinheit Decibel (dB) angegeben. Die Korrektur 
+der Schrägdistanz in Blickrichtung erfolgt dabei erfolgt dabei durch Projektion auf einen Ellipsoiden. \cite{sentinel_1_definition}. Aus den Level-1 Produkten können die 
+Level-2 Produkte OSW, OWI und RVL abgeleitet werden.
 
 \subsubsection{Datenzugang}
 \subsection{Überschwemmungsmonitoring}
+Um Wasserflächen und damit auch überflutete Areale auf Radarbildern zu erkennen können die Reflektionseingenschaften von Wasserflächen genutzt werden. Das Wasser eine 
+sehr niedrige Rauigkeit besitzt kommt beim Aufprall eines Radarsignals zu einer Spiegelung und nur ein sehr geringer Teil des Signals wird zum Empfänger 
+zurückgeworfen. In den resultierenden Bildern äußert sich dieser Umstand in niedrigen Refelktivitätswerten. 
+Um die Areale mit niedrigen Reflektionswerten automatisiert detektieren können Verfahren genutzt werden welche aus den Histogrammen der Bilder einen Schwellwert berechnen.
+Eines dieses Schwellwertverfahren wurde von Nobuyuki Otsu entwickelt und ist nach ihm benannt. Bei diesem Verfahren werden alle Werte eines Histogramms durchlaufen.
+Jeder dieser Werte teilt das Histogramm in zwei Gruppen und bildet so einen Schwellwert. 
+
 \subsection{Schnittstellen}
 \subsection{OGC und OGC Standards}
 \subsection{OGC API - Processes - Part 1: Core}

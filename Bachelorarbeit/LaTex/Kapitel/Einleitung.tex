@@ -2,46 +2,6 @@
 \restoregeometry
 \section{Einleitung}
 \subsection{Motivation}
-Diverse fernerkundungs Programme und Plattformen erfassen täglich eine große Menge 
-von Fernerkundungsdaten in unterschiedlichsten Formaten. Die erfassten Daten finden 
-in vielen Unterschiedlichen Szenarien anwendung. Eines dieser Szenarien ist das Kartieren 
-von Flutkatastrophen und die Unterstützung entsprechnder Risikoanalysen. Da Überschwemmungen 
-ca. 75\% der weltweiten Naturkatastrophen ausmachen ist dieses Thema in der EU und Weltweit 
-im Fokus des zuständiger Behörden. Um deren Arbeit so effizient und präzise wie möglich zu 
-unterstützen werden nicht nur ein Zugang zu den erfassten Fernerkndungsdaten 
-benötigt sondern auch die Möglichkeit abgeleitete Geoprodukte beziehen 
-zu können. Diese abgeleiteten Geoprodukte sind bereits vorprozessiert und auf spezielle Anwedungsfälle,
-zum Beispiel die Überschwemmungskartierung, zugeschnitten. Für die Entscheidungsträger bietet dies einige 
-Vorteile Zum einen müssen sie die teilweise aufwendigen und fachlich anspruchsvollen Verarbeitung der 
-Geodaten nicht eigenständig durchführen. Zum anderen besteht keine Notwendigkeit auf seiter der 
-Konsumenten Infrastrukturen für die Verarbeitung und Speicherung der Rohdaten bereitstellen zu müssen.
-Um eine große Nitzergemeinschaft schnell und einfach mit den beschreibenen Daten versoregn zu können 
-ist die Standardisierung von Formaten und Schnittstellen unabdingbar. Das Open Geospatial Consortium (OGC)
-widmet dieser Aufgabe und definiert seit 1994 dieser Aufgabe. 
 \subsection{Ziele}
-Das Hauptziel dieser Arbeit ist die Implementierung einer OGC API - Processes - Part 1: Core standardkonformen
-API. Die API wird einen Prozess anbieten welches es Nutzer Überschwemmungsmasken für ein gewünschtes Gebiet 
-zu erzeugen. Die Überschwemmungsmaken sollen auf der Basis von Fernerkundungsdaten der Sentinel-1 Mission erfolgen.
-Der Prozess soll dabei die Beschaffung und Vorprozessierung der Daten sowie die Berechng des Normalized Difference 
-Sigma-Naught Index (NDSI) und dessen Grenzwertbestimmung und Binärisierung durchführen.  
 \subsection{Aufbau}
-Im ersten Teil dieser Arbeit sollen die fachlichen und technischen Grundlagen gechaffen werden. 
-Dabei werden zunächst Grundlegende Konzepte der Radarfernerkundung erläutert werden. Ein besonderes
-Augenmerk liegt dabei auf der sattelitengestützten Plattformen mit eines synthetischen Apetur zu denen 
-die beiden Satteliten der Sentinel-1 Mission zählen. 
-Anschließend sollen die Ziele sowie die Struktur das der Sentinel-1 Mission zugrunde liegenden Copernicus 
-Programm der Europäischen Union vorgestellt werden. Da im Kontext dieser Arbeit nicht nur die im Rahmen dieses
-Programmes erfassten Geodaten von Interesse sind sonder auch der Zugang zu diesen wird dieser Aspekt ebenfalls
-näher untersucht.
-Da der über die API anzubietende Prozess das Detektieren von Überflutungen auf Radardaten der Sentinel-1 Mission
-ermöglichen soll im Grundlageteil auch kurz in dieses Thema eingeführt werden. Dabei werden sowohl die Arbeitscshritte
-der Vorprozessierung als auch das Hereausrbeiten der Überflutung beschreiben werden.
-Da sich ein großteil der Arbeit mit der Implementierung eines Standards für Application programming Interfaces (API)
-beschäftigt soll der Begriff der Schnittstelle im Kontext der Geoinformatik klar definiert und und ihre Eigenschaften 
-beschrieben werden. Da der zu implmentierende Stadard ein Entwicklng des OGC ist wird diese Organisation ebenfalls 
-kurz vorgestellt. Darauf aufbauend wird der OGC API - Processes - Part 1: Core Standard vorgestellt. Im Fokus dieser 
-Beschreibung liegt das Ziel welches das OGC mit dieser Standardisierung verfolgt sowie der Aufbau von OGC Standards Im
-Allgemeinen und dem genannten Standard im Besonderen. 
-Abschließend werden die Evaluationkriterien mit welchen in dieser ARbeit die zu implementierende API bewertet werden 
-soll vorgestellt. 
 

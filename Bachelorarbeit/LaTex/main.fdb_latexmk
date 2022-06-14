@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1655199323 "c:/Users/Alexander/Documents/GitHub/RichDataInterfacesForCopernicusData/Bachelorarbeit/LaTex/main.tex" "main.pdf" "main" 1655199327
+["pdflatex"] 1655201438 "c:/Users/Alexander/Documents/GitHub/RichDataInterfacesForCopernicusData/Bachelorarbeit/LaTex/main.tex" "main.pdf" "main" 1655201442
   "Bilder/Aquisition_Modes.PNG" 1655135318 414850 1f326bf901ae08283c52c04a6abc4073 ""
   "Bilder/SAR_Modi.PNG" 1655140722 179757 c3f8a6ba86adc7dec7849551ccb76c35 ""
   "Bilder/SAR_Prinzip.PNG" 1654953603 130505 02c21c1be00bd36e0c308ef6444a554a ""
@@ -8,10 +8,10 @@
   "Kapitel/Abkürzungsverzeichnis.tex" 1655198935 901 68dc965a2d58eafd330b0ef303982c56 ""
   "Kapitel/Abschlusserklärung.tex" 1654763853 587 fd15b604c7da6215fba2be5e90fefec2 ""
   "Kapitel/Ausblick.tex" 1655130677 52 3657704be8a97bc5933b669e544ee24a ""
-  "Kapitel/Einleitung.tex" 1654787086 4020 cec54391557c72c4b95b8c24740e517d ""
+  "Kapitel/Einleitung.tex" 1655199400 118 af44424e4a825ec4bcbe50b7a852439c ""
   "Kapitel/Evaluation.tex" 1655130682 54 7d45a851c6d159b40ce627d7ba49b2e4 ""
-  "Kapitel/Grundlagen.tex" 1655199322 15400 b0c4d2dba04cd1b72650234fcdfbc52e ""
-  "Kapitel/Implementierung.tex" 1654763853 399 a6b59c7a533d5ee2493f28e613e4762c ""
+  "Kapitel/Grundlagen.tex" 1655201437 16035 3f77c9a015b333f515450c640d590477 ""
+  "Kapitel/Implementierung.tex" 1655200060 440 04bbf27c037a80ee017816cc70200cce ""
   "Kapitel/Literatur.tex" 1655135457 2235 50e057493740f185ba7f6d0a3ecd15a8 ""
   "c:/Users/Alexander/Documents/GitHub/RichDataInterfacesForCopernicusData/Bachelorarbeit/LaTex/main.tex" 1655140783 2591 4b6b217ae22f84c785ec04ba7da71ab3 ""
   "c:/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc" 1649941661 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -125,12 +125,12 @@
   "c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1649961136 4448422 53302d27d6d34c8e3e97ce3a8b4bdfa7 ""
   "c:/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1649961426 2828314 b5761775eeb7194b8cd62da8207c18a3 ""
   "c:/texlive/2022/texmf.cnf" 1649961096 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1655199327 8426 18ff11b9fcb786fab23c38f8cfe17e34 "pdflatex"
-  "main.lof" 1655199327 421 51282ace00a752dbad4fd9bf7ec8d9c0 "pdflatex"
-  "main.lot" 1655199327 323 4cc9971e2bc770880a943edeadd049cf "pdflatex"
-  "main.out" 1655199327 4215 c5994b9b7a54f0567b571b6141a24aab "pdflatex"
+  "main.aux" 1655201442 8557 a85a8cf26e5d773ad083a02273e5f481 "pdflatex"
+  "main.lof" 1655201442 421 ee58fdb29607702559a6ef30323c0359 "pdflatex"
+  "main.lot" 1655201442 323 30e63a346d567d2839a65d6b8838432c "pdflatex"
+  "main.out" 1655201442 4401 ea438ca06f96999dc6adafc56487c39a "pdflatex"
   "main.tex" 1655140783 2591 4b6b217ae22f84c785ec04ba7da71ab3 ""
-  "main.toc" 1655199327 2470 8ca53439dd032c0ba0cb4fdef4972246 "pdflatex"
+  "main.toc" 1655201442 2560 ea2e3a42abc6bad9fa4dfb0749d703e5 "pdflatex"
   (generated)
   "main.aux"
   "main.lof"
