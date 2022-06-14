@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.14)  13 JUN 2022 20:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.14)  14 JUN 2022 11:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -644,33 +644,58 @@ LaTeX Warning: Hyper reference `acro:SM' on page 4 undefined on input line 16.
 
 LaTeX Warning: Hyper reference `acro:SM' on page 4 undefined on input line 16.
 
+
+LaTeX Warning: Hyper reference `acro:SLC' on page 4 undefined on input line 17.
+
+
+LaTeX Warning: Hyper reference `acro:SLC' on page 4 undefined on input line 17.
+
+
+LaTeX Warning: Hyper reference `acro:GRD' on page 4 undefined on input line 18.
+
+
+LaTeX Warning: Hyper reference `acro:GRD' on page 4 undefined on input line 18.
+
+
+LaTeX Warning: Hyper reference `acro:OSW' on page 4 undefined on input line 19.
+
+
+LaTeX Warning: Hyper reference `acro:OSW' on page 4 undefined on input line 19.
+
+
+LaTeX Warning: Hyper reference `acro:OWI' on page 4 undefined on input line 20.
+
+
+LaTeX Warning: Hyper reference `acro:OWI' on page 4 undefined on input line 20.
+
+
+LaTeX Warning: Hyper reference `acro:RVL' on page 4 undefined on input line 21.
+
+
+LaTeX Warning: Hyper reference `acro:RVL' on page 4 undefined on input line 21.
+
 ) (./Kapitel/Einleitung.tex [4] [5
 
 ]) (./Kapitel/Grundlagen.tex [6]
-Overfull \hbox (19.75798pt too wide) in paragraph at lines 28--35
- [] 
+Overfull \hbox (19.75798pt too wide) in paragraph at lines 27--34
+ [][] 
  []
 
 [7
 
 ]
-<Bilder/SAR_Prinzip.png, id=228, 648.92438pt x 609.02531pt>
+<Bilder/SAR_Prinzip.png, id=234, 648.92438pt x 609.02531pt>
 File: Bilder/SAR_Prinzip.png Graphic file (type png)
 <use Bilder/SAR_Prinzip.png>
-Package pdftex.def Info: Bilder/SAR_Prinzip.png  used on input line 56.
-(pdftex.def)             Requested size: 341.43306pt x 320.44005pt.
+Package pdftex.def Info: Bilder/SAR_Prinzip.png  used on input line 58.
+(pdftex.def)             Requested size: 206.28249pt x 193.59106pt.
  [8]
-<Bilder/SAR_Modi.png, id=235, 1150.2975pt x 317.68687pt>
+<Bilder/SAR_Modi.png, id=241, 1150.2975pt x 317.68687pt>
 File: Bilder/SAR_Modi.png Graphic file (type png)
 <use Bilder/SAR_Modi.png>
-Package pdftex.def Info: Bilder/SAR_Modi.png  used on input line 69.
-(pdftex.def)             Requested size: 455.24408pt x 125.72972pt.
-
-Overfull \hbox (42.67911pt too wide) in paragraph at lines 69--70
- [][] 
- []
-
-[9 <./Bilder/SAR_Prinzip.PNG>] [10 <./Bilder/SAR_Modi.PNG>]
+Package pdftex.def Info: Bilder/SAR_Modi.png  used on input line 72.
+(pdftex.def)             Requested size: 206.28249pt x 56.96786pt.
+ [9 <./Bilder/SAR_Prinzip.PNG> <./Bilder/SAR_Modi.PNG>]
 Underfull \hbox (badness 10000) in paragraph at lines 93--100
 
  []
@@ -680,27 +705,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 101--104
 
  []
 
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 126--127
-
- []
-
-<Bilder/Aquisition_Modes.png, id=267, 861.2175pt x 593.21625pt>
+[10]
+<Bilder/Aquisition_Modes.png, id=270, 861.2175pt x 593.21625pt>
 File: Bilder/Aquisition_Modes.png Graphic file (type png)
 <use Bilder/Aquisition_Modes.png>
-Package pdftex.def Info: Bilder/Aquisition_Modes.png  used on input line 131.
-(pdftex.def)             Requested size: 455.24408pt x 313.5794pt.
-
-Overfull \hbox (42.67911pt too wide) in paragraph at lines 131--132
- [][] 
- []
-
-
-Overfull \hbox (298.32175pt too wide) in paragraph at lines 140--149
- [] 
- []
-
-[12 <./Bilder/Aquisition_Modes.PNG>]) (./Kapitel/Implementierung.tex [13]) (./Kapitel/Evaluation.tex [14
+Package pdftex.def Info: Bilder/Aquisition_Modes.png  used on input line 129.
+(pdftex.def)             Requested size: 206.28249pt x 142.08514pt.
+ [11] [12 <./Bilder/Aquisition_Modes.PNG>]) (./Kapitel/Implementierung.tex [13]) (./Kapitel/Evaluation.tex [14
 
 ]) (./Kapitel/Ausblick.tex [15
 
@@ -812,18 +823,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: C5994B9B7A54F0567B571B6141A24AAB;4215.
  ) 
 Here is how much of TeX's memory you used:
- 14348 strings out of 478238
- 225377 string characters out of 5847939
- 548148 words of memory out of 5000000
- 32239 multiletter control sequences out of 15000+600000
+ 14363 strings out of 478238
+ 225472 string characters out of 5847939
+ 549343 words of memory out of 5000000
+ 32249 multiletter control sequences out of 15000+600000
  493330 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,8n,63p,462b,448s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmr8a.pfb>
-Output written on main.pdf (18 pages, 970988 bytes).
+Output written on main.pdf (18 pages, 973221 bytes).
 PDF statistics:
- 336 PDF objects out of 1000 (max. 8388607)
- 299 compressed objects within 3 object streams
- 79 named destinations out of 1000 (max. 500000)
+ 346 PDF objects out of 1000 (max. 8388607)
+ 308 compressed objects within 4 object streams
+ 84 named destinations out of 1000 (max. 500000)
  258 words of extra memory for PDF output out of 10000 (max. 10000000)
 
