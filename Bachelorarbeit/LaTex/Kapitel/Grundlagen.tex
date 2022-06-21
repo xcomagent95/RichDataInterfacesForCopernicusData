@@ -17,7 +17,7 @@ bezeichnet \cite{tutorial_on_sar} (Abbildung 1).
 Die Eigenschaften des reflektierten Signals hängen sowohl von Parametern des Aufnahmesystems als von Parametern der reflektierenden Oberfläche ab.
 So werden in der Radarfernerkundung verschiedenen Frequenzbänder verwendet, welche sich in Frequenz und Wellenlänge unterscheiden. Da sich Wechselwirkung zwischen Signalen 
 unterschiedlicher Frequenzbänder unterscheidet können so unterschiedliche Aspekte der beobachteten Oberfläche hervorgehoben werden. Dabei kommen in der Regel
-Wellenlängen von 0.75m bis 120m zum Einsatz (Tabelle 1).
+Wellenlängen von 0.75m bis 120m zum Einsatz (siehe Tabelle \ref{frequenzbaender}).
 Mit einer größeren Wellenlänge kann ein Medium auch tiefer durchdrungen werden. Außerdem werden Wolken, Dunst und Rauch durchdrungen was den zusätzlich Vorteil bietet
 wetterunabhängig Messungen durchführen zu können \cite{einfuehrung_in_fernerkundung}.
 
@@ -30,7 +30,7 @@ wetterunabhängig Messungen durchführen zu können \cite{einfuehrung_in_fernerk
         Frequenz (GHz) & 40-25 & 17.6-12 & 12-7.5 & 7.5-3.75 & 3.75-2 & 2-1 & 0.5-0.25\\ 
         Wellenlänge (cm) & 0.75–1.2 & 1.7–2.5 & 2.5–4 & 4–8 & 8–15 & 15–30 & 60–120\\ 
     \end{tabular}
-    \label{table:1}
+    \label{frequenzbaender}
 \end{table}
 
 Die Durchdringungstiefe hängt auch von der Dielektrizitätskonstante, also der Leitfähigkeit, der reflektierenden Oberfläche ab. Ist diese groß, reflektiert die Oberfläche stark und die 
@@ -58,20 +58,20 @@ miteinander korreliert werden. So können hohe Azimutauflösungen erzielt werden
     \centering
     \includegraphics[width=0.6\textwidth]{Bilder/SAR_Prinzip.png}
     \caption{Prinzip eines SAR Fernerkundungssystems \cite{tutorial_on_sar}}
-    \label{fig:sar_prinzip}
+    \label{sar_prinzip}
 \end{figure}
 
 Solche Systeme können in unterschiedlichen Aufnahmeverfahren arbeiten. Das einfachste dieser Verfahren ist das Stripmap Verfahren bei dem nur ein Aufnahmestreifen
 kontinuierlich aufgenommen wird. Breitere Aufnahmestreifen können mit dem ScanSAR Verfahren erzielt werden. Dabei werden unter verschiedenen Depressionswinkeln, 
 in Blickrichtung und zeitversetzt mehrere Subaufnahmestreifen erzeugt. Im Vergleich zum Stripmap Verfahren ist Auflösung jedoch geringer. 
 Wird eine höhere Auflösung benötigt kann das Spotlight Verfahren zum Einsatz kommen, bei dem eine fixe Region über einen längeren Zeitraum hinweg beobachtet wird. Dies führt zu 
-einer sehr langen wirksamen Antenne. Angepasste Verfahren oder Mischformen können je Beobachtungsszenario zum Einsatz kommen \cite{tutorial_on_sar}. 
+einer sehr langen wirksamen Antenne. Angepasste Verfahren oder Mischformen können je Beobachtungsszenario zum Einsatz kommen (siehe Abbildung \ref{sar_scan_modi})\cite{tutorial_on_sar}. 
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Bilder/SAR_Modi.png}
     \caption{Aufnahmeverfahren SAR Systemen \cite{tutorial_on_sar}}
-    \label{fig:sar_prinzip}
+    \label{sar_scan_modi}
 \end{figure}
 
 Im Gegensatz zu optischen Aufnahmeverfahren liefern die Rohdaten 
@@ -119,19 +119,19 @@ Die Sentinel-1 Satellitenmission liefert wetter- und tageszeitunabhängige Radar
 sowie einer Bodenkomponente welche für Steuerung und Kalibrierung und Datenverarbeitung verantwortlich ist. Die Satelliten tragen als Hauptinstrument ein 
 bildgebendes Radar mit synthetischer Apertur welches im C-Frequenzband arbeitet. Es stehen zwei Polarisationsmodi, Single (HH, VV) oder Dual (HH+HV, VV+VH),
 zur Verfügung \cite{sentinel_1_definition}. 
-Die Erfassung von Daten kann in vier Aufnahmemodi erfolgen welche sich in Auflösung, Streifenbreite und Anwendungsszenario unterscheiden. 
+Die Erfassung von Daten kann in vier Aufnahmemodi erfolgen welche sich in Auflösung, Streifenbreite und Anwendungsszenario unterscheiden (siehe Tabelle \ref{aufnahmemodi_sentinel_1}). 
 Der Standardmodus ist der Stripmap Modus (SM) bei dem Aufnahmestreifen mit einer kontinuierlichen Folge von Signalen abgetastet wird \cite{sentinel_1_definition}.
 Die Aufnahmemodi Interferometric Wide Swath Mode (IW) und Extra-Wide Swath Mode (EW) arbeiten im TOPSAR Verfahren mit drei beziehungsweise
 fünf Sub-Aufnahmestreifen um ein größeres Gebiet aber in geringerer Auflösung aufnehmen zu können. TOPSAR ist eine Abwandlung des ScanSAR Verfahrens bei 
 dem die Antenne zusätzlich in Azimut-Richtung vor und zurück bewegt wird, um die radiometrische Qualität der resultierenden Bilder zu verbessern. 
 Wenn der Wave Modus (WV) zu Einsatz kommt werden kleine, Vignetten genannte, Szenen im Stripmap Verfahren aufgenommen. Sie werden in regelmäßigen Abständen und
-wechselnden Depressionwinkeln aufgenommen \cite{tutorial_on_sar}\cite{sentinel_1_definition}.   
+wechselnden Depressionwinkeln aufgenommen (siehe Abbildung \ref{sar_modi_sentinel_1})\cite{tutorial_on_sar}\cite{sentinel_1_definition}.   
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Bilder/Aquisition_Modes.png}
     \caption{Aufnahmemodi der Sentinel-1 Mission \cite{sentinel_1_overview}}
-    \label{fig:aquisition_modes}
+    \label{sar_modi_sentinel_1}
 \end{figure}
 
 \begin{center}
@@ -146,7 +146,7 @@ wechselnden Depressionwinkeln aufgenommen \cite{tutorial_on_sar}\cite{sentinel_1
         Rage-Auflösung (m) & 5 & 5 & 5 & 20 \\
         Streifenbreite (km) & 250 & 20x20 & 80 & 410\\
     \end{tabular}
-    \label{table:1}
+    \label{aufnahmemodi_sentinel_1}
 \end{table}
 \end{center}
 
