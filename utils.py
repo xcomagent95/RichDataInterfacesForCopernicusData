@@ -26,6 +26,7 @@ from skimage.filters import threshold_yen
 from skimage.filters import threshold_otsu
 import datetime
 from skimage import io
+import traceback
 
 import numpy as np
 import xml.etree.cElementTree as et
@@ -51,7 +52,7 @@ def readJob(jobFile):
     return jobObject #return job object
 
 def floodMonitoringProcess(job):
-    
+    datasets = datasets = os.listdir("data/")
     if(checkForDismissal(job.path + '/status.json') == True):
         return
     
@@ -90,8 +91,12 @@ def floodMonitoringProcess(job):
         return
     
     pre_product = getProduct(api, job, pre_date_t0, pre_date_t1)
-    retrieveProduct(api, pre_product[0], job.downloads)
-    updateStatus(job.path + '/status.json', "running", "Step 4 of 10 completed", "40")
+    print(datasets)
+    print(pre_product[1] + ".tif")
+    print(pre_product[1] + ".tif" not in datasets)
+    if(pre_product[1] + ".zip" not in datasets):
+        retrieveProduct(api, pre_product[0], job.downloads)
+        updateStatus(job.path + '/status.json', "running", "Step 4 of 10 completed", "40")
     
     calibrateProductSNAP(pre_product[1], job)
     updateStatus(job.path + '/status.json', "running", "Step 5 of 10 completed", "50")
@@ -100,16 +105,17 @@ def floodMonitoringProcess(job):
         return
     
     post_product = getProduct(api, job, post_date_t0, post_date_t1)
-    retrieveProduct(api, post_product[0], job.downloads)
-    updateStatus(job.path + '/status.json', "running", "Step 6 of 10 completed", "60")
+    if(post_product[1] + ".zip" not in datasets):
+        retrieveProduct(api, post_product[0], job.downloads)
+        updateStatus(job.path + '/status.json', "running", "Step 6 of 10 completed", "60")
     
     calibrateProductSNAP(post_product[1], job)
     updateStatus(job.path + '/status.json', "running", "Step 7 of 10 completed", "70")
-    
+        
     if(checkForDismissal(job.path + '/status.json') == True):
         return
     
-    ndsiSNAP(job)
+    ndsiSNAP(job, pre_product[1], post_product[1])
     updateStatus(job.path + '/status.json', "running", "Step 8 of 10 completed", "80")
     
     clipProductSNAP(job)
@@ -288,17 +294,18 @@ def parseInput(processID, data):
             
     if(processID == "FloodMonitoring"):
         
-        if(data["inputs"]["bbox"]["bbox"][0] > data["inputs"]["bbox"]["bbox"][2] or data["inputs"]["bbox"]["bbox"][1] < data["inputs"]["bbox"]["bbox"][3]):
-            return False
+        #if(data["inputs"]["bbox"]["bbox"][0] > data["inputs"]["bbox"]["bbox"][2] or data["inputs"]["bbox"]["bbox"][1] < data["inputs"]["bbox"]["bbox"][3]):
+            #return False
         
-        try:
-            preDate = datetime.date(int(job.input[0][0:4]), int(job.input[0][4:6]), int(job.input[0][6:]))
-            postDate = datetime.date(int(job.input[1][0:4]), int(job.input[1][4:6]), int(job.input[1][6:]))
-        except:
-            return False
+        #try:
+         #   preDate = datetime.date(int(job.input[0][0:4]), int(job.input[0][4:6]), int(job.input[0][6:]))
+         #   postDate = datetime.date(int(job.input[1][0:4]), int(job.input[1][4:6]), int(job.input[1][6:]))
+        #except:
+         #   traceback.print_exc()
+          #  return False
         
-        if(postDate < preDate):
-            return False
+        #if(postDate < preDate):
+          #  return False
         
         inputs = [data["inputs"]["preDate"],
                   data["inputs"]["postDate"],
@@ -344,13 +351,18 @@ def getProduct(api, job, t0, t1):
     return (product_id, product_title) #return a tuple containing the product id and the product title
 
 def retrieveProduct(api, product_id, downloads_path):
-    #tiff_filter = products.make_path_filter("*/measurement/*-iw-grd-vv-*-*-*-*-*.tiff") #define .tiff filter
-    api.download(product_id, directory_path=downloads_path, checksum=False) #download full product
+    #tiff_filter = products.make_path_filter("*/measurement/*-iw-grd-vv-*-*-*-*-*.tif") #define .tif filter
+    api.download(product_id, directory_path="data/", checksum=False) #download full product
     
 def calibrateProductSNAP(product_id, job):
-    product = snappy.ProductIO.readProduct(job.downloads + product_id + '.zip')
+    product = snappy.ProductIO.readProduct("data/" + product_id + '.zip')
     
-    #apply orbit file
+   #apply orbit file
+    parameters = snappy.HashMap()
+    parameters.put('Apply-Orbit-File', True)
+    apply_orbit_file = GPF.createProduct('Apply-Orbit-File', parameters, product)
+    
+     #apply orbit file
     parameters = snappy.HashMap()
     parameters.put('Apply-Orbit-File', True)
     apply_orbit_file = GPF.createProduct('Apply-Orbit-File', parameters, product)
@@ -405,7 +417,7 @@ def calibrateProductSNAP(product_id, job):
     
     ProductIO.writeProduct(speckle_filter_tc, job.results + product_id + '.tif', 'GeoTIFF')  
     
-def ndsiSNAP(job):
+def ndsiSNAP(job, preID, postID):
     files = os.listdir(job.results)
     
     pre_dataset = gdal.Open(job.results + files[0]) #load pre dataset with gdal
@@ -415,6 +427,7 @@ def ndsiSNAP(job):
     pre_array = pre_band.ReadAsArray() #read pre raster band as array 
     
     post_band = post_dataset.GetRasterBand(1)  #get post raster band
+    post_array = post_band.ReadAsArray() #read post raster band as array 
     post_array = post_band.ReadAsArray() #read post raster band as array 
     
     
@@ -431,7 +444,7 @@ def ndsiSNAP(job):
                 result_array[i][j] = -0
             
     driver = gdal.GetDriverByName('GTiff') #initialize driver
-    image_out = driver.Create(job.results + 'ndsi.tiff', pre_dataset.RasterXSize, pre_dataset.RasterYSize, 1, gdal.GDT_Float32) #initialize output image
+    image_out = driver.Create(job.results + 'ndsi.tif', pre_dataset.RasterXSize, pre_dataset.RasterYSize, 1, gdal.GDT_Float32) #initialize output image
     image_out.SetGeoTransform(pre_dataset.GetGeoTransform()) #set geotransform of output image
     image_out.SetProjection(pre_dataset.GetProjection()) #set projection of output image
     image_out.GetRasterBand(1).WriteArray(result_array) #set band information of output image
@@ -442,13 +455,13 @@ def ndsiSNAP(job):
     post_dataset = None #free source image 
     
 def clipProductSNAP(job):
-    dataset = gdal.Open(job.results + 'ndsi.tiff') #open raster file with gdal
-    gdal.Warp(job.results + 'ndsi_clipped.tiff', dataset, cutlineDSName = job.path + '/footprint.geojson', cropToCutline = True, dstNodata = -0, format="GTiff") #use gadl.warp for clipping
+    dataset = gdal.Open(job.results + 'ndsi.tif') #open raster file with gdal
+    gdal.Warp(job.results + 'ndsi_clipped.tif', dataset, cutlineDSName = job.path + '/footprint.geojson', cropToCutline = True, dstNodata = -0, format="GTiff") #use gadl.warp for clipping
     dataset = None #free dataset
 
 #function for binarize an image unsing a thresholding     
 def theresholdSNAP(job):
-    dataset = gdal.Open(job.results + 'ndsi_clipped.tiff') #load dataset with gdal
+    dataset = gdal.Open(job.results + 'ndsi_clipped.tif') #load dataset with gdal
     
     band = dataset.GetRasterBand(1) #get raster band
     image = band.ReadAsArray() #read raster band as array 
@@ -463,7 +476,7 @@ def theresholdSNAP(job):
     #binary_yen = image < yen_thresh
     
     driver = gdal.GetDriverByName('GTiff') #initialize driver
-    image_out = driver.Create(job.results + 'bin.tiff', dataset.RasterXSize, dataset.RasterYSize, 1, gdal.GDT_Float32) #initialize output image
+    image_out = driver.Create(job.results + 'bin.tif', dataset.RasterXSize, dataset.RasterYSize, 1, gdal.GDT_Float32) #initialize output image
     image_out.SetGeoTransform(dataset.GetGeoTransform()) #set geotransform of output image
     image_out.SetProjection(dataset.GetProjection())  #set projection of output image
     image_out.GetRasterBand(1).WriteArray(binary_otsu) #set band information of output image
