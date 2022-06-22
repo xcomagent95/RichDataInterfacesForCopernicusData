@@ -4,8 +4,10 @@
 		{% block body %}
 		<p>
             {% for coverage in coverages %}
-            <b>Product:</b> {{coverage.name}<br>
-				BBOX: {{coverage.bbox}}<br>
+            <b>Product:</b> {{coverage.name}}<br>
+			BBox: {{coverage.bbox}}<br>
+			Date: {{coverage.date}}<br>
+			<br>
             {% endfor %}
 		</p>
     	{% endblock %}

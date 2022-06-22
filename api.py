@@ -198,7 +198,6 @@ def executeProcess(processID):
             #create job directories        
             os.mkdir("jobs/" + jobID) #directory for current job
             os.mkdir("jobs/" + jobID + "/results/") #results directory for current job
-            os.mkdir("jobs/" + jobID + "/downloads/") #download directory for current job
 
             #create job.json
             job_file = {"jobID": str(jobID), #set jobID
@@ -541,19 +540,25 @@ def getCoverage():
     for i in kmlFiles:
         tree = ET.parse('data/coverage/' + i)
         root = tree.getroot()
-        print(root[0])
-    
+        bbox = root[0][1][1][2][0].text
+        name = i[:-4]
+        date = i[17:21] + '.' + i[21:23] + '.' + i[23:25]
+        dataset = {'name': name,
+                   'bbox': bbox,
+                   'date': date}
+        coverages.append(dataset)
+        
     try:
         if(request.content_type == "application/json" or #check requested content-type from request body
            request.args.get('f')=="application/json"): #check requested content-type from inline request
-            #response = render_template("html/coverage.html", coverages=coverages) #render dynamic job
-            return "test"
+            response = render_template("html/coverage.html", coverages=coverages) #render dynamic job
+            return response
             
         elif(request.content_type == "text/html" or #check requested content-type from request body
              request.args.get('f')=="text/html" or 
              request.args.get('f') == None): #check requested content-type from inline request
-            #response = render_template("html/coverage.html", coverages=coverages) #render dynamic job
-            return "test"
+            response = render_template("html/coverage.html", coverages=coverages) #render dynamic job
+            return response
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except Exception as e:
