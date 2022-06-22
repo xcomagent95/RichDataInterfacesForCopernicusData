@@ -185,7 +185,7 @@ def setFinished(path):
     with open(path, "r") as f:
             data = json.load(f)
             data["finished"] = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-            data["status"] = 'finished'
+            data["status"] = 'successful'
             f.close()
             with open(path, "w") as f:
                 json.dump(data, f) 
