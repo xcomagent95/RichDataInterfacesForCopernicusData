@@ -28,4 +28,9 @@
 \contentsline {subsection}{\numberline {3.8}Zusätzliche Funktionalitäten}{14}{subsection.3.8}%
 \contentsline {subsection}{\numberline {3.9}Überschwemmungsmonitoring}{14}{subsection.3.9}%
 \contentsline {section}{\numberline {4}Evaluation}{16}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Sichtbarkeit des Systemstatus}{16}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Kongruenz von System- und Realwelt}{16}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Nutzen Kontrolle und Freiheit}{16}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Konsistenz und Standards}{16}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Fehlervermeidung}{16}{subsection.4.5}%
 \contentsline {section}{\numberline {5}Ausblick}{17}{section.5}%

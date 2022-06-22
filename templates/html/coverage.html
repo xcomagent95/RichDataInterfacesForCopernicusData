@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		{% block body %}
+		<p>
+            {% for coverage in coverages %}
+            <b>Product:</b> {{coverage.name}<br>
+				BBOX: {{coverage.bbox}}<br>
+            {% endfor %}
+		</p>
+    	{% endblock %}
+		<p><b>links:</b><br>
+			href:<a href="localhost:5000/coverage?f=text/html">localhost:5000/coverage?f=text/html</a><br>
+			rel: self<br>
+			type: text/html<br>
+			title: This document<br>
+			<br>
+			href:<a href="localhost:5000/coverage?f=application/json">localhost:5000/coverage?f=application/json</a><br>
+			rel: alternate<br>
+			type: application/json<br>
+			title: This document as JSON<br>
+		</p>
+	</body>
+</html>

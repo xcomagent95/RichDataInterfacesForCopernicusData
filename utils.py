@@ -16,6 +16,7 @@ from snappy import ProductUtils
 from snappy import WKTReader
 from snappy import HashMap
 from snappy import GPF
+
 from osgeo import gdal, ogr, osr
 from gdalconst import GA_ReadOnly
 
@@ -33,6 +34,10 @@ import xml.etree.cElementTree as et
 import math
 
 import base64
+
+import zipfile
+
+import shutil
 
 class job:
     def __init__(self, id, process, job_path, results_path, downloads_path, input):
@@ -95,7 +100,7 @@ def floodMonitoringProcess(job):
     print(pre_product[1] + ".tif")
     print(pre_product[1] + ".tif" not in datasets)
     if(pre_product[1] + ".zip" not in datasets):
-        retrieveProduct(api, pre_product[0], job.downloads)
+        retrieveProduct(api, pre_product[0], pre_product[1], job.downloads)
         updateStatus(job.path + '/status.json', "running", "Step 4 of 10 completed", "40")
     
     calibrateProductSNAP(pre_product[1], job)
@@ -106,7 +111,7 @@ def floodMonitoringProcess(job):
     
     post_product = getProduct(api, job, post_date_t0, post_date_t1)
     if(post_product[1] + ".zip" not in datasets):
-        retrieveProduct(api, post_product[0], job.downloads)
+        retrieveProduct(api, post_product[0], post_product[1], job.downloads)
         updateStatus(job.path + '/status.json', "running", "Step 6 of 10 completed", "60")
     
     calibrateProductSNAP(post_product[1], job)
@@ -180,6 +185,7 @@ def setFinished(path):
     with open(path, "r") as f:
             data = json.load(f)
             data["finished"] = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            data["status"] = 'finished'
             f.close()
             with open(path, "w") as f:
                 json.dump(data, f) 
@@ -350,9 +356,10 @@ def getProduct(api, job, t0, t1):
 
     return (product_id, product_title) #return a tuple containing the product id and the product title
 
-def retrieveProduct(api, product_id, downloads_path):
+def retrieveProduct(api, product_id, product_name, downloads_path):
     #tiff_filter = products.make_path_filter("*/measurement/*-iw-grd-vv-*-*-*-*-*.tif") #define .tif filter
     api.download(product_id, directory_path="data/", checksum=False) #download full product
+    getKML(product_name)
     
 def calibrateProductSNAP(product_id, job):
     product = snappy.ProductIO.readProduct("data/" + product_id + '.zip')
@@ -488,3 +495,11 @@ def theresholdSNAP(job):
 def encodeImageBase64(imagePath):
     with open(imagePath, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode('utf-8')
+    
+def getKML(productName):
+    zip = zipfile.ZipFile('data/' + productName + '.zip')
+    zip.extract(productName + '.SAFE/preview/map-overlay.kml', 'data/')
+    zip.close()
+    
+    shutil.move('data/' + productName + '.SAFE/preview/map-overlay.kml', 'data/coverage/' + productName + '.kml')
+    shutil.rmtree('data/' + productName + '.SAFE')

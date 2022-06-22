@@ -8,6 +8,7 @@ import datetime
 import utils
 import traceback
 import logging
+import xml.etree.ElementTree as ET
 
 from werkzeug.serving import WSGIRequestHandler
 from werkzeug.serving import BaseWSGIServer
@@ -522,7 +523,7 @@ def downloadFile(jobID):
     if(os.path.exists('jobs/' + str(jobID))):
         file = open('jobs/' + str(jobID) + "/status.json",) #open status.json
         status = json.load(file) #load the data from .json file
-        file.close() #close .json file
+        file.close() #close .json file:
         file = open('jobs/' + str(jobID) + "/job.json",) #open job.json
         job = json.load(file) #load the data from .json file
         file.close() #close .json file  
@@ -531,7 +532,35 @@ def downloadFile(jobID):
             return send_file('jobs/' + str(jobID) + '/results/bin.tif', mimetype=job["resultMediaType"]), 200 #send raw file
         else:
             return 500 #internal server error
+
+@app.route('/coverage', methods = ["GET"])
+def getCoverage():
+    app.logger.info('/coverage') #add log entry when endpoint is called
+    kmlFiles = os.listdir('data/coverage/')
+    coverages = []
+    for i in kmlFiles:
+        tree = ET.parse('data/coverage/' + i)
+        root = tree.getroot()
+        print(root[0])
     
+    try:
+        if(request.content_type == "application/json" or #check requested content-type from request body
+           request.args.get('f')=="application/json"): #check requested content-type from inline request
+            #response = render_template("html/coverage.html", coverages=coverages) #render dynamic job
+            return "test"
+            
+        elif(request.content_type == "text/html" or #check requested content-type from request body
+             request.args.get('f')=="text/html" or 
+             request.args.get('f') == None): #check requested content-type from inline request
+            #response = render_template("html/coverage.html", coverages=coverages) #render dynamic job
+            return "test"
+        else:
+            return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
+    except Exception as e:
+        print(e)
+        return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
+    
+
          
 #run application
 if __name__ == '__main__':
