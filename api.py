@@ -436,7 +436,7 @@ def getJob(jobID):
                             job = json.load(file) #create response   
                             file.close() #close status.json
                             response = render_template("html/Job.html", job=job) #render dynamic job
-                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok
+                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job-dismissed", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok
                         else:
                             response = jsonify(data) #create response
                             return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
@@ -570,3 +570,4 @@ def getCoverage():
 #run application
 if __name__ == '__main__':
     app.run(port=5000, debug=True, use_reloader=False) 
+    

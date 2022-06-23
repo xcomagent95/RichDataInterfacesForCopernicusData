@@ -7,13 +7,11 @@ import subprocess
 import json
 import os
 import datetime
+import shutil
 
 logging.basicConfig(filename = 'testSuitLog.log', 
                     level=logging.INFO, 
                     format = f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
-
-api = subprocess.Popen(['python', 'api.py']) #start the api in a subprocess
-print("API running...")
 
 def createTestJob(jobID, status, progress):
     #create job directories        
@@ -67,7 +65,7 @@ def createTestResult(jobID, input):
     result ={"result": "input",
              "message": "This is an echo"}
     json.dumps(result, indent=4)
-    with open("jobs/" + jobID + "results/result.json", 'w') as f: #create file
+    with open("jobs/" + jobID + "/results/result.json", 'w') as f: #create file
         json.dump(result, f) #write content
         f.close() #close file
 
@@ -259,7 +257,7 @@ class TestStringMethods(unittest.TestCase):
         
         #Echo execution
         logging.info("--> abstract test a34 started")  
-        request = requests.post('http://localhost:5000/processes/Echo/execution', json={'inputs':{'inputValue':'test'}, 'outputs':{'complexObjectOutput': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'})
+        request = requests.post('http://localhost:5000/processes/Echo/execution', json={'inputs':{'echo':'test'}, 'outputs':{'complexObjectOutput': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'})
         status_code = request.status_code
         self.assertEqual(status_code, 201)
         logging.info("--> abstract test a34 passed")   
@@ -535,16 +533,17 @@ class TestStringMethods(unittest.TestCase):
         
     #Abstract Test A.81 & A.82
     def test_a81_82(self):
-        with open('jobs/testDismissed/status.json', "r") as f:
+        createTestJob("dismissedJob", "running", 0)
+        with open('jobs/dismissedJob/status.json', "r") as f:
                 data = json.load(f)
                 data["status"] = "created"
                 f.close()
-                with open('jobs/testDismissed/status.json', "w") as f:
+                with open('jobs/dismissedJob/status.json', "w") as f:
                     json.dump(data, f) 
         
         
         logging.info("--> abstract test a81 & a82 started")  
-        request = requests.delete('http://localhost:5000/jobs/testDismissed')
+        request = requests.delete('http://localhost:5000/jobs/dismissedJob')
         status_code = request.status_code
         resource = request.headers["resource"]
         self.assertEqual(resource, 'job-dismissed')
@@ -552,6 +551,10 @@ class TestStringMethods(unittest.TestCase):
         logging.info("--> abstract test a81 & a82 passed")    
     
 if __name__ == '__main__':
-    WSGIRequestHandler.protocol_version = "HTTP/1.1"
     unittest.main()
+    shutil.rmtree('jobs/dismissedJob')
+    shutil.rmtree('jobs/failedJob')
+    shutil.rmtree('jobs/runningJob')
+    shutil.rmtree('jobs/successfulJob')
+    shutil.rmtree('jobs/testJob')
     
