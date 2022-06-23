@@ -14,3 +14,8 @@ print("Processing running...")
 
 #test = subprocess.Popen(['python', 'testSuit.py']) #start the test suit
 #print("Test suit running running...")
+
+killSwitch = input("Enter 'k' to stop the API:")
+if(killSwitch == 'k'):
+    api.kill()
+    processing.kill()

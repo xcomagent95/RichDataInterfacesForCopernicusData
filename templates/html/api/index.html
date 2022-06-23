@@ -201,6 +201,10 @@
   <ul>
   <li><a href="#getConformanceClasses"><code><span class="http-method">get</span> /conformance</code></a></li>
   </ul>
+  <h4><a href="#Coverage">Coverage</a></h4>
+  <ul>
+  <li><a href="#getCoverage"><code><span class="http-method">get</span> /coverage</code></a></li>
+  </ul>
   <h4><a href="#Dismiss">Dismiss</a></h4>
   <ul>
   <li><a href="#dismiss"><code><span class="http-method">delete</span> /jobs/{jobID}</code></a></li>
@@ -284,6 +288,53 @@
     <pre class="get"><code class="huge"><span class="http-method">get</span> /conformance</code></pre></div>
     <div class="method-summary"> (<span class="nickname">getConformanceClasses</span>)</div>
     <div class="method-notes">information about requiremnt classes that this API conforms to</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      String
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>text/html</code></li>
+      <li><code>application/json</code></li>
+      <li><code>text/plain</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    ok
+        <a href="#String">String</a>
+    <h4 class="field-label">406</h4>
+    not acceptable
+        <a href="#String">String</a>
+    <h4 class="field-label">500</h4>
+    internal server error
+        <a href="#String">String</a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Coverage">Coverage</a></h1>
+  <div class="method"><a name="getCoverage"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /coverage</code></pre></div>
+    <div class="method-summary"> (<span class="nickname">getCoverage</span>)</div>
+    <div class="method-notes">retrieve the coverage for which offline datasets are available</div>
 
 
 
@@ -718,6 +769,8 @@
 
   <h3>Table of Contents</h3>
   <ol>
+    <li><a href="#Coverage"><code>Coverage</code></a></li>
+    <li><a href="#Coverages"><code>Coverages</code></a></li>
     <li><a href="#additionalParameter"><code>additionalParameter</code></a></li>
     <li><a href="#bbox"><code>bbox</code></a></li>
     <li><a href="#binaryInputValue"><code>binaryInputValue</code></a></li>
@@ -751,6 +804,23 @@
     <li><a href="#transmissionMode"><code>transmissionMode</code></a></li>
   </ol>
 
+  <div class="model">
+    <h3><a name="Coverage"><code>Coverage</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">date (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">bbox (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="Coverages"><code>Coverages</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">coverages (optional)</div><div class="param-desc"><span class="param-type"><a href="#Coverage">array[Coverage]</a></span>  </div>
+<div class="param">links (optional)</div><div class="param-desc"><span class="param-type"><a href="#link">array[link]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
   <div class="model">
     <h3><a name="additionalParameter"><code>additionalParameter</code></a> <a class="up" href="#__Models">Up</a></h3>
     

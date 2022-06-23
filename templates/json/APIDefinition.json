@@ -585,6 +585,52 @@
           }
         }
       }
+    },
+    "/coverage": {
+      "get": {
+        "tags": [
+          "Coverage"
+        ],
+        "description": "retrieve the coverage for which offline datasets are available",
+        "operationId": "getCoverage",
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Coverage"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "not acceptable",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "internal server error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1469,6 +1515,37 @@
             "$ref": "#/components/schemas/results"
           }
         ]
+      },
+      "Coverages": {
+        "type": "object",
+        "properties": {
+          "coverages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Coverage"
+            }
+          },
+          "links": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/link"
+            }
+          }
+        }
+      },
+      "Coverage": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "bbox": {
+            "type": "string"
+          }
+        }
       }
     },
     "responses": {

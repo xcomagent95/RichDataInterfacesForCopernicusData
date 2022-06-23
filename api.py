@@ -547,18 +547,19 @@ def getCoverage():
                    'bbox': bbox,
                    'date': date}
         coverages.append(dataset)
+    coverageJSON = {'coverages': coverages}
+    print(coverages)
         
     try:
         if(request.content_type == "application/json" or #check requested content-type from request body
            request.args.get('f')=="application/json"): #check requested content-type from inline request
-            coverageJSON = {'coverage': coverages}
             return coverageJSON, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
             
         elif(request.content_type == "text/html" or #check requested content-type from request body
              request.args.get('f')=="text/html" or 
              request.args.get('f') == None): #check requested content-type from inline request
-            response = render_template("html/coverage.html", coverages=coverages), 200 #render dynamic coverage
-            return response, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
+            response = render_template("html/coverage.html", coverages=coverages) #render dynamic coverage
+            return response, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except Exception as e:
