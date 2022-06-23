@@ -557,7 +557,9 @@ def getCoverage():
             coordinates.append(float(coords[1]))
         geojson = {"type": "FeatureCollection", "features": [{
                   "type": "Feature",
-                  "properties": {},
+                  "properties": {
+                      "name": name,
+                      "date": date},
                   "geometry": {
                     "type": "Polygon",
                     "coordinates": [

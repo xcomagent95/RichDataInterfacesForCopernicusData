@@ -10,6 +10,18 @@
 			Version: {{process.version}}<br>
 			Job control options: {{process.jobControlOptions}}<br>
 			Output transmission: {{process.outputTransmission}}<br>
+			<p><h2>inputs:</h2></p>
+			<p id='{{process.id}}'><p>
+			<script>
+				var inputs = '{{process.inputs}}'
+				var inputsString = inputs.replaceAll('&#39;', '"')
+				var inputsJSON = JSON.parse(inputsString)
+				for (var key in inputsJSON) {
+					var newElement = document.createElement("p")
+					newElement.innerHTML = "<p>" + key + "</p>"
+					document.getElementById('{{process.id}}').appendChild(newElement);
+				}
+			</script>
 			<p>
 				<b>links: </b><br>
 					href: <a href=localhost:5000/processes/{{process.id}}?f=application/json>localhost:5000/processes/{{process["id"]}}?f=application/json</a><br>
@@ -21,6 +33,7 @@
 					type: text/html<br>
 					title: Process description<br>
 			</p>
+			<p>=================================================================================================================</p>
             {% endfor %}
 		</p>
     	{% endblock %}

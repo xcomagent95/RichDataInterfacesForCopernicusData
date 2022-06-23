@@ -7,6 +7,7 @@
 		<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
 		integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
 		crossorigin=""></script>
+		<h1>coverage:</h1>
 		{% block body %}
 		<p>
             {% for coverage in coverages %}
@@ -28,10 +29,16 @@
 			var bboxes = '{{bboxes}}'
 			var bboxesString = bboxes.replaceAll('&#39;', '"')
 			var bboxesJSON = JSON.parse(bboxesString)
-			console.log(bboxesJSON)
+			
+			var coverage = L.featureGroup().addTo(map)
 			for (var i=0; i < bboxesJSON.length; i++) {
-				L.geoJSON(bboxesJSON[i]).addTo(map);
+				name = bboxesJSON[i].features[0].properties.name
+				date = bboxesJSON[i].features[0].properties.date
+				console.log(name)
+				layer = L.geoJSON(bboxesJSON[i]).bindPopup("Name: " + name + "<br>Date: " + date, {maxWidth: "auto"})
+				layer.addTo(coverage)
 			}
+			map.fitBounds(coverage.getBounds())
 				</script>
 		<p><b>links:</b><br>
 			href:<a href="localhost:5000/coverage?f=text/html">localhost:5000/coverage?f=text/html</a><br>
