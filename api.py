@@ -537,6 +537,7 @@ def getCoverage():
     app.logger.info('/coverage') #add log entry when endpoint is called
     kmlFiles = os.listdir('data/coverage/')
     coverages = []
+    bboxes = []
     for i in kmlFiles:
         tree = ET.parse('data/coverage/' + i)
         root = tree.getroot()
@@ -547,8 +548,43 @@ def getCoverage():
                    'bbox': bbox,
                    'date': date}
         coverages.append(dataset)
+        bboxArray = bbox.split()
+        coordinates = []
+        for i in bboxArray:
+            rawCoords = i.replace(',', ' ')
+            coords = rawCoords.split()
+            coordinates.append(float(coords[0]))
+            coordinates.append(float(coords[1]))
+        geojson = {"type": "FeatureCollection", "features": [{
+                  "type": "Feature",
+                  "properties": {},
+                  "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                      [
+                        [
+                          coordinates[0], coordinates[1]
+                        ],
+                        [
+                          coordinates[2], coordinates[3]
+                        ],
+                        [
+                          coordinates[4], coordinates[5]
+                        ],
+                        [
+                          coordinates[6], coordinates[7]
+                        ],
+                        [
+                          coordinates[0], coordinates[1]
+                        ]
+                      ]
+                    ]
+                  }
+                }
+              ]
+            }
+        bboxes.append(geojson)
     coverageJSON = {'coverages': coverages}
-    print(coverages)
         
     try:
         if(request.content_type == "application/json" or #check requested content-type from request body
@@ -558,7 +594,7 @@ def getCoverage():
         elif(request.content_type == "text/html" or #check requested content-type from request body
              request.args.get('f')=="text/html" or 
              request.args.get('f') == None): #check requested content-type from inline request
-            response = render_template("html/coverage.html", coverages=coverages) #render dynamic coverage
+            response = render_template("html/coverage.html", coverages=coverages, bboxes=bboxes) #render dynamic coverage
             return response, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
