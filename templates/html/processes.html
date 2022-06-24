@@ -11,16 +11,26 @@
 			Job control options: {{process.jobControlOptions}}<br>
 			Output transmission: {{process.outputTransmission}}<br>
 			<p><b>inputs:</b></p>
-			<p id='{{process.id}}'><p>
+			<p id='{{process.id}}inputs'><p>
+			<p><b>outputs:</b></p>
+			<p id='{{process.id}}outputs'><p>
 			<script>
 				var inputs = '{{process.inputs}}'
 				var inputsString = inputs.replaceAll('&#39;', '"')
 				var inputsJSON = JSON.parse(inputsString)
-				console.log(inputsJSON)
+				var outputs = '{{process.outputs}}'
+				var outputsString = outputs.replaceAll('&#39;', '"')
+				var outputsJSON = JSON.parse(outputsString)
+				console.log(outputsJSON)
 				for (var key in inputsJSON) {
-					var newElement = document.createElement("p")
-					newElement.innerHTML = "<p><b>" + key + "</b><br>Description: " + inputsJSON[key].description + "<br><b>Schema:</b><br>Type: " + inputsJSON[key].schema.type + "</p>"
-					document.getElementById('{{process.id}}').appendChild(newElement);
+					var inputs = document.createElement("p")
+					inputs.innerHTML = "<p><b>" + key + "</b><br>Description: " + inputsJSON[key].description + "<br><b>Schema:</b><br>Type: " + inputsJSON[key].schema.type + "</p>"
+					document.getElementById('{{process.id}}inputs').appendChild(inputs);
+				}
+				for (var key in outputsJSON) {
+					var outputs = document.createElement("p")
+					outputs.innerHTML = "<p><b>" + key + "</b><br><b>Type: </b>" + outputsJSON[key].description + "</p>"
+					document.getElementById('{{process.id}}outputs').appendChild(outputs);
 				}
 			</script>
 			<p>
