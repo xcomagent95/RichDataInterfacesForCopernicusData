@@ -10,15 +10,16 @@
 			Version: {{process.version}}<br>
 			Job control options: {{process.jobControlOptions}}<br>
 			Output transmission: {{process.outputTransmission}}<br>
-			<p><h2>inputs:</h2></p>
+			<p><b>inputs:</b></p>
 			<p id='{{process.id}}'><p>
 			<script>
 				var inputs = '{{process.inputs}}'
 				var inputsString = inputs.replaceAll('&#39;', '"')
 				var inputsJSON = JSON.parse(inputsString)
+				console.log(inputsJSON)
 				for (var key in inputsJSON) {
 					var newElement = document.createElement("p")
-					newElement.innerHTML = "<p>" + key + "</p>"
+					newElement.innerHTML = "<p><b>" + key + "</b><br>Description: " + inputsJSON[key].description + "<br><b>Schema:</b><br>Type: " + inputsJSON[key].schema.type + "</p>"
 					document.getElementById('{{process.id}}').appendChild(newElement);
 				}
 			</script>
