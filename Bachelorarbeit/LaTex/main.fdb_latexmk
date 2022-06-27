@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1656075633 "c:/Users/Alexander/Documents/GitHub/RichDataInterfacesForCopernicusData/Bachelorarbeit/LaTex/main.tex" "main.pdf" "main" 1656075639
+["pdflatex"] 1656341057 "c:/Users/Alexander/Documents/GitHub/RichDataInterfacesForCopernicusData/Bachelorarbeit/LaTex/main.tex" "main.pdf" "main" 1656341062
   "Bilder/Aquisition_Modes.PNG" 1655135318 414850 1f326bf901ae08283c52c04a6abc4073 ""
   "Bilder/SAR_Modi.PNG" 1655140722 179757 c3f8a6ba86adc7dec7849551ccb76c35 ""
   "Bilder/SAR_Prinzip.PNG" 1655294989 163668 63241ebe0a74abca051b6040ff176f8e ""
@@ -10,9 +10,9 @@
   "Kapitel/Ausblick.tex" 1656069817 116 d4f9d63c1f061e7fb16bd8519d772479 ""
   "Kapitel/Einleitung.tex" 1655199400 118 af44424e4a825ec4bcbe50b7a852439c ""
   "Kapitel/Evaluation.tex" 1656069725 156 4d8a9118f4ee6b306623eea726c5ac8a ""
-  "Kapitel/Grundlagen.tex" 1656075626 21025 e66163d62db38c0eb8e5eb7d6643691d ""
+  "Kapitel/Grundlagen.tex" 1656341055 24795 6b45bbb361335b39d79fe525e2542e1c ""
   "Kapitel/Implementierung.tex" 1656069492 2263 47be1dfce6812c7ef7203bee7cc4a1ab ""
-  "Kapitel/Literatur.tex" 1656073645 3898 778c930ea39083295ef40ee8e780e65b ""
+  "Kapitel/Literatur.tex" 1656337595 4244 50729209d71aa0aa27754ca19153ebec ""
   "c:/Users/Alexander/Documents/GitHub/RichDataInterfacesForCopernicusData/Bachelorarbeit/LaTex/main.tex" 1655823303 2593 ade4efb90b77b41d2623713532f11895 ""
   "c:/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc" 1649941661 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1649943886 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -142,12 +142,12 @@
   "c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1649961136 4448422 53302d27d6d34c8e3e97ce3a8b4bdfa7 ""
   "c:/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1649961426 2828314 b5761775eeb7194b8cd62da8207c18a3 ""
   "c:/texlive/2022/texmf.cnf" 1649961096 713 e69b156964470283e0530f5060668171 ""
-  "main.aux" 1656075638 9830 a9638d0578e5182d1d1e51b2ca261fdd "pdflatex"
-  "main.lof" 1656075638 421 ee58fdb29607702559a6ef30323c0359 "pdflatex"
-  "main.lot" 1656075638 323 30e63a346d567d2839a65d6b8838432c "pdflatex"
-  "main.out" 1656075638 4892 58de9e089a4b80e7e32fdf9f2cd2384d "pdflatex"
+  "main.aux" 1656341062 10359 886ce04812501ac4291742ac4e294b21 "pdflatex"
+  "main.lof" 1656341062 421 51282ace00a752dbad4fd9bf7ec8d9c0 "pdflatex"
+  "main.lot" 1656341062 323 4cc9971e2bc770880a943edeadd049cf "pdflatex"
+  "main.out" 1656341062 5083 72724780dd205972a26b610252ffcfba "pdflatex"
   "main.tex" 1655823303 2593 ade4efb90b77b41d2623713532f11895 ""
-  "main.toc" 1656075638 2861 e5ea2f8eed2df76e281ec4521418bcbb "pdflatex"
+  "main.toc" 1656341062 3029 8336b31dd4c03b663b5c4509315245ba "pdflatex"
   (generated)
   "main.aux"
   "main.lof"

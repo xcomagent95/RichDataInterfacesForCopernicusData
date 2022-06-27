@@ -181,7 +181,7 @@ zurückgeworfen. In den resultierenden Bildern äußert sich dieser Umstand in n
 Um die Areale mit niedrigen Reflektionswerten zu detektieren können Verfahren genutzt werden, welche aus den Histogrammen der Bilder einen Schwellwert ermitteln.
 Um die Ergebnisse einer solchen Schwellwertbestimmung zu verbessern, sollten die Radardaten, zum Beispiel Sentinel-1 IW GRD, zusätzlich Kalibriert werden. 
 So können die genaue Kenntnis über die tatsächliche Flugbahn des Satelliten dazu betragen die geografische Genauigkeit zu verbessern. Diese kann zusätzlich durch Verfahren 
-wie die Diffentialentzerrung gesteigert werden die die durch das Relief enstandenen Lagefehler ausgleicht \cite{einfuehrung_in_fernerkundung}.
+wie die Diffentialentzerrung gesteigert werden die die durch das Relief entstandenen Lagefehler ausgleicht \cite{einfuehrung_in_fernerkundung}.
 Die radiometrische Genauigkeit kann gesteigert werden indem zum Beispiel thermisches Rauschen aus den Daten entfernt wird und die Reflektivitätswerte zum 
 sogenannten $\sigma_0$-Wert umgerechnet werden. Dieser repräsentiert den Querschnitt der Reflektivität für eine normierte Fläche am Boden \cite{radiometric_calibration_of_S1_level1_products}.
 Dieses Maß erlaubt zudem das Vergleichen unterschiedlicher Radaraufnahmen.  
@@ -189,7 +189,7 @@ Auch sollte ein Speckle-Filter zum Einsatz kommen um. Dieser reduziert körnige 
 rechnerische Bildauswertung erschweren können. \cite{einfuehrung_in_fernerkundung}\cite{sentinel_1_flood_mapping_tutorial}.  
 Auf Basis des Schwellwertes kann ein Binärisierung des Bilder durchgeführt werden. Die entstehenden Werte würden überflutete beziehungsweise trocken liegende 
 Areale repräsentieren \cite{sentinel_1_flood_mapping_tutorial}.
-Die Binärisierung kann direkt auf Basis der Radaraufnahme der Überflutung, oder auf abgeleiteten Daten erfolgen. So können zum Beispiel das Radaraufnahme der überflutung mit 
+Die Binärisierung kann direkt auf Basis der Radaraufnahme der Überflutung, oder auf abgeleiteten Daten erfolgen. So können zum Beispiel das Radaraufnahme der Überflutung mit 
 einer überflutungsfreien Referenzaufnahme kombiniert zum Normalized Difference Sigma-Naught Index (NDSI) \cite{flood_proxy_mapping_ndsi}. Dabei die Reflektivitätswerte von 
 zwei unterschiedlichen Zeitpunkten zu einem Maß verrechnet welches als stärke der Veränderung interpretiert werden kann. 
 
@@ -209,9 +209,34 @@ in Kreisen der Informatik verbreiten und die Nutzung von interoperabler und komm
 
 
 \subsection{OGC API - Processes - Part 1: Core}
-Der OGC API - Processes - Part 1: Core Standrad soll das Bereitstellen von aufwendingen Prozessierungsaufgaben und ausführbaren Prozessen welche über eine webbasierte 
+\subsubsection{Ziele}
+Der OGC API - Processes - Part 1: Core Standard soll das Bereitstellen von aufwendigen Prozessierungsaufgaben und ausführbaren Prozessen welche über eine webbasierte 
 Programmierschittstelle von anderen Programmen aufgerufen und gestartet werden können unterstützen \cite{ogc_api_processes_core}. Der Standard ist dabei von Konzepten des 
-OGC Web Processing Service 2.0 Interface Standards beeinflusst und bedient sich des RESTful Paradigmas sowie der Java Script Object Notation (JSON)
+OGC Web Processing Service 2.0 Interface Standards beeinflusst und bedient sich des RESTful Paradigmas sowie der Java Script Object Notation (JSON).
+\subsubsection{Aufbau}
+Der Aufbau des OGC API - Processes - Part 1: Core Standards orientiert sich am OGC Spezifikationsmodell. Dieses beschreibt die modularen Komponenten eines Standards und 
+wie diese miteinander in Verbindung stehen \cite{ogc_specification_model}. Das Spezifikationsmodell definiert einen Standard als Teillösung eines Entwicklungsproblems.
+Diese Teillösung limitiert die Anzahl an möglichen Implementierungen. Ziel ist die Harmonisierung der Implementierungen und so die Interoperabilität zu steigern.
+Der OGC API - Processes - Part 1: Core Standard formuliert Requirements, Recommendations und fasst diese zu Requirements-Classes zusammen welche wiederum 
+ein Standardisierungsziel beschreiben. Requirements beschrieben Eigenschaften oder Vorgehensweisen die die Implementierung umsetzen muss um standardkonform zu sein. 
+Recommendations sind hingegen nicht verpflichtend beschreiben aber aus Sicht der Autoren empfehlenswerte Eigenschaften oder Vorgehensweisen \cite{ogc_specification_model}. 
+Jedes Requirement kann mit einem ebenfalls im Standard definierten Conformance-Test-Case überprüft werden. Diese Tests können zu Conformance-Test-Modules zusammengefasst 
+welche alle Test zum prüfen einer Requirements-Class umfassen. Die Gesamtheit dieser Conformance-Test-Modules wird auch als Conformance-Test-Class bezeichnet. Alle vom 
+Standard Conformance-Test-Classes werden im Conformance-Suit zusammengefasst \cite{ogc_specification_model}. Erfüllt eine Implementierung alle im Conformance-Suit definierten 
+Tests kann sie mit einem Certificate of Conformance für die implementierten Requirements-Classes versehen werden. Requirements, Recommendation und Conformance-Suit bilden 
+gemeinsam eine Spezifikation welche nach der Anerkennung durch ein legitimes Gremium wie das OGC als Standard angesehen werden.
+Der OGC API - Processes - Part 1: Core Standard definiert sieben Requirements-Classes. Die Requirements-Class Core beschreibt dabei die Kernfunktionalitäten welche 
+von standardkonformen Implementierungen umgesetzt werden. Da dem Nutzer mit diesen Kernfunktionalitäten Ressourcen zugänglich gemacht werden sollen werden in den 
+Requirements-Classes JSON und HTML Repräsentationen dieser Ressourcen in JSON und HTML definiert \cite{ogc_api_processes_core}. Die Requirements-Class Core macht keine
+expliziten Vorgaben für die Beschreibung einer standardkonformen API. Solche Vorgaben finden sich in der nicht verpflichtend umzusetzenden Requirements-Class
+OpenAPI Specification 3.0. Diese definiert wie implementierte APIs mithilfe der OpenAPI 3.0 Spezifikation beschrieben und dokumentiert werden können \cite{ogc_api_processes_core}.
+Ebenso werden in der Core Requirements-Class keine expliziten Vorgaben zur Beschreibung der angebotenen Prozesse gemacht. Da der Standard primär, aber nicht
+ausschließlich, zum Breitstellen von Diensten aus dem Bereich der Geoinformatik genutzt werden soll wird in der Requirements-Class OGC Process Description die Nutzung des 
+OGC Processes Description Formats zum Beschreiben von angebotenen Prozessen empfohlen \cite{ogc_api_processes_core}. 
+Zusätzliche Funktionen werden in den Requirements-Classes Job-List, Callback und Dismiss beschreiben. Sie beschreiben zusätzliche Ressourcen und Interaktionsmöglichkeiten 
+mit den auszuführenden Instanzen eines Prozesses welche als Jobs bezeichnet werden \cite{ogc_api_processes_core}.
+Die Requirements-Classes definieren hier Endpoints sowie deren Funktionen, Responses und mögliche Fehlersituationen. Jede implementierte Requirements-Class kann mit einem 
+entsprechenden Test, welcher im Abstract Test Suit beschreiben ist, auf ihre korrekte Implementierung hin überprüft werden. 
 \subsection{Evaluationskriterien}
 
 
