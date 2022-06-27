@@ -163,6 +163,17 @@ der Schrägdistanz in Blickrichtung erfolgt durch Projektion auf einen Ellipsoid
 Level-2 Produkte OSW, OWI und RVL abgeleitet werden.
 
 \subsubsection{Datenzugang}
+Die Daten des Copernicus-Programmes sollen einer möglichst breiten Nutzergruppe möglichst einfach zugänglich gemacht werden. Sie sollen frei zugänglich und kostenlos angeboten 
+werden \cite{copernicus_regulation}. Daten der Sentinel-1, 2, 3 und 5 können über das von der ESA betriebene Copernicus Open Access Hub bezogen werden. Datensätze können sowohl
+auf der Webseite als auch mithilfe einer API gesucht und heruntergeladen werden. Der Zugang zu Daten der Sentinel-3, 6 und 4 sowie weiterer Satelliten können über das 
+dem Copernicus Open Access Hub ähnlichen EUMETCast bezogen werden.
+In Ergänzung zu diesen Quellen werden Daten von fünf privaten, in Kooperation mit dem Copernicus-Programm stehenden Unternehmen in unterschiedlichen Formen bereitgestellt. 
+Diese als Data and Information Access Services (DIAS) bezeichneten Zugänge stellen unverarbeitete und abgeleitete Daten sowie Werkzeuge zur Analyse zur Verfügung \cite{dias_factsheet}.
+Da die DIAS kommerziell betrieben werden müssen einige Dienste und Werkzeuge bezahlt werden während Nutzer sich lediglich am Copernicus Open Access Hub oder EUMETCast 
+registrieren müssen. Zu erwähnen ist das die DIAS Zugriff auf die gesamten Daten gestatten. Aus dem Copernicus Open Access Hub lassen sich nur Teile der Daten synchron beziehen.
+In der Regel müssen Daten welche älter als einen Monat sind aus dem Archiv wiederhergestellt werden. Dieser Vorgang kann einige Zeit in Anspruch nehmen. 
+
+
 \subsection{Überschwemmungsmonitoring}
 Um Wasserflächen und damit auch überflutete Areale auf Radarbildern zu erkennen können die Reflektionseigenschaften von Wasserflächen genutzt werden. Das Wasser eine 
 sehr niedrige Rauigkeit besitzt kommt beim Aufprall eines Radarsignals zu einer spiegelnden Reflektion und nur ein sehr geringer Teil des Signals wird zum Empfänger 
@@ -170,14 +181,14 @@ zurückgeworfen. In den resultierenden Bildern äußert sich dieser Umstand in n
 Um die Areale mit niedrigen Reflektionswerten zu detektieren können Verfahren genutzt werden, welche aus den Histogrammen der Bilder einen Schwellwert ermitteln.
 Um die Ergebnisse einer solchen Schwellwertbestimmung zu verbessern, sollten die Radardaten, zum Beispiel Sentinel-1 IW GRD, zusätzlich Kalibriert werden. 
 So können die genaue Kenntnis über die tatsächliche Flugbahn des Satelliten dazu betragen die geografische Genauigkeit zu verbessern. Diese kann zusätzlich durch Verfahren 
-wie die Diffentialentzerrung gesteigert werden die die durch das Relief enstandenen Lagefehler ausgleichen \cite{einfuehrung_in_fernerkundung}.
+wie die Diffentialentzerrung gesteigert werden die die durch das Relief enstandenen Lagefehler ausgleicht \cite{einfuehrung_in_fernerkundung}.
 Die radiometrische Genauigkeit kann gesteigert werden indem zum Beispiel thermisches Rauschen aus den Daten entfernt wird und die Reflektivitätswerte zum 
 sogenannten $\sigma_0$-Wert umgerechnet werden. Dieser repräsentiert den Querschnitt der Reflektivität für eine normierte Fläche am Boden \cite{radiometric_calibration_of_S1_level1_products}.
 Dieses Maß erlaubt zudem das Vergleichen unterschiedlicher Radaraufnahmen.  
-Auch sollte ein Speckle-Filter zum Einsatz kommen um. Diese reduzieren körnige Bildstrukturen welche auf homogenen Flächen in Radarbildern auftreten und die 
+Auch sollte ein Speckle-Filter zum Einsatz kommen um. Dieser reduziert körnige Bildstrukturen welche auf homogenen Flächen in Radarbildern auftreten und die 
 rechnerische Bildauswertung erschweren können. \cite{einfuehrung_in_fernerkundung}\cite{sentinel_1_flood_mapping_tutorial}.  
-Auf Basis des Schwellwertes kann ein Binärisierung des Bilder durchgeführt werden. Die beiden Werte repäsentieren dann überflutete beziehungsweise trocken liegende 
-Areale \cite{sentinel_1_flood_mapping_tutorial}.
+Auf Basis des Schwellwertes kann ein Binärisierung des Bilder durchgeführt werden. Die entstehenden Werte würden überflutete beziehungsweise trocken liegende 
+Areale repräsentieren \cite{sentinel_1_flood_mapping_tutorial}.
 Die Binärisierung kann direkt auf Basis der Radaraufnahme der Überflutung, oder auf abgeleiteten Daten erfolgen. So können zum Beispiel das Radaraufnahme der überflutung mit 
 einer überflutungsfreien Referenzaufnahme kombiniert zum Normalized Difference Sigma-Naught Index (NDSI) \cite{flood_proxy_mapping_ndsi}. Dabei die Reflektivitätswerte von 
 zwei unterschiedlichen Zeitpunkten zu einem Maß verrechnet welches als stärke der Veränderung interpretiert werden kann. 
@@ -188,13 +199,19 @@ zwei unterschiedlichen Zeitpunkten zu einem Maß verrechnet welches als stärke 
 
 Dieses Maß bewegt sich zwischen $-1$ und $1$ wobei 
 Werte um $0$ für identische Reflektionswerte an beiden Zeitpunkten und daher für geringe Veränderung stehen. 
-Aufgrund der Reflektionseigenschgaften von Wasserflächen deuten Werte nahe $-1$ auf überflutete Areale hin \cite{flood_proxy_mapping_ndsi}. 
+Aufgrund der Reflektionseigenschaften von Wasserflächen deuten Werte nahe $-1$ auf überflutete Areale hin \cite{flood_proxy_mapping_ndsi}. 
 
 \subsection{Schnittstellen}
 \subsection{OGC und OGC Standards}
+Das Open Geospatial Consotium (OGC) widmet sich der Aufgabe die Entwicklung von internationalen Standards und unterstützender Dienste welche die Interoperabilität im 
+Bereich der Geoinformatik verbessern voranzutreiben. Das OGC soll dabei offene Systeme und Techniken verbreiten welche es erlauben Dienste und Prozesse mit geobezug
+in Kreisen der Informatik verbreiten und die Nutzung von interoperabler und kommerzieller Software fördern.
+
+
 \subsection{OGC API - Processes - Part 1: Core}
-\subsubsection{Ziele}
-\subsubsection{Aufbau}
+Der OGC API - Processes - Part 1: Core Standrad soll das Bereitstellen von aufwendingen Prozessierungsaufgaben und ausführbaren Prozessen welche über eine webbasierte 
+Programmierschittstelle von anderen Programmen aufgerufen und gestartet werden können unterstützen \cite{ogc_api_processes_core}. Der Standard ist dabei von Konzepten des 
+OGC Web Processing Service 2.0 Interface Standards beeinflusst und bedient sich des RESTful Paradigmas sowie der Java Script Object Notation (JSON)
 \subsection{Evaluationskriterien}
 
 
