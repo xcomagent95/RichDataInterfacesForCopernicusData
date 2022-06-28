@@ -29,7 +29,7 @@
 				}
 				for (var key in outputsJSON) {
 					var outputs = document.createElement("p")
-					outputs.innerHTML = "<p><b>" + key + "</b><br><b>Type: </b>" + outputsJSON[key].description + "</p>"
+					outputs.innerHTML = "<p><b>" + key + "</b><br><b>Description: </b>" + outputsJSON[key].description + "<br><b>Schema:</b><br>Type: " + outputsJSON[key].schema.type + "</p>"
 					document.getElementById('{{process.id}}outputs').appendChild(outputs);
 				}
 			</script>

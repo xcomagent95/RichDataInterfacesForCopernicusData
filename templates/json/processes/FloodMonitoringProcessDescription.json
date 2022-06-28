@@ -77,13 +77,13 @@
 		}
   },
   "outputs": {
-   "imagesOutput": {
+   "floodMask": {
 	  "title": "outputDocument",
 	  "description": "The output document",
       "schema": {
 			"type": "string",
 			"contentEncoding": "binary",
-			"contentMediaType": "application=geotiff"
+			"contentMediaType": "application=zip"
       }
     }
   },

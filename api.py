@@ -491,14 +491,18 @@ def getResults(jobID):
             elif(job["processID"] == "FloodMonitoring"): #check processID
                 if(status["status"] == "successful"): #check if job is successful
                     if(job["responseType"] == "raw"): #check if response type is raw
-                        return send_file('jobs/' + str(jobID) + '/results/bin.tif', mimetype=job["resultMediaType"]), 200 #send raw file
+                        return send_file('jobs/' + str(jobID) + '/results/floodMask.zip', mimetype=job["resultMediaType"]), 200 #send raw file
                     else: #check if response type is document
-                        imageBase64 = utils.encodeImageBase64('jobs/' + str(jobID) + '/results/bin.tif')
-                        result = {"imagesOutput": [
+                        ndsi64 = utils.encodeImageBase64('jobs/' + str(jobID) + '/results/ndsi_clipped.tif')
+                        bin64 = utils.encodeImageBase64('jobs/' + str(jobID) + '/results/bin.tif')
+                        result = {"floodMask": [
                                 {"href": "localhost:5000/download/" + str(jobID),
                                  "type": job["resultMediaType"]
                                  },
-                                {"value": imageBase64,
+                                {"value": ndsi64,
+                                 "encoding": "base64",
+                                 "mediaType": job["resultMediaType"]},
+                                {"value": bin64,
                                  "encoding": "base64",
                                  "mediaType": job["resultMediaType"]}
                             ]}
@@ -528,7 +532,8 @@ def downloadFile(jobID):
         file.close() #close .json file  
         
         if(job["processID"] == "FloodMonitoring"): #check processID
-            return send_file('jobs/' + str(jobID) + '/results/bin.tif', mimetype=job["resultMediaType"]), 200 #send raw file
+            utils.zipResults(str(jobID))
+            return send_file('jobs/' + str(jobID) + '/results/floodMask.zip', mimetype=job["resultMediaType"]), 200 #send raw file
         else:
             return 500 #internal server error
 

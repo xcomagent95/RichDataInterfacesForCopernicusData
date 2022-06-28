@@ -190,10 +190,11 @@ def setFinished(path):
             with open(path, "w") as f:
                 json.dump(data, f) 
                 
-def zipResults(job):
-    file = job.path + "/results"  # zip file name
-    directory = job.results
-    make_archive(file, "zip", directory)  # zipping the directory
+def zipResults(jobID):
+    files = ["ndsi_clipped.tif", "bin.tif"] # zip file name
+    with zipfile.ZipFile("jobs/" + jobID + "/results/floodMask.zip", 'w') as zipF:
+        for file in files:
+            zipF.write("jobs/" + jobID + "/results/" + file, "\\" + file, compress_type=zipfile.ZIP_DEFLATED)
     
 def convertRFC3339ToDatetime(datetimeString):
     r1 = datetimeString.replace('"', '') 
@@ -330,16 +331,16 @@ def parseInput(processID, data):
         file.close() #close ProcessDescription.json
         
         if("response" in data):
-            if(data["outputs"]["imageOutput"]["transmissionMode"] not in process["outputTransmission"]):
+            if(data["outputs"]["floodMask"]["transmissionMode"] not in process["outputTransmission"]):
                 response = False
 
-        if("format" in data["outputs"]["imageOutput"]):
-            if(data["outputs"]["imageOutput"]["format"]["mediaType"] != process["outputs"]["imagesOutput"]["schema"]["contentMediaType"]):
+        if("format" in data["outputs"]["floodMask"]):
+            if(data["outputs"]["floodMask"]["format"]["mediaType"] != process["outputs"]["floodMask"]["schema"]["contentMediaType"]):
                 response = False
             else:
-                response.append(data["outputs"]["imageOutput"]["format"]["mediaType"])
+                response.append(data["outputs"]["floodMask"]["format"]["mediaType"])
         else:
-            response.append(process["outputs"]["imagesOutput"]["schema"]["contentMediaType"])
+            response.append(process["outputs"]["floodMask"]["schema"]["contentMediaType"])
     return response
 
 def loginCopernicusHub(job):
@@ -503,3 +504,5 @@ def getKML(productName):
     
     shutil.move('data/' + productName + '.SAFE/preview/map-overlay.kml', 'data/coverage/' + productName + '.kml')
     shutil.rmtree('data/' + productName + '.SAFE')
+    
+zipResults("2e4c85ca-7101-40d1-94ab-a19fc338c374")
