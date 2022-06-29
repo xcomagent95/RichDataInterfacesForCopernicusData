@@ -9,10 +9,6 @@ import os
 import datetime
 import shutil
 
-logging.basicConfig(filename = 'testSuitLog.log', 
-                    level=logging.INFO, 
-                    format = f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
-
 def createTestJob(jobID, status, progress):
     #create job directories        
     os.mkdir("jobs/" + jobID) #directory for current job
@@ -68,14 +64,8 @@ def createTestResult(jobID, input):
     with open("jobs/" + jobID + "/results/result.json", 'w') as f: #create file
         json.dump(result, f) #write content
         f.close() #close file
-
-class TestStringMethods(unittest.TestCase):
-    def setUp(self):
-        #created finished job
-        #create failed job
-        #create created job
-        
         pass
+    
     logging.info("------------------> new test run <------------------")  
     #Test "/"
     #Abstract Test A.1

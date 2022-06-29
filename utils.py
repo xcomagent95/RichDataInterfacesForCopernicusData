@@ -57,6 +57,7 @@ def readJob(jobFile):
     return jobObject #return job object
 
 def floodMonitoringProcess(job):
+    setStarted(job.path + '/status.json')
     datasets = datasets = os.listdir("data/")
     if(checkForDismissal(job.path + '/status.json') == True):
         return
@@ -192,7 +193,7 @@ def setFinished(path):
                 
 def zipResults(jobID):
     files = ["ndsi_clipped.tif", "bin.tif"] # zip file name
-    with zipfile.ZipFile("jobs/" + jobID + "/results/floodMask.zip", 'w') as zipF:
+    with zipfile.ZipFile("jobs/" + jobID + "/results/ndsi_bin.zip", 'w') as zipF:
         for file in files:
             zipF.write("jobs/" + jobID + "/results/" + file, "\\" + file, compress_type=zipfile.ZIP_DEFLATED)
     
@@ -272,9 +273,9 @@ def parseInput(processID, data):
     if("response" in data):
         #set response type
         if(data["response"] not in ["document", "raw"]):
-            responseType = "raw"
+            responseType = "raw" #set raw as default
         else:
-            responseType = data["response"]
+            responseType = data["response"] #else set selected
      
     #parse echo input
     if(processID == "Echo"):
@@ -300,9 +301,9 @@ def parseInput(processID, data):
             response.append(process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"])
             
     if(processID == "FloodMonitoring"):
-        
-        #if(data["inputs"]["bbox"]["bbox"][0] > data["inputs"]["bbox"]["bbox"][2] or data["inputs"]["bbox"]["bbox"][1] < data["inputs"]["bbox"]["bbox"][3]):
-            #return False
+       
+        if(data["inputs"]["bbox"]["bbox"][0] > data["inputs"]["bbox"]["bbox"][2] or data["inputs"]["bbox"]["bbox"][1] < data["inputs"]["bbox"]["bbox"][3]):
+            return False
         
         #try:
          #   preDate = datetime.date(int(job.input[0][0:4]), int(job.input[0][4:6]), int(job.input[0][6:]))
@@ -323,25 +324,23 @@ def parseInput(processID, data):
                   data["inputs"]["bbox"]["bbox"][1],
                   data["inputs"]["bbox"]["bbox"][0]]
         
-        response = [inputs, responseType]
+        outputs = []
         
         #check transmission mode
         file = open('templates/json/processes/' + processID + 'ProcessDescription.json',) #open ProcessDescription.json
         process = json.load(file) #create response   
         file.close() #close ProcessDescription.json
-        
-        if("response" in data):
-            if(data["outputs"]["floodMask"]["transmissionMode"] not in process["outputTransmission"]):
-                response = False
-
-        if("format" in data["outputs"]["floodMask"]):
-            if(data["outputs"]["floodMask"]["format"]["mediaType"] != process["outputs"]["floodMask"]["schema"]["contentMediaType"]):
-                response = False
-            else:
-                response.append(data["outputs"]["floodMask"]["format"]["mediaType"])
-        else:
-            response.append(process["outputs"]["floodMask"]["schema"]["contentMediaType"])
-    return response
+        if("outputs" in data):
+            for i in data["outputs"]:
+                if(data["outputs"][i]["transmissionMode"] not in process["outputTransmission"]):
+                    response = False
+                    return response
+                if(data["outputs"][i]["format"]["mediaType"] != process["outputs"][i]["schema"]["contentMediaType"]):
+                    response = False
+                    return response
+                outputs.append([i, data["outputs"][i]["format"]["mediaType"], data["outputs"][i]["transmissionMode"]])
+        response = [inputs, responseType, outputs]
+        return response
 
 def loginCopernicusHub(job):
     api = SentinelAPI(job.input[2], job.input[3]) #create api object
@@ -476,12 +475,6 @@ def theresholdSNAP(job):
     
     otsu_thresh = threshold_otsu(image) #apply otsu thresholding
     binary_otsu = image > otsu_thresh #binarize with otsu threshold
-    print(otsu_thresh)
-    #iso_thresh = threshold_isodata(image)
-    #binary_iso = image < iso_thresh
-    
-    #yen_thresh = threshold_isodata(image)
-    #binary_yen = image < yen_thresh
     
     driver = gdal.GetDriverByName('GTiff') #initialize driver
     image_out = driver.Create(job.results + 'bin.tif', dataset.RasterXSize, dataset.RasterYSize, 1, gdal.GDT_Float32) #initialize output image
@@ -504,5 +497,15 @@ def getKML(productName):
     
     shutil.move('data/' + productName + '.SAFE/preview/map-overlay.kml', 'data/coverage/' + productName + '.kml')
     shutil.rmtree('data/' + productName + '.SAFE')
-    
-zipResults("2e4c85ca-7101-40d1-94ab-a19fc338c374")
+
+#check ndsi    
+#data = {'inputs': {'preDate': '20220305', 'postDate': '20220329', 'username': 'xcomagent95', 'password': 'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs': {'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}
+#print(parseInput("FloodMonitoring", data))
+
+#check bin
+#data = {'inputs': {'preDate': '20220305', 'postDate': '20220329', 'username': 'xcomagent95', 'password': 'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs': {'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}
+#print(parseInput("FloodMonitoring", data))
+
+#check both
+#data = {'inputs': {'preDate': '20220305', 'postDate': '20220329', 'username': 'xcomagent95', 'password': 'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs': {'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}
+#print(parseInput("FloodMonitoring", data))

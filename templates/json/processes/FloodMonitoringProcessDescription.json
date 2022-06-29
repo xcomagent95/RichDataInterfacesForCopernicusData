@@ -77,13 +77,22 @@
 		}
   },
   "outputs": {
-   "floodMask": {
+   "bin": {
 	  "title": "outputDocument",
 	  "description": "The output document",
       "schema": {
 			"type": "string",
 			"contentEncoding": "binary",
-			"contentMediaType": "application=zip"
+			"contentMediaType": "application/tiff"
+      }
+    },
+	"ndsi": {
+	  "title": "outputDocument",
+	  "description": "The output document",
+      "schema": {
+			"type": "string",
+			"contentEncoding": "binary",
+			"contentMediaType": "application/tiff"
       }
     }
   },

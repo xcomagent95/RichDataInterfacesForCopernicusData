@@ -15,11 +15,6 @@ from werkzeug.serving import BaseWSGIServer
 WSGIRequestHandler.protocol_version = "HTTP/1.1"
 BaseWSGIServer.protocol_version = "HTTP/1.1"
 
-#set logging options
-logging.basicConfig(filename = 'apiLog.log', #set logfile
-                    level=logging.INFO, #set loglevel
-                    format = f'%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s') #set logging format
-
 #initialize app
 app = Flask(__name__) #initialize application
 
@@ -203,8 +198,8 @@ def executeProcess(processID):
             job_file = {"jobID": str(jobID), #set jobID
                         "processID": str(processID), #set processID
                         "input": inputParameters[0], #set input parameters
+                        "output": inputParameters[2],
                         "responseType": inputParameters[1], #set response type (raw or document)
-                        "resultMediaType": inputParameters[2], #set result mediatype
                         "path": "jobs/" + jobID, #set job path
                         "results": "jobs/" + jobID + "/results/", #set results path
                         "downloads": "jobs/" + jobID + "/downloads/"} #set downloads path
@@ -491,22 +486,57 @@ def getResults(jobID):
             elif(job["processID"] == "FloodMonitoring"): #check processID
                 if(status["status"] == "successful"): #check if job is successful
                     if(job["responseType"] == "raw"): #check if response type is raw
-                        return send_file('jobs/' + str(jobID) + '/results/floodMask.zip', mimetype=job["resultMediaType"]), 200 #send raw file
-                    else: #check if response type is document
-                        ndsi64 = utils.encodeImageBase64('jobs/' + str(jobID) + '/results/ndsi_clipped.tif')
-                        bin64 = utils.encodeImageBase64('jobs/' + str(jobID) + '/results/bin.tif')
-                        result = {"floodMask": [
-                                {"href": "localhost:5000/download/" + str(jobID),
-                                 "type": job["resultMediaType"]
-                                 },
-                                {"value": ndsi64,
-                                 "encoding": "base64",
-                                 "mediaType": job["resultMediaType"]},
-                                {"value": bin64,
-                                 "encoding": "base64",
-                                 "mediaType": job["resultMediaType"]}
-                            ]}
-                        return result, 200 #send raw file
+                        if(len(job["output"]) > 1):
+                            utils.zipResults(jobID)
+                            return send_file('jobs/' + str(jobID) + '/results/ndsi_bin.zip', mimetype='application/zip'), 200 #send raw file
+                        elif(job["output"][0][0] == "ndsi"):
+                            return send_file('jobs/' + str(jobID) + '/results/ndsi.tif', mimetype=job["output"][0][1]), 200 #send raw file
+                        elif(job["output"][0][0] == "bin"):
+                            return send_file('jobs/' + str(jobID) + '/results/bin.tif', mimetype=job["output"][0][1]), 200 #send raw file
+                    elif(job["responseType"] == "document"): #check if response type is document
+                        if(len(job["output"]) > 1):
+                            ndsi64 = utils.encodeImageBase64('jobs/' + str(jobID) + '/results/ndsi_clipped.tif')
+                            bin64 = utils.encodeImageBase64('jobs/' + str(jobID) + '/results/bin.tif')
+                            ndsi = {"ndsi": [
+                                    {"href": "localhost:5000/download/" + str(jobID) + "/ndsi",
+                                     "type": job["output"][0][1]
+                                     },
+                                    {"value": ndsi64,
+                                     "encoding": "base64",
+                                     "mediaType": job["output"][0][1]},
+                                ]}
+                            bin = {"bin": [
+                                    {"href": "localhost:5000/download/" + str(jobID) + "/bin",
+                                     "type": job["output"][0][1]
+                                     },
+                                    {"value": bin64,
+                                     "encoding": "base64",
+                                     "mediaType": job["output"][0][1]},
+                                ]}
+                            response = jsonify([ndsi, bin])
+                            return response, 200 #send raw file                        
+                        elif(job["output"][0][0] == "ndsi"):
+                            ndsi64 = utils.encodeImageBase64('jobs/' + str(jobID) + '/results/ndsi_clipped.tif')
+                            result = {"ndsi": [
+                                    {"href": "localhost:5000/download/" + str(jobID) + "/ndsi",
+                                     "type": job["output"][0][1]
+                                     },
+                                    {"value": ndsi64,
+                                     "encoding": "base64",
+                                     "mediaType": job["output"][0][1]},
+                                ]}
+                            return result, 200 #send raw file
+                        elif(job["output"][0][0] == "bin"):
+                            bin64 = utils.encodeImageBase64('jobs/' + str(jobID) + '/results/bin.tif')
+                            result = {"bin": [
+                                    {"href": "localhost:5000/download/" + str(jobID) + "/bin",
+                                     "type": job["output"][0][1]
+                                     },
+                                    {"value": bin64,
+                                     "encoding": "base64",
+                                     "mediaType": job["output"][0][1]},
+                                ]}
+                            return result, 200 #send raw file
                 elif(status["status"] == "failed"): #check if job failed
                     exception = {"title": "Job failed exception", "description": status["message"], "type": "job-results-failed"}
                     return exception, 404, {"resource": "job-failed"} #return not found if requested job is failed
@@ -520,9 +550,8 @@ def getResults(jobID):
         exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
         return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
 
-@app.route('/download/<jobID>', methods = ["GET"])
-def downloadFile(jobID):
-    app.logger.info('/download/' + jobID) #add log entry when endpoint is called
+@app.route('/download/<jobID>/<requestedFile>', methods = ["GET"])
+def downloadFile(jobID, requestedFile):
     if(os.path.exists('jobs/' + str(jobID))):
         file = open('jobs/' + str(jobID) + "/status.json",) #open status.json
         status = json.load(file) #load the data from .json file
@@ -530,16 +559,16 @@ def downloadFile(jobID):
         file = open('jobs/' + str(jobID) + "/job.json",) #open job.json
         job = json.load(file) #load the data from .json file
         file.close() #close .json file  
-        
         if(job["processID"] == "FloodMonitoring"): #check processID
-            utils.zipResults(str(jobID))
-            return send_file('jobs/' + str(jobID) + '/results/floodMask.zip', mimetype=job["resultMediaType"]), 200 #send raw file
+            if(str(requestedFile) == "bin"):
+                return send_file('jobs/' + str(jobID) + '/results/bin.tif', mimetype='application/tiff'), 200 #send raw file
+            elif(str(requestedFile) == 'ndsi'):
+                return send_file('jobs/' + str(jobID) + '/results/ndsi_clipped.tif', mimetype='application/tiff'), 200 #send raw file
         else:
             return 500 #internal server error
 
 @app.route('/coverage', methods = ["GET"])
 def getCoverage():
-    app.logger.info('/coverage') #add log entry when endpoint is called
     kmlFiles = os.listdir('data/coverage/')
     coverages = []
     bboxes = []
