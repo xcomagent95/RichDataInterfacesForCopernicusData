@@ -11,17 +11,17 @@
   ],
   "inputs": {
     "echo": {
-      "title": "Value to be echoed",
-      "description": "The input value",
+      "title": "echo",
+      "description": "Value to be echoed",
       "schema": {
         "type": "string"
       }
 	}
   },
   "outputs": {
-   "complexObjectOutput": {
-      "title": "outputDocument",
-      "description": "The output document",
+   "outgoingEcho": {
+      "title": "outgoingEcho",
+      "description": "The output document containing the echoed value",
       "schema": {
         "type": "object",
         "contentMediaType": "application/json",

@@ -288,17 +288,17 @@ def parseInput(processID, data):
         
         #check transmission mode
         if("response" in data):
-            if(data["outputs"]["complexObjectOutput"]["transmissionMode"] not in process["outputTransmission"]):
+            if(data["outputs"]["outgoingEcho"]["transmissionMode"] not in process["outgoingEcho"]):
                 response = False
         
         #check media type
-        if("format" in data["outputs"]["complexObjectOutput"]):
-            if(data["outputs"]["complexObjectOutput"]["format"]["mediaType"] != process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"]):
+        if("format" in data["outputs"]["outgoingEcho"]):
+            if(data["outputs"]["outgoingEcho"]["format"]["mediaType"] != process["outputs"]["outgoingEcho"]["schema"]["contentMediaType"]):
                 response = False
             else:
-                response.append(data["outputs"]["complexObjectOutput"]["format"]["mediaType"])
+                response.append(data["outputs"]["outgoingEcho"]["format"]["mediaType"])
         else:
-            response.append(process["outputs"]["complexObjectOutput"]["schema"]["contentMediaType"])
+            response.append(process["outputs"]["outgoingEcho"]["schema"]["contentMediaType"])
             
     if(processID == "FloodMonitoring"):
        
