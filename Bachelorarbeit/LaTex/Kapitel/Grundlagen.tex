@@ -76,9 +76,9 @@ einer sehr langen wirksamen Antenne. Angepasste Verfahren oder Mischformen könn
 Im Gegensatz zu optischen Aufnahmeverfahren liefern die Rohdaten 
 einer Befliegung mit Radarsensoren noch keine Bilddaten. Um Bilder zu erzeugen, bedarf es zunächst einer komplexen Verarbeitung der aus Amplitude und Phase bestehenden 
 reflektierten Signale. Dabei werden die Daten entlang des Azimuts und der Blickrichtung gefiltert. In der Regel repräsentieren die Pixelwerte eines aus Radardaten 
-abgeleiteten Bildes die Reflektivität des korrespondierenden Bodenelements. Mittels Geocodierung kann das so entstandene Bild verortet werden. Zusätzlich können diverse 
-Kalibrierungen vorgenommen werden. Dazu gehören Verfahren welche Rauscheffekte minimieren, die geometrischen Eigenschaften verbessern oder die Interpretation der Bilder 
-erleichtern \cite{tutorial_on_sar}. 
+abgeleiteten Bildes die Reflektivität des korrespondierenden Bodenelements. Mittels Geocodierung kann das so entstandene Bild verortet werden. Zusätzlich können diverse,
+ebenfalls rechen- und zeitintensive, Kalibrierungen vorgenommen werden. Dazu gehören Verfahren welche Rauscheffekte minimieren, die geometrischen Eigenschaften verbessern 
+oder die Interpretation der Bilder erleichtern \cite{tutorial_on_sar}.
 
 \subsection{Copernicus Programm}
 \subsubsection{Ziele}
@@ -115,7 +115,7 @@ breit. Ähnliche Daten können von europäischen Zoll- und Grenzschutzbehörden 
 
 \subsubsection{Sentinel 1}
 Die Sentinel-1 Satellitenmission liefert wetter- und tageszeitunabhängige Radardaten der Erdoberfläche. Die Mission besteht aus zwei Satelliten, Sentinel-1 A und B,
-sowie einer Bodenkomponente welche für Steuerung und Kalibrierung und Datenverarbeitung verantwortlich ist. Die Satelliten tragen als Hauptinstrument ein 
+sowie einer Bodenkomponente welche für Steuerung, Kalibrierung und Datenverarbeitung verantwortlich ist. Die Satelliten tragen als Hauptinstrument ein 
 bildgebendes Radar mit synthetischer Apertur welches im C-Frequenzband arbeitet. Es stehen zwei Polarisationsmodi, Single (HH, VV) oder Dual (HH+HV, VV+VH),
 zur Verfügung \cite{sentinel_1_definition}. 
 Die Erfassung von Daten kann in vier Aufnahmemodi erfolgen welche sich in Auflösung, Streifenbreite und Anwendungsszenario unterscheiden (siehe Tabelle \ref{aufnahmemodi_sentinel_1}). 
@@ -190,8 +190,8 @@ rechnerische Bildauswertung erschweren können. \cite{einfuehrung_in_fernerkundu
 Auf Basis des Schwellwertes kann ein Binärisierung des Bilder durchgeführt werden. Die entstehenden Werte würden überflutete beziehungsweise trocken liegende 
 Areale repräsentieren \cite{sentinel_1_flood_mapping_tutorial}.
 Die Binärisierung kann direkt auf Basis der Radaraufnahme der Überflutung, oder auf abgeleiteten Daten erfolgen. So können zum Beispiel das Radaraufnahme der Überflutung mit 
-einer überflutungsfreien Referenzaufnahme kombiniert zum Normalized Difference Sigma-Naught Index (NDSI) \cite{flood_proxy_mapping_ndsi}. Dabei die Reflektivitätswerte von 
-zwei unterschiedlichen Zeitpunkten zu einem Maß verrechnet welches als stärke der Veränderung interpretiert werden kann. 
+einer überflutungsfreien Referenzaufnahme kombiniert zum Normalized Difference Sigma-Naught Index (NDSI) \cite{flood_proxy_mapping_ndsi}. Dabei werden 
+die Reflektivitätswerte von zwei unterschiedlichen Zeitpunkten zum NDSI verrechnet welcher als Maß für die Stärke der Veränderung interpretiert werden kann. 
 
 \begin{equation}
     NDSI = \frac{\sigma_0^f-\sigma_0^r}{\sigma_0^f+\sigma_0^r}
@@ -200,13 +200,13 @@ zwei unterschiedlichen Zeitpunkten zu einem Maß verrechnet welches als stärke 
 Dieses Maß bewegt sich zwischen $-1$ und $1$ wobei 
 Werte um $0$ für identische Reflektionswerte an beiden Zeitpunkten und daher für geringe Veränderung stehen. 
 Aufgrund der Reflektionseigenschaften von Wasserflächen deuten Werte nahe $-1$ auf überflutete Areale hin \cite{flood_proxy_mapping_ndsi}. 
+Die der vielen und teilweise zeitintensiven Prozessierungsschritte können, je nach Größe des zu untersuchenden Areals, viel Zeit und Rechenleistung in Anspruch nehmen.
 
 \subsection{Schnittstellen}
 \subsection{OGC und OGC Standards}
 Das Open Geospatial Consotium (OGC) widmet sich der Aufgabe die Entwicklung von internationalen Standards und unterstützender Dienste welche die Interoperabilität im 
 Bereich der Geoinformatik verbessern voranzutreiben. Das OGC soll dabei offene Systeme und Techniken verbreiten welche es erlauben Dienste und Prozesse mit geobezug
 in Kreisen der Informatik verbreiten und die Nutzung von interoperabler und kommerzieller Software fördern.
-
 
 \subsection{OGC API - Processes - Part 1: Core}
 \subsubsection{Ziele}

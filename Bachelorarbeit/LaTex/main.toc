@@ -31,7 +31,6 @@
 \contentsline {subsection}{\numberline {4.1}Jakob's Nutzbarkeitsheuristiken}{19}{subsection.4.1}%
 \contentsline {subsection}{\numberline {4.2}Unit Testsuit}{19}{subsection.4.2}%
 \contentsline {subsection}{\numberline {4.3}OGC Compliance Test}{19}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Ausblick}{20}{section.5}%
-\contentsline {subsection}{\numberline {5.1}API}{20}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Prozesse}{20}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Standard}{20}{subsection.5.3}%
+\contentsline {section}{\numberline {5}Diskussion}{20}{section.5}%
+\contentsline {section}{\numberline {6}Ausblick}{21}{section.6}%
+\contentsline {section}{\numberline {7}Fazit}{22}{section.7}%
