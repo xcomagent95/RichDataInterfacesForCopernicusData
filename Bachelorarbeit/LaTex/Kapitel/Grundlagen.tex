@@ -173,7 +173,6 @@ Da die DIAS kommerziell betrieben werden müssen einige Dienste und Werkzeuge be
 registrieren müssen. Zu erwähnen ist das die DIAS Zugriff auf die gesamten Daten gestatten. Aus dem Copernicus Open Access Hub lassen sich nur Teile der Daten synchron beziehen.
 In der Regel müssen Daten welche älter als einen Monat sind aus dem Archiv wiederhergestellt werden. Dieser Vorgang kann einige Zeit in Anspruch nehmen. 
 
-
 \subsection{Überschwemmungsmonitoring}
 Um Wasserflächen und damit auch überflutete Areale auf Radarbildern zu erkennen können die Reflektionseigenschaften von Wasserflächen genutzt werden. Das Wasser eine 
 sehr niedrige Rauigkeit besitzt kommt beim Aufprall eines Radarsignals zu einer spiegelnden Reflektion und nur ein sehr geringer Teil des Signals wird zum Empfänger 
@@ -189,9 +188,9 @@ Auch sollte ein Speckle-Filter zum Einsatz kommen um. Dieser reduziert körnige 
 rechnerische Bildauswertung erschweren können. \cite{einfuehrung_in_fernerkundung}\cite{sentinel_1_flood_mapping_tutorial}.  
 Auf Basis des Schwellwertes kann ein Binärisierung des Bilder durchgeführt werden. Die entstehenden Werte würden überflutete beziehungsweise trocken liegende 
 Areale repräsentieren \cite{sentinel_1_flood_mapping_tutorial}.
-Die Binärisierung kann direkt auf Basis der Radaraufnahme der Überflutung, oder auf abgeleiteten Daten erfolgen. So können zum Beispiel das Radaraufnahme der Überflutung mit 
-einer überflutungsfreien Referenzaufnahme kombiniert zum Normalized Difference Sigma-Naught Index (NDSI) \cite{flood_proxy_mapping_ndsi}. Dabei werden 
-die Reflektivitätswerte von zwei unterschiedlichen Zeitpunkten zum NDSI verrechnet welcher als Maß für die Stärke der Veränderung interpretiert werden kann. 
+Die Binärisierung kann direkt auf Basis der Radaraufnahme der Überflutung, oder auf abgeleiteten Daten erfolgen. So können zum Beispiel das Radaraufnahme der Überflutung
+$\sigma_0^f$ mit einer überflutungsfreien Referenzaufnahme ($\sigma_0^r$) kombiniert zum Normalized Difference Sigma-Naught Index (NDSI) \cite{flood_proxy_mapping_ndsi}.
+Dabei werden die Reflektivitätswerte von zwei unterschiedlichen Zeitpunkten zum NDSI verrechnet welcher als Maß für die Stärke der Veränderung interpretiert werden kann. 
 
 \begin{equation}
     NDSI = \frac{\sigma_0^f-\sigma_0^r}{\sigma_0^f+\sigma_0^r}
@@ -201,8 +200,58 @@ Dieses Maß bewegt sich zwischen $-1$ und $1$ wobei
 Werte um $0$ für identische Reflektionswerte an beiden Zeitpunkten und daher für geringe Veränderung stehen. 
 Aufgrund der Reflektionseigenschaften von Wasserflächen deuten Werte nahe $-1$ auf überflutete Areale hin \cite{flood_proxy_mapping_ndsi}. 
 Die der vielen und teilweise zeitintensiven Prozessierungsschritte können, je nach Größe des zu untersuchenden Areals, viel Zeit und Rechenleistung in Anspruch nehmen.
+Der Schwellwert kann mit unterschiedlichen verfahren aus dem Bild beziehungsweise seinem Histogramm abgeleitet werden.
+Eines dieses Schwellwertverfahren wurde von Nobuyuki Otsu entwickelt und ist nach ihm benannt. Bei diesem Verfahren werden alle Werte eines Histogramms durchlaufen.
+Jeder dieser Werte teilt das Histogramm in zwei Gruppen und bildet so einen Schwellwert. Jener Wert welcher die gewichtete Varianz zwischen der Klassen maximiert wird
+als optimaler Grenzwert angesehen \cite{thresholds_selection}.
+Gegeben sei ein Bild $C$ mit $N$ Pixeln in $L$ Grauwertstufen. Die Anzahl der Pixel einer Grauwertstufe $i$ sein dann gegeben durch $n_i$ und es gilt:
 
-\subsection{Schnittstellen}
+\begin{equation}
+    N = \sum_{i=1}^{L} n_i
+\end{equation}
+
+Ein betrachteter Grenzwert $t$ teil das Bild in die Gruppen $C_0$ und $C_1$ wobei $C_0$ alle Pixel der Graustufen $1$ bis $t$ und 
+$C_1$ alle Pixel der Graustufen $t+1$ bis $L$ enthält. Die Gewichte für die Gruppen $C_0$ und $C_1$ sind nun gegeben durch:
+\begin{equation}
+    w_0(t) = w(t) = \sum_{i=1}^{t} p_i
+    \text{   und   }
+    w_1(t) = \sum_{i=t+1}^{L} p_i
+\end{equation}
+mit $p_i$: 
+\begin{equation}
+    p_i = \frac{n_i}{N}
+\end{equation}
+sowie $\mu_0$, $\mu_1$ und $\mu_T$:
+\begin{equation}
+    \mu_0(t) = \sum_{i=1}^{t} ip_i/w_0
+    \text{   und   }
+    \mu_1(t) = \sum_{i=t+1}^{L} ip_i/w_1
+    \text{   und   }
+    \mu_T = \sum_{i=1}^{L} ip_i
+\end{equation}
+Die Klassenvarianzen $\sigma_0^2(t)$ und $\sigma_1^2(t)$ sind gegeben durch:
+\begin{equation}
+    \sigma_0^2(t) =  \sum_{i=1}^{t} (i-\mu_0)^2p_i/w_0
+    \text{   und   }
+    \sigma_1^2(t) = \sum_{i=t+1}^{L} (i-\mu_1)^2p_i/w_1
+\end{equation}
+Zu Maximieren ist nun die Inter-Klassenvarianz $K$:
+\begin{equation}
+    K = \frac{\sigma_t^2}{\sigma_W^2}
+\end{equation}
+mit $\sigma_W^2$ und $\sigma_T^2$:
+\begin{equation}
+    \sigma_W^2 = w_0\sigma_0^2 + w_1\sigma_1^2
+    \text{   und   }
+    \sigma_T^2 = \sum_{i=1}^{L} (i-\mu_T)^2p_i
+\end{equation}
+
+
+\subsection{Programmierschnittstelle}
+Eine Programmierschnittstelle, kurz API für Application Programming Interface, ist eine Menge von Funktionen und Prozeduren die einem Programm erlauben Zugriff auf 
+Funktionen einer anderen Anwendung zu gewähren \cite{geospatial_apis}.
+
+
 \subsection{OGC und OGC Standards}
 Das Open Geospatial Consortium (OGC) widmet sich der Aufgabe die Entwicklung von internationalen Standards und unterstützender Dienste welche die Interoperabilität im 
 Bereich der Geoinformatik verbessern voranzutreiben. Das OGC soll dabei offene Systeme und Techniken verbreiten welche es erlauben Dienste und Prozesse mit geobezug
@@ -210,14 +259,16 @@ in Kreisen der Informatik verbreiten und die Nutzung von interoperabler und komm
 Akteure aus Wissenschaft, Wirtschaft und Verwaltung zu beteiligen um Standards zu schaffen welche auf möglichst breitem Konsens basieren. Zudem werden 
 Mechanismen zur Zertifizierung von standardkonformen Software-Lösungen angeboten \cite{ogc_bylaws}.
 
-Das OGC formuliert Standards für unterschiedliche Themenbereiche. In Standards aus dem Bereich Data Models und Encodings....
+Das OGC formuliert Standards für unterschiedliche Themenbereiche. In Standards aus dem Bereich Data Models und Encodings werden Daten- und Datenaustauschformate
+definiert. Standards welche Webdienste und Schnittstellen zum Austausch von Geodaten beschreiben werden dem Bereich Services und APIs zugeordnet. 
+Der OGC API - Processes - Part 1: Core Standard gehört in diesen Bereich. Die Bereiche Discovery und Containers enthalten Standards für die Speicherung von Geodaten
+sowie die Auffindbarkeit und Durchsuchbarkeit dieser. Ein weiterer Bereich widmet sich Standards rund um den betrieb von Sensornetzwerken sowie deren Schnittstellen. 
+
 
 \subsection{OGC API - Processes - Part 1: Core}
-\subsubsection{Ziele}
 Der OGC API - Processes - Part 1: Core Standard soll das Bereitstellen von aufwendigen Prozessierungsaufgaben und ausführbaren Prozessen welche über eine webbasierte 
 Programmierschittstelle von anderen Programmen aufgerufen und gestartet werden können unterstützen \cite{ogc_api_processes_core}. Der Standard ist dabei von Konzepten des 
-OGC Web Processing Service 2.0 Interface Standards beeinflusst und bedient sich des RESTful Paradigmas sowie der Java Script Object Notation (JSON).
-\subsubsection{Aufbau}
+OGC Web Processing Service 2.0 Interface Standards beeinflusst und bedient sich des RESTful Paradigmas sowie der Java Script Object Notation (JSON). \\
 Der Aufbau des OGC API - Processes - Part 1: Core Standards orientiert sich am OGC Spezifikationsmodell. Dieses beschreibt die modularen Komponenten eines Standards und 
 wie diese miteinander in Verbindung stehen \cite{ogc_specification_model}. Das Spezifikationsmodell definiert einen Standard als Teillösung eines Entwicklungsproblems.
 Diese Teillösung limitiert die Anzahl an möglichen Implementierungen. Ziel ist die Harmonisierung der Implementierungen und so die Interoperabilität zu steigern.
@@ -242,5 +293,8 @@ mit den auszuführenden Instanzen eines Prozesses welche als Jobs bezeichnet wer
 Die Requirements-Classes definieren hier Endpoints sowie deren Funktionen, Responses und mögliche Fehlersituationen. Jede implementierte Requirements-Class kann mit einem 
 entsprechenden Test, welcher im Abstract Test Suit beschreiben ist, auf ihre korrekte Implementierung hin überprüft werden. 
 \subsection{Evaluationskriterien}
+Die Evaluation einer Implementierung einer API kann unter verschiedenen Gesichtspunkten erfolgen. Zum einen können technische Aspekte Effizienz, Skalierbarkeit,
+Stabilität und Wartbarkeit untersucht werden. Zu dieser technischen Bewertung einer API kann auch das Überprüfen der Standardkonformität gezählt werden.
+   
 
 

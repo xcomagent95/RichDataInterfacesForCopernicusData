@@ -2,56 +2,24 @@
 \restoregeometry
 \section{Implementierung}
 \subsection{Requirements Class Core}
+In der Requirements-Class Core werden alle wesentlichen Funktionalitäten beschreiben die eine minimale Implementierung des Standards zur Verfügung stellen muss. 
+Dazu gehören Endpunkte zum Beschaffen von Ressourcen, zum Ausführen der angebotenen Prozesse sowie zum Beschaffen der Prozessierungsergebnisse. Auch definiert diese 
+Requirements-Class grundlegende Eigenschaften der Implementierung wie die HTTP-Version. 
+\subsubsection{API Landig Page}
+Die Landing Page der API kann als Zugangspunkt zu allen weiteren Funktionen und Ressourcen der API gesehen werden. Sie ist über den URL \textit{/} mittels der HTTP-Get
+Über den Parameter $f$ kann definiert werden ob die Ressource als HTML- oder JSON-Dokument geliefert werden soll. Bei erfolgreicher Ausführung wird mit dem HTTP-Statuscode
+200 geantwortet. Wird der Endpunkt mit einer falschen HTTP-Methode aufgerufen wird mit dem HTTP-Statuscode 405 geantwortet. 
+Ein erfolgreiches Abrufen der Landing Page mittels einer
+
 \subsection{Requirements Class OGC Process Description}
 \subsection{Requirements Class JSON}
 \subsection{Requirements Class HTML}
 \subsection{Requirements Class OpenAPI 3.0}
 \subsection{Requirements Class Job List}
 \subsection{Requirements Class Dismiss}
+Die Requirements-Class Dismiss beschreibt eine weitere Interaktionsmöglichkeit mit von Nutzern angelegten Jobs. Sie soll dazu dienen angelegte Jobs abzubrechen oder 
+Dateien eines abgeschlossenen Jobs zu löschen \cite{ogc_api_processes_core}. 
 \subsection{Prozesse}
-Eines dieses Schwellwertverfahren wurde von Nobuyuki Otsu entwickelt und ist nach ihm benannt. Bei diesem Verfahren werden alle Werte eines Histogramms durchlaufen.
-Jeder dieser Werte teilt das Histogramm in zwei Gruppen und bildet so einen Schwellwert. Jener Wert welcher die gewichtete Varianz zwischen der Klassen maximiert wird
-als optimaler Grenzwert angesehen.
-Gegeben sei ein Bild $C$ mit $N$ Pixeln in $L$ Grauwertstufen. Die Anzahl der Pixel einer Grauwertstufe $i$ sein dann gegeben durch $n_i$ und es gilt:
-
-\begin{equation}
-    N = \sum_{i=1}^{L} n_i
-\end{equation}
-
-Ein betrachteter Grenzwert $t$ teil das Bild in die Gruppen $C_0$ und $C_1$ wobei $C_0$ alle Pixel der Graustufen $1$ bis $t$ und 
-$C_1$ alle Pixel der Graustufen $t+1$ bis $L$ enthält. Die Gewichte für die Gruppen $C_0$ und $C_1$ sind nun gegeben durch:
-\begin{equation}
-    w_0(t) = w(t) = \sum_{i=1}^{t} p_i
-    \text{   und   }
-    w_1(t) = \sum_{i=t+1}^{L} p_i
-\end{equation}
-mit $p_i$: 
-\begin{equation}
-    p_i = \frac{n_i}{N}
-\end{equation}
-sowie $\mu_0$, $\mu_1$ und $\mu_T$:
-\begin{equation}
-    \mu_0(t) = \sum_{i=1}^{t} ip_i/w_0
-    \text{   und   }
-    \mu_1(t) = \sum_{i=t+1}^{L} ip_i/w_1
-    \text{   und   }
-    \mu_T = \sum_{i=1}^{L} ip_i
-\end{equation}
-Die Klassenvarianzen $\sigma_0^2(t)$ und $\sigma_1^2(t)$ sind gegeben durch:
-\begin{equation}
-    \sigma_0^2(t) =  \sum_{i=1}^{t} (i-\mu_0)^2p_i/w_0
-    \text{   und   }
-    \sigma_1^2(t) = \sum_{i=t+1}^{L} (i-\mu_1)^2p_i/w_1
-\end{equation}
-Zu Maximieren ist nun die Inter-Klassenvarianz $K$:
-\begin{equation}
-    K = \frac{\sigma_t^2}{\sigma_W^2}
-\end{equation}
-mit $\sigma_W^2$ und $\sigma_T^2$:
-\begin{equation}
-    \sigma_W^2 = w_0\sigma_0^2 + w_1\sigma_1^2
-    \text{   und   }
-    \sigma_T^2 = \sum_{i=1}^{L} (i-\mu_T)^2p_i
-\end{equation}
-
+\subsubsection{Echo}
+\subsubsection{Überflutungsmonitoring}
 \subsection{Zusätzliche Funktionalitäten}
