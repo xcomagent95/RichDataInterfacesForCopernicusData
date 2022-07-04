@@ -3,6 +3,18 @@
 \section{Implementierung}
 \subsection{Softwarestack}
 \subsection{Programmstruktur}
+Die Anwendung ist in vier Python-Scripte aufgeteilt. Im api.py Script ist die Webanwendung definiert. Neben Grundeinstellungen enthält diese Datei
+die Endpoints der API. Die geordnete Abarbeitung der angelegten Jobs werden vom Script processing.py gesteuert. Die eigentlichen Prozesse sowie 
+Hilfsfunktionen befinden sich im utils.py Script.
+Diese Scripte verwalten Dateien in einem einfach Verzeichnissystem. Templates für statische Ressourcen befinden sich im Verzeichnis $templates/$. HTML-Dateien 
+befinden sich im Verzeichnis $templates/html/$ und JSON-Dateien im Verzeichnis $templates/json/$. Das Unterverzeichnis $templates/json/processes/$ enthält die 
+Beschreibungen der von der API angebotenen Prozesse. Die Anwendung erlaubt das persistente hinterlegen von Sentinel-1 Datensätzen um zeitaufwendiges 
+Herunterladen zu vermeiden. Diese Datensätze können im Verzeichnis $data/$ abgelegt werden. Jeder Sentinel-1 Datensatz enthält eine .kml-Datei welche 
+Metadaten zum Datensatz enthält. Diese werden im Unterverzeichnis $data/coverage/$ abgelegt. 
+Jeder angelegt Job, also jede auszuführende Instanz einer Prozesses erhält ein einzigartiges Verzeichnis innerhalb des Verzeichnisses $jobs/$. In diesem 
+Verzeichnis befinden sich eine Status- und Job-Datei sowie ein Footprint. Neben diesen Dateien enthält jedes Job-Verzeichnis ein Unterverzeichnis $results/$.  
+
+
 \subsection{Requirements Classes für Encodings}
 \subsubsection{Requirements Class JSON}
 In der Requirements Class JSON wird definiert welche Ressourcen im Media-Type $application/json$ angefragt werden können. Dazu gehören alle Responses der 
@@ -52,7 +64,7 @@ In dieser Requirements-Class werden zudem alle HTTP-Statuscodes gelistet die Nut
     \end{tabular}\label{httpcodes}
 \end{table}
 Alle erfolgreichen Anfragen welche eine Resource liefern mit dem HTTP-Statuscode 200 beantwortet. Die Verwendung nicht zulässiger HTTP-Methoden resultieren 
-in Antworten mit dem Status-Code 405 während Anfragen für nicht unterstütze Encodings mit dem Status-Code 406 beantwortet werden. Kommt es zu Fehlern bei der Ausführung 
+in Antworten mit dem Status-Code 405 während Anfragen für nicht unterstütze Media-Types mit dem Status-Code 406 beantwortet werden. Kommt es zu Fehlern bei der Ausführung 
 des Programmcodes antwortet die Anwendung mit dem HTTP-Statuscode 500. Werden durch eine Anfrage Ressourcen neu erzeugt oder nicht gefunden antwortet die Anwendung mit 
 den HTTP-Statuscodes 201 beziehungsweise 404. Der Standard erlaubt die Nutzung weiterer HTTP-Statuscodes.
 
@@ -87,7 +99,9 @@ die Ein- und Ausgaben jedes angebotenen Prozesses gelistet. Die nötigen Informa
 Auch Requests an diesen Endpoint können mit den optional Parametern $f$ oder $content\_type$ zur Spezifizierung des Media-Types aber auch mit dem $limit$ Parameter versehen werden 
 welches die Anzahl der wiedergegebene Prozesse steuert. Auch dieser Endpoint erlaubt nur die Nutzung der HTTP-Get Methode. 
 Nach Überprüfung aller Parameter werden zunächst alle Process Descriptions aus dem Verzeichnis $/templates/json/processes$ geladen und in einem Array gespeichert.
-(siehe Anhang \ref{appendixProcessList})
+Wird der Media-Type $aplication/json$ angefragt wird das Array mit der vom $limit$-Parameter festgelegten Länge und den Verknüpfungen $self$ und $alternate$ an die
+Funktion $jsonify()$ übergeben und als Response versandt. Eine ähnliche Verfahrensweise kommt zum Einsatz wenn der Media-Type $text/html$ angefragt wurde. Dann wird das 
+durch den $limit$-Parameter limitierte Array samt dem entsprechenden HTML-Template an den Renderer übergeben und anschließend als Response versandt (siehe Anhang \ref{appendixProcessList})
 
 \subsubsection{Process Endpoint}
 \subsubsection{Prozess Ausführung}
@@ -97,8 +111,12 @@ Nach Überprüfung aller Parameter werden zunächst alle Process Descriptions au
 \subsection{Requirements Class Job List}
 \subsection{Requirements Class Dismiss}
 \subsection{Requirements Class OpenAPI 3.0}
+Der OGC API - Processes - Part 1: Core Standard macht über die eigentlichen Funktionen der API auch Vorgaben zur Art der Dokumentation der API. Hierfür soll der 
+OpenAPI 3.0 Standard genutzt werden. 
 \subsection{Prozesse}
 \subsubsection{Echo}
+Da eine standardkonforme API mindestens einen testbaren Prozess anbieten muss ist der Echo-Prozess ebenfalls Teil der prototypischen Implementierung. 
+Dieser nimmt einen beliebigen Wert entgegen. Nach einer kurzen, simulierten Bearbeitungszeit kann dieser wieder als Resultat abgefragt werden. 
 \subsubsection{Überflutungsmonitoring}
 \subsection{Zusätzliche Funktionalitäten}
 \subsubsection{Coverage} 
