@@ -7,7 +7,7 @@
 \usepackage{csquotes} %Paket für Anführungszeichen
 \usepackage{graphics, graphicx} %Paket für die Einbindung von Grafiken
 \usepackage{amssymb, amsmath, amstext} %Pakete für Formeln
-\usepackage[left=2.5cm, right=4cm, top=2.5cm, bottom=2.5cm]{geometry} %Einstellung der Seitenränder
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry} %Einstellung der Seitenränder
 \setlength{\parindent}{0em} %kein Einzug
 \usepackage[onehalfspacing]{setspace}	%Paket für die Zeilenabstände
 \usepackage{adjustbox}
@@ -61,7 +61,9 @@
     showspaces  = false,
     showstringspaces    = false,
     captionpos  = t,
-    caption     = \lstname
+    caption     = \lstname,
+    tabsize         = 2,
+    numberstyle     = \tiny
 }
 
 \newgeometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
@@ -107,10 +109,6 @@ Fachsemester: 6. Semester\\
 \newpage
 \listoffigures
 \listoftables
-\listofalgorithms
-\renewcommand{\lstlistlistingname}{Quellcodeverzeichniss}
-\renewcommand{\lstlistingname}{Quellcode}
-\lstlistoflistings
 \newpage
 \input{Kapitel/Abkürzungsverzeichnis.tex}
 
@@ -123,5 +121,7 @@ Fachsemester: 6. Semester\\
 \input{Kapitel/Fazit.tex}
 \input{Kapitel/Literatur.tex}
 \input{Kapitel/Abschlusserklärung.tex}
+\appendix
+\input{Kapitel/Anhang.tex}
 
 \end{document}

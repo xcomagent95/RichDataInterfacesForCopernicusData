@@ -188,7 +188,7 @@ def executeProcess(processID):
             if(inputParameters == False): #if request body can not be parsed
                 return "HTTP status code 400: bad request", 400 #return bad request
             jobID = str(uuid.uuid4()) #generate jobID
-
+            created = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
             #create job directories        
             os.mkdir("jobs/" + jobID) #directory for current job
             os.mkdir("jobs/" + jobID + "/results/") #results directory for current job
@@ -214,7 +214,7 @@ def executeProcess(processID):
                            "message": "Step 0/1", #set initial message
                            "type": "process", #set type of job
                            "progress": 0, #set unitial progress
-                           "created": str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), #set created timestamp
+                           "created": created, #set created timestamp
                            "started": "none", #set initial started timestamp
                            "finished": "none", #set initial finished tiestamp
                            "links": [ #add links to self and alternate
@@ -236,12 +236,11 @@ def executeProcess(processID):
             f.close() #close file
 
             response = jsonify(status_file) #create response
-            return response, 201, {"location": "localhost:5000/jobs/" + jobID + "?f=application/json", "resource": "job", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok and files created with location header
+            return response, 201, {"location": "localhost:5000/jobs/" + jobID + "?f=application/json", "resource": "job"} #return response and ok and files created with location header
         else:
-            exception = {"title": "No such process exception", "description": "No process with the requested processID could be found", "type": "no-such-process"}
+            exception = {"title": "No such process exception", "description": "Requested process could not be found", "type": "no-such-process"}
             return exception, 404 #return not found if requested process is not found 
-    except Exception:
-        traceback.print_exc()
+    except:
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 
 #jobs endpoint    

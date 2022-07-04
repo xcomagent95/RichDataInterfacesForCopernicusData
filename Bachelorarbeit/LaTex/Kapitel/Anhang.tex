@@ -1,0 +1,298 @@
+\newpage
+\restoregeometry
+%\renewcommand{\lstlistlistingname}{Quellcodeverzeichniss}
+\renewcommand{\lstlistingname}{Quellcode}
+%\lstlistoflistings
+\section{Quellcodeverzeichnis}
+
+\subsection{Konfiguration von Werkzeug auf HTTP 1.1}
+\begin{lstlisting}[caption={Konfiguration von Werkzeug auf HTTP 1.1}, style = Python]
+    from flask import Flask
+    from werkzeug.serving import WSGIRequestHandler
+    from werkzeug.serving import BaseWSGIServer
+    WSGIRequestHandler.protocol_version = "HTTP/1.1"
+    BaseWSGIServer.protocol_version = "HTTP/1.1"
+\end{lstlisting}\label{appendixconfWerkzeug}
+
+\subsection{Quellcode Landing Page Endpoint}
+\begin{lstlisting}[caption={Landing Page Endpoint}, style = Python]
+#landingpage endpoint
+@app.route('/',  methods = ['GET'])
+def getLandingPage():
+    app.logger.info('/') 
+    try:
+        if(request.content_type == "text/html" or
+        request.args.get('f')=="text/html" or 
+        request.args.get('f') == None):
+                response = render_template('html/landingPage.html') 
+                return response, 200, {
+                "link": "localhost:5000/?f=text/html", 
+                "resource": "landingPage"
+                } 
+        elif(request.content_type == "application/json" or
+        request.args.get('f')=="application/json"): 
+            file = open('templates/json/landingPage.json',) 
+            payload = json.load(file) 
+            file.close() 
+            response = jsonify(payload) 
+            return response, 200, {
+                "link": "localhost:5000/?f=application/json", 
+                "resource": "landingPage"} 
+        else:
+            return "HTTP status code 406: not acceptable", 406 
+        except:
+            return "HTTP status code 500: internal server error", 500 
+\end{lstlisting}\label{appendixLandingPage}
+
+\newpage
+\subsection{Quellcode API Definition Endpoint}
+\begin{lstlisting}[caption={API Definition Endpoint}, style = Python]
+#api endpoint
+@app.route('/api',  methods = ['GET']) 
+def getAPIDefinition():
+    app.logger.info('/api') 
+    try:
+        if(request.content_type == "text/html" or
+        request.args.get('f')=="text/html" or 
+        request.args.get('f') == None): 
+            response = render_template('html/apiDefinition.html') 
+            return response, 200, {
+                "link": "localhost:5000/apiDefinition?f=text/html", 
+                "resource": "apiDefinition"} 
+        elif(request.content_type == "application/json" or 
+        request.args.get('f')=="application/json"): 
+            file = open('templates/json/apiDefinition.json',) 
+            payload = json.load(file) 
+            file.close() #close apiDefinition.json
+            response = jsonify(payload) 
+            return response, 200, {
+                "link": "localhost:5000/api?f=application/json", 
+                "resource": "apiDefinition"} 
+        else:
+            return "HTTP status code 406: not acceptable", 406 
+    except:
+        return "HTTP status code 500: internal server error", 500
+\end{lstlisting}\label{appendixAPIDefinition}
+
+\newpage
+\subsection{Quellcode Conformance Endpoint}
+\begin{lstlisting}[caption={Conformance Endpoint}, style = Python]
+#conformance endpoint
+@app.route('/conformance',  methods = ['GET'])
+def getConformance():
+    app.logger.info('/conformance') 
+    try:
+        if(request.content_type == "text/html" or 
+        request.args.get('f')=="text/html" or 
+        request.args.get('f') == None): 
+            response = render_template('html/confClasses.html') 
+            return response, 200, {
+                "link": "localhost:5000/conformance?f=text/html", 
+                "resource": "conformance"}
+        elif(request.content_type == "application/json" or 
+        request.args.get('f')=="application/json"): 
+            file = open('templates/json/confClasses.json',)
+            payload = json.load(file) 
+            file.close() 
+            response = jsonify(payload) 
+            return response, 200, {
+                "link": "localhost:5000/conformance?f=application/json",
+                "resource": "conformance"} 
+        else:
+            return "HTTP status code 406: not acceptable", 406 
+    except:
+        return "HTTP status code 500: internal server error", 500
+\end{lstlisting}\label{appendixConformance}   
+
+\newpage
+\subsection{Quellcode Process List Endpoint}
+\begin{lstlisting}[caption={Process List Endpoint}, style = Python]
+#processes endpoint
+@app.route('/processes', methods = ['GET']) 
+def getProcesses():
+    app.logger.info('/processes') 
+    if(request.args.get('limit') == None or 
+        int(request.args.get('limit')) <= 0 or 
+        int(request.args.get('limit')) > 1000): 
+        limit = 10 #set limit to default value
+    else:
+        limit = int(request.args.get('limit'))
+    try:
+        if(request.content_type == "text/html" or
+            request.args.get('f')=="text/html" or 
+            request.args.get('f') == None): 
+                processList = [] #initialize list of processes
+                processDescriptions = os.listdir("templates/json/processes") 
+                counter = 0
+                for i in processDescriptions:
+                    file = open('templates/json/processes/' + i,) 
+                    process = json.load(file) 
+                    file.close() 
+                    processList.append(process) 
+                    counter += 1 
+                    if(counter == limit): 
+                        break 
+                response = render_template('html/processes.html', 
+                    processes=processList) 
+                return response, 200, {
+                    "link": "localhost:5000/processes?f=text/html", 
+                    "resource": "processes"} 
+        elif(request.content_type == "application/json" or 
+                request.args.get('f')=="application/json"): 
+            processList = [] #initialize list of processes
+            processDescriptions = os.listdir("templates/json/processes")     
+            for i in processDescriptions: 
+                file = open('templates/json/processes/' + i,) 
+                process = json.load(file) 
+                file.close() 
+                processList.append(process) 
+            processes = {"processes": processList[0:limit],
+                        "links": [ #add links to self and alternate
+                            {
+                            "href": "localhost:5000/processes?f=applicattion/json",
+                            "rel": "self",
+                            "type": "application/json"
+                            },
+                            {
+                            "href": "localhost:5000/processes?f=text/html",
+                            "rel": "alternate",
+                            "type": "text/html"
+                            }
+                        ]}
+            response = jsonify(processes) 
+            return response, 200, {
+                "link": "localhost:5000/processes?f=application/json", 
+                "resource": "processes"} 
+        else:
+            return "HTTP status code 406: not acceptable", 406 
+    except:
+        return "HTTP status code 500: internal server error", 500 
+\end{lstlisting}\label{appendixProcessList}   
+
+\newpage
+\subsection{Quellcode Process Description Endpoint}
+\begin{lstlisting}[caption={Process Description Endpoint}, style = Python]
+#process endpoint
+@app.route('/processes/<processID>', methods = ['GET']) 
+def getProcess(processID):
+    app.logger.info('/processes/' + processID) 
+    try:
+        if(request.content_type == "text/html" or 
+            request.args.get('f')=="text/html" or 
+            request.args.get('f') == None): 
+            if(os.path.exists('templates/json/processes/' 
+            + str(processID) + 'ProcessDescription.json')): 
+                file = open('templates/json/processes/' 
+                + str(processID) 
+                + 'ProcessDescription.json',) 
+                process = json.load(file) 
+                file.close() 
+                response = render_template("html/Process.html", process=process) 
+                return response, 200, {"link": "localhost:5000/processes/" 
+                + str(processID) 
+                + "?f=text/html", 
+                "resource": str(processID)} 
+            else:
+                exception = render_template('html/exception.html', 
+                title="No such process exception", 
+                description="Requested process could not be found", 
+                type="no-such-process")
+                return exception, 404, {"resource": "no-such-process"}
+        elif(request.content_type == "application/json" or
+                request.args.get('f')=="application/json"): 
+            if(os.path.exists('templates/json/processes/' 
+            + str(processID) 
+            + 'ProcessDescription.json')): 
+                file = open('templates/json/processes/' 
+                + str(processID) 
+                + 'ProcessDescription.json',)
+                payload = json.load(file) 
+                file.close() 
+                response = jsonify(payload) 
+                return response, 200, {"link": "localhost:5000/processes/" 
+                + str(processID) 
+                + "?f=application/json", 
+                "resource": str(processID)} 
+            else:
+                exception = {"title": "No such process exception", 
+                "description": "Requested process could not be found", 
+                "type": "no-such-process"}
+                return exception, 404, {"resource": "no-such-process"} 
+        else:
+            return "HTTP status code 406: not acceptable", 406
+    except:
+        return "HTTP status code 500: internal server error", 500 
+\end{lstlisting}\label{appendixProcessDescription}      
+
+\newpage
+\subsection{Quellcode Process Execution Endpoint}
+\begin{lstlisting}[caption={Process Execution}, style = Python]
+@app.route('/processes/<processID>/execution', methods = ['POST']) 
+def executeProcess(processID):
+    app.logger.info('/processes/' + processID + '/execution') 
+    try:
+        if(os.path.exists('templates/json/processes/' 
+        + str(processID) 
+        + 'ProcessDescription.json')): 
+            data = json.loads(request.data.decode('utf8').replace("'", '"')) 
+            inputParameters = utils.parseInput(processID, data)
+            if(inputParameters == False):
+                return "HTTP status code 400: bad request", 400 
+            jobID = str(uuid.uuid4()) 
+            created = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            os.mkdir("jobs/" + jobID) 
+            os.mkdir("jobs/" + jobID + "/results/") 
+
+            job_file = {"jobID": str(jobID), 
+                        "processID": str(processID), 
+                        "input": inputParameters[0], 
+                        "output": inputParameters[2],
+                        "responseType": inputParameters[1], 
+                        "path": "jobs/" + jobID, 
+                        "results": "jobs/" + jobID + "/results/", 
+                        "downloads": "jobs/" + jobID + "/downloads/"} 
+            json.dumps(job_file, indent=4) 
+            with open("jobs/" + jobID + "/job.json", 'w') as f: 
+                json.dump(job_file, f) 
+            f.close()
+
+            status_file = {"jobID": str(jobID), 
+                            "processID": str(processID), 
+                            "status": "accepted", 
+                            "message": "Step 0/1", 
+                            "type": "process", 
+                            "progress": 0, 
+                            "created": created, 
+                            "started": "none", 
+                            "finished": "none", 
+                            "links": [ 
+                                {
+                                "href": "localhost:5000/jobs/" 
+                                + jobID + "?f=application/json",
+                                "rel": "self",
+                                "type": "application/json",
+                                "title": "this document as JSON"},
+                                {
+                                "href": "localhost:5000/jobs/" 
+                                + jobID + "?f=text/html",
+                                "rel": "alternate",
+                                "type": "text/html",
+                                "title": "this document as HTML"
+                                }
+                            ]}
+            json.dumps(status_file, indent=4) #dump content
+            with open("jobs/" + jobID + "/status.json", 'w') as f: #create file
+                json.dump(status_file, f) #write content
+            f.close() #close file
+
+            response = jsonify(status_file) #create response
+            return response, 201, {"location": "localhost:5000/jobs/" 
+            + jobID + "?f=application/json", 
+            "resource": "job"} 
+            exception = {"title": "No such process exception", 
+            "description": "Requested process could not be found", 
+            "type": "no-such-process"}
+            return exception, 404 
+    except:
+        return "HTTP status code 500: internal server error", 500
+\end{lstlisting}\label{appendixProcessExecution}   

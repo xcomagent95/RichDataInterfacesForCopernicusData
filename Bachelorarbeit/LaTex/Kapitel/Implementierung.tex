@@ -2,25 +2,32 @@
 \restoregeometry
 \section{Implementierung}
 \subsection{Softwarestack}
-\subsection{Architektur}
-\subsection{Requirements Class Core}
-In der Requirements-Class Core werden alle Endpunkte und Eigenschaften beschrieben welche eine minimale, standardkonforme API anbieten beziehungsweise aufweisen muss. 
+\subsection{Programmstruktur}
+\subsection{Requirements Classes für Encodings}
+\subsubsection{Requirements Class JSON}
+In der Requirements Class JSON wird definiert welche Ressourcen im Media-Type $application/json$ angefragt werden können. Dazu gehören alle Responses der 
+Endpunkte API Landing Page, API Definition, Conformance Deklaration, Prozess Liste, Prozess Beschreibung, Prozess Ausführung und Job Status welche mit dem 
+HTTP-Statuscode 200 versandt werden. Da die prototypische Implementierung auch die Endpunkte Job Liste und Coverage bereitstellt können die korrespondierenden
+Ressourcen auch im Media-Type $application/json$ angefragt werden.
+Die statischen .json-Dateien für die Endpunkte API Landing Page, API Definition, Conformance Deklaration, Prozess Liste, Prozess Beschreibung sind im Verzeichnis
+$/templates/json$ hinterlegt. Die .json-Dateien der angelegten Jobs finden sich jeweils in den Job-Verzeichnissen unter $/jobs/<jobID>$ während die .kml-Dateien
+welche die Informationen für den Coverage-Endpoint beinhalten unter $data/coverage$ gespeichert sind. Werden Ressourcen im Media-Type $application/json$ angefragt
+müssen also zunächst die entsprechenden .json-Dateien geladen, je nach Endpunkt variiert oder kombiniert und vor dem versenden mit der Funktion $jsonify()$
+vorbereitet werden. 
 
+\subsubsection{Requirements Class HTML}
+In der Requirements-Class HTML werden analog zu Requirements Class JSON jene Ressourcen definiert welche im Media-Type $text/html$ angefragt werden können. Jedoch
+entfällt in dieser Requirements-Class die Einschränkung auf bestimmte Endpunkte und alle Responses welche mit dem HTTP-Statuscode 200 versandt werden müssen den 
+Media-Type $text/html$ unterstützen. 
+
+\subsection{Requirements Class Core}
 \subsubsection{HTTP 1.1}
 Die Umsetzung der Requirements-Class HTTP 1.1 (RFC 2616) verlangt das die API exklusiv das HTTP 1.1 unterstützt. 
 Falls die API ebenfalls HTTPS unterstützt muss ebenfalls HTTP over TLS (RFC 2818) eingehalten werden. 
 Das Flask-Framework nutzt standardmäßig das HTTP 1.0. Teil des Flask-Frameworks ist die WSGI Bibliothek Werkzeug welche
-das Implementieren von Webanwendungen erlaubt. Um die Verwendete HTTP-Version von 1.0 auf 1.1 umzustellen müssen Variablen 
+das Implementieren von Webanwendungen erlaubt. Um die verwendete HTTP-Version von 1.0 auf 1.1 umzustellen müssen Variablen 
 in Werkzeug angepasst werden. Nach dem Import der Module WSGIRequestHandler und BaseWSGIServer kann in beiden die 
-Version des HTTP Protokolls angepasst werden. 
-
-\begin{lstlisting}[caption={Konfiguration von Werkzeug auf HTTP 1.1}, style = Python]
-    from flask import Flask
-    from werkzeug.serving import WSGIRequestHandler
-    from werkzeug.serving import BaseWSGIServer
-    WSGIRequestHandler.protocol_version = "HTTP/1.1"
-    BaseWSGIServer.protocol_version = "HTTP/1.1"
-\end{lstlisting}\label{confWerkzeug}
+Version des HTTP Protokolls angepasst werden (siehe Anhang \ref{appendixconfWerkzeug}). 
 
 In dieser Requirements-Class werden zudem alle HTTP-Statuscodes gelistet die Nutzer von einer standardkonformen Implementierung mindestens erwarten können. 
 \begin{table}[H]
@@ -46,276 +53,52 @@ In dieser Requirements-Class werden zudem alle HTTP-Statuscodes gelistet die Nut
 \end{table}
 Alle erfolgreichen Anfragen welche eine Resource liefern mit dem HTTP-Statuscode 200 beantwortet. Die Verwendung nicht zulässiger HTTP-Methoden resultieren 
 in Antworten mit dem Status-Code 405 während Anfragen für nicht unterstütze Encodings mit dem Status-Code 406 beantwortet werden. Kommt es zu Fehlern bei der Ausführung 
-des Programmcodes antwortet die Anwendung mit dem HTTP-Statuscode 500. Da Implementierung jedoch erweiterte HTTP Funktionen nutzen darf, dürfen auch zusätzliche 
-HTTP-Statuscodes genutzt werden. Werden durch eine Anfrage Ressourcen neu erzeugt oder nicht gefunden antwortet die Anwendung mit den HTTP-Statuscodes 201 beziehungsweise
-404. 
-
-\subsubsection{Requirements Class JSON}
-In der Requirements Class JSON wird definiert welche Ressourcen im Media-Type $application/json$ angefragt werden können. Dazu gehören alle Responses der 
-Endpunkte API Landing Page, API Definition, Conformance Deklaration, Prozess Liste, Prozess Beschreibung, Prozess Ausführung und Job Status welche mit dem 
-HTTP-Statuscode 200 versandt werden. Da die prototypische Implementierung auch die Endpunkte Job Liste und Coverage bereitstellt können die korrespondierenden
-Ressourcen auch im Media-Type $application/json$ angefragt werden.
-
-Die statischen .json-Dateien für die Endpunkte API Landing Page, API Definition, Conformance Deklaration, Prozess Liste, Prozess Beschreibung sind im Verzeichnis
-$/templates/json$ hinterlegt. Die .json-Dateien der angelegten Jobs finden sich jeweils in den Job-Verzeichnissen unter $/jobs/<jobID>$ während die .kml-Dateien
-welche die Informationen für den Coverage-Endpoint beinhalten unter $data/coverage$ gespeichert sind. Werden Ressourcen im Media-Type $application/json$ angefragt
-müssen also zunächst die entsprechenden .json-Dateien geladen, je nach Endpunkt variiert oder kombiniert und vor dem versenden mit der Funktion $jsonify()$
-vorbereitet werden. 
-
-\subsubsection{Requirements Class HTML}
-In der Requirements-Class HTML werden analog zu Requirements Class JSON jene Ressourcen definiert welche im Media-Type $text/html$ angefragt werden können. Jedoch
-entfällt in dieser Requirements-Class die Einschränkung auf bestimmte Endpunkte und alle Responses welche mit dem HTTP-Statuscode 200 versandt werden müssen den 
-Media-Type $text/html$ unterstützen.
+des Programmcodes antwortet die Anwendung mit dem HTTP-Statuscode 500. Werden durch eine Anfrage Ressourcen neu erzeugt oder nicht gefunden antwortet die Anwendung mit 
+den HTTP-Statuscodes 201 beziehungsweise 404. Der Standard erlaubt die Nutzung weiterer HTTP-Statuscodes.
 
 \subsubsection{API Landig Page}
-Der erste im Standard definierte Endpunkt kann über den URL \textit{http://HOST:PORT/?f=<text/html | application/json>} aufgerufen werden und liefert als Resource die 
-Landing Page der API. Diese kann als Eintrittspunkt zu allen anderen Funktionalitäten angesehen werden. Sie enthält Verknüpfungen zur API Definition, zur Conformance Declaration, 
-zur Liste der Prozesse, zur Liste der Jobs sowie zur Datenabdeckung. Der Endpunkt kann nur mit der HTTP-Get Methode verwendet werden. Die Resource wird als HTML- aber auch als JSON-Dokument angeboten. 
-Der Nutzer kann über den optionalen Parameter $f$ steuern welches Encoding als Antwort gesandt werden soll.
-Wird eine Anfrage akzeptiert so wird, je nach gewähltem Encoding, eine Antwort aus einer statischen .html- oder .json-Datei generiert und mit zusätzlichen HTTP-Headern versandt.
-Der $link$-Header liefert einen URL zur angefragten Resource während der $resource$-Header die angefragte Ressource identifiziert. 
-Die Landing Page wird hier mit $landingPage$ identifiziert.
-
-\begin{lstlisting}[caption={Landing Page Endpoint}, style = Python]
-#landingpage endpoint
-@app.route('/',  methods = ['GET'])
-def getLandingPage():
-    app.logger.info('/') 
-    try:
-        if(request.content_type == "text/html" or
-        request.args.get('f')=="text/html" or 
-        request.args.get('f') == None):
-              response = render_template('html/landingPage.html') 
-              return response, 200, {
-                "link": "localhost:5000/?f=text/html", 
-                "resource": "landingPage"
-                } 
-        elif(request.content_type == "application/json" or
-        request.args.get('f')=="application/json"): 
-            file = open('templates/json/landingPage.json',) 
-            payload = json.load(file) 
-            file.close() 
-            response = jsonify(payload) 
-            return response, 200, {
-                "link": "localhost:5000/?f=application/json", 
-                "resource": "landingPage"} 
-        else:
-            return "HTTP status code 406: not acceptable", 406 
-        except:
-            return "HTTP status code 500: internal server error", 500 
-\end{lstlisting}
+Der erste im Standard definierte Endpoint kann über den URL \textit{http://HOST:PORT/?f=<text/html | application/json>} aufgerufen werden und liefert als Resource die 
+Landing Page der API. Diese kann als Eintrittspunkt zu allen anderen Funktionalitäten angesehen werden. Sie enthält Verknüpfungen zu den Endpoints API Definition, 
+Conformance Declaration, Process List, Process Description, Job List und Coverage. Der Endpoint kann nur mit der HTTP-Get Methode verwendet werden. 
+Die Resource wird als HTML- aber auch als JSON-Dokument angeboten. Der Nutzer kann über die optionalen Parameter $f$ oder $content\_type$ steuern welcher Media-Type der Response 
+nutzen soll. Wird eim Request akzeptiert so wird, je nach gewähltem Media-Type, ein Response aus einer statischen .html- oder .json-Datei generiert und mit zusätzlichen 
+HTTP-Headern versandt. Der $link$-Header liefert einen URL zur angefragten Resource während der $resource$-Header die angefragte Ressource identifiziert. 
+Die Landing Page wird hier mit $landingPage$ identifiziert (siehe Anhang \ref{appendixLandingPage}). 
 
 \subsubsection{API Definition}
-Unter dem URL \textit{http://HOST:PORT/api?f=<text/html | application/json>} kann der API Definitions Endpunkt erreicht werden. Dieser liefert eine detaillierte Beschreibung
+Unter dem URL \textit{http://HOST:PORT/api?f=<text/html | application/json>} kann der API Definition Endpoint erreicht werden. Dieser liefert eine detaillierte Beschreibung
 der API und ihrer Funktionen.  Da eine andere Requirements-Class die Dokumentation im  OpenAPI 3.0 Format fordert sind die von diesem Endpunkt bereitgestellten Ressourcen aus 
-einer solchen abgeleitet. In dieser Form der Dokumentation werden neben einer allgemeinen Beschreibung sämtliche Endpunkte mit ihren zu erwartenden HTTP-Statuscodes und 
-Rückgabewerten beschrieben. Zusätzlich erfolgt einen Auflistung aller Schemata nach welchen von der API angebotene Ressourcen strukturiert sind. Die API Beschreibung wird
-als HTML- oder JSON-Dokument angeboten. Die Wahl des Encodings wird auch hier über den optionalen Parameter $f$ gesteuert. Die angefragten Ressourcen werden auch hier nicht 
-dynamisch sondern aus statischen .html- beziehungsweise .json-Dateien generiert. Nach einer erfolgreichen Anfrage werden sie zusammen mit einem $link$- und $resource$-Header versandt. 
-Der Endpunkt erlaubt nur die Nutzung der HTTP-Get Methode.
+einer solchen abgeleitet. In dieser Form der Dokumentation werden neben einer allgemeinen Beschreibung sämtliche Endpoints mit ihren zu erwartenden HTTP-Statuscodes und 
+Responses beschrieben. Zusätzlich erfolgt einen Auflistung aller Schemata nach welchen von der API angebotene Ressourcen strukturiert sind. Die API Beschreibung wird
+als HTML- oder JSON-Dokument angeboten. Die Wahl des Media-Type wird auch hier über die optionalen Parameter $f$ oder $content\_type$ gesteuert. Die angefragten Ressourcen 
+werden auch hier nicht dynamisch sondern aus statischen .html- beziehungsweise .json-Dateien generiert. Nach einem erfolgreichen Request werden sie zusammen mit 
+einem $link$- und $resource$-Header versandt. Der Endpoint erlaubt nur die Nutzung der HTTP-Get Methode (siehe Anhang \ref{appendixAPIDefinition}).
 
-\begin{lstlisting}[caption={API Definition Endpoint}, style = Python]
-#api endpoint
-@app.route('/api',  methods = ['GET']) 
-def getAPIDefinition():
-    app.logger.info('/api') 
-    try:
-        if(request.content_type == "text/html" or
-        request.args.get('f')=="text/html" or 
-        request.args.get('f') == None): 
-            response = render_template('html/apiDefinition.html') 
-            return response, 200, {
-                "link": "localhost:5000/apiDefinition?f=text/html", 
-                "resource": "apiDefinition"} 
-        elif(request.content_type == "application/json" or 
-        request.args.get('f')=="application/json"): 
-            file = open('templates/json/apiDefinition.json',) 
-            payload = json.load(file) 
-            file.close() #close apiDefinition.json
-            response = jsonify(payload) 
-            return response, 200, {
-                "link": "localhost:5000/api?f=application/json", 
-                "resource": "apiDefinition"} 
-        else:
-            return "HTTP status code 406: not acceptable", 406 
-    except:
-        return "HTTP status code 500: internal server error", 500
-\end{lstlisting}
+\subsubsection{Conformance Endpoint}
+Fragt ein Nutzer den Conformance Endpoint an so erhält er Informationen zur Konformität der API zum OGC API - Processes - Part 1: Core Standard. 
+In der Ressource werden alle Requirements-Classes gelistet welche von der API implementiert werden. Über die optionalen Parameter $f$ oder $content\_type$ kann
+im Request spezifiziert werden in welchem Media-Type die angefragte Ressource versandt werden soll. Der Endpoint erlaubt nur die Nutzung der HTTP-Get Methode
+(siehe Anhang \ref{appendixConformance}). 
 
-\subsubsection{Conformance Deklaration}
-Fragt ein Nutzer den Endpunkt Conformance Deklaration an so erhält er Informationen zur Konformität der API zum OGC API - Processes - Part 1: Core Standard. 
-In der Ressource werden alle Requirements-Classes gelistet welche von der API implementiert werden. Über die optionalen Parameter $f$ oder $content_type$ kann
-im request spezifiziert werden in welchem Media-Type die angefragte Ressource versandt werden soll.
-
-\begin{lstlisting}[caption={Conformance Endpoint}, style = Python]
-#conformance endpoint
-@app.route('/conformance',  methods = ['GET'])
-def getConformance():
-    app.logger.info('/conformance') 
-    try:
-        if(request.content_type == "text/html" or 
-        request.args.get('f')=="text/html" or 
-        request.args.get('f') == None): 
-            response = render_template('html/confClasses.html') 
-            return response, 200, {
-                "link": "localhost:5000/conformance?f=text/html", 
-                "resource": "conformance"}
-        elif(request.content_type == "application/json" or 
-        request.args.get('f')=="application/json"): 
-            file = open('templates/json/confClasses.json',)
-            payload = json.load(file) 
-            file.close() 
-            response = jsonify(payload) 
-            return response, 200, {
-                "link": "localhost:5000/conformance?f=application/json",
-                "resource": "conformance"} 
-        else:
-            return "HTTP status code 406: not acceptable", 406 
-    except:
-        return "HTTP status code 500: internal server error", 500
-\end{lstlisting}   
-\subsubsection{Prozess Liste}
+\subsubsection{Processes Endpoint}
 Damit der Nutzer schnell einen Überblick über die von der API angebotenen Prozesse erhält enthält die Requirements-Class Core Vorgaben für einen entsprechenden Endpunkt.
 Dieser liefert als Resource eine detaillierte Liste der angebotenen Prozesse als HTML- oder JSON-Dokument. In dieser Liste werden die Bezeichnung, die Steueroptionen sowie
-die Ein- und Ausgaben jedes angebotenen Prozesses gelistet. Die nötigen Informationen werden statischen Prozess Beschreibungen entnommen. 
+die Ein- und Ausgaben jedes angebotenen Prozesses gelistet. Die nötigen Informationen werden statischen Prozess Beschreibungen entnommen.
+Auch Requests an diesen Endpoint können mit den optional Parametern $f$ oder $content\_type$ zur Spezifizierung des Media-Types aber auch mit dem $limit$ Parameter versehen werden 
+welches die Anzahl der wiedergegebene Prozesse steuert. Auch dieser Endpoint erlaubt nur die Nutzung der HTTP-Get Methode. 
+Nach Überprüfung aller Parameter werden zunächst alle Process Descriptions aus dem Verzeichnis $/templates/json/processes$ geladen und in einem Array gespeichert.
+(siehe Anhang \ref{appendixProcessList})
 
-\begin{lstlisting}[caption={Process List Endpoint}, style = Python]
-#processes endpoint
-@app.route('/processes', methods = ['GET']) 
-def getProcesses():
-    app.logger.info('/processes') 
-    if(request.args.get('limit') == None or 
-        int(request.args.get('limit')) <= 0 or 
-        int(request.args.get('limit')) > 1000): 
-        limit = 10 #set limit to default value
-    else:
-        limit = int(request.args.get('limit'))
-    try:
-        if(request.content_type == "text/html" or
-            request.args.get('f')=="text/html" or 
-            request.args.get('f') == None): 
-                processList = [] #initialize list of processes
-                processDescriptions = os.listdir("templates/json/processes") 
-                counter = 0
-                for i in processDescriptions:
-                    file = open('templates/json/processes/' + i,) 
-                    process = json.load(file) 
-                    file.close() 
-                    processList.append(process) 
-                    counter += 1 
-                    if(counter == limit): 
-                        break 
-                response = render_template('html/processes.html', 
-                    processes=processList) 
-                return response, 200, {
-                    "link": "localhost:5000/processes?f=text/html", 
-                    "resource": "processes"} 
-        elif(request.content_type == "application/json" or 
-                request.args.get('f')=="application/json"): 
-            processList = [] #initialize list of processes
-            processDescriptions = os.listdir("templates/json/processes")     
-            for i in processDescriptions: 
-                file = open('templates/json/processes/' + i,) 
-                process = json.load(file) 
-                file.close() 
-                processList.append(process) 
-            processes = {"processes": processList[0:limit],
-                        "links": [ #add links to self and alternate
-                         {
-                          "href": "localhost:5000/processes?f=applicattion/json",
-                          "rel": "self",
-                          "type": "application/json"
-                         },
-                         {
-                          "href": "localhost:5000/processes?f=text/html",
-                          "rel": "alternate",
-                          "type": "text/html"
-                         }
-                        ]}
-            response = jsonify(processes) 
-            return response, 200, {
-                "link": "localhost:5000/processes?f=application/json", 
-                "resource": "processes"} 
-        else:
-            return "HTTP status code 406: not acceptable", 406 
-    except:
-        return "HTTP status code 500: internal server error", 500 
-      
-\end{lstlisting}   
-\subsubsection{Prozess Beschreibung}
-\begin{lstlisting}[caption={Process Description Endpoint}, style = Python]
-#process endpoint
-@app.route('/processes/<processID>', methods = ['GET']) 
-def getProcess(processID):
-    app.logger.info('/processes/' + processID) 
-    try:
-        if(request.content_type == "text/html" or 
-           request.args.get('f')=="text/html" or 
-           request.args.get('f') == None): 
-            if(os.path.exists('templates/json/processes/' 
-            + str(processID) + 'ProcessDescription.json')): 
-                file = open('templates/json/processes/' 
-                + str(processID) 
-                + 'ProcessDescription.json',) 
-                process = json.load(file) 
-                file.close() 
-                response = render_template("html/Process.html", process=process) 
-                return response, 200, {"link": "localhost:5000/processes/" 
-                + str(processID) 
-                + "?f=text/html", 
-                "resource": str(processID)} 
-            else:
-                exception = render_template('html/exception.html', 
-                title="No such process exception", 
-                description="Requested process could not be found", 
-                type="no-such-process")
-                return exception, 404, {"resource": "no-such-process"}
-        elif(request.content_type == "application/json" or
-             request.args.get('f')=="application/json"): 
-            if(os.path.exists('templates/json/processes/' 
-            + str(processID) 
-            + 'ProcessDescription.json')): 
-                file = open('templates/json/processes/' 
-                + str(processID) 
-                + 'ProcessDescription.json',)
-                payload = json.load(file) 
-                file.close() 
-                response = jsonify(payload) 
-                return response, 200, {"link": "localhost:5000/processes/" 
-                + str(processID) 
-                + "?f=application/json", 
-                "resource": str(processID)} 
-            else:
-                exception = {"title": "No such process exception", 
-                "description": "Requested process could not be found", 
-                "type": "no-such-process"}
-                return exception, 404, {"resource": "no-such-process"} 
-        else:
-            return "HTTP status code 406: not acceptable", 406
-    except:
-        return "HTTP status code 500: internal server error", 500 
-    \end{lstlisting}   
+\subsubsection{Process Endpoint}
 \subsubsection{Prozess Ausführung}
-\begin{lstlisting}[caption={Process Execution}, style = Python]
-\end{lstlisting}  
 \subsubsection{Job Status}
-\begin{lstlisting}[caption={Job Status}, style = Python]
-\end{lstlisting}  
 \subsubsection{Job Resultate}
-\begin{lstlisting}[caption={Job Results}, style = Python]
-\end{lstlisting}  
 \subsection{Requirements Class OGC Process Description}
 \subsection{Requirements Class Job List}
-\begin{lstlisting}[caption={Job List}, style = Python]
-\end{lstlisting}  
 \subsection{Requirements Class Dismiss}
-\begin{lstlisting}[caption={Dismiss}, style = Python]
-\end{lstlisting}  
 \subsection{Requirements Class OpenAPI 3.0}
 \subsection{Prozesse}
 \subsubsection{Echo}
 \subsubsection{Überflutungsmonitoring}
 \subsection{Zusätzliche Funktionalitäten}
-\subsubsection{Coverage}
-\begin{lstlisting}[caption={Coverage}, style = Python]
-\end{lstlisting}  
+\subsubsection{Coverage} 
