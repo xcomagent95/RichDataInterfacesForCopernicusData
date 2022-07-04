@@ -103,11 +103,11 @@ def createTestResult(jobID, input):
         logging.info("--> abstract test a3 started")  
         request = requests.get('http://localhost:5000/api?f=application/json')
         resource = request.headers["resource"]
-        self.assertEqual(resource, 'api')
+        self.assertEqual(resource, 'apiDefinition')
         
         request = requests.get('http://localhost:5000/api?f=text/html')
         resource = request.headers["resource"]
-        self.assertEqual(resource, 'api')
+        self.assertEqual(resource, 'apiDefinition')
         logging.info("--> abstract test a3 passed")
         
     #Abstract Test A.4

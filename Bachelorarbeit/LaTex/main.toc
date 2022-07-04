@@ -11,27 +11,38 @@
 \contentsline {subsubsection}{\numberline {2.2.3}Sentinel 1}{11}{subsubsection.2.2.3}%
 \contentsline {subsubsection}{\numberline {2.2.4}Datenzugang}{13}{subsubsection.2.2.4}%
 \contentsline {subsection}{\numberline {2.3}Überschwemmungsmonitoring}{13}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Programmierschnittstelle}{15}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.4}Programmierschnittstellen}{15}{subsection.2.4}%
 \contentsline {subsection}{\numberline {2.5}OGC und OGC Standards}{15}{subsection.2.5}%
 \contentsline {subsection}{\numberline {2.6}OGC API - Processes - Part 1: Core}{16}{subsection.2.6}%
 \contentsline {subsection}{\numberline {2.7}Evaluationskriterien}{17}{subsection.2.7}%
 \contentsline {section}{\numberline {3}Implementierung}{18}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Requirements Class Core}{18}{subsection.3.1}%
-\contentsline {subsubsection}{\numberline {3.1.1}API Landig Page}{18}{subsubsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.2}Requirements Class OGC Process Description}{18}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Requirements Class JSON}{18}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Requirements Class HTML}{18}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}Requirements Class OpenAPI 3.0}{18}{subsection.3.5}%
-\contentsline {subsection}{\numberline {3.6}Requirements Class Job List}{18}{subsection.3.6}%
-\contentsline {subsection}{\numberline {3.7}Requirements Class Dismiss}{18}{subsection.3.7}%
-\contentsline {subsection}{\numberline {3.8}Prozesse}{19}{subsection.3.8}%
-\contentsline {subsubsection}{\numberline {3.8.1}Echo}{19}{subsubsection.3.8.1}%
-\contentsline {subsubsection}{\numberline {3.8.2}Überflutungsmonitoring}{19}{subsubsection.3.8.2}%
-\contentsline {subsection}{\numberline {3.9}Zusätzliche Funktionalitäten}{19}{subsection.3.9}%
-\contentsline {section}{\numberline {4}Evaluation}{20}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Jakob's Nutzbarkeitsheuristiken}{20}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Unit Testsuit}{20}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}OGC Compliance Test}{20}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Diskussion}{21}{section.5}%
-\contentsline {section}{\numberline {6}Ausblick}{22}{section.6}%
-\contentsline {section}{\numberline {7}Fazit}{23}{section.7}%
+\contentsline {subsection}{\numberline {3.1}Softwarestack}{18}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Architektur}{18}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Requirements Class Core}{18}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}HTTP 1.1}{18}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Requirements Class JSON}{19}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3}Requirements Class HTML}{20}{subsubsection.3.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.4}API Landig Page}{20}{subsubsection.3.3.4}%
+\contentsline {subsubsection}{\numberline {3.3.5}API Definition}{21}{subsubsection.3.3.5}%
+\contentsline {subsubsection}{\numberline {3.3.6}Conformance Deklaration}{22}{subsubsection.3.3.6}%
+\contentsline {subsubsection}{\numberline {3.3.7}Prozess Liste}{22}{subsubsection.3.3.7}%
+\contentsline {subsubsection}{\numberline {3.3.8}Prozess Beschreibung}{24}{subsubsection.3.3.8}%
+\contentsline {subsubsection}{\numberline {3.3.9}Prozess Ausführung}{25}{subsubsection.3.3.9}%
+\contentsline {subsubsection}{\numberline {3.3.10}Job Status}{25}{subsubsection.3.3.10}%
+\contentsline {subsubsection}{\numberline {3.3.11}Job Resultate}{25}{subsubsection.3.3.11}%
+\contentsline {subsection}{\numberline {3.4}Requirements Class OGC Process Description}{25}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Requirements Class Job List}{25}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Requirements Class Dismiss}{25}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Requirements Class OpenAPI 3.0}{25}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}Prozesse}{25}{subsection.3.8}%
+\contentsline {subsubsection}{\numberline {3.8.1}Echo}{25}{subsubsection.3.8.1}%
+\contentsline {subsubsection}{\numberline {3.8.2}Überflutungsmonitoring}{25}{subsubsection.3.8.2}%
+\contentsline {subsection}{\numberline {3.9}Zusätzliche Funktionalitäten}{25}{subsection.3.9}%
+\contentsline {subsubsection}{\numberline {3.9.1}Coverage}{25}{subsubsection.3.9.1}%
+\contentsline {section}{\numberline {4}Evaluation}{26}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Nielsen's Nutzbarkeitsheuristiken}{26}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Unit Testsuit}{26}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}OGC Compliance Test}{26}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Diskussion}{27}{section.5}%
+\contentsline {section}{\numberline {6}Ausblick}{28}{section.6}%
+\contentsline {section}{\numberline {7}Fazit}{29}{section.7}%

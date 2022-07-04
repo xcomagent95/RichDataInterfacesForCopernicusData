@@ -3,7 +3,7 @@
 \section{Grundlagen}
 \subsection{Radarfernerkundung}
 Bei der Radarfernerkundung werden vom Radarsystem in regelmäßigen Abständen elektromagnetische Signale ausgesandt. Nach dem Senden eines Signals 
-(Chrip) folgt ein Zeitfenster, indem die Plattform auf Echos des ausgesandten Signals wartet.
+(Chirp) folgt ein Zeitfenster, indem die Plattform auf Echos des ausgesandten Signals wartet.
 Trifft das ausgesandte Signal auf eine Oberfläche, zum Beispiel 
 die Erdoberfläche, wird ein Bruchteil in Richtung Empfänger reflektiert und als Echo vom Fernerkundungssystem empfangen \cite{tutorial_on_sar}.
 
@@ -188,19 +188,6 @@ Auch sollte ein Speckle-Filter zum Einsatz kommen um. Dieser reduziert körnige 
 rechnerische Bildauswertung erschweren können. \cite{einfuehrung_in_fernerkundung}\cite{sentinel_1_flood_mapping_tutorial}.  
 Auf Basis des Schwellwertes kann ein Binärisierung des Bilder durchgeführt werden. Die entstehenden Werte würden überflutete beziehungsweise trocken liegende 
 Areale repräsentieren \cite{sentinel_1_flood_mapping_tutorial}.
-Die Binärisierung kann direkt auf Basis der Radaraufnahme der Überflutung, oder auf abgeleiteten Daten erfolgen. So können zum Beispiel das Radaraufnahme der Überflutung
-$\sigma_0^f$ mit einer überflutungsfreien Referenzaufnahme ($\sigma_0^r$) kombiniert zum Normalized Difference Sigma-Naught Index (NDSI) \cite{flood_proxy_mapping_ndsi}.
-Dabei werden die Reflektivitätswerte von zwei unterschiedlichen Zeitpunkten zum NDSI verrechnet welcher als Maß für die Stärke der Veränderung interpretiert werden kann. 
-
-\begin{equation}
-    NDSI = \frac{\sigma_0^f-\sigma_0^r}{\sigma_0^f+\sigma_0^r}
-\end{equation} 
-
-Dieses Maß bewegt sich zwischen $-1$ und $1$ wobei 
-Werte um $0$ für identische Reflektionswerte an beiden Zeitpunkten und daher für geringe Veränderung stehen. 
-Aufgrund der Reflektionseigenschaften von Wasserflächen deuten Werte nahe $-1$ auf überflutete Areale hin \cite{flood_proxy_mapping_ndsi}. 
-Die der vielen und teilweise zeitintensiven Prozessierungsschritte können, je nach Größe des zu untersuchenden Areals, viel Zeit und Rechenleistung in Anspruch nehmen.
-Der Schwellwert kann mit unterschiedlichen verfahren aus dem Bild beziehungsweise seinem Histogramm abgeleitet werden.
 Eines dieses Schwellwertverfahren wurde von Nobuyuki Otsu entwickelt und ist nach ihm benannt. Bei diesem Verfahren werden alle Werte eines Histogramms durchlaufen.
 Jeder dieser Werte teilt das Histogramm in zwei Gruppen und bildet so einen Schwellwert. Jener Wert welcher die gewichtete Varianz zwischen der Klassen maximiert wird
 als optimaler Grenzwert angesehen \cite{thresholds_selection}.
@@ -246,11 +233,19 @@ mit $\sigma_W^2$ und $\sigma_T^2$:
     \sigma_T^2 = \sum_{i=1}^{L} (i-\mu_T)^2p_i
 \end{equation}
 
+Die Binärisierung kann direkt auf Basis der Radaraufnahme der Überflutung, oder auf abgeleiteten Daten erfolgen. So können zum Beispiel das Radaraufnahme der Überflutung
+$\sigma_0^f$ mit einer überflutungsfreien Referenzaufnahme ($\sigma_0^r$) kombiniert zum Normalized Difference Sigma-Naught Index (NDSI) \cite{flood_proxy_mapping_ndsi}.
+Dabei werden die Reflektivitätswerte von zwei unterschiedlichen Zeitpunkten zum NDSI verrechnet welcher als Maß für die Stärke der Veränderung interpretiert werden kann. 
 
-\subsection{Programmierschnittstelle}
-Eine Programmierschnittstelle, kurz API für Application Programming Interface, ist eine Menge von Funktionen und Prozeduren die einem Programm erlauben Zugriff auf 
-Funktionen einer anderen Anwendung zu gewähren \cite{geospatial_apis}.
+\begin{equation}
+    NDSI = \frac{\sigma_0^f-\sigma_0^r}{\sigma_0^f+\sigma_0^r}
+\end{equation} 
 
+Dieses Maß bewegt sich zwischen $-1$ und $1$ wobei Werte um $0$ für identische Reflektionswerte an beiden Zeitpunkten und daher für geringe Veränderung stehen. 
+Aufgrund der Reflektionseigenschaften von Wasserflächen deuten Werte nahe $-1$ auf überflutete Areale hin \cite{flood_proxy_mapping_ndsi}. 
+Die der vielen und teilweise zeitintensiven Prozessierungsschritte können, je nach Größe des zu untersuchenden Areals, viel Zeit und Rechenleistung in Anspruch nehmen.
+
+\subsection{Programmierschnittstellen}
 
 \subsection{OGC und OGC Standards}
 Das Open Geospatial Consortium (OGC) widmet sich der Aufgabe die Entwicklung von internationalen Standards und unterstützender Dienste welche die Interoperabilität im 
@@ -262,8 +257,7 @@ Mechanismen zur Zertifizierung von standardkonformen Software-Lösungen angebote
 Das OGC formuliert Standards für unterschiedliche Themenbereiche. In Standards aus dem Bereich Data Models und Encodings werden Daten- und Datenaustauschformate
 definiert. Standards welche Webdienste und Schnittstellen zum Austausch von Geodaten beschreiben werden dem Bereich Services und APIs zugeordnet. 
 Der OGC API - Processes - Part 1: Core Standard gehört in diesen Bereich. Die Bereiche Discovery und Containers enthalten Standards für die Speicherung von Geodaten
-sowie die Auffindbarkeit und Durchsuchbarkeit dieser. Ein weiterer Bereich widmet sich Standards rund um den betrieb von Sensornetzwerken sowie deren Schnittstellen. 
-
+sowie die Auffindbarkeit und Durchsuchbarkeit dieser. Ein weiterer Bereich widmet sich Standards zum Thema Sensornetzwerke. 
 
 \subsection{OGC API - Processes - Part 1: Core}
 Der OGC API - Processes - Part 1: Core Standard soll das Bereitstellen von aufwendigen Prozessierungsaufgaben und ausführbaren Prozessen welche über eine webbasierte 
@@ -295,6 +289,11 @@ entsprechenden Test, welcher im Abstract Test Suit beschreiben ist, auf ihre kor
 \subsection{Evaluationskriterien}
 Die Evaluation einer Implementierung einer API kann unter verschiedenen Gesichtspunkten erfolgen. Zum einen können technische Aspekte Effizienz, Skalierbarkeit,
 Stabilität und Wartbarkeit untersucht werden. Zu dieser technischen Bewertung einer API kann auch das Überprüfen der Standardkonformität gezählt werden.
-   
+Diese kann durch einen ebenfalls zu implementierenden Unit-Test teilweise überprüft werden da mache Testfälle des Test-Suits des Standards automatisch überprüft
+werden können \cite{ogc_api_processes_core}. Der Fokus der in dieser Arbeit durchgeführt Evaluation soll jedoch die Benutzbarkeit und Benutzerfreundlichkeit der Implementierung sein. 
+Dafür können die von Jakob Nielsen 1993 aufgestellten Heuristiken verwendet werden. Dabei handelt es sich um zehn Heuristiken unter denen eine Schnittstelle betrachtet 
+werden kann \cite{usability_engineering}. 
+
+
 
 

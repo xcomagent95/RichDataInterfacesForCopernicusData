@@ -25,8 +25,45 @@
 }
 \usepackage{cite}
 
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\floatname{algorithm}{Programmablauf}
+
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+
+\usepackage[T1]{fontenc}         % Not always necessary, but recommended.
+% End of standard header.  What follows pertains to the problem at hand.
+
+\usepackage{xcolor}
+\usepackage{listings}
+
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    basicstyle      = \ttfamily\scriptsize,
+    keywordstyle    = \color{blue},
+    keywordstyle    = [2] \color{teal}, % just to check that it works
+    stringstyle     = \color{orange},
+    commentstyle    = \color{red}\ttfamily,
+    tabsize         = 2,
+    numberstyle     = \tiny
+}
+
+
 %Dokument
 \begin{document}
+
+\lstset{
+    frame       = single,
+    numbers     = left,
+    showspaces  = false,
+    showstringspaces    = false,
+    captionpos  = t,
+    caption     = \lstname
+}
+
 \newgeometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
 \thispagestyle{empty}
 \begin{center}
@@ -50,7 +87,6 @@ im Fach Geoinformatik
 
 \vspace{1cm}
 
-
 Themensteller: Prof. Dr. Albert Remke\\
 Betreuer: Dr. Christian Knoth, Dipl.-Geoinf. Matthes Rieke\\
 Ausgabetermin: tbd.\\
@@ -71,6 +107,10 @@ Fachsemester: 6. Semester\\
 \newpage
 \listoffigures
 \listoftables
+\listofalgorithms
+\renewcommand{\lstlistlistingname}{Quellcodeverzeichniss}
+\renewcommand{\lstlistingname}{Quellcode}
+\lstlistoflistings
 \newpage
 \input{Kapitel/Abkürzungsverzeichnis.tex}
 
