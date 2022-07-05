@@ -1,10 +1,8 @@
 \newpage
 \restoregeometry
-%\renewcommand{\lstlistlistingname}{Quellcodeverzeichniss}
+\counterwithin{lstlisting}{section}
 \renewcommand{\lstlistingname}{Quellcode}
-%\lstlistoflistings
 \section{Quellcodeverzeichnis}
-
 \subsection{Konfiguration von Werkzeug auf HTTP 1.1}
 \begin{lstlisting}[caption={Konfiguration von Werkzeug auf HTTP 1.1}, style = Python]
     from flask import Flask
@@ -168,7 +166,6 @@ def getProcesses():
     except:
         return "HTTP status code 500: internal server error", 500 
 \end{lstlisting}\label{appendixProcessList}   
-
 \newpage
 \subsection{Quellcode Process Description Endpoint}
 \begin{lstlisting}[caption={Process Description Endpoint}, style = Python]
@@ -327,9 +324,9 @@ def echoProcess(job):
 \end{lstlisting}\label{appendixEchoProcess}  
 
 \section{Schemata}
-\renewcommand{\lstlistingname}{Schema}
+\renewcommand{\lstlistingname}{Schema}  
 \subsection{landingPage.yaml}
-\begin{lstlisting}[caption={landingPage.yaml}]
+\begin{lstlisting}[caption={landingPage.yaml}, style = JSON]
 type: object
 required:
   - links
@@ -346,8 +343,21 @@ properties:
       $ref: "link.yaml"
 \end{lstlisting}\label{appendixlandngPageyaml}  
 
+\subsection{confClasses.yaml}
+\begin{lstlisting}[caption={confClasses.yaml}, style = JSON]
+type: object
+required:
+    - conformsTo
+properties:
+    conformsTo:
+    type: array
+    items:
+        type: string
+        example: "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core"
+\end{lstlisting}\label{appendixconfClassesyaml}  
+
 \subsection{processList.yaml}
-\begin{lstlisting}[caption={processList.yaml}]
+\begin{lstlisting}[caption={processList.yaml}, style = JSON]
 type: object
 required:
   - processes
@@ -364,7 +374,7 @@ properties:
 \end{lstlisting}\label{appendixprocessListyaml}  
 
 \subsection{limit.yaml}
-\begin{lstlisting}[caption={limit.yaml}]
+\begin{lstlisting}[caption={limit.yaml}, style = JSON]
 name: limit
 in: query
 required: false
@@ -378,7 +388,7 @@ explode: false
 \end{lstlisting}\label{appendixlimityaml}  
 
 \subsection{link.yaml}
-\begin{lstlisting}[caption={link.yaml}]
+\begin{lstlisting}[caption={link.yaml}, style = JSON]
 type: object
 required:
   - href
@@ -397,6 +407,23 @@ properties:
   title:
     type: string
 \end{lstlisting}\label{appendixlinkyaml}  
+
+\subsection{processList.yaml}
+\begin{lstlisting}[caption={processList.yaml}, style = JSON]
+type: object
+required:
+    - processes
+    - links
+properties:
+    processes:
+    type: array
+    items:
+        $ref: "processSummary.yaml"
+    links:
+    type: array
+    items:
+        $ref: "link.yaml"
+\end{lstlisting}\label{appendixprocessListyaml}  
 
 \section{Ressourcen}
 \renewcommand{\lstlistingname}{Ressource}
@@ -572,3 +599,146 @@ properties:
     ]
 }
 \end{lstlisting}\label{appendixlandingPageJSON}  
+
+\subsection{confClasses.html}
+\begin{lstlisting}[caption={confClasses.html}, style = HTML]
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>conforms to:</h1>
+            <p><a href="https://docs.ogc.org/is/18-062r2/18-062r2.html#toc21">
+            https://docs.ogc.org/is/18-062r2/18-062r2.html#toc21</a></p>
+            <p><a href="https://docs.ogc.org/is/18-062r2/18-062r2.html#toc40">
+            https://docs.ogc.org/is/18-062r2/18-062r2.html#toc40</a></p>
+            <p><a href="https://docs.ogc.org/is/18-062r2/18-062r2.html#toc41">
+            https://docs.ogc.org/is/18-062r2/18-062r2.html#toc41</a></p>
+            <p><a href="https://docs.ogc.org/is/18-062r2/18-062r2.html#toc42">
+            https://docs.ogc.org/is/18-062r2/18-062r2.html#toc42</a></p>
+			<p><a href="https://docs.ogc.org/is/18-062r2/18-062r2.html#toc47">
+            https://docs.ogc.org/is/18-062r2/18-062r2.html#toc47</a></p>
+			<p><a href="https://docs.ogc.org/is/18-062r2/18-062r2.html#toc53">
+            https://docs.ogc.org/is/18-062r2/18-062r2.html#toc53</a></p>
+            <p>
+                <b>links:</b><br><br>
+                <b>href:</b> <a href="localhost:5000/conformance?f=text/html">
+                localhost:5000/conformance?f=text/html</a><br>
+                <b>rel:</b> self<br>
+                <b>type:</b> text/html<br>
+                <b>title:</b> This Document as HTML<br>
+                <br>
+                <b>href:</b> <a href="localhost:5000/conformance?f=application/json">
+                localhost:5000/conformance?f=application/json</a><br>
+                <b>rel:</b> alternate<br>
+                <b>type:</b> application/json<br>
+                <b>title:</b> This document as JSON<br>
+            </p>
+    </body>
+</html>
+\end{lstlisting}\label{appendixconfClassesHTML}  
+
+\subsection{confClasses.json}
+\begin{lstlisting}[caption={confClasses.json}, style = JSON]
+{
+    "conformsTo": [
+        "https://docs.ogc.org/is/18-062r2/18-062r2.html#toc21",
+        "https://docs.ogc.org/is/18-062r2/18-062r2.html#toc40",
+        "https://docs.ogc.org/is/18-062r2/18-062r2.html#toc41",
+        "https://docs.ogc.org/is/18-062r2/18-062r2.html#toc42",
+        "https://docs.ogc.org/is/18-062r2/18-062r2.html#toc47",
+        "https://docs.ogc.org/is/18-062r2/18-062r2.html#toc53"
+    ],
+    "links": [
+        {
+            "href": "localhost:5000/conformance?f=application/json",
+            "rel": "self",
+            "type": "application/json",
+            "title": "This Document as JSON"
+        },
+            {
+            "href": "localhost:5000/conformance?f=text/html",
+            "rel": "alternate",
+            "type": "text/html",
+            "title": "This Document as HTML"
+        }
+    ]
+}
+\end{lstlisting}\label{appendixconfClassesJSON}  
+
+\subsection{processList.html}
+\begin{lstlisting}[caption={processList.html}, style = HTML]
+<!DOCTYPE html>
+<html>
+    <body>
+        {% block body %}
+        <p>
+            {% for process in processes %}
+            <b>Title:</b> {{process.title}}<br>
+            <b>processID: </b>{{process.id}}<br>
+            Description: {{process.description}}<br>
+            Version: {{process.version}}<br>
+            Job control options: {{process.jobControlOptions}}<br>
+            Output transmission: {{process.outputTransmission}}<br>
+            <p><b>inputs:</b></p>
+            <p id='{{process.id}}inputs'><p>
+            <p><b>outputs:</b></p>
+            <p id='{{process.id}}outputs'><p>
+            <script>
+                var inputs = '{{process.inputs}}'
+                var inputsString = inputs.replaceAll('&#39;', '"')
+                var inputsJSON = JSON.parse(inputsString)
+                var outputs = '{{process.outputs}}'
+                var outputsString = outputs.replaceAll('&#39;', '"')
+                var outputsJSON = JSON.parse(outputsString)
+                console.log(outputsJSON)
+                for (var key in inputsJSON) {
+                    var inputs = document.createElement("p")
+                    inputs.innerHTML = "<p><b>" + key 
+                    + "</b><br>Description: " 
+                    + inputsJSON[key].description 
+                    + "<br><b>Schema:</b><br>Type: " 
+                    + inputsJSON[key].schema.type + "</p>"
+                    document.getElementById('{{process.id}}inputs').appendChild(inputs);
+                }
+                for (var key in outputsJSON) {
+                    var outputs = document.createElement("p")
+                    outputs.innerHTML = "<p><b>" + key 
+                    + "</b><br><b>Description: </b>" 
+                    + outputsJSON[key].description 
+                    + "<br><b>Schema:</b><br>Type: " 
+                    + outputsJSON[key].schema.type + "</p>"
+                    document.getElementById('{{process.id}}outputs').appendChild(outputs);
+                }
+            </script>
+            <p>
+                <b>links: </b><br>
+                href: <a href=localhost:5000/processes/{{process.id}}?f=application/json>
+                localhost:5000/processes/{{process["id"]}}?f=application/json</a><br>
+                rel: process<br>
+                type: application/json<br>
+                title: Process description<br><br>
+                href: <a href=localhost:5000/processes/{{process.id}}?f=text/html>
+                localhost:5000/processes/{{process["id"]}}?f=text/html</a><br>
+                rel: process<br>
+                type: text/html<br>
+                title: Process description<br>
+            </p>
+            <p>======================================================================</p>
+            {% endfor %}
+        </p>
+        {% endblock %}
+        <p><b>links:</b><br>
+            href:<a href="localhost:5000/processes?f=text/html">
+            localhost:5000/processes?f=text/html</a><br>
+            rel: self<br>
+            type: text/html<br>
+            title: This document<br>
+            <br>
+            href:<a href="localhost:5000/processes?f=application/json">
+            localhost:5000/processes?f=application/json</a><br>
+            rel: alternate<br>
+            type: application/json<br>
+            title: This document as JSON<br>
+        </p>
+    </body>
+</html>
+\end{lstlisting}\label{appendixprocessListHTML}  

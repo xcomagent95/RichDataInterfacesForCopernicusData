@@ -112,7 +112,7 @@ def getProcesses():
                     counter += 1 #increase counter
                     if(counter == limit): #check if counter has reached limit value
                         break #if limit is reached break loop
-                response = render_template('html/processes.html', processes=processList) #render dynamic process list 
+                response = render_template('html/processList.html', processes=processList) #render dynamic process list 
                 return response, 200, {"link": "localhost:5000/processes?f=text/html", "resource": "processes"} #return response and ok with link and resource header
 
         elif(request.content_type == "application/json" or #check requested content-type from request body 
