@@ -11,47 +11,46 @@
 \contentsline {subsubsection}{\numberline {2.2.3}Sentinel 1}{11}{subsubsection.2.2.3}%
 \contentsline {subsubsection}{\numberline {2.2.4}Datenzugang}{13}{subsubsection.2.2.4}%
 \contentsline {subsection}{\numberline {2.3}Überschwemmungsmonitoring}{13}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Programmierschnittstellen}{15}{subsection.2.4}%
-\contentsline {subsection}{\numberline {2.5}OGC und OGC Standards}{15}{subsection.2.5}%
-\contentsline {subsection}{\numberline {2.6}OGC API - Processes - Part 1: Core}{16}{subsection.2.6}%
-\contentsline {subsection}{\numberline {2.7}Evaluationskriterien}{17}{subsection.2.7}%
-\contentsline {section}{\numberline {3}Implementierung}{18}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Softwarestack}{18}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Programmstruktur}{18}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Requirements Classes für Encodings}{18}{subsection.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.1}Requirements Class JSON}{18}{subsubsection.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.2}Requirements Class HTML}{19}{subsubsection.3.3.2}%
-\contentsline {subsection}{\numberline {3.4}Requirements Class Core}{19}{subsection.3.4}%
-\contentsline {subsubsection}{\numberline {3.4.1}HTTP 1.1}{19}{subsubsection.3.4.1}%
-\contentsline {subsubsection}{\numberline {3.4.2}API Landig Page}{20}{subsubsection.3.4.2}%
-\contentsline {subsubsection}{\numberline {3.4.3}API Definition}{20}{subsubsection.3.4.3}%
-\contentsline {subsubsection}{\numberline {3.4.4}Conformance Endpoint}{20}{subsubsection.3.4.4}%
-\contentsline {subsubsection}{\numberline {3.4.5}Processes Endpoint}{21}{subsubsection.3.4.5}%
-\contentsline {subsubsection}{\numberline {3.4.6}Process Endpoint}{21}{subsubsection.3.4.6}%
-\contentsline {subsubsection}{\numberline {3.4.7}Prozess Ausführung}{21}{subsubsection.3.4.7}%
-\contentsline {subsubsection}{\numberline {3.4.8}Job Status}{21}{subsubsection.3.4.8}%
-\contentsline {subsubsection}{\numberline {3.4.9}Job Resultate}{21}{subsubsection.3.4.9}%
-\contentsline {subsection}{\numberline {3.5}Requirements Class OGC Process Description}{21}{subsection.3.5}%
-\contentsline {subsection}{\numberline {3.6}Requirements Class Job List}{21}{subsection.3.6}%
-\contentsline {subsection}{\numberline {3.7}Requirements Class Dismiss}{21}{subsection.3.7}%
-\contentsline {subsection}{\numberline {3.8}Requirements Class OpenAPI 3.0}{21}{subsection.3.8}%
-\contentsline {subsection}{\numberline {3.9}Prozesse}{22}{subsection.3.9}%
-\contentsline {subsubsection}{\numberline {3.9.1}Echo}{22}{subsubsection.3.9.1}%
-\contentsline {subsubsection}{\numberline {3.9.2}Überflutungsmonitoring}{22}{subsubsection.3.9.2}%
-\contentsline {subsection}{\numberline {3.10}Zusätzliche Funktionalitäten}{22}{subsection.3.10}%
-\contentsline {subsubsection}{\numberline {3.10.1}Coverage}{22}{subsubsection.3.10.1}%
-\contentsline {section}{\numberline {4}Evaluation}{23}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Nielsen's Nutzbarkeitsheuristiken}{23}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Unit Testsuit}{23}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}OGC Compliance Test}{23}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Diskussion}{24}{section.5}%
-\contentsline {section}{\numberline {6}Ausblick}{25}{section.6}%
-\contentsline {section}{\numberline {7}Fazit}{26}{section.7}%
-\contentsline {section}{\numberline {A}Quellcodeverzeichnis}{30}{appendix.A}%
-\contentsline {subsection}{\numberline {A.1}Konfiguration von Werkzeug auf HTTP 1.1}{30}{subsection.A.1}%
-\contentsline {subsection}{\numberline {A.2}Quellcode Landing Page Endpoint}{30}{subsection.A.2}%
-\contentsline {subsection}{\numberline {A.3}Quellcode API Definition Endpoint}{31}{subsection.A.3}%
-\contentsline {subsection}{\numberline {A.4}Quellcode Conformance Endpoint}{32}{subsection.A.4}%
-\contentsline {subsection}{\numberline {A.5}Quellcode Process List Endpoint}{33}{subsection.A.5}%
-\contentsline {subsection}{\numberline {A.6}Quellcode Process Description Endpoint}{35}{subsection.A.6}%
-\contentsline {subsection}{\numberline {A.7}Quellcode Process Execution Endpoint}{36}{subsection.A.7}%
+\contentsline {subsection}{\numberline {2.4}Web Application Programming Interfaces}{15}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Rich Data Interfaces}{16}{subsubsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.5}OGC und OGC Standards}{16}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}OGC API - Processes - Part 1: Core}{17}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Evaluationskriterien}{18}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Implementierung}{19}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Softwarestack}{19}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Programmstruktur}{19}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Requirements Classes für Encodings}{19}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Requirements Class Core}{20}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}HTTP 1.1}{20}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}API Landig Page}{21}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}API Definition}{21}{subsubsection.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.4}Conformance Endpoint}{22}{subsubsection.3.4.4}%
+\contentsline {subsubsection}{\numberline {3.4.5}Processes Endpoint}{22}{subsubsection.3.4.5}%
+\contentsline {subsubsection}{\numberline {3.4.6}Process Endpoint}{23}{subsubsection.3.4.6}%
+\contentsline {subsubsection}{\numberline {3.4.7}Prozess Ausführung}{23}{subsubsection.3.4.7}%
+\contentsline {subsubsection}{\numberline {3.4.8}Job Status}{23}{subsubsection.3.4.8}%
+\contentsline {subsubsection}{\numberline {3.4.9}Job Resultate}{23}{subsubsection.3.4.9}%
+\contentsline {subsection}{\numberline {3.5}Requirements Class OGC Process Description}{23}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}Requirements Class Job List}{23}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Requirements Class Dismiss}{23}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}Requirements Class OpenAPI 3.0}{23}{subsection.3.8}%
+\contentsline {subsection}{\numberline {3.9}Prozesse}{23}{subsection.3.9}%
+\contentsline {subsubsection}{\numberline {3.9.1}Echo}{23}{subsubsection.3.9.1}%
+\contentsline {subsubsection}{\numberline {3.9.2}Überflutungsmonitoring}{23}{subsubsection.3.9.2}%
+\contentsline {subsection}{\numberline {3.10}Zusätzliche Funktionalitäten}{23}{subsection.3.10}%
+\contentsline {subsubsection}{\numberline {3.10.1}Coverage}{23}{subsubsection.3.10.1}%
+\contentsline {section}{\numberline {4}Evaluation}{24}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Nielsen's Nutzbarkeitsheuristiken}{24}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Unit Testsuit}{24}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}OGC Compliance Test}{24}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Diskussion}{25}{section.5}%
+\contentsline {section}{\numberline {6}Ausblick}{26}{section.6}%
+\contentsline {section}{\numberline {7}Fazit}{27}{section.7}%
+\contentsline {section}{\numberline {A}Quellcodeverzeichnis}{31}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}Konfiguration von Werkzeug auf HTTP 1.1}{31}{subsection.A.1}%
+\contentsline {subsection}{\numberline {A.2}Quellcode Landing Page Endpoint}{31}{subsection.A.2}%
+\contentsline {subsection}{\numberline {A.3}Quellcode API Definition Endpoint}{32}{subsection.A.3}%
+\contentsline {subsection}{\numberline {A.4}Quellcode Conformance Endpoint}{33}{subsection.A.4}%
+\contentsline {subsection}{\numberline {A.5}Quellcode Process List Endpoint}{34}{subsection.A.5}%
+\contentsline {subsection}{\numberline {A.6}Quellcode Process Description Endpoint}{36}{subsection.A.6}%
+\contentsline {subsection}{\numberline {A.7}Quellcode Process Execution Endpoint}{37}{subsection.A.7}%

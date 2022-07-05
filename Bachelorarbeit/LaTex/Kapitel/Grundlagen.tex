@@ -245,11 +245,35 @@ Dieses Maß bewegt sich zwischen $-1$ und $1$ wobei Werte um $0$ für identische
 Aufgrund der Reflektionseigenschaften von Wasserflächen deuten Werte nahe $-1$ auf überflutete Areale hin \cite{flood_proxy_mapping_ndsi}. 
 Die der vielen und teilweise zeitintensiven Prozessierungsschritte können, je nach Größe des zu untersuchenden Areals, viel Zeit und Rechenleistung in Anspruch nehmen.
 
-\subsection{Programmierschnittstellen}
+\subsection{Web Application Programming Interfaces}
+Schnittstellen sind gemeinsame Grenzen zwischen funktionalen Einheiten über die mittels vorgegebener Kommunikationswege Informationen ausgetauscht werden können.
+Ein Application Programming Interface erlaubt also den Austausch von Informationen zwischen zwei unterschiedlichen Programmen. 
+Genauer ausgedrückt erlaubt eine API einem Programm Funktionen eines anderen Programms zu nutzen \cite{geospatial_apis}. Zu bemerken ist hierbei das keines der beiden 
+Programme die programmatische Details des jeweils anderen kennt oder kennen muss \cite{testbed_11}.
+Die Nutzung von APIs erlaubt die Modularisierung von Software in voneinander unabhängige, und untereinander austauschbare Module. Dabei sind APIs jedoch als 
+Bausteine von Anwendungen zu betrachten.\\
+Bei diesen kann es sich zum Beispiel um Web-Anwendungen handeln welche ihre Informationen über standardisierte Protokolle,
+zum Beispiel HTTP über das Internet austauschen. Moderne Web-Anwendungen werden häufig nach dem REST Paradigma entwickelt. Dieses beschreibt einen 
+Softwarearchitekturstil für verteilte Hypermedia Systeme wie das Internet. Durch die Umsetzung dieses Paradigmas sollen Webanwendungen Eigenschaften wie 
+Skalierbarkeit, Ausfallsicherheit, Transparenz und Zuverlässigkeit. Außerdem sollen die Belange unterschiedlichen Anwendungen getrennt werden \cite{testbed_11}.\\ 
+Zudem definiert das REST Paradigma fünf Einschränkungen bezüglich der Konfiguration von Anwendungen und deren Kommunikation. So werden Server klar von Clients 
+abgegrenzt um die Skalierbarkeit der Server sicherzustellen. Stabile Schnittstellen zwischen Server und Client stellen zudem sicher das beide unabhängig voneinander 
+entwickelt werden können. Um die Skalierbarkeit weiter zu steigern sollen Anwendungen stateless miteinander kommunizieren. 
+Die bedeutet das alle Informationen die ein System zur Beantwortung eines Requests benötigt in selbigem enthalten sein müssen. Um die performante Beantwortung 
+von Requests zu steigern soll es möglich sein Responses zu speichern und wiederzuverwenden. Zu guter Letzt sollen Anwendungen ressourcenbasiert arbeiten und diese 
+mit wenigen, klar definierten Methoden abrufbar machen. Der Austausch von Ressourcen soll mit unterschiedlichsten Repräsentationen möglich sein. So kann eine 
+Ressource zum Beispiel als .xml- oder .json-Datei verfügbar sein.
+\subsubsection{Rich Data Interfaces}
+Der Begriff Rich Data Interface kann unter zwei Gesichtspunkten betrachtet werden. Einerseits kann darunter eine API verstanden werden welche 
+reich an Interaktionsmöglichkeiten ist, dem Nutzer also umfangreiche Funktionen zur Interaktion mit den durch die von der API angebotenen Ressourcen ermöglicht.
+Andererseits könnten die Ressourcen selber reich an Informationen sein. Die reichhaltigen Ressourcen können zum Beispiel vorprozsessierte Daten 
+sein welche von Nutzern direkt für weitere Analysen verwendet werden können ohne das diese selber die möglicherweise Aufwendige Vorprozsessierung durchführen müssen.\\ 
+Unter reichhaltigen Ressourcen können jedoch auch aus Rohdaten abgeleitete Produkte verstanden werden welche bestimmte, bereits in den Rohdaten vorhandene Aspekte 
+hervorheben oder bereits Daten ableiten welche einen bestimmten Sachverhalt klar abbilden. 
 
 \subsection{OGC und OGC Standards}
 Das Open Geospatial Consortium (OGC) widmet sich der Aufgabe die Entwicklung von internationalen Standards und unterstützender Dienste welche die Interoperabilität im 
-Bereich der Geoinformatik verbessern voranzutreiben. Das OGC soll dabei offene Systeme und Techniken verbreiten welche es erlauben Dienste und Prozesse mit geobezug
+Bereich der Geoinformatik verbessern voranzutreiben. Das OGC soll dabei offene Systeme und Techniken verbreiten welche es erlauben Dienste und Prozesse mit Raumbezug
 in Kreisen der Informatik verbreiten und die Nutzung von interoperabler und kommerzieller Software fördern \cite{ogc_bylaws}. Dabei wird versucht möglichst viel
 Akteure aus Wissenschaft, Wirtschaft und Verwaltung zu beteiligen um Standards zu schaffen welche auf möglichst breitem Konsens basieren. Zudem werden 
 Mechanismen zur Zertifizierung von standardkonformen Software-Lösungen angeboten \cite{ogc_bylaws}.
@@ -262,7 +286,7 @@ sowie die Auffindbarkeit und Durchsuchbarkeit dieser. Ein weiterer Bereich widme
 \subsection{OGC API - Processes - Part 1: Core}
 Der OGC API - Processes - Part 1: Core Standard soll das Bereitstellen von aufwendigen Prozessierungsaufgaben und ausführbaren Prozessen welche über eine webbasierte 
 Programmierschittstelle von anderen Programmen aufgerufen und gestartet werden können unterstützen \cite{ogc_api_processes_core}. Der Standard ist dabei von Konzepten des 
-OGC Web Processing Service 2.0 Interface Standards beeinflusst und bedient sich des RESTful Paradigmas sowie der Java Script Object Notation (JSON). \\
+OGC Web Processing Service 2.0 Interface Standards beeinflusst und bedient sich des REST Paradigmas sowie der Java Script Object Notation (JSON). \\
 Der Aufbau des OGC API - Processes - Part 1: Core Standards orientiert sich am OGC Spezifikationsmodell. Dieses beschreibt die modularen Komponenten eines Standards und 
 wie diese miteinander in Verbindung stehen \cite{ogc_specification_model}. Das Spezifikationsmodell definiert einen Standard als Teillösung eines Entwicklungsproblems.
 Diese Teillösung limitiert die Anzahl an möglichen Implementierungen. Ziel ist die Harmonisierung der Implementierungen und so die Interoperabilität zu steigern.
@@ -290,9 +314,10 @@ entsprechenden Test, welcher im Abstract Test Suit beschreiben ist, auf ihre kor
 Die Evaluation einer Implementierung einer API kann unter verschiedenen Gesichtspunkten erfolgen. Zum einen können technische Aspekte Effizienz, Skalierbarkeit,
 Stabilität und Wartbarkeit untersucht werden. Zu dieser technischen Bewertung einer API kann auch das Überprüfen der Standardkonformität gezählt werden.
 Diese kann durch einen ebenfalls zu implementierenden Unit-Test teilweise überprüft werden da mache Testfälle des Test-Suits des Standards automatisch überprüft
-werden können \cite{ogc_api_processes_core}. Der Fokus der in dieser Arbeit durchgeführt Evaluation soll jedoch die Benutzbarkeit und Benutzerfreundlichkeit der Implementierung sein. 
-Dafür können die von Jakob Nielsen 1993 aufgestellten Heuristiken verwendet werden. Dabei handelt es sich um zehn Heuristiken unter denen eine Schnittstelle betrachtet 
-werden kann \cite{usability_engineering}. 
+werden können \cite{ogc_api_processes_core}. Der Fokus der in dieser Arbeit durchgeführt Evaluation soll jedoch die Benutzbarkeit und Benutzerfreundlichkeit der 
+Implementierung sein. Dafür können die von Jakob Nielsen 1993 aufgestellten Heuristiken verwendet werden. Dabei handelt es sich um zehn Heuristiken unter denen 
+eine Schnittstelle betrachtet werden kann \cite{usability_engineering}. Die Heuristiken decken unter anderem die Themenfelder Verständlichkeit, Fehlerbehandlung und 
+Fehlervermeidung, Dokumentation und Konsistenz ab \cite{usability_engineering}. 
 
 
 

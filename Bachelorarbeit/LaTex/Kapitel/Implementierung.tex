@@ -2,6 +2,12 @@
 \restoregeometry
 \section{Implementierung}
 \subsection{Softwarestack}
+Die prototypische Entwicklung eines leichtgewichtigen Rich Data Interface für Copernicus-Daten erfolgte im Rahmen dieser Arbeit mit der Programmiersprache Python.
+Diese ist nicht nur aufgrund ihrer Einfachheit vorteilhaft sondern erlaubt auch den Zugriff auf eine große Zahl von Packages für die unterschiedlichsten 
+Anwendungsfälle. 
+Weite Teile des Rich Data Interface wurden mithilfe des Flask-Frameworks umgesetzt. Dieses erlaubt das schnelle Entwicklen von kleinen und auf wenige Aufgaben
+fokussierten APIs. 
+
 \subsection{Programmstruktur}
 Die Anwendung ist in vier Python-Scripte aufgeteilt. Im api.py Script ist die Webanwendung definiert. Neben Grundeinstellungen enthält diese Datei
 die Endpoints der API. Die geordnete Abarbeitung der angelegten Jobs werden vom Script processing.py gesteuert. Die eigentlichen Prozesse sowie 
@@ -12,25 +18,20 @@ Beschreibungen der von der API angebotenen Prozesse. Die Anwendung erlaubt das p
 Herunterladen zu vermeiden. Diese Datensätze können im Verzeichnis $data/$ abgelegt werden. Jeder Sentinel-1 Datensatz enthält eine .kml-Datei welche 
 Metadaten zum Datensatz enthält. Diese werden im Unterverzeichnis $data/coverage/$ abgelegt. 
 Jeder angelegt Job, also jede auszuführende Instanz einer Prozesses erhält ein einzigartiges Verzeichnis innerhalb des Verzeichnisses $jobs/$. In diesem 
-Verzeichnis befinden sich eine Status- und Job-Datei sowie ein Footprint. Neben diesen Dateien enthält jedes Job-Verzeichnis ein Unterverzeichnis $results/$.  
-
+Verzeichnis befinden sich eine Status- und Job-Datei sowie ein Footprint. Neben diesen Dateien enthält jedes Job-Verzeichnis ein Unterverzeichnis $results/$ in dem
+die Ergebnisse des jeweiligen Jobs abgelegt werden.  
 
 \subsection{Requirements Classes für Encodings}
-\subsubsection{Requirements Class JSON}
 In der Requirements Class JSON wird definiert welche Ressourcen im Media-Type $application/json$ angefragt werden können. Dazu gehören alle Responses der 
 Endpunkte API Landing Page, API Definition, Conformance Deklaration, Prozess Liste, Prozess Beschreibung, Prozess Ausführung und Job Status welche mit dem 
 HTTP-Statuscode 200 versandt werden. Da die prototypische Implementierung auch die Endpunkte Job Liste und Coverage bereitstellt können die korrespondierenden
 Ressourcen auch im Media-Type $application/json$ angefragt werden.
-Die statischen .json-Dateien für die Endpunkte API Landing Page, API Definition, Conformance Deklaration, Prozess Liste, Prozess Beschreibung sind im Verzeichnis
-$/templates/json$ hinterlegt. Die .json-Dateien der angelegten Jobs finden sich jeweils in den Job-Verzeichnissen unter $/jobs/<jobID>$ während die .kml-Dateien
-welche die Informationen für den Coverage-Endpoint beinhalten unter $data/coverage$ gespeichert sind. Werden Ressourcen im Media-Type $application/json$ angefragt
-müssen also zunächst die entsprechenden .json-Dateien geladen, je nach Endpunkt variiert oder kombiniert und vor dem versenden mit der Funktion $jsonify()$
-vorbereitet werden. 
-
-\subsubsection{Requirements Class HTML}
+Werden Ressourcen im Media-Type $application/json$ angefragt müssen also zunächst die entsprechenden .json-Dateien geladen, je nach Endpunkt variiert oder 
+kombiniert und vor dem versenden mit der Funktion $jsonify()$ vorbereitet werden. \\
 In der Requirements-Class HTML werden analog zu Requirements Class JSON jene Ressourcen definiert welche im Media-Type $text/html$ angefragt werden können. Jedoch
 entfällt in dieser Requirements-Class die Einschränkung auf bestimmte Endpunkte und alle Responses welche mit dem HTTP-Statuscode 200 versandt werden müssen den 
-Media-Type $text/html$ unterstützen. 
+Media-Type $text/html$ unterstützen. Wird dieser angefragt wird die entsprechende Ressource mit der Funktion $render_template()$ gerendert und als Response versandt.
+Dabei können zusätzliche Elemente übergeben werden welche von der in Flask enthaltenen Jinja template engine dynamisch dargestellt werden können.
 
 \subsection{Requirements Class Core}
 \subsubsection{HTTP 1.1}
@@ -43,7 +44,7 @@ Version des HTTP Protokolls angepasst werden (siehe Anhang \ref{appendixconfWerk
 
 In dieser Requirements-Class werden zudem alle HTTP-Statuscodes gelistet die Nutzer von einer standardkonformen Implementierung mindestens erwarten können. 
 \begin{table}[H]
-    \caption{Typische HTTP-Statuscodes \cite{ogc_api_processes_core}}
+    \caption{Vorgesehene HTTP-Statuscodes \cite{ogc_api_processes_core}}
     \centering
     \begin{tabular}{c c} 
         HTTP-Statuscode & Bedeutung\\ 
@@ -66,10 +67,10 @@ In dieser Requirements-Class werden zudem alle HTTP-Statuscodes gelistet die Nut
 Alle erfolgreichen Anfragen welche eine Resource liefern mit dem HTTP-Statuscode 200 beantwortet. Die Verwendung nicht zulässiger HTTP-Methoden resultieren 
 in Antworten mit dem Status-Code 405 während Anfragen für nicht unterstütze Media-Types mit dem Status-Code 406 beantwortet werden. Kommt es zu Fehlern bei der Ausführung 
 des Programmcodes antwortet die Anwendung mit dem HTTP-Statuscode 500. Werden durch eine Anfrage Ressourcen neu erzeugt oder nicht gefunden antwortet die Anwendung mit 
-den HTTP-Statuscodes 201 beziehungsweise 404. Der Standard erlaubt die Nutzung weiterer HTTP-Statuscodes.
+den HTTP-Statuscodes 201 beziehungsweise 404. Der Standard erlaubt die Nutzung weiterer HTTP-Statuscodes \cite{ogc_api_processes_core}.
 
 \subsubsection{API Landig Page}
-Der erste im Standard definierte Endpoint kann über den URL \textit{http://HOST:PORT/?f=<text/html | application/json>} aufgerufen werden und liefert als Resource die 
+Der erste im Standard definierte Endpoint kann über den URL\textit{http://HOST:PORT/?f=<MEDIA-TYPE>} aufgerufen werden und liefert als Resource die 
 Landing Page der API. Diese kann als Eintrittspunkt zu allen anderen Funktionalitäten angesehen werden. Sie enthält Verknüpfungen zu den Endpoints API Definition, 
 Conformance Declaration, Process List, Process Description, Job List und Coverage. Der Endpoint kann nur mit der HTTP-Get Methode verwendet werden. 
 Die Resource wird als HTML- aber auch als JSON-Dokument angeboten. Der Nutzer kann über die optionalen Parameter $f$ oder $content\_type$ steuern welcher Media-Type der Response 
@@ -78,12 +79,12 @@ HTTP-Headern versandt. Der $link$-Header liefert einen URL zur angefragten Resou
 Die Landing Page wird hier mit $landingPage$ identifiziert (siehe Anhang \ref{appendixLandingPage}). 
 
 \subsubsection{API Definition}
-Unter dem URL \textit{http://HOST:PORT/api?f=<text/html | application/json>} kann der API Definition Endpoint erreicht werden. Dieser liefert eine detaillierte Beschreibung
+Unter dem URL \textit{http://HOST:PORT/api?f=<MEDIA-TYPE>} kann der API Definition Endpoint erreicht werden. Dieser liefert eine detaillierte Beschreibung
 der API und ihrer Funktionen.  Da eine andere Requirements-Class die Dokumentation im  OpenAPI 3.0 Format fordert sind die von diesem Endpunkt bereitgestellten Ressourcen aus 
 einer solchen abgeleitet. In dieser Form der Dokumentation werden neben einer allgemeinen Beschreibung sämtliche Endpoints mit ihren zu erwartenden HTTP-Statuscodes und 
 Responses beschrieben. Zusätzlich erfolgt einen Auflistung aller Schemata nach welchen von der API angebotene Ressourcen strukturiert sind. Die API Beschreibung wird
 als HTML- oder JSON-Dokument angeboten. Die Wahl des Media-Type wird auch hier über die optionalen Parameter $f$ oder $content\_type$ gesteuert. Die angefragten Ressourcen 
-werden auch hier nicht dynamisch sondern aus statischen .html- beziehungsweise .json-Dateien generiert. Nach einem erfolgreichen Request werden sie zusammen mit 
+werden auch hier aus statischen .html- beziehungsweise .json-Dateien generiert. Nach einem erfolgreichen Request werden sie zusammen mit 
 einem $link$- und $resource$-Header versandt. Der Endpoint erlaubt nur die Nutzung der HTTP-Get Methode (siehe Anhang \ref{appendixAPIDefinition}).
 
 \subsubsection{Conformance Endpoint}
