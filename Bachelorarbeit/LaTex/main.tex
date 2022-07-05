@@ -38,7 +38,20 @@
 
 \usepackage{xcolor}
 \usepackage{listings}
-
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+}
 
 \lstdefinestyle{Python}{
     language        = Python,
@@ -51,7 +64,27 @@
     numberstyle     = \tiny
 }
 
+\lstdefinestyle{HTML}{
+    language        = HTML,
+    basicstyle      = \ttfamily\scriptsize,
+    keywordstyle    = \color{blue},
+    keywordstyle    = [2] \color{teal}, % just to check that it works
+    stringstyle     = \color{orange},
+    commentstyle    = \color{red}\ttfamily,
+    tabsize         = 2,
+    numberstyle     = \tiny
+}
 
+\lstdefinestyle{JSON}{
+    language        = JSON,
+    basicstyle      = \ttfamily\scriptsize,
+    keywordstyle    = \color{blue},
+    keywordstyle    = [2] \color{teal}, % just to check that it works
+    stringstyle     = \color{orange},
+    commentstyle    = \color{red}\ttfamily,
+    tabsize         = 2,
+    numberstyle     = \tiny
+}
 %Dokument
 \begin{document}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.14)  5 JUL 2022 12:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.4.14)  5 JUL 2022 17:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -439,24 +439,24 @@ File: l3backend-pdftex.def 2022-04-10 L3 backend support: PDF output (pdfTeX)
 ) (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 56.
-LaTeX Font Info:    ... okay on input line 56.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 89.
+LaTeX Font Info:    ... okay on input line 89.
  (c:/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count313
@@ -510,7 +510,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 56.
+Package hyperref Info: Link coloring ON on input line 89.
 (c:/texlive/2022/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
  (c:/texlive/2022/texmf-dist/tex/latex/refcount/refcount.sty
@@ -520,9 +520,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count319
 )
-LaTeX Info: Redefining \ref on input line 56.
-LaTeX Info: Redefining \pageref on input line 56.
-LaTeX Info: Redefining \nameref on input line 56.
+LaTeX Info: Redefining \ref on input line 89.
+LaTeX Info: Redefining \pageref on input line 89.
+LaTeX Info: Redefining \nameref on input line 89.
  (./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
@@ -560,19 +560,456 @@ LaTeX Info: Redefining \nameref on input line 56.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<Bilder/wwu_logo.png, id=225, 2276.2641pt x 768.2301pt>
+<Bilder/wwu_logo.png, id=265, 2276.2641pt x 768.2301pt>
 File: Bilder/wwu_logo.png Graphic file (type png)
 <use Bilder/wwu_logo.png>
-Package pdftex.def Info: Bilder/wwu_logo.png  used on input line 72.
+Package pdftex.def Info: Bilder/wwu_logo.png  used on input line 105.
 (pdftex.def)             Requested size: 170.71652pt x 57.61476pt.
-<Bilder/ifgi_logo.png, id=227, 359.7075pt x 133.0425pt>
+<Bilder/ifgi_logo.png, id=267, 359.7075pt x 133.0425pt>
 File: Bilder/ifgi_logo.png Graphic file (type png)
 <use Bilder/ifgi_logo.png>
-Package pdftex.def Info: Bilder/ifgi_logo.png  used on input line 73.
+Package pdftex.def Info: Bilder/ifgi_logo.png  used on input line 106.
 (pdftex.def)             Requested size: 170.71652pt x 63.14102pt.
  [1
 
 
-{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map
-!pdfTeX error: pdflatex.exe (file c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map): fflush() failed (Invalid argument)
- ==> Fatal error occurred, no output PDF file produced!
+{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./Bilder/wwu_logo.png> <./Bilder/ifgi_logo.png>] (./main.toc
+LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 3.
+ (c:/texlive/2022/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 3.
+ (c:/texlive/2022/texmf-dist/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 3.
+ (c:/texlive/2022/texmf-dist/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 3.
+ (c:/texlive/2022/texmf-dist/tex/latex/psnfss/omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 3.
+ (c:/texlive/2022/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 3.
+ [2])
+\tf@toc=\write4
+\openout4 = `main.toc'.
+
+ [3] (./main.lof)
+\tf@lof=\write5
+\openout5 = `main.lof'.
+
+ (./main.lot)
+\tf@lot=\write6
+\openout6 = `main.lot'.
+
+ [4] (./Kapitel/AbkÃ¼rzungsverzeichnis.tex
+
+LaTeX Warning: Hyper reference `acro:API' on page 5 undefined on input line 5.
+
+
+LaTeX Warning: Hyper reference `acro:API' on page 5 undefined on input line 5.
+
+
+LaTeX Warning: Hyper reference `acro:OGC' on page 5 undefined on input line 6.
+
+
+LaTeX Warning: Hyper reference `acro:OGC' on page 5 undefined on input line 6.
+
+
+LaTeX Warning: Hyper reference `acro:SAR' on page 5 undefined on input line 7.
+
+
+LaTeX Warning: Hyper reference `acro:SAR' on page 5 undefined on input line 7.
+
+
+LaTeX Warning: Hyper reference `acro:ESA' on page 5 undefined on input line 8.
+
+
+LaTeX Warning: Hyper reference `acro:ESA' on page 5 undefined on input line 8.
+
+
+LaTeX Warning: Hyper reference `acro:GMES' on page 5 undefined on input line 9.
+
+
+LaTeX Warning: Hyper reference `acro:GMES' on page 5 undefined on input line 9.
+
+
+LaTeX Warning: Hyper reference `acro:CAMS' on page 5 undefined on input line 10.
+
+
+LaTeX Warning: Hyper reference `acro:CAMS' on page 5 undefined on input line 10.
+
+
+LaTeX Warning: Hyper reference `acro:CMEMS' on page 5 undefined on input line 11.
+
+
+LaTeX Warning: Hyper reference `acro:CMEMS' on page 5 undefined on input line 11.
+
+
+LaTeX Warning: Hyper reference `acro:CLMS' on page 5 undefined on input line 12.
+
+
+LaTeX Warning: Hyper reference `acro:CLMS' on page 5 undefined on input line 12.
+
+
+LaTeX Warning: Hyper reference `acro:EMS' on page 5 undefined on input line 13.
+
+
+LaTeX Warning: Hyper reference `acro:EMS' on page 5 undefined on input line 13.
+
+
+LaTeX Warning: Hyper reference `acro:C3S' on page 5 undefined on input line 14.
+
+
+LaTeX Warning: Hyper reference `acro:C3S' on page 5 undefined on input line 14.
+
+
+LaTeX Warning: Hyper reference `acro:SM' on page 5 undefined on input line 15.
+
+
+LaTeX Warning: Hyper reference `acro:SM' on page 5 undefined on input line 15.
+
+
+LaTeX Warning: Hyper reference `acro:SLC' on page 5 undefined on input line 16.
+
+
+LaTeX Warning: Hyper reference `acro:SLC' on page 5 undefined on input line 16.
+
+
+LaTeX Warning: Hyper reference `acro:GRD' on page 5 undefined on input line 17.
+
+
+LaTeX Warning: Hyper reference `acro:GRD' on page 5 undefined on input line 17.
+
+
+LaTeX Warning: Hyper reference `acro:OSW' on page 5 undefined on input line 18.
+
+
+LaTeX Warning: Hyper reference `acro:OSW' on page 5 undefined on input line 18.
+
+
+LaTeX Warning: Hyper reference `acro:OWI' on page 5 undefined on input line 19.
+
+
+LaTeX Warning: Hyper reference `acro:OWI' on page 5 undefined on input line 19.
+
+
+LaTeX Warning: Hyper reference `acro:RVL' on page 5 undefined on input line 20.
+
+
+LaTeX Warning: Hyper reference `acro:RVL' on page 5 undefined on input line 20.
+
+
+LaTeX Warning: Hyper reference `acro:NDSI' on page 5 undefined on input line 21.
+
+
+LaTeX Warning: Hyper reference `acro:NDSI' on page 5 undefined on input line 21.
+
+
+LaTeX Warning: Hyper reference `acro:DIAS' on page 5 undefined on input line 22.
+
+
+LaTeX Warning: Hyper reference `acro:DIAS' on page 5 undefined on input line 22.
+
+
+LaTeX Warning: Hyper reference `acro:JSON' on page 5 undefined on input line 23.
+
+
+LaTeX Warning: Hyper reference `acro:JSON' on page 5 undefined on input line 23.
+
+
+LaTeX Warning: Hyper reference `acro:URL' on page 5 undefined on input line 24.
+
+
+LaTeX Warning: Hyper reference `acro:URL' on page 5 undefined on input line 24.
+
+
+LaTeX Warning: Hyper reference `acro:XML' on page 5 undefined on input line 25.
+
+
+LaTeX Warning: Hyper reference `acro:XML' on page 5 undefined on input line 25.
+
+
+LaTeX Warning: Hyper reference `acro:WSGI' on page 5 undefined on input line 26.
+
+
+LaTeX Warning: Hyper reference `acro:WSGI' on page 5 undefined on input line 26.
+
+
+LaTeX Warning: Hyper reference `acro:REST' on page 5 undefined on input line 27.
+
+
+LaTeX Warning: Hyper reference `acro:REST' on page 5 undefined on input line 27.
+
+) (./Kapitel/Einleitung.tex [5]) (./Kapitel/Grundlagen.tex [6
+
+] [7
+
+]
+<Bilder/SAR_Prinzip.png, id=426, 625.58719pt x 560.8453pt>
+File: Bilder/SAR_Prinzip.png Graphic file (type png)
+<use Bilder/SAR_Prinzip.png>
+Package pdftex.def Info: Bilder/SAR_Prinzip.png  used on input line 58.
+(pdftex.def)             Requested size: 273.14923pt x 244.88997pt.
+ [8]
+<Bilder/SAR_Modi.png, id=436, 1150.2975pt x 317.68687pt>
+File: Bilder/SAR_Modi.png Graphic file (type png)
+<use Bilder/SAR_Modi.png>
+Package pdftex.def Info: Bilder/SAR_Modi.png  used on input line 71.
+(pdftex.def)             Requested size: 455.24411pt x 125.72972pt.
+ [9 <./Bilder/SAR_Prinzip.PNG> <./Bilder/SAR_Modi.PNG>]
+Overfull \hbox (21.51656pt too wide) in paragraph at lines 93--102
+\T1/ptm/m/n/12 Das Copernicus-Programm be-steht aus Welt-raum, In-Situ- und Service-Komponente. Zur Weltraum-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--106
+
+ []
+
+[10]
+<Bilder/Aquisition_Modes.png, id=467, 861.2175pt x 593.21625pt>
+File: Bilder/Aquisition_Modes.png Graphic file (type png)
+<use Bilder/Aquisition_Modes.png>
+Package pdftex.def Info: Bilder/Aquisition_Modes.png  used on input line 131.
+(pdftex.def)             Requested size: 455.24411pt x 313.5794pt.
+ [11] [12 <./Bilder/Aquisition_Modes.PNG>] [13] [14] [15] [16]
+Overfull \hbox (0.41502pt too wide) in paragraph at lines 286--312
+\T1/ptm/m/n/12 Conformance-Test-Modules zu-sam-men-ge-fasst wel-che al-le Test zum prü-fen ei-ner Requirements-
+ []
+
+
+Overfull \hbox (2.55524pt too wide) in paragraph at lines 286--312
+\T1/ptm/m/n/12 Class um-fas-sen. Die Ge-samt-heit die-ser Conformance-Test-Modules wird auch als Conformance-
+ []
+
+[17]) (./Kapitel/Implementierung.tex [18] [19
+
+] [20]
+Underfull \hbox (badness 10000) in paragraph at lines 83--85
+
+ []
+
+[21]
+Underfull \hbox (badness 10000) in paragraph at lines 94--95
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 96--99
+
+ []
+
+
+Overfull \hbox (6.18797pt too wide) in paragraph at lines 104--106
+\T1/ptm/m/n/12 Der Con-for-man-ce End-point kann un-ter dem URL \T1/ptm/m/it/12 http://HOST:PORT/conformance?f=<MEDIA-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 104--106
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 107--109
+
+ []
+
+
+Overfull \hbox (34.5068pt too wide) in paragraph at lines 114--115
+\T1/ptm/m/n/12 Requests an den Pro-cess List end-point müs-sen an den URL \T1/ptm/m/it/12 http://HOST:PORT/processes?f=<MEDIA-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--115
+
+ []
+
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 116--118
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
+
+ []
+
+
+Overfull \hbox (80.91069pt too wide) in paragraph at lines 128--129
+\T1/ptm/m/n/12 Der Pro-cess De-s-crip-ti-on End-point kann über den URL \T1/ptm/m/it/12 http://HOST:PORT/processes/<processID>?f=<MEDIA-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 128--129
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 130--131
+
+ []
+
+[23]) (./Kapitel/Evaluation.tex [24]) (./Kapitel/Diskussion.tex [25
+
+]) (./Kapitel/Ausblick.tex [26
+
+]) (./Kapitel/Fazit.tex [27
+
+]) (./Kapitel/Literatur.tex [28
+
+]
+Overfull \hbox (17.17467pt too wide) in paragraph at lines 6--9
+\T1/ptm/m/n/12 ps://www.researchgate.net/publication/257008464_A_Tutorial_on_Synthetic_Aperture_Radar
+ []
+
+
+Underfull \hbox (badness 6001) in paragraph at lines 14--17
+[]\T1/ptm/m/n/12 Europäische Kom-mis-si-on (2018, Ok-to-ber 06). Co-per-ni-cus: 20 years of His-to-
+ []
+
+
+Underfull \hbox (badness 3668) in paragraph at lines 24--27
+[]\T1/ptm/m/n/12 Europäische Kom-mis-si-on (2019). What is Co-per-ni-cus [On-li-ne]. Ver-füg-bar un-ter:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--27
+\T1/ptm/m/n/12 https://www.copernicus.eu/en/documentation/information-material/brochuresbrochures
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 29--32
+[]\T1/ptm/m/n/12 ESA Com-mu-ni-ca-ti-ons (2012, März). Sentinel-1 ESA's Ra-dar Ob-ser-va-to-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 29--32
+\T1/ptm/m/n/12 ry Missi-on for GMES Ope-ra-tio-nal Ser-vices [On-li-ne]. Ver-füg-bar un-ter:
+ []
+
+
+Underfull \hbox (badness 4353) in paragraph at lines 29--32
+\T1/ptm/m/n/12 https://sentinel.esa.int/web/sentinel/missions/sentinel-1/overview (Zu-griff am: 13. Ju-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 34--37
+[]\T1/ptm/m/n/12 Europäisches Par-la-ment und Rat der Eu-ro-päi-schen Uni-on (2014, April
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 34--37
+\T1/ptm/m/n/12 24). Re-gu-la-ti-on (EU) No 377/2014 Esta-blis-hing the Co-per-ni-cus Pro-gram-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 34--37
+\T1/ptm/m/n/12 me and re-pe-aling Re-gu-la-ti-on (EU) No 911/2010 [On-li-ne]. Ver-füg-bar un-ter:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 34--37
+\T1/ptm/m/n/12 https://www.kowi.de/Portaldata/2/Resources/horizon2020/coop/Copernicus-regulation.pdf
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 39--42
+\T1/ptm/m/n/12 [On-li-ne]. Ver-füg-bar un-ter: https://sentinel.esa.int/web/sentinel/user-guides/sentinel-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 39--42
+\T1/ptm/m/n/12 1-sar/document-library/-/asset_publisher/1dO7RF5fJMbd/content/sentinel-1-product-
+ []
+
+
+Underfull \hbox (badness 1924) in paragraph at lines 44--47
+\T1/ptm/m/n/12 li-ne]. Ver-füg-bar un-ter: htt-ps://ieeexplore.ieee.org/document/4310076/citations#citations
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 54--57
+[]\T1/ptm/m/n/12 N. Mi-ran-da und P.J. Mea-dows (2015, Mai 21). Ra-dio-me-tric Ca-li-bra-ti-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 54--57
+\T1/ptm/m/n/12 on of S-1 Level-1 Pro-ducts Ge-ne-ra-ted by the S-1 IPF [On-li-ne]. Ver-füg-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 54--57
+\T1/ptm/m/n/12 bar un-ter: https://sentinel.esa.int/web/sentinel/user-guides/document-library/-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 54--57
+\T1/ptm/m/n/12 /asset_publisher/xlslt4309D5h/content/sentinel-1-radiometric-calibration-of-products-
+ []
+
+[29]
+Underfull \hbox (badness 2181) in paragraph at lines 74--77
+\T1/ptm/m/n/12 te-le, B. Reff, P. Scar-pon-ci-ni, A. Whi-te-si-de (2009, Ok-to-ber 19). The Spe-ci-fi-ca-ti-
+ []
+
+
+Underfull \hbox (badness 1314) in paragraph at lines 74--77
+\T1/ptm/m/n/12 on Mo-del - A Stan-dard for Mo-du-lar spe-ci-fi-ca-ti-ons [On-li-ne]. Ver-füg-bar un-ter: htt-
+ []
+
+
+Underfull \hbox (badness 1939) in paragraph at lines 89--92
+[]\T1/ptm/m/n/12 F. Hou-bie, s. San-ka-ran, J. Lie-ber-man, P. Vre-ta-nos, J. Masó (2016, Ja-nu-ar 16).
+ []
+
+) (./Kapitel/AbschlusserklÃ¤rung.tex [30]) (./Kapitel/Anhang.tex [31] (c:/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+)
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 9.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 9.
+ (c:/texlive/2022/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+) [32
+
+] [33] [34] [35] [36] [37] [38] [39]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 335.
+ (c:/texlive/2022/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+) [40] [41] (c:/texlive/2022/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2020/03/24 1.8d listings language file
+) (c:/texlive/2022/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
+) [42] [43] [44]) [45] (./main.aux)
+
+LaTeX Warning: There were undefined references.
+
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 3A94FDD38222CF6E1A8B23A03D238717;10007.
+ ) 
+Here is how much of TeX's memory you used:
+ 17918 strings out of 478238
+ 272947 string characters out of 5847939
+ 1026396 words of memory out of 5000000
+ 35129 multiletter control sequences out of 15000+600000
+ 510902 words of font info for 88 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 60i,9n,100p,462b,2271s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{c:/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2022/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (45 pages, 1144546 bytes).
+PDF statistics:
+ 1392 PDF objects out of 1440 (max. 8388607)
+ 1303 compressed objects within 14 object streams
+ 689 named destinations out of 1000 (max. 500000)
+ 546 words of extra memory for PDF output out of 10000 (max. 10000000)
+

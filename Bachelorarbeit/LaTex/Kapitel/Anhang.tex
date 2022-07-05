@@ -296,3 +296,279 @@ def executeProcess(processID):
     except:
         return "HTTP status code 500: internal server error", 500
 \end{lstlisting}\label{appendixProcessExecution}   
+
+\newpage
+\subsection{Quellcode Echo Process}
+\begin{lstlisting}[caption={Echo Process}, style = Python]
+def echoProcess(job):
+    if(checkForDismissal(job.path + '/status.json') == True):
+        return
+    
+    setStarted(job.path + '/status.json')
+    
+    try:
+        input = job.input[0]
+        time.sleep(5)
+    except:
+        updateStatus(job.path + '/status.json', "failed", "The job has failed", "-")
+        return
+    
+    if(checkForDismissal(job.path + '/status.json') == True):
+        return
+    
+    result ={"result": input,
+             "message": "This is an echo"}
+    json.dumps(result, indent=4)
+    with open(job.results + "result.json", 'w') as f: #create file
+        json.dump(result, f) #write content
+        f.close() #close file
+    updateStatus(job.path + '/status.json', "successful", "Step 1 of 1 completed", "100")
+    setFinished(job.path + '/status.json')
+\end{lstlisting}\label{appendixEchoProcess}  
+
+\section{Schemata}
+\renewcommand{\lstlistingname}{Schema}
+\subsection{landingPage.yaml}
+\begin{lstlisting}[caption={landingPage.yaml}]
+type: object
+required:
+  - links
+properties:
+  title:
+    type: string
+    example: Example processing server
+  description:
+    type: string
+    example: Example server 
+  links:
+    type: array
+    items:
+      $ref: "link.yaml"
+\end{lstlisting}\label{appendixlandngPageyaml}  
+
+\subsection{processList.yaml}
+\begin{lstlisting}[caption={processList.yaml}]
+type: object
+required:
+  - processes
+  - links
+properties:
+  processes:
+    type: array
+    items:
+      $ref: "processSummary.yaml"
+  links:
+    type: array
+    items:
+      $ref: "link.yaml"
+\end{lstlisting}\label{appendixprocessListyaml}  
+
+\subsection{limit.yaml}
+\begin{lstlisting}[caption={limit.yaml}]
+name: limit
+in: query
+required: false
+schema:
+  type: integer
+  minimum: 1
+  maximum: 10000
+  default: 10
+style: form
+explode: false
+\end{lstlisting}\label{appendixlimityaml}  
+
+\subsection{link.yaml}
+\begin{lstlisting}[caption={link.yaml}]
+type: object
+required:
+  - href
+properties:
+  href:
+    type: string
+  rel:
+    type: string
+    example: service
+  type:
+    type: string
+    example: application/json
+  hreflang:
+    type: string
+    example: en
+  title:
+    type: string
+\end{lstlisting}\label{appendixlinkyaml}  
+
+\section{Ressourcen}
+\renewcommand{\lstlistingname}{Ressource}
+\subsection{landingPage.html}
+\begin{lstlisting}[caption={landingPage.html}, style = HTML]
+<!DOCTYPE html>
+<html>
+	<body>
+	<h1>links:</h1>
+		<p>
+			href:<a href="localhost:5000/?f=text/html">
+            localhost:5000/?f=text/html</a><br>
+			rel: self<br>
+			type: text/html<br>
+			title: This document as HTML
+		</p>
+		<p>
+			href:<a href="localhost:5000/?f=application/json">
+            localhost:5000/?f=application/json</a><br>
+			rel: alternate<br>
+			type: application/json<br>
+			title: This document as JSON 
+		</p>
+		<p>
+			href:<a href="localhost:5000/api?f=application/json">
+            localhost:5000/apiDefinition?f=application/json</a><br>
+			rel: service-desc<br>
+			type: application/json<br>
+			title: API definition for this endpoint as JSON
+		</p>
+		<p>
+			href:<a href="localhost:5000/api?f=text/html">
+            localhost:5000/apiDefinition?f=text/html</a><br>
+			rel: service-desc<br>
+			type: text/html<br>
+			title: API definition for this endpoint as HTML
+		</p>
+		<p>
+			href:<a href="localhost:5000/conformance?f=application/json">
+            localhost:5000/conformance?f=application/json</a><br>
+			rel: conformance<br>
+			type: application/json<br>
+			title: OGC API - Processes conformance classes implemented by this server as JSON
+		</p>
+		<p>
+			href:<a href="localhost:5000/conformance?f=text/html">
+            localhost:5000/conformance?f=text/html</a><br>
+			rel: conformance<br>
+			type: text/html<br>
+			title: OGC API - Processes conformance classes implemented by this server as HTML
+		</p>
+		<p>
+			href:<a href="localhost:5000/processes?f=application/json">
+            localhost:5000/processes?f=application/json</a><br>
+			rel: processes<br>
+			type: application/json<br>
+			title: Metadata about the processes as JSON
+		</p>
+		<p>
+			href:<a href="localhost:5000/processes?f=text/html">
+            localhost:5000/processes?f=text/html</a><br>
+			rel: processes<br>
+			type: text/html,<br>
+			title: Metadata about the processes as HTML
+		</p>
+		<p>
+			href:<a href="localhost:5000/jobs?f=application/json">
+            localhost:5000/jobs?f=application/json</a><br>
+			rel: jobs<br>
+			type: application/json<br>
+			title: The endpoint for job monitoring as JSON
+		</p>
+		<p>
+			href:<a href="localhost:5000/jobs?f=text/html">
+            localhost:5000/jobs?f=text/html</a><br>
+			rel: jobs<br>
+			type: text/html<br>
+			title: The endpoint for job monitoring as HTML
+		</p>
+		<p>
+			href:<a href="localhost:5000/coverage?f=application/json">
+            localhost:5000/coverage?f=application/json</a><br>
+			rel: coverage<br>
+			type: application/json<br>
+			title: The endpoint for coverage as JSON
+		</p>
+		<p>
+			href:<a href="localhost:5000/coverage?f=text/html">
+            localhost:5000/coverage?f=text/html</a><br>
+			rel: coverage<br>
+			type: text/html<br>
+			title: The endpoint for coverage as HTML
+		</p>
+	</body>
+</html>
+\end{lstlisting}\label{appendixlandingPageHTML}  
+
+\subsection{landingPage.json}
+\begin{lstlisting}[caption={landingPage.json}, style = JSON]
+{
+    "links": [
+    {
+        "href": "localhost:5000/?f=application/json",
+        "rel": "self",
+        "type": "application/json",
+        "title": "This document"
+    },{
+        "href": "localhost:5000/?f=text/html",
+        "rel": "alternate",
+        "type": "text/html",
+        "title": "This document as HTML"
+    },
+    {
+        "href": "localhost:5000/api?f=application/json",
+        "rel": "service-desc",
+        "type": "application/json",
+        "title": "API definition for this endpoint as JSON"
+    },
+    {
+        "href": "localhost:5000/api?f=text/html",
+        "rel": "service-desc",
+        "type": "text/html",
+        "title": "API definition for this endpoint as HTML"
+    },
+    {
+        "href": "localhost:5000/conformance?f=application/json",
+        "rel": "conformance",
+        "type": "application/json",
+        "title": "OGC API - Processes conformance classes implemented by this server as JSON"
+    },
+    {
+        "href": "localhost:5000/conformance?f=text/html",
+        "rel": "conformance",
+        "type": "text/html",
+        "title": "OGC API - Processes conformance classes implemented by this server as HTML"
+    },
+    {
+        "href": "localhost:5000/processes?f=application/json",
+        "rel": "processes",
+        "type": "application/json",
+        "title": "Metadata about the processes as JSON"
+    },
+        {
+        "href": "localhost:5000/processes?f=text/html",
+        "rel": "processes",
+        "type": "text/html",
+        "title": "Metadata about the processes as HTML"
+    },
+    {
+        "href": "localhost:5000/jobs?f=application/json",
+        "rel": "jobs",
+        "type": "application/json",
+        "title": "The endpoint for job monitoring as JSON"
+    },
+        {
+        "href": "localhost:5000/jobs?f=text/html",
+        "rel": "jobs",
+        "type": "text/html",
+        "title": "The endpoint for job monitoring as HTML"
+    },
+    {
+        "href": "localhost:5000/coverage?f=application/json",
+        "rel": "coverage",
+        "type": "application/json",
+        "title": "The endpoint for coverage as JSON"
+    },
+        {
+        "href": "localhost:5000/coverage?f=text/html",
+        "rel": "coverage",
+        "type": "text/html",
+        "title": "The endpoint for coverage as HTML"
+    }
+    ]
+}
+\end{lstlisting}\label{appendixlandingPageJSON}  

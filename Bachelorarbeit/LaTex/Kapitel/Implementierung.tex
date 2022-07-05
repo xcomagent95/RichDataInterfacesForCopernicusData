@@ -5,33 +5,37 @@
 Die prototypische Entwicklung eines leichtgewichtigen Rich Data Interface für Copernicus-Daten erfolgte im Rahmen dieser Arbeit mit der Programmiersprache Python.
 Diese ist nicht nur aufgrund ihrer Einfachheit vorteilhaft sondern erlaubt auch den Zugriff auf eine große Zahl von Packages für die unterschiedlichsten 
 Anwendungsfälle. 
-Weite Teile des Rich Data Interface wurden mithilfe des Flask-Frameworks umgesetzt. Dieses erlaubt das schnelle Entwicklen von kleinen und auf wenige Aufgaben
-fokussierten APIs. 
+Weite Teile des Rich Data Interface wurden mithilfe des Flask-Frameworks umgesetzt. Dieses erlaubt das schnelle Entwickeln von kleinen und auf wenige Aufgaben
+fokussierten APIs.   
 
 \subsection{Programmstruktur}
 Die Anwendung ist in vier Python-Scripte aufgeteilt. Im api.py Script ist die Webanwendung definiert. Neben Grundeinstellungen enthält diese Datei
 die Endpoints der API. Die geordnete Abarbeitung der angelegten Jobs werden vom Script processing.py gesteuert. Die eigentlichen Prozesse sowie 
 Hilfsfunktionen befinden sich im utils.py Script.
-Diese Scripte verwalten Dateien in einem einfach Verzeichnissystem. Templates für statische Ressourcen befinden sich im Verzeichnis $templates/$. HTML-Dateien 
-befinden sich im Verzeichnis $templates/html/$ und JSON-Dateien im Verzeichnis $templates/json/$. Das Unterverzeichnis $templates/json/processes/$ enthält die 
+Diese Scripte verwalten Dateien in einem einfach Verzeichnissystem. Templates für statische Ressourcen befinden sich im Verzeichnis \textit{templates/}. HTML-Dateien 
+befinden sich im Verzeichnis \textit{templates/html/} und JSON-Dateien im Verzeichnis \textit{templates/json/}. Das Unterverzeichnis \textit{templates/json/processes/} enthält die 
 Beschreibungen der von der API angebotenen Prozesse. Die Anwendung erlaubt das persistente hinterlegen von Sentinel-1 Datensätzen um zeitaufwendiges 
-Herunterladen zu vermeiden. Diese Datensätze können im Verzeichnis $data/$ abgelegt werden. Jeder Sentinel-1 Datensatz enthält eine .kml-Datei welche 
-Metadaten zum Datensatz enthält. Diese werden im Unterverzeichnis $data/coverage/$ abgelegt. 
-Jeder angelegt Job, also jede auszuführende Instanz einer Prozesses erhält ein einzigartiges Verzeichnis innerhalb des Verzeichnisses $jobs/$. In diesem 
-Verzeichnis befinden sich eine Status- und Job-Datei sowie ein Footprint. Neben diesen Dateien enthält jedes Job-Verzeichnis ein Unterverzeichnis $results/$ in dem
+Herunterladen zu vermeiden. Diese Datensätze können im Verzeichnis \textit{data/} abgelegt werden. Jeder Sentinel-1 Datensatz enthält eine .kml-Datei welche 
+Metadaten zum Datensatz enthält. Diese werden im Unterverzeichnis \textit{data/coverage/} abgelegt. 
+Jeder angelegt Job, also jede auszuführende Instanz einer Prozesses erhält ein einzigartiges Verzeichnis innerhalb des Verzeichnisses \textit{jobs/}. In diesem 
+Verzeichnis befinden sich eine Status- und Job-Datei sowie ein Footprint. Neben diesen Dateien enthält jedes Job-Verzeichnis ein Unterverzeichnis \textit{results/} in dem
 die Ergebnisse des jeweiligen Jobs abgelegt werden.  
 
 \subsection{Requirements Classes für Encodings}
-In der Requirements Class JSON wird definiert welche Ressourcen im Media-Type $application/json$ angefragt werden können. Dazu gehören alle Responses der 
+In der Requirements Class JSON wird definiert welche Ressourcen im Media-Type \textit{application/json} angefragt werden können. Dazu gehören alle Responses der 
 Endpunkte API Landing Page, API Definition, Conformance Deklaration, Prozess Liste, Prozess Beschreibung, Prozess Ausführung und Job Status welche mit dem 
 HTTP-Statuscode 200 versandt werden. Da die prototypische Implementierung auch die Endpunkte Job Liste und Coverage bereitstellt können die korrespondierenden
-Ressourcen auch im Media-Type $application/json$ angefragt werden.
-Werden Ressourcen im Media-Type $application/json$ angefragt müssen also zunächst die entsprechenden .json-Dateien geladen, je nach Endpunkt variiert oder 
-kombiniert und vor dem versenden mit der Funktion $jsonify()$ vorbereitet werden. \\
-In der Requirements-Class HTML werden analog zu Requirements Class JSON jene Ressourcen definiert welche im Media-Type $text/html$ angefragt werden können. Jedoch
+Ressourcen auch im Media-Type \textit{application/json} angefragt werden.
+Werden Ressourcen im Media-Type \textit{application/json} angefragt müssen also zunächst die entsprechenden .json-Dateien geladen, je nach Endpunkt variiert oder 
+kombiniert und vor dem versenden mit der Funktion \textit{jsonify()} vorbereitet werden. \\
+In der Requirements-Class HTML werden analog zu Requirements Class JSON jene Ressourcen definiert welche im Media-Type \textit{text/html} angefragt werden können. Jedoch
 entfällt in dieser Requirements-Class die Einschränkung auf bestimmte Endpunkte und alle Responses welche mit dem HTTP-Statuscode 200 versandt werden müssen den 
-Media-Type $text/html$ unterstützen. Wird dieser angefragt wird die entsprechende Ressource mit der Funktion $render_template()$ gerendert und als Response versandt.
+Media-Type \textit{text/html} unterstützen. Wird dieser angefragt wird die entsprechende Ressource mit der Funktion \textit{render\_template()} gerendert und als Response versandt.
 Dabei können zusätzliche Elemente übergeben werden welche von der in Flask enthaltenen Jinja template engine dynamisch dargestellt werden können.
+Stellen Endpoints ihre Ressourcen sowohl den Media-Type \textit{application/json} als auch \textit{text/html} zur Verfügung so können Nutzer diesen über den optional Parameter
+\textit{f} oder \textit{content\_type} spezifizieren. Wird kein Media-Type über diese Parameter spezifiziert so wird standardmäßig der Media-Type \textit{text/html} verwendet. \\
+Jede Ressource die in beiden Media-Typen bereitgestellt wird enthält eine Verknüpfungen zu sich selbst mit der Relation \textit{self} und eine Verknüpfung 
+zur Ressource im jeweils anderen Media-Type mit der Relation \textit{alternate}.
 
 \subsection{Requirements Class Core}
 \subsubsection{HTTP 1.1}
@@ -69,42 +73,62 @@ in Antworten mit dem Status-Code 405 während Anfragen für nicht unterstütze M
 des Programmcodes antwortet die Anwendung mit dem HTTP-Statuscode 500. Werden durch eine Anfrage Ressourcen neu erzeugt oder nicht gefunden antwortet die Anwendung mit 
 den HTTP-Statuscodes 201 beziehungsweise 404. Der Standard erlaubt die Nutzung weiterer HTTP-Statuscodes \cite{ogc_api_processes_core}.
 
+\subsubsection{Limit Paramter}
+Der \textit{limit}-Parameter wird von den Endpoints Process List und Job List unterstützt. Mit ihm kann gesteuert werden wie viele Elemente im Response gelistet werden. 
+Der \textit{limit}-Parameter ist optional. Ist er nicht Teil eines Requests werden standardmäßig 10 Elemente zurückgegeben. Es können maximal 1000 Elemente angefragt werden.
+Ergibt die Überprüfung des \textit{limit}-Parameters das Werte außerhalb des gültigen Wertebereichs von 0 bis 1000 angefragt werden wird der Parameter auf 10 zurückgesetzt. 
+Ein Response kann weniger, aber nie mehr Elemente als durch den \textit{limit}-Parameter spezifiziert werden enthalten \ref{appendixlimityaml}. 
+
 \subsubsection{API Landig Page}
 Der erste im Standard definierte Endpoint kann über den URL\textit{http://HOST:PORT/?f=<MEDIA-TYPE>} aufgerufen werden und liefert als Resource die 
-Landing Page der API. Diese kann als Eintrittspunkt zu allen anderen Funktionalitäten angesehen werden. Sie enthält Verknüpfungen zu den Endpoints API Definition, 
-Conformance Declaration, Process List, Process Description, Job List und Coverage. Der Endpoint kann nur mit der HTTP-Get Methode verwendet werden. 
-Die Resource wird als HTML- aber auch als JSON-Dokument angeboten. Der Nutzer kann über die optionalen Parameter $f$ oder $content\_type$ steuern welcher Media-Type der Response 
-nutzen soll. Wird eim Request akzeptiert so wird, je nach gewähltem Media-Type, ein Response aus einer statischen .html- oder .json-Datei generiert und mit zusätzlichen 
-HTTP-Headern versandt. Der $link$-Header liefert einen URL zur angefragten Resource während der $resource$-Header die angefragte Ressource identifiziert. 
-Die Landing Page wird hier mit $landingPage$ identifiziert (siehe Anhang \ref{appendixLandingPage}). 
+Landing Page der API. Der Endpoint kann nur mit der HTTP-Get Methode verwendet werden. \\ 
+
+Diese kann als Eintrittspunkt zu allen anderen Funktionalitäten angesehen werden. Sie enthält Verknüpfungen zu den Endpoints API Definition, 
+Conformance Declaration, Process List, Process Description, Job List und Coverage. Die Resource kann in den Media-Types \textit{text/html} und \textit{application/json} abgerufen werden. 
+ 
+Wird ein Request akzeptiert so wird, je nach gewähltem Media-Type, ein Response aus einer statischen .html- oder .json-Datei generiert und mit zusätzlichen 
+HTTP-Headern versandt. Der \textit{link}-Header liefert einen URL zur angefragten Resource während der \textit{resource}-Header die angefragte Ressource 
+identifiziert (siehe Anhang \ref{appendixLandingPage}). 
 
 \subsubsection{API Definition}
-Unter dem URL \textit{http://HOST:PORT/api?f=<MEDIA-TYPE>} kann der API Definition Endpoint erreicht werden. Dieser liefert eine detaillierte Beschreibung
-der API und ihrer Funktionen.  Da eine andere Requirements-Class die Dokumentation im  OpenAPI 3.0 Format fordert sind die von diesem Endpunkt bereitgestellten Ressourcen aus 
-einer solchen abgeleitet. In dieser Form der Dokumentation werden neben einer allgemeinen Beschreibung sämtliche Endpoints mit ihren zu erwartenden HTTP-Statuscodes und 
-Responses beschrieben. Zusätzlich erfolgt einen Auflistung aller Schemata nach welchen von der API angebotene Ressourcen strukturiert sind. Die API Beschreibung wird
-als HTML- oder JSON-Dokument angeboten. Die Wahl des Media-Type wird auch hier über die optionalen Parameter $f$ oder $content\_type$ gesteuert. Die angefragten Ressourcen 
-werden auch hier aus statischen .html- beziehungsweise .json-Dateien generiert. Nach einem erfolgreichen Request werden sie zusammen mit 
-einem $link$- und $resource$-Header versandt. Der Endpoint erlaubt nur die Nutzung der HTTP-Get Methode (siehe Anhang \ref{appendixAPIDefinition}).
+Unter dem URL \textit{http://HOST:PORT/api?f=<MEDIA-TYPE>} kann der API Definition Endpoint erreicht werden. Auch dieser Endpoint erlaubt nur die Nutzung der HTTP-Get Methode.\\
+
+Dieser Endpoint liefert eine detaillierte Beschreibung der API und ihrer Funktionen. Da eine andere Requirements-Class die Dokumentation im  OpenAPI 3.0 Format fordert sind 
+die von diesem Endpunkt bereitgestellten Ressourcen aus einer solchen abgeleitet. In dieser Form der Dokumentation werden neben einer allgemeinen Beschreibung sämtliche Endpoints mit ihren zu erwartenden HTTP-Statuscodes und 
+Responses beschrieben. Zusätzlich erfolgt einen Auflistung aller Schemata nach welchen von der API angebotene Ressourcen strukturiert sind. \\
+
+Bei einem gültigen Request werden die angefragten Ressourcen werden auch hier aus statischen .html- beziehungsweise .json-Dateien generiert und werden zusammen mit 
+einem $link$- und $resource$-Header versandt (siehe Anhang \ref{appendixAPIDefinition}).
 
 \subsubsection{Conformance Endpoint}
-Fragt ein Nutzer den Conformance Endpoint an so erhält er Informationen zur Konformität der API zum OGC API - Processes - Part 1: Core Standard. 
-In der Ressource werden alle Requirements-Classes gelistet welche von der API implementiert werden. Über die optionalen Parameter $f$ oder $content\_type$ kann
-im Request spezifiziert werden in welchem Media-Type die angefragte Ressource versandt werden soll. Der Endpoint erlaubt nur die Nutzung der HTTP-Get Methode
-(siehe Anhang \ref{appendixConformance}). 
+Der Conformance Endpoint kann unter dem URL \textit{http://HOST:PORT/conformance?f=<MEDIA-TYPE>} angefragt werden. Für Requests an diesen Endpoint ist allein die HTTP-Get 
+Methode zulässig.\\
+
+Stellt ein Nutzer einen Request an den Conformance Endpoint so erhält er Informationen zur Konformität der API zum OGC API - Processes - Part 1: Core Standard. 
+In der Ressource werden Verknüpfungen zu allen Requirements-Classes gelistet welche von der API implementiert werden.\\
+
+Der Response wird nach einem gültigen Request aus den statischen .html beziehungsweise .json Dateien erzeugt und samt $link$- und $resource$-Header 
+versandt (siehe Anhang \ref{appendixConformance}). 
 
 \subsubsection{Processes Endpoint}
-Damit der Nutzer schnell einen Überblick über die von der API angebotenen Prozesse erhält enthält die Requirements-Class Core Vorgaben für einen entsprechenden Endpunkt.
-Dieser liefert als Resource eine detaillierte Liste der angebotenen Prozesse als HTML- oder JSON-Dokument. In dieser Liste werden die Bezeichnung, die Steueroptionen sowie
-die Ein- und Ausgaben jedes angebotenen Prozesses gelistet. Die nötigen Informationen werden statischen Prozess Beschreibungen entnommen.
-Auch Requests an diesen Endpoint können mit den optional Parametern $f$ oder $content\_type$ zur Spezifizierung des Media-Types aber auch mit dem $limit$ Parameter versehen werden 
-welches die Anzahl der wiedergegebene Prozesse steuert. Auch dieser Endpoint erlaubt nur die Nutzung der HTTP-Get Methode. 
-Nach Überprüfung aller Parameter werden zunächst alle Process Descriptions aus dem Verzeichnis $/templates/json/processes$ geladen und in einem Array gespeichert.
-Wird der Media-Type $aplication/json$ angefragt wird das Array mit der vom $limit$-Parameter festgelegten Länge und den Verknüpfungen $self$ und $alternate$ an die
-Funktion $jsonify()$ übergeben und als Response versandt. Eine ähnliche Verfahrensweise kommt zum Einsatz wenn der Media-Type $text/html$ angefragt wurde. Dann wird das 
-durch den $limit$-Parameter limitierte Array samt dem entsprechenden HTML-Template an den Renderer übergeben und anschließend als Response versandt (siehe Anhang \ref{appendixProcessList})
+Requests an den Process List endpoint müssen an den URL \textit{http://HOST:PORT/processes?f=<MEDIA-TYPE>\&limit=<INTEGER>} und der HTTP-Get Methode gesendet werden.\\
+
+Als Resource liefert dieser Endpoint eine detaillierte Liste der angebotenen Prozesse als HTML- oder JSON-Dokument. In dieser Liste werden die Bezeichnung, 
+die Steueroptionen sowie die Ein- und Ausgaben jedes angebotenen Prozesses gelistet.\\
+
+Der Process List Endpoint unterstützt den \textit{limit}-Parameter welcher die Anzahl der wiedergegebene Prozesse steuert.\\ 
+
+Wir ein gültiger Request an diesen Endpoint gestellt werden zunächst alle Process Descriptions aus dem Verzeichnis \textit{/templates/json/processes} geladen und in einem Array 
+gespeichert. Wird der Media-Type \textit{aplication/json} angefragt wird das Array mit der vom \textit{limit}-Parameter festgelegten Länge und den Verknüpfungen \textit{self} und \textit{alternate} an 
+die Funktion \textit{jsonify()} übergeben und als Response versandt. Eine ähnliche Verfahrensweise kommt zum Einsatz wenn der Media-Type \textit{text/html} angefragt wurde. In diesem Fall 
+wird das durch den \textit{limit}-Parameter in seiner Länge eingeschränkte Array samt dem entsprechenden HTML-Template an den Renderer übergeben und anschließend als 
+Response versandt (siehe Anhang \ref{appendixProcessList}).
 
 \subsubsection{Process Endpoint}
+Der Process Description Endpoint kann über den URL \textit{http://HOST:PORT/processes/<processID>?f=<MEDIA-TYPE>} ausschließlich mit der HTTP-Get Methode angefragt werden.\\
+
+Dieser Endpoint liefert als Response detaillierte Informationen zu dem im Request über seine eindeutige Bezeichnung spezifizierten Prozess.\\ 
+
 \subsubsection{Prozess Ausführung}
 \subsubsection{Job Status}
 \subsubsection{Job Resultate}
@@ -118,6 +142,14 @@ OpenAPI 3.0 Standard genutzt werden.
 \subsubsection{Echo}
 Da eine standardkonforme API mindestens einen testbaren Prozess anbieten muss ist der Echo-Prozess ebenfalls Teil der prototypischen Implementierung. 
 Dieser nimmt einen beliebigen Wert entgegen. Nach einer kurzen, simulierten Bearbeitungszeit kann dieser wieder als Resultat abgefragt werden. 
+
+Nach dem Start eines Echo Prozesses wird zunächst überprüft ob der Job nicht den Status \textit{dismissed} aufweist. Wäre dies der Fall wird die Ausführung abgebrochen. 
+Andernfalls wird der \textit{started}-Eintrag in der status.json mit dem aktuellen Zeitstempel versehen und der zurückzugebende Wert aus den Eingaben des Jobs gelesen.
+Schlägt dies fehl wird der \textit{status}-Eintrag in der status.json auf \textit{failed} gesetzt und der Ausführung abgebrochen. 
+Anschließend wartet das Programm fünf Sekunden. Nach einer erneuten Prüfung des Job-Status wird das Ergebnis als .json in das \textit{results/}-Verzeichnis des Jobs geschrieben.
+Diese results.json enthält den Eingabewert und die Nachricht das es sich um ein Echo handelt. 
+Als letzter Schritt wird der Job-Status, der Fortschritt, der Infotext sowie der Beendigungszeitpunkt in der Status-Datei des Jobs aktualisiert \ref{appendixEchoProcess}. 
+
 \subsubsection{Überflutungsmonitoring}
 \subsection{Zusätzliche Funktionalitäten}
 \subsubsection{Coverage} 

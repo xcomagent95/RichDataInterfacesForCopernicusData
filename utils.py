@@ -142,6 +142,7 @@ def echoProcess(job):
         time.sleep(5)
     except:
         updateStatus(job.path + '/status.json', "failed", "The job has failed", "-")
+        return
     
     if(checkForDismissal(job.path + '/status.json') == True):
         return
