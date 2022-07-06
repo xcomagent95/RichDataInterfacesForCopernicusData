@@ -5,21 +5,24 @@
 Die prototypische Entwicklung eines leichtgewichtigen Rich Data Interface für Copernicus-Daten erfolgte im Rahmen dieser Arbeit mit der Programmiersprache Python.
 Diese ist nicht nur aufgrund ihrer Einfachheit vorteilhaft sondern erlaubt auch den Zugriff auf eine große Zahl von Packages für die unterschiedlichsten 
 Anwendungsfälle. 
-Weite Teile des Rich Data Interface wurden mithilfe des Flask-Frameworks umgesetzt. Dieses erlaubt das schnelle Entwickeln von kleinen und auf wenige Aufgaben
-fokussierten APIs.   
+Weite Teile des Rich Data Interface wurden mithilfe des Flask-Frameworks umgesetzt. Dieses erlaubt das schnelle Entwickeln einer leichtgewichtigen API.   
 
 \subsection{Struktur}
-Die Anwendung ist in vier Python-Scripte aufgeteilt. Im api.py Script ist die Webanwendung definiert. Neben Grundeinstellungen enthält diese Datei
-die Endpoints der API. Die geordnete Abarbeitung der angelegten Jobs werden vom Script processing.py gesteuert. Die eigentlichen Prozesse sowie 
-Hilfsfunktionen befinden sich im utils.py Script.
-Diese Scripte verwalten Dateien in einem einfach Verzeichnissystem. Templates für statische Ressourcen befinden sich im Verzeichnis \textit{templates/}. HTML-Dateien 
+Die Anwendung ist in vier Python-Scripte aufgeteilt. Im api.py Script ist die API der Anwendung definiert. 
+Die geordnete Abarbeitung der angelegten Jobs werden vom Script processing.py gesteuert. Die eigentlichen Prozesse sowie 
+Hilfsfunktionen befinden sich im utils.py Script. Das test.py Script kann dazu genuzt werden um die Stabilität und Standardkonformität der API zu testen.
+
+Diese Scripte verwalten Dateien in einem einfachen Verzeichnissystem. Templates für statische Ressourcen befinden sich im Verzeichnis \textit{templates/}. HTML-Dateien 
 befinden sich im Verzeichnis \textit{templates/html/} und JSON-Dateien im Verzeichnis \textit{templates/json/}. Das Unterverzeichnis \textit{templates/json/processes/} enthält die 
-Beschreibungen der von der API angebotenen Prozesse. 
+Beschreibungen der von der Anwendung angebotenen Prozesse. 
 Die Anwendung erlaubt das persistente hinterlegen von Sentinel-1 Datensätzen um zeitaufwendiges Herunterladen zu vermeiden. Diese Datensätze können im Verzeichnis \textit{data/} abgelegt werden. Jeder Sentinel-1 Datensatz enthält eine .kml-Datei welche 
 Metadaten zum Datensatz enthält. Diese werden im Unterverzeichnis \textit{data/coverage/} abgelegt. 
-Jeder angelegt Job, also jede auszuführende Instanz einer Prozesses erhält ein einzigartiges Verzeichnis innerhalb des Verzeichnisses \textit{jobs/}. In diesem 
+Jeder angelegte Job, also jede auszuführende Instanz eines Prozesses erhält ein einzigartiges Verzeichnis innerhalb des Verzeichnisses \textit{jobs/}. In diesem 
 Verzeichnis befinden sich eine Status- und Job-Datei sowie ein Footprint. Neben diesen Dateien enthält jedes Job-Verzeichnis ein Unterverzeichnis \textit{results/} in dem
-die Ergebnisse des jeweiligen Jobs abgelegt werden.  
+die Ergebnisse des jeweiligen Jobs abgelegt werden.
+
+Insgesamt handelt es sich bei der protypischen Implemntierung eines Rich Data Interfaces for Copernicus-Daten also um eine Anwendung welche Überschwemmungsmasken und Daten zur Hochwasseranalyse als Ressourcen bereitstellt.
+Zugrill auf diese Ressourcen erhalten Nutzer über eine OGC API - Processes - Part 1: Core standardkonforme API. 
 
 \subsection{Ressourcen}
 Ressourcen sind die üer die Endpoints der API bereitgestellten Informationen und Dateien. Sie können in unterschiedlichen Repräsentationen vorliegen.
@@ -120,25 +123,24 @@ Gültige Requests Lösen die Generierung eines Responses im angefragten Media-Ty
 !Pseudode!
 
 \subsubsection{Process List Endpoint}
-?Wie erreiche ich den Endpoint?
 Der Process List Endpoint ist über den URL \textit{http://HOST:PORT/processes?f=<MEDIA-TYPE>&limit=<INTEGRER>} angefragt werden. 
-Request sind nur mit der HTTP-Methode Get zulässig. Als Ressource erhalten nutzer eine detaillierte Liste der durch die Anwendung agebotenen Prozesse (siehe Anhang \ref{appendixprocessListyaml}). In dieser Listee finden sich die Bezeichnungen, STeueroptionen sowie die 
-Ein- und Ausgaben der Prozesse. Die Process Liste kann in den Media-Types textit{text/html} (siehe Anhang \ref{appendixprocessListHTML}) und \textit{application/json} angefragt werden. 
+Request sind nur mit der HTTP-Methode Get zulässig. Als Ressource erhalten nutzer eine detaillierte Liste der durch die Anwendung agebotenen Prozesse (siehe Anhang \ref{appendixprocessListyaml}). In dieser Listee finden sich die Bezeichnungen, 
+Steueroptionen sowie die 
+Ein- und Ausgaben der Prozesse. Die Process Liste kann in den Media-Types \textit{text/html} (siehe Anhang \ref{appendixprocessListHTML}) und \textit{application/json} angefragt werden. 
 
-Die Generierung eines Responses im angefrgten Media-Type wird nach einem gültigen request gestartet. Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixProcessList}).
-
-?Welche Ressource liefert der Endpoint?
-?Welche HTTP-Methoden sind erlaubt?
-?Was ist der Inhalt der Resource?
-?Welche Media Types gibt es?
-?Wie läuft die generierung des Response ab und was enthält dieser?
+Die Generierung eines Responses im angefrgten Media-Type wird nach einem gültigen Request gestartet. Dazu werden zunächst im \textit{templates/json/processes} Verzeichnis hinterlegten Prozess Beschreibungen geladen und in ein Array geschrieben. 
+Dieses kann nun falls der Media-Type \textit{application/json} zu einem Objekt hinzugefügt werden welches zusärtzlich die Verknüfungen zur Ressource enthält. Wurde der Media-Type \textit{text/html} angefragt wird das Array zusammen mit dem HTML-Template dem 
+gerendert. 
+Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixProcessList}).
 !Pseudode!
-\subsubsection{Process Endpoint}?Wie erreiche ich den Endpoint?
-?Welche Ressource liefert der Endpoint?
-?Welche HTTP-Methoden sind erlaubt?
-?Was ist der Inhalt der Resource?
-?Welche Media Types gibt es?
-?Wie läuft die generierung des Response ab und was enthält dieser?
+
+\subsubsection{Process Description Endpoint}
+Unter dem URL \textit{http://HOST:PORT/processes/<processID>?f=<MEDIA-TYPE>} kann der Process Description Endpoint angefragt werden. Welche Prozessdetails zurückgegeben werden hängt vom \textit{processID}-Paramter ab. Alle Prozesse werden über eine 
+eindeutige Bezeichnung, die \textit{processID} gekennzeichnet. Sie kann der Prozess Liste entnommen werden. Um eine Prozess Beschreibung anzufragen darf nur die HTTP-Get Methode verwendet werden.   
+Als Ressource liefert der Endpoint eine detaillierte Beschreibung des im Request spezifizierten Prozesses (siehe Anhang \ref{appendixoutputDescriptionyaml}). Diese Beschreibung enthält Informationen zu den Steueroptionen sowie den Ein- und Ausgaben des Prozesses.
+Wie die Prozess Liste kann die auch die Process Beschreibung im Media-Type \textit{text/html} oder \textit{application/json} angefragt werden. 
+Die Generierung eines Responses verläuft ähnlich der der Prozess Liste. Zunächst wird die Prozess Beschreibung des angefragten Prozesses geladen. Soll ein Response mit dem Media-Type \textit{application/json} generiert werden wird diese versandt. 
+Für Request mit dem Media-Type \textit{text/html} wird die Prozessbeschreibung zusammen mit einem Template an den Renderer übergegen. 
 !Pseudode!
 \subsubsection{Prozess Ausführung}
 ?Wie erreiche ich den Endpoint?
@@ -197,9 +199,9 @@ Als letzter Schritt wird der Job-Status, der Fortschritt, der Infotext sowie der
 \subsubsection{Überflutungsmonitoring}
 \subsection{Zusätzliche Funktionalitäten}
 \subsubsection{Coverage} 
-?Wie erreiche ich den Endpoint?
-?Welche Ressource liefert der Endpoint?
-?Welche HTTP-Methoden sind erlaubt?
+Der nicht im Standard definierte Coverage Endpoint kann über den URL \textit{http://HOST:PORT/coverage?f=<MEDIA-TYPE>} erreicht werden. Als Ressource liefert er eine Liste aller Sentinel-1 Datensätze welche persistent gespiechert sind. 
+Jobs welche auf diese Datensätze zugreifen können schneller abgearbeitet werden da ein zeitaufwendiges herunterladen der Datensätze entfällt. Die Coverage Ressource kann nur mit der HTTP-Get Methode angefragt werden. 
+
 ?Was ist der Inhalt der Resource?
 ?Welche Media Types gibt es?
 ?Wie läuft die generierung des Response ab und was enthält dieser?

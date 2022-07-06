@@ -471,6 +471,81 @@ default:
     - value
 \end{lstlisting}\label{appendixtransmissionModeyaml} 
 
+\subsection{process.yaml}
+\begin{lstlisting}[caption={process.yaml}, style = JSON]
+allOf:
+  - $ref: "processSummary.yaml"
+  - type: object
+    properties:
+      inputs:
+        additionalProperties:
+          $ref: "inputDescription.yaml"
+      outputs:
+        additionalProperties:
+          $ref: "outputDescription.yaml"
+\end{lstlisting}\label{appendixprocessyaml} 
+
+\subsection{inputDescription.yaml}
+\begin{lstlisting}[caption={inputDescription.yaml}, style = JSON]
+allOf:
+- $ref: "descriptionType.yaml"
+- type: object
+    required:
+    - schema
+    properties:
+    minOccurs:
+        type: integer
+        default: 1
+    maxOccurs:
+        oneOf:
+        - type: integer
+            default: 1
+        - type: string
+            enum:
+            - "unbounded"
+    schema:
+        $ref: "schema.yaml"
+\end{lstlisting}\label{appendixinputDescriptionyaml} 
+
+\subsection{outputDescription.yaml}
+\begin{lstlisting}[caption={outputDescription.yaml}, style = JSON]
+allOf:
+- $ref: "descriptionType.yaml"
+- type: object
+    required:
+    - schema
+    properties:
+    schema:
+        $ref: "schema.yaml"
+\end{lstlisting}\label{appendixoutputDescriptionyaml} 
+
+\subsection{description.yaml}
+\begin{lstlisting}[caption={description.yaml}, style = JSON]
+type: object
+properties:
+    title:
+    type: string
+    description:
+    type: string
+    keywords:
+    type: array
+    items:
+        type: string
+    metadata:
+    type: array
+    items:
+        $ref: "metadata.yaml"
+    additionalParameters:
+    allOf:
+        - $ref: "metadata.yaml"
+        - type: object
+        properties:
+            parameters:
+            type: array
+            items:
+                $ref: "additionalParameter.yaml"
+\end{lstlisting}\label{appendixdescriptionyaml} 
+
 \subsection{jobList.yaml}
 \begin{lstlisting}[caption={jobList.yaml}, style = JSON]
 type: object
