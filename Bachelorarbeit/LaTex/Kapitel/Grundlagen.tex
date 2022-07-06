@@ -10,15 +10,15 @@ die Erdoberfläche, wird ein Bruchteil in Richtung Empfänger reflektiert und al
 Die Radarfernerkundung gehört zu den aktiven Fernerkundungsmethoden da hier im Gegensatz zur optischen Fernerkundung nicht nur 
 von Oberflächen reflektierte Strahlung von anderen Strahlungsquellen wie der Sonne aufgenommen wird, sondern das Fernerkundungssystem 
 selbst als Strahlungsquelle dient. Messungen können daher tageszeitunabhängig erfolgen. Bildgebende Radarsysteme werden auf mobilen Plattformen 
-montiert und blicken seitlich auf die zu beobachtende Oberfläche. Die Flugrichtung wird Azimut und die Blickrichtung als Slant Range 
-bezeichnet \cite{tutorial_on_sar} (Abbildung 1). 
+montiert und blicken seitlich auf die zu beobachtende Oberfläche \cite{tutorial_on_sar} (Abbildung 1). 
+%Die Flugrichtung wird Azimut und die Blickrichtung als Slant Range bezeichnet \cite{tutorial_on_sar} (Abbildung 1). 
 
 Die Eigenschaften des reflektierten Signals hängen sowohl von Parametern des Aufnahmesystems als von Parametern der reflektierenden Oberfläche ab.
 So werden in der Radarfernerkundung verschiedenen Frequenzbänder verwendet, welche sich in Frequenz und Wellenlänge unterscheiden. Da sich die Wechselwirkungen zwischen Signalen 
 unterschiedlicher Frequenzbänder und den reflektierenden Oberflächen unterscheidet können so unterschiedliche Aspekte der beobachteten Oberflächen hervorgehoben werden. 
 Dabei kommen in der Regel Wellenlängen von 0.75m bis 120m zum Einsatz (siehe Tabelle \ref{frequenzbaender}).
-Mit einer größeren Wellenlänge kann ein Medium auch tiefer durchdrungen werden. Außerdem werden Wolken, Dunst und Rauch durchdrungen was den zusätzlich Vorteil bietet
-wetterunabhängig Messungen durchführen zu können \cite{einfuehrung_in_fernerkundung}.
+%Mit einer größeren Wellenlänge kann ein Medium auch tiefer durchdrungen werden. 
+Außerdem werden Wolken, Dunst und Rauch durchdrungen was den zusätzlich Vorteil bietet wetterunabhängig Messungen durchführen zu können \cite{einfuehrung_in_fernerkundung}.
 
 \begin{table}[H]
     \caption{Gängige Frequenz-Bänder in der Radarfernerkundung \cite{tutorial_on_sar}}
@@ -32,33 +32,35 @@ wetterunabhängig Messungen durchführen zu können \cite{einfuehrung_in_fernerk
     \label{frequenzbaender}
 \end{table}
 
-Die Durchdringungstiefe hängt auch von der Dielektrizitätskonstante, also der Leitfähigkeit, ab. Ist diese groß, kommt es zu starken Reflektionen und die 
-Durchdringungstiefe ist gering. Die Rauigkeit ist eine Eigenschaft der reflektierenden Oberfläche und hat großen Einfluss auf das reflektierte Signal. Ist diese im Verhältnis
+%Die Durchdringungstiefe hängt auch von der Dielektrizitätskonstante, also der Leitfähigkeit, ab. Ist diese groß, kommt es zu starken Reflektionen und die Durchdringungstiefe ist gering. 
+Die Rauigkeit ist eine Eigenschaft der reflektierenden Oberfläche und hat großen Einfluss auf das reflektierte Signal. Ist diese im Verhältnis
 zur verwandten Wellenlänge gering so kommt es zu spiegelnden Reflektionen und nur ein geringer Anteil des kehrt zum Empfänger zurück. Je diffuser
-die Reflektion mit zunehmender Rauigkeit wird umso größer ist der Anteil des Signals welcher zum Empfänger zurückgeworfenen Signals. Doch auch die Form und Exposition der Oberfläche 
-nimmt Einfluss auf das reflektierte Signal. So werden Flächen je nach Neigung unterschiedlich stark bestrahlt. Ist eine dem System abgewandte Fläche steiler geneigt als der Depressionswinkel 
-liegen Sie sogar im Radarschatten und werden gar nicht bestrahlt \cite{einfuehrung_in_fernerkundung}. 
+die Reflektion mit zunehmender Rauigkeit wird umso größer ist der Anteil des Signals welcher zum Empfänger zurückgeworfenen Signals. 
+%Doch auch die Form und Exposition der Oberfläche nimmt Einfluss auf das reflektierte Signal. So werden Flächen je nach Neigung unterschiedlich stark bestrahlt. 
+%Ist eine dem System abgewandte Fläche steiler geneigt als der Depressionswinkel liegen Sie sogar im Radarschatten und werden gar nicht bestrahlt \cite{einfuehrung_in_fernerkundung}. 
 Zusätzlich ist die Polarisation der ausgesandten und empfangenen Signale bei der Messung ausschlaggebend. Sie können horizontal oder 
 vertikal polarisiert sein. Dies führt zu vier möglichen Polarisationsmodi für das Senden und das Empfangen nämlich HH, VV, HV und VH. Auch die 
 Polarisation sorgt für eine unterschiedliche Wiedergabe von beobachteten Objekten und kann somit verwendet werden, um bestimmte Aspekte hervorzuheben
- \cite{einfuehrung_in_fernerkundung}. Die Auflösung entlang des Azimut unterscheidet sich von der Auflösung in Blickrichtung. Die Auflösung in Azimutrichtung wird von 
-der Antennenlänge bestimmt da diese festlegt wie lange die Reflektionen eines Objektes empfangen werden. Die Antennenlänge kann bauartbedingt nicht beliebig gesteigert werden.
-Die Bauart der Antenne bestimmt auch den Abstrahlwinkel $\Theta_a$ und somit die Ausdehnung am Boden eines Impulses in Azimutrichtung. Diese nimmt mit zunehmender Entfernung
-zu, während die Auflösung abnimmt.
-Die Auflösung in Blickrichtung hängt von der Bandbreite ab welche sich aus der Sendefrequenz und der Signaldauer. Die Ausdehnung des beobachteten Gebietes 
-in Blickrichtung hängt von der Laufzeit des ausgesandten Signales ab. Die Objekte werden abhängig von ihrer Entfernung zur Antenne verzerrt wiedergegeben da nahegelegene 
-Objekte von der Wellenfront schneller durchlaufen werden. Dieser Unterschied zwischen Schrägdistanz und Bodendistanz lässt sich jedoch nahezu vollständig korrigieren 
-\cite{einfuehrung_in_fernerkundung}. Die bisher beschriebenen Systeme werden auch als Systeme mit realer Apertur bezeichnet und eignen sich nur für geringe Flughöhen da hier 
-der Abstand zwischen Antenne und Oberfläche gering ist. Bei Radarsystemen mit einer synthetischen Apertur wird durch die Bewegung des Sensors in Azimutrichtung die 
-wirksame Antennenlänge rechnerisch verlängert indem die reflektierten Signale eines beobachteten Objektes von verschiedenen Standpunkten und unterschiedlichen Zeitpunkten 
-miteinander korreliert werden. So können hohe Azimutauflösungen erzielt werden. Solche Systeme eigenen sich auch für den Einsatz auf Satelliten \cite{einfuehrung_in_fernerkundung}. 
+ \cite{einfuehrung_in_fernerkundung}. 
+%Die Auflösung entlang des Azimut unterscheidet sich von der Auflösung in Blickrichtung. Die Auflösung in Azimutrichtung wird von 
+%der Antennenlänge bestimmt da diese festlegt wie lange die Reflektionen eines Objektes empfangen werden. Die Antennenlänge kann bauartbedingt nicht beliebig gesteigert werden.
+%Die Bauart der Antenne bestimmt auch den Abstrahlwinkel $\Theta_a$ und somit die Ausdehnung am Boden eines Impulses in Azimutrichtung. Diese nimmt mit zunehmender Entfernung
+%zu, während die Auflösung abnimmt.
+%Die Auflösung in Blickrichtung hängt von der Bandbreite ab welche sich aus der Sendefrequenz und der Signaldauer. Die Ausdehnung des beobachteten Gebietes 
+%in Blickrichtung hängt von der Laufzeit des ausgesandten Signales ab. Die Objekte werden abhängig von ihrer Entfernung zur Antenne verzerrt wiedergegeben da nahegelegene 
+%Objekte von der Wellenfront schneller durchlaufen werden. Dieser Unterschied zwischen Schrägdistanz und Bodendistanz lässt sich jedoch nahezu vollständig korrigieren 
+%\cite{einfuehrung_in_fernerkundung}. 
+%Die bisher beschriebenen Systeme werden auch als Systeme mit realer Apertur bezeichnet und eignen sich nur für geringe Flughöhen da hier 
+%der Abstand zwischen Antenne und Oberfläche gering ist. Bei Radarsystemen mit einer synthetischen Apertur wird durch die Bewegung des Sensors in Azimutrichtung die 
+%wirksame Antennenlänge rechnerisch verlängert indem die reflektierten Signale eines beobachteten Objektes von verschiedenen Standpunkten und unterschiedlichen Zeitpunkten 
+%miteinander korreliert werden. So können hohe Azimutauflösungen erzielt werden. Solche Systeme eigenen sich auch für den Einsatz auf Satelliten \cite{einfuehrung_in_fernerkundung}. 
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\textwidth]{Bilder/SAR_Prinzip.png}
-    \caption{Prinzip eines SAR Fernerkundungssystems \cite{tutorial_on_sar}}
-    \label{sar_prinzip}
-\end{figure}
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=0.6\textwidth]{Bilder/SAR_Prinzip.png}
+%    \caption{Prinzip eines SAR Fernerkundungssystems \cite{tutorial_on_sar}}
+%    \label{sar_prinzip}
+%\end{figure}
 
 Solche Systeme können in unterschiedlichen Aufnahmeverfahren arbeiten. Das einfachste dieser Verfahren ist das Stripmap Verfahren bei dem nur ein Aufnahmestreifen
 kontinuierlich aufgenommen wird. Breitere Aufnahmestreifen können mit dem ScanSAR Verfahren erzielt werden. Dabei werden unter verschiedenen Depressionswinkeln, 
@@ -149,8 +151,9 @@ wechselnden Depressionwinkeln aufgenommen (siehe Abbildung \ref{sar_modi_sentine
 \end{table}
 \end{center}
 
-Beide Satelliten befinden sich auf einem polnahen, sonnensynchronen Orbit. Ein Zyklus dauert 12 Tage, in denen die Erde 175 umrundet wird. Da er sich um ein Satellitenpaar
-handelt welches als Tandem die Erde umrundet wird ein Punkte alle sechs Tage von einem der Satelliten überflogen. Das System kann eine zuverlässige globale und systematische
+Beide Satelliten befinden sich auf einem polnahen, sonnensynchronen Orbit. 
+%Ein Zyklus dauert 12 Tage, in denen die Erde 175 umrundet wird. 
+Da es sich um ein Satellitenpaar handelt welches als Tandem die Erde umrundet wird ein Punkte alle sechs Tage von einem der Satelliten überflogen. Das System kann eine zuverlässige globale und systematische
 Abdeckung liefern. Dabei können im IW Modus alle relevanten Land-, Wasser- und Eismassen alle zwölf Tage vollständig von einem Satelliten erfasst werden. 
 In Krisensituationen können nach Bedarf innerhalb von zweieinhalb und fünf Tagen Daten erfasst werden \cite{sentinel_1_overview}. 
 
@@ -198,11 +201,11 @@ Gegeben sei ein Bild $C$ mit $N$ Pixeln in $L$ Grauwertstufen. Die Anzahl der Pi
 \end{equation}
 
 Ein betrachteter Grenzwert $t$ teil das Bild in die Gruppen $C_0$ und $C_1$ wobei $C_0$ alle Pixel der Graustufen $1$ bis $t$ und 
-$C_1$ alle Pixel der Graustufen $t+1$ bis $L$ enthält. Die Gewichte für die Gruppen $C_0$ und $C_1$ sind nun gegeben durch:
+$C_1$ alle Pixel der Graustufen $t+1$ bis $L$ enthält. Die Gewichte und Mittelwerte für die Gruppen $C_0$ und $C_1$ sind nun gegeben durch:
 \begin{equation}
-    w_0(t) = w(t) = \sum_{i=1}^{t} p_i
+    w_0 = w(t) = \sum_{i=1}^{t} p_i
     \text{   und   }
-    w_1(t) = \sum_{i=t+1}^{L} p_i
+    w_1 = \sum_{i=t+1}^{L} p_i
 \end{equation}
 mit $p_i$: 
 \begin{equation}
@@ -210,19 +213,19 @@ mit $p_i$:
 \end{equation}
 sowie $\mu_0$, $\mu_1$ und $\mu_T$:
 \begin{equation}
-    \mu_0(t) = \sum_{i=1}^{t} ip_i/w_0
+    \mu_0 = \sum_{i=1}^{t} ip_i/w_0
     \text{   und   }
-    \mu_1(t) = \sum_{i=t+1}^{L} ip_i/w_1
+    \mu_1 = \sum_{i=t+1}^{L} ip_i/w_1
     \text{   und   }
     \mu_T = \sum_{i=1}^{L} ip_i
 \end{equation}
-Die Klassenvarianzen $\sigma_0^2(t)$ und $\sigma_1^2(t)$ sind gegeben durch:
+Die Klassenvarianzen $\sigma_0^2$ und $\sigma_1^2$ sind gegeben durch:
 \begin{equation}
-    \sigma_0^2(t) =  \sum_{i=1}^{t} (i-\mu_0)^2p_i/w_0
+    \sigma_0^2 =  \sum_{i=1}^{t} (i-\mu_0)^2p_i/w_0
     \text{   und   }
-    \sigma_1^2(t) = \sum_{i=t+1}^{L} (i-\mu_1)^2p_i/w_1
+    \sigma_1^2 = \sum_{i=t+1}^{L} (i-\mu_1)^2p_i/w_1
 \end{equation}
-Zu Maximieren ist nun die Inter-Klassenvarianz $K$:
+Gesucht wird nun jeder Grenzwert $t$ welcher die Inter-Klassenvarianz $K$ maximiert:
 \begin{equation}
     K = \frac{\sigma_t^2}{\sigma_W^2}
 \end{equation}
@@ -234,7 +237,7 @@ mit $\sigma_W^2$ und $\sigma_T^2$:
 \end{equation}
 
 Die Binärisierung kann direkt auf Basis der Radaraufnahme der Überflutung, oder auf abgeleiteten Daten erfolgen. So können zum Beispiel das Radaraufnahme der Überflutung
-$\sigma_0^f$ mit einer überflutungsfreien Referenzaufnahme ($\sigma_0^r$) kombiniert zum Normalized Difference Sigma-Naught Index (NDSI) \cite{flood_proxy_mapping_ndsi}.
+$\sigma_0^f$ mit einer überflutungsfreien Referenzaufnahme $\sigma_0^r$ kombiniert zum Normalized Difference Sigma-Naught Index (NDSI) \cite{flood_proxy_mapping_ndsi}.
 Dabei werden die Reflektivitätswerte von zwei unterschiedlichen Zeitpunkten zum NDSI verrechnet welcher als Maß für die Stärke der Veränderung interpretiert werden kann. 
 
 \begin{equation}

@@ -23,7 +23,7 @@ die Ergebnisse des jeweiligen Jobs abgelegt werden.
 
 \subsection{Ressourcen}
 Ressourcen sind die üer die Endpoints der API bereitgestellten Informationen und Dateien. Sie können in unterschiedlichen Repräsentationen vorliegen.
-Die meisten angebotenen Ressourcen können um Media-Type \textit{text/html/}, also als HTML-Dateien oder im Media-Type \textit{application/json} also als 
+Die meisten angebotenen Ressourcen können um Media-Type \textit{text/html}, also als HTML-Dateien oder im Media-Type \textit{application/json} also als 
 JSON-Dateien angefragt werden. Um aus diesen Dateien einen Response zu generieren werden .html-Dateien zuvor mit der Methode \textit{render\_template()}, welcher auch 
 dynamische Inhalte übergeben werden können gerendert während .json-Dateien zunächst mit der Methode \textit{jsonify()} bearbeitet werden. Beide genannten Methoden
 geben ein Response-Objekt zurück welches versandt werden kann.  
@@ -88,38 +88,58 @@ Ergibt die Überprüfung des \textit{limit}-Parameters das Werte außerhalb des 
 Ein Response kann weniger, aber nie mehr Elemente als durch den \textit{limit}-Parameter spezifiziert werden enthalten \ref{appendixlimityaml}. 
 
 \subsubsection{API Landig Page}
-Der erste im Standard definierte Endpoint kann über den URL\textit{http://HOST:PORT/?f=<MEDIA-TYPE>} angefragt werden und liefert als Resource die 
+Der API Landing Page kann über den URL \textit{http://HOST:PORT/?f=<MEDIA-TYPE>} angefragt werden und liefert als Resource die 
 API Landing Page (siehe Anhang \ref{appendixlandngPageyaml}). 
-Der Endpoint kann nur mit der HTTP-Get Methode verwendet werden. \\ 
-Die API Landing Page kann Eintrittspunkt zu allen anderen Funktionalitäten bezeichnet werden. Sie enthält Verknüpfungen zu den Endpoints, API Landing Page, API Definition, 
+Die einzig zulässige HTTP-Methode für diesen Endpoint ist die HTTP-Get Methode.\\ 
+Die API Landing Page kann Eintrittspunkt zu allen anderen Funktionalitäten der Anwendung bezeichnet werden. Sie enthält Verknüpfungen zu den Endpoints, API Landing Page, API Definition, 
 Conformance, Process List, Process Description, Job List und Coverage.\\
 Die API Landing Page kann in den Media-Types \textit{text/html} (siehe Anhang \ref{appendixlandingPageHTML}) und \textit{application/json} 
 (siehe Anhang \ref{appendixlandingPageJSON}) abgerufen werden.\\
  
 Wird ein Request für gültig befunden so wird, je nach gewähltem Media-Type, ein passender Response generiert. 
-Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixAPIDefinition}). 
+Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixLandingPage}). 
+
+!Pseudode!
 
 \subsubsection{API Definition}
+Der API Definition Endpoint kann über den URL \textit{http://HOST:PORT/api?f=<MEDIA-TYPE>} angefragt werden und liefert als Ressource die API Definition (siehe Anhang !ref einfügen!).
+Auch für diesen Endpoint ist die einzig zulässige HTTP-Methode Get. 
+Die API Definition enhält detailierte Informationen zur API. In ihr sind alle verfügbaren Endpoints mit ihren Parametern und Responses aufgeführt. Auch die API Definition kann in den Media-Types
+textit{text/html} (siehe Anhang !ref einfügen!) und \textit{application/json} (siehe Anhang !ref einfügen!) abgerufen werden.\\
+Nach einem gültigen Request wird ein zum angefrgten Media-Type passen Response generiert. Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixAPIDefinition}). 
+
+!Pseudode!
+\subsubsection{Conformance Decalration}
+Der Endpoint Conformance Declaration kann über den URL \textit{http://HOST:PORT/conformance?f=<MEDIA-TYPE>} angefragt werden und liefert als Ressource die Conformance Declaration (siehe Anhang \ref{appendixconfClassesyaml}).
+Get ist ebenfalls die einzige zulässige HTTP-Methode für Requests an diesen Endpoint.
+
+Die Conformance Declaration enthält Verknüpfungen zu allen von der Anwendung implementierten Requiremnets Classes und steht in den Media-Types textit{text/html} (siehe Anhang \ref{appendixconfClassesHTML}) und 
+\textit{application/json} (siehe Anhang \ref{appendixconfClassesJSON}) zu Verfügung.
+
+Gültige Requests Lösen die Generierung eines Responses im angefragten Media-Type aus. Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixConformance}).
+!Pseudode!
+
+\subsubsection{Process List Endpoint}
 ?Wie erreiche ich den Endpoint?
+Der Process List Endpoint ist über den URL \textit{http://HOST:PORT/processes?f=<MEDIA-TYPE>&limit=<INTEGRER>} angefragt werden. 
+Request sind nur mit der HTTP-Methode Get zulässig. Als Ressource erhalten nutzer eine detaillierte Liste der durch die Anwendung agebotenen Prozesse (siehe Anhang \ref{appendixprocessListyaml}). In dieser Listee finden sich die Bezeichnungen, STeueroptionen sowie die 
+Ein- und Ausgaben der Prozesse. Die Process Liste kann in den Media-Types textit{text/html} (siehe Anhang \ref{appendixprocessListHTML}) und \textit{application/json} angefragt werden. 
+
+Die Generierung eines Responses im angefrgten Media-Type wird nach einem gültigen request gestartet. Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixProcessList}).
+
 ?Welche Ressource liefert der Endpoint?
 ?Welche HTTP-Methoden sind erlaubt?
 ?Was ist der Inhalt der Resource?
 ?Welche Media Types gibt es?
 ?Wie läuft die generierung des Response ab und was enthält dieser?
-\subsubsection{Processes Endpoint}
-?Wie erreiche ich den Endpoint?
-?Welche Ressource liefert der Endpoint?
-?Welche HTTP-Methoden sind erlaubt?
-?Was ist der Inhalt der Resource?
-?Welche Media Types gibt es?
-?Wie läuft die generierung des Response ab und was enthält dieser?
+!Pseudode!
 \subsubsection{Process Endpoint}?Wie erreiche ich den Endpoint?
 ?Welche Ressource liefert der Endpoint?
 ?Welche HTTP-Methoden sind erlaubt?
 ?Was ist der Inhalt der Resource?
 ?Welche Media Types gibt es?
 ?Wie läuft die generierung des Response ab und was enthält dieser?
-
+!Pseudode!
 \subsubsection{Prozess Ausführung}
 ?Wie erreiche ich den Endpoint?
 ?Welche Ressource liefert der Endpoint?
@@ -127,12 +147,14 @@ Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versand
 ?Was ist der Inhalt der Resource?
 ?Welche Media Types gibt es?
 ?Wie läuft die generierung des Response ab und was enthält dieser?
+!Pseudode!
 \subsubsection{Job Status}?Wie erreiche ich den Endpoint?
 ?Welche Ressource liefert der Endpoint?
 ?Welche HTTP-Methoden sind erlaubt?
 ?Was ist der Inhalt der Resource?
 ?Welche Media Types gibt es?
 ?Wie läuft die generierung des Response ab und was enthält dieser?
+!Pseudode!
 \subsubsection{Job Resultate}
 ?Wie erreiche ich den Endpoint?
 ?Welche Ressource liefert der Endpoint?
@@ -140,6 +162,7 @@ Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versand
 ?Was ist der Inhalt der Resource?
 ?Welche Media Types gibt es?
 ?Wie läuft die generierung des Response ab und was enthält dieser?
+!Pseudode!
 \subsection{Requirements Class OGC Process Description}
 \subsection{Requirements Class Job List}
 ?Wie erreiche ich den Endpoint?
@@ -148,6 +171,7 @@ Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versand
 ?Was ist der Inhalt der Resource?
 ?Welche Media Types gibt es?
 ?Wie läuft die generierung des Response ab und was enthält dieser?
+!Pseudode!
 \subsection{Requirements Class Dismiss}
 ?Wie erreiche ich den Endpoint?
 ?Welche Ressource liefert der Endpoint?
@@ -155,6 +179,7 @@ Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versand
 ?Was ist der Inhalt der Resource?
 ?Welche Media Types gibt es?
 ?Wie läuft die generierung des Response ab und was enthält dieser?
+!Pseudode!
 \subsection{Requirements Class OpenAPI 3.0}
 Der OGC API - Processes - Part 1: Core Standard macht über die eigentlichen Funktionen der API auch Vorgaben zur Art der Dokumentation der API. Hierfür soll der 
 OpenAPI 3.0 Standard genutzt werden. 

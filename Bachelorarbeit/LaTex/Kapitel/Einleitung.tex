@@ -2,16 +2,39 @@
 \restoregeometry
 \section{Einleitung}
 \subsection{Motivation}
-Geodaten helfen weltweit bei der Analyse unterschiedlichster Probleme. Um diese Analysen möglichst schnell und präzise durchführen zu 
-können müssen Geodaten schnell und in hoher Qualität abrufbar sein. Zwar lassen sich zahlreiche Geodaten nach Bedarf aus dem Internet beziehen, 
-manche Geodaten bedürfen allerdings zeit- und und rechenintensiven Vorverarbeitungen welche teilweise fundierte Kenntnisse aus dem Bereich der 
-Geoinformatik voraussetzen. Zur Lösung dieses Problems könnten sogenannte Rich Data Interfaces dienen. Diese würden Nutzer in die Lage versetzen 
-Geodaten abzurufen welche bereits auf einen speziellen Anwendungsfall zugeschnitten sind. 
+?Wofür werden Geodaten über das Web gebraucht?
+Geodaten werden von einer breiten Nutzerschicht für die unterschiedlichsten Anwendungsfälle benötigt.
+Zu diesen Anwendungsfällen gehören unter anderem der Umwelt- und Katastropehnschutz. Dort werden flächendeckende,
+verlässliche und aktuelle Geodaten benötigt. Diese müssen schnell und einfach beschaft und verarbeitet werden können
+um zum Beispiel rechtzeitig Maßnahmen ergreifen oder mögliche Schäden quantifizieren zu können. 
+
+?Wo ist das Problem bei complexen oder rohen Geodaten?
+Flächendecknde Fernerkundungsdaten von diversen Plattformen werden vom europäischen Copernicus Programm 
+erfasst und im Internet bereitgestellt und können über Webseiten und APIs beschafft werden. 
+Manche Daten, wie die Radardaten der Sentinel-1 Mission, bedürfen jedoch einer komplexen Vorverarbeitung befor aus ihnen verlässliche Aussagen über die in den Abgebildeten Räume 
+stattfindenden Phänomene gemacht werden können. Die Vorverarbeitungen können nicht von allen Nutzern selbst durchgeführt werden. Zum einen Verfügen nicht alle Nutzer über die 
+nötigen Fachkenntnisse und zum anderen stehen nicht jedem Nutzer entsprechende techniche Infrastrukturen zur Verfügung. 
+
+?Daten Beschaffung über API??Rich Data Interfaces als Lösung?
+Um dieses Probel zu lösen und Nutzer mit einsatzbereiten Geodaten oder abgeleiteten Produkten zu versorgen können sogenannte Rich Data Interfaces zum Einsatz kommen.  
+
+?In Standardisierter Weise?
+Um die Interoprabilität einer solchen Anwendung sicherzsutellen sollte diese nach den Maßgabene eines Standards implementiert werden. OGC API - Processes - Part 1: Core ist ein 
+Standard nach dem APIs implementiert werden können welche als Ressource Prozesse bereitstellen. 
+
 \subsection{Ziele}
-Ziel dieser Arbeit ist die Implementierung und Evaluation eines leichtgewichtigen, OGC API - Processes - Part: 1 Core Standard konformen Application Programming Interface. 
-Die Implementierung soll dabei die Eigenschaften eines Rich Data Interface für Copernicus-Daten aufweisen. Dieses soll Rohdaten der Sentinel-1 Mission 
-auf Nutzeranfrage hin beschaffen, vorverarbeiten und als Endprodukt Daten liefern welche sich für das Überschwemmungsmonitoring eignen. 
-Es soll untersucht werden inwieweit sich der OGC API - Processes - Part: 1 Core Standard dazu eignet Rich Data Interfaces für Copernicus Daten zu entwerfen. 
-\subsection{Aufbau}
+?Eignet sich der Standard für Rich Data Interfaces?
+Ziel dieser Arbeit ist die Erprobung des OGC API - Processes - Part 1: Core Standards als Grundlage zur Implementierung von Rich Data Interfaces für die 
+Daten des Copernicus Programmes. 
+-> Prototypische Implementierung
+-> Mit Geodaten ser S-1 Mission
+-> Evaluation des Rich Data Interface
+\subsection{Aufbau} 
+-> Grundlagen zum schaffen der Grundkenntnisse
+-> Implementierung
+-> Evaluation durch Heuristiken und Test Suit 
+-> Diskussion
+-> Ausblick
+-> Fazit
 
 

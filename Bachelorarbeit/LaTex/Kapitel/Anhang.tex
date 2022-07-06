@@ -425,6 +425,123 @@ properties:
         $ref: "link.yaml"
 \end{lstlisting}\label{appendixprocessListyaml}  
 
+\subsection{processSummary.yaml}
+\begin{lstlisting}[caption={processSummary.yaml}, style = JSON]
+allOf:
+    - $ref: "descriptionType.yaml"
+    - type: object
+      required:
+        - id
+        - version
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+        jobControlOptions:
+          type: array
+          items:
+            $ref: "jobControlOptions.yaml"
+        outputTransmission:
+          type: array
+          items:
+            $ref: "transmissionMode.yaml"
+        links:
+          type: array
+          items:
+            $ref: "link.yaml"
+\end{lstlisting}\label{appendixprocessSummaryyaml} 
+
+\subsection{jobControlOptions.yaml}
+\begin{lstlisting}[caption={jobControlOptions.yaml}, style = JSON]
+type: string
+enum:
+    - sync-execute
+    - async-execute
+    - dismiss
+\end{lstlisting}\label{appendixjobControlOptionsyaml} 
+
+\subsection{transmissionMode.yaml}
+\begin{lstlisting}[caption={transmissionMode.yaml}, style = JSON]
+type: string
+enum:
+    - value
+    - reference
+default:
+    - value
+\end{lstlisting}\label{appendixtransmissionModeyaml} 
+
+\subsection{jobList.yaml}
+\begin{lstlisting}[caption={jobList.yaml}, style = JSON]
+type: object
+required:
+    - jobs
+    - links
+properties:
+    jobs:
+    type: array
+    items:
+        $ref: "statusInfo.yaml"
+    links:
+    type: array
+    items:
+        $ref: "link.yaml"
+\end{lstlisting}\label{appendixjobListyaml} 
+
+\subsection{statusInfo.yaml}
+\begin{lstlisting}[caption={statusInfo.yaml}, style = JSON]
+type: object
+required:
+    - jobID
+    - status
+    - type
+properties:
+    processID:
+        type: string
+    type:
+        type: string
+        enum:
+        - process
+    jobID:
+        type: string
+    status:
+        $ref: "statusCode.yaml"
+    message:
+        type: string
+    created:
+        type: string
+        format: date-time
+    started:
+        type: string
+        format: date-time
+    finished:
+        type: string
+        format: date-time
+    updated:
+        type: string
+        format: date-time
+    progress:
+        type: integer
+        minimum: 0
+        maximum: 100
+    links:
+        type: array
+        items:
+            $ref: "link.yaml"
+\end{lstlisting}\label{appendixstatusInfoyaml}
+
+\subsection{statusCode.yaml}
+\begin{lstlisting}[caption={statusCode.yaml}, style = JSON]
+type: string
+nullable: false
+enum:
+    - accepted
+    - running
+    - successful
+    - failed
+    - dismissed
+\end{lstlisting}\label{appendixstatusCodeyaml}
+
 \section{Ressourcen}
 \renewcommand{\lstlistingname}{Ressource}
 \subsection{landingPage.html}
