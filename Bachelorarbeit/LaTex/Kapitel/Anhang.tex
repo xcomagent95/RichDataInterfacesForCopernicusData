@@ -1,6 +1,266 @@
 \newpage
 \restoregeometry
 \counterwithin{lstlisting}{section}
+
+\section{Schemata}
+\renewcommand{\lstlistingname}{Pseudocode}  
+
+\subsection{Ablauf eines Requests an den API Landing Page Endpoint}
+\begin{algorithm}[H]
+\caption{Ablauf eines Requests an den API Landing Page Endpoint}\label{appendixpsedoLandingPage}
+\scriptsize
+\begin{algorithmic}     
+    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
+    \STATE Encoding $\gets$ Anfrage.f
+    \IF{HTTP-Methode != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+        \IF{Encoding == text/html \OR Encoding == None}
+            \STATE Response $\gets$ render\_template(templates/html/landingPage.html)
+            \STATE Link-Header $\gets$ http://HOST:PORT/?f=text/html
+            \STATE Resource-Header $\gets$ landingPage
+            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+        \ELSIF{Encoding == application/json}
+            \STATE JSON $\gets$ open(templates/json/landingPage.json)
+            \STATE Response $\gets$ jsonify(Datei)
+            \STATE Link-Header $\gets$ http://HOST:PORT/?f=application/json
+            \STATE Resource-Header $\gets$ landingPage
+            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Ablauf eines Requests an den API Definition Endpoint}
+\begin{algorithm}[H]
+\caption{Ablauf eines Requests an den API Definition Endpoint}\label{appendixpsedoAPIDefinition}
+\scriptsize
+\begin{algorithmic}     
+    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
+    \STATE Encoding $\gets$ Anfrage.f
+    \IF{HTTP-Methode != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+        \IF{Encoding == text/html \OR Encoding == None}
+            \STATE Response $\gets$ render\_template(templates/html/apiDefinition.html)
+            \STATE Link-Header $\gets$ http://HOST:PORT/api?f=text/html
+            \STATE Resource-Header $\gets$ apiDefinition
+            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+        \ELSIF{Encoding == application/json}
+            \STATE JSON $\gets$ open(templates/json/apiDefinition.json)
+            \STATE Response $\gets$ jsonify(Datei)
+            \STATE Link-Header $\gets$ http://HOST:PORT/api?f=application/json
+            \STATE Resource-Header $\gets$ apiDefinition
+            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{algorithm}
+    
+\subsection{Ablauf eines Requests an den Conformance Endpoint}
+\begin{algorithm}[H]
+\caption{Ablauf eines Requests an den Conformance Endpoint}\label{appendixpsedoConformance}
+\scriptsize
+\begin{algorithmic}     
+    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
+    \STATE Encoding $\gets$ Anfrage.f
+    \IF{HTTP-Methode != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+        \IF{Encoding == text/html \OR Encoding == None}
+            \STATE Response $\gets$ render\_template(templates/html/confClasses.html)
+            \STATE Link-Header $\gets$ http://HOST:PORT/conformance?f=text/html
+            \STATE Resource-Header $\gets$ conformance
+            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+        \ELSIF{Encoding == application/json}
+            \STATE JSON $\gets$ open(templates/json/confClasses.json)
+            \STATE Response $\gets$ jsonify(Datei)
+            \STATE Link-Header $\gets$ http://HOST:PORT/conformance?f=application/json
+            \STATE Resource-Header $\gets$ conformance
+            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Ablauf eines Requests an den Process List Endpoint}
+\begin{algorithm}[H]
+\caption{Ablauf eines Requests an den Process List Endpoint}\label{appendixpsedoProcessList}
+\scriptsize
+\begin{algorithmic}     
+    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
+    \STATE Encoding $\gets$ Anfrage.f
+    \STATE Limit $\gets$ Anfrage.limit
+    \IF{HTTP-Methode != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{Limit == None \OR Limit <= 0 \OR Limit > 10000}
+                \STATE Limit $\gets$ 10
+            \ELSE{}
+                \STATE Limit $\gets$ Anfrage.limit
+            \ENDIF
+        \IF{Encoding == text/html \OR Encoding == None}
+            \STATE Process List $\gets$ []
+            \STATE Processes $\gets$ List of Process descriptions in templates/json/processes
+            \FOR{Process \textbf{in} Processes}
+                \STATE JSON $\gets$ open(jobs/Job-ID/status.json)
+                \STATE Process List \textbf{append} JSON
+            \ENDFOR{}
+            \STATE Response $\gets$ render\_template(templates/html/processList.html, Process List[0:Limit])
+            \STATE Link-Header $\gets$ http://HOST:PORT/processList?f=application/json
+            \STATE Resource-Header $\gets$ processList
+            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+        \ELSIF{Encoding == application/json}
+            \STATE Process List $\gets$ []
+            \STATE Processes $\gets$ List of Process descriptions in templates/json/processes
+            \FOR{Process \textbf{in} Processes}
+                \STATE JSON $\gets$ open(jobs/Job-ID/status.json)
+                \STATE Process Liste \textbf{append} JSON
+            \ENDFOR{}
+            \STATE \textbf{add} Links \textbf{to} Process Liste
+            \STATE Response $\gets$ jsonify(Process Liste[0:Limit])
+            \STATE Link-Header $\gets$ http://HOST:PORT/processList?f=application/json
+            \STATE Resource-Header $\gets$ processList
+            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Ablauf eines Requests an den Process Description Endpoint}
+\begin{algorithm}[H]
+\caption{Ablauf eines Requests an den Process Description Endpoint}\label{appendixpsedoProcessDescription}
+\scriptsize
+\begin{algorithmic}     
+    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
+    \STATE Encoding $\gets$ Anfrage.f
+    \STATE Process-ID $\gets$ Anfrage.processID
+    \IF{HTTP-Methode != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{Encoding == text/html \OR Encoding == None}
+                \IF{templates/json/processes/Process-ID.json exists}
+                    \STATE JSON $\gets$ open(json/processes/Process-ID.json)
+                    \STATE Response $\gets$ render\_template(templates/html/process.html, JSON)
+                    \STATE Link-Header $\gets$ http://HOST:PORT/processes/<processID>?f=text/html
+                    \STATE Resource-Header $\gets$ Process-ID
+                    \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+                \ELSE{}
+                    \STATE Exception $\gets$ No such process exception
+                    \STATE Resource-Header $\gets$ no-such-process
+                    \RETURN{HTTP-Statuscode 404 \AND Exception mit Resource-Header}
+                \ENDIF{}
+            \ELSIF{Encoding == application/json}
+                \IF{templates/json/processes/Process-ID.json exists}
+                    \STATE JSON $\gets$ open(json/processes/Process-ID.json)
+                    \STATE Response $\gets$ jsonify(JSON)
+                    \STATE Link-Header $\gets$ http://HOST:PORT/processes/<processID>?f=application/json
+                    \STATE Resource-Header $\gets$ Process-ID
+                    \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+                \ELSE{}
+                    \STATE Exception $\gets$ No such process exception
+                    \STATE Resource-Header $\gets$ no-such-process
+                    \RETURN{HTTP-Statuscode 404 \AND Exception mit Resource-Header}
+                \ENDIF{}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Ablauf eines Requests an den Job Status Endpoint}
+\begin{algorithm}[H]
+\caption{Ablauf eines Requests an den Job Status Endpoint}\label{appendixpsedoProcessDescription}
+\scriptsize
+\begin{algorithmic}     
+    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
+    \STATE Encoding $\gets$ Anfrage.f
+    \STATE Job-ID $\gets$ Anfrage.jobID
+    \IF{HTTP-Methode != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{Encoding == text/html \OR Encoding == None}
+                \IF{templates/json/processes/Job-ID.json exists}
+                    \STATE JSON $\gets$ open(jobs/Job-ID/status.json)
+                    \STATE Response $\gets$ render\_template(templates/html/job.html, JSON)
+                    \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<jobID>?f=text/html
+                    \STATE Resource-Header $\gets$ job - Job-ID
+                    \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+                \ELSE{}
+                    \STATE Exception $\gets$ No such job exception
+                    \STATE Resource-Header $\gets$ no-such-job
+                    \RETURN{HTTP-Statuscode 404 \AND Exception mit Resource-Header}
+                \ENDIF{}
+            \ELSIF{Encoding == application/json}
+                \IF{templates/json/processes/Job-ID.json exists}
+                \STATE JSON $\gets$ open(jobs/Job-ID/status.json)
+                    \STATE Response $\gets$ jsonify(JSON)
+                    \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<jobID>?f=application/json
+                    \STATE Resource-Header $\gets$ job - Job-ID
+                    \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+                \ELSE{}
+                    \STATE Exception $\gets$ No such job exception
+                    \STATE Resource-Header $\gets$ no-such-job
+                    \RETURN{HTTP-Statuscode 404 \AND Exception mit Resource-Header}
+                \ENDIF{}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{algorithm}
+
 \renewcommand{\lstlistingname}{Quellcode}
 \section{Quellcodeverzeichnis}
 \subsection{Konfiguration von Werkzeug auf HTTP 1.1}
@@ -934,3 +1194,229 @@ enum:
     </body>
 </html>
 \end{lstlisting}\label{appendixprocessListHTML}  
+
+\subsection{processDescription.html}
+\begin{lstlisting}[caption={processDescription.html}, style = HTML]
+<!DOCTYPE html>
+<html>
+	<body>
+        <p>
+            <b>processID:</b> {{process.id}}<br>
+            <b>Title:</b> {{process.title}}<br>
+            <b>Description:</b> {{process.description}}<br>
+            <b>Version:</b> {{process.version}}<br>
+            <b>Job control options:</b> {{process.jobControlOptions}}<br>
+            <b>Output transmission mode:</b> {{process.outputTransmission}}
+        </p>
+        <p><b>inputs:</b></p>
+        <p id='{{process.id}}'><p>
+        <script>
+            var inputs = '{{process.inputs}}'
+            var inputsString = inputs.replaceAll('&#39;', '"')
+            var inputsJSON = JSON.parse(inputsString)
+            console.log(inputsJSON)
+            for (var key in inputsJSON) {
+                var newElement = document.createElement("p")
+                newElement.innerHTML = "<p><b>" + key 
+                + "</b><br>Description: " 
+                + inputsJSON[key].description 
+                + "<br><b>Schema:</b><br>Type: " 
+                + inputsJSON[key].schema.type + "</p>"
+                document.getElementById('{{process.id}}').appendChild(newElement);
+            }
+        </script>
+        <p>
+        <b>links:</b><br>
+        href:<a href="localhost:5000/processes/{{process.id}}?f=text/html">
+        localhost:5000/processes/{{process.id}}?f=text/html</a><br>
+        rel: self<br>
+        type: text/html<br>
+        title: This document as HTML<br>
+        <br>
+        href:<a href="localhost:5000/processes/{{process.id}}?f=application/json">
+        localhost:5000/processes/{{process.id}}?f=application/json</a><br>
+        rel: alternate<br>
+        type: application/json<br>
+        title: This document as JSON
+		</p>
+	</body>
+<html>
+\end{lstlisting}\label{appendixprocessDescriptionHTML}  
+
+\subsection{FloodMonitoringProcessDescription.json}
+\begin{lstlisting}[caption={FloodMonitoringProcessDescription.json}, style = JSON]
+{
+  "id": "FloodMonitoring",
+  "title": "Flood Monitoring",
+  "description": "This process accepts a Test input and returns an echo",
+  "version": "1.0.0",
+  "jobControlOptions": [
+    "async-execute", "dismiss"
+  ],
+  "outputTransmission": [
+    "value"
+  ],
+  "inputs": {
+    "preDate": {
+      "title": "preDate",
+      "description": "The input value",
+      "schema": {
+        "type": "string"
+      }
+	},
+	"postDate": {
+      "title": "postDate",
+      "description": "The input value",
+      "schema": {
+        "type": "string"
+      }
+	},
+	"username": {
+      "title": "username",
+      "description": "The input value",
+      "schema": {
+        "type": "string"
+      }
+	},
+	"password": {
+      "title": "password",
+      "description": "The input value",
+      "schema": {
+        "type": "string"
+      }
+	},
+	"bbox": {
+		"title": "Bounding Box Input Example",
+		"description": "This is an example of a BBOX literal input.",
+			"schema": {
+				"type": "object",
+				"required": [
+					"bbox"
+				],
+				"properties": {
+					"bbox": {
+						"type": "array",
+						"oneOf": [
+							{
+								"minItems": 4,
+								"maxItems": 4
+							},
+							{
+								"minItems": 6,
+								"maxItems": 6
+							}
+						],
+						"items": {
+							"type": "number"
+						}
+					},
+					"crs": {
+						"type": "string",
+						"format": "uri",
+						"default": "http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+						"enum": [
+							"http://www.opengis.net/def/crs/OGC/1.3/CRS84",
+							"http://www.opengis.net/def/crs/OGC/0/CRS84h"
+						]
+					}
+				}
+			}
+		}
+  },
+  "outputs": {
+   "bin": {
+	  "title": "outputDocument",
+	  "description": "The output document",
+      "schema": {
+			"type": "string",
+			"contentEncoding": "binary",
+			"contentMediaType": "application/tiff"
+      }
+    },
+	"ndsi": {
+	  "title": "outputDocument",
+	  "description": "The output document",
+      "schema": {
+			"type": "string",
+			"contentEncoding": "binary",
+			"contentMediaType": "application/tiff"
+      }
+    }
+  },
+  "links": [
+	{
+		"href": "localhost:5000/processes/Echo?f=application/json",
+		"rel": "self",
+		"type": "application/json",
+		"title": "This document"
+	},
+	{
+		"href": "localhost:5000/processes/Echo?f=text/html",
+		"rel": "alternate",
+		"type": "text/html",
+		"title": "This document as HTML"
+	}
+  ]
+}
+\end{lstlisting}\label{appendixFloodMonitoringProcessDescriptionJSON}  
+
+\subsection{EchoProcessDescription.json}
+\begin{lstlisting}[caption={EchoProcessDescription.json}, style = JSON]
+{
+    "id": "Echo",
+    "title": "Echo",
+    "description": "This process accepts a Test input and returns an echo",
+    "version": "1.0.0",
+    "jobControlOptions": [
+        "async-execute", "dismiss"
+    ],
+    "outputTransmission": [
+        "value"
+    ],
+    "inputs": {
+        "echo": {
+        "title": "echo",
+        "description": "Value to be echoed",
+        "schema": {
+            "type": "string"
+        }
+        }
+    },
+    "outputs": {
+        "outgoingEcho": {
+        "title": "outgoingEcho",
+        "description": "The output document containing the echoed value",
+        "schema": {
+            "type": "object",
+            "contentMediaType": "application/json",
+            "required": [
+            "result",
+            "message"
+            ],
+            "properties": {
+            "result": {
+                "type": "string"
+            },
+            "message": {
+                "type": "string"
+            }
+            }
+        }
+        }
+    },
+    "links": [
+        {
+            "href": "localhost:5000/processes/Echo?f=application/json",
+            "rel": "self",
+            "type": "application/json",
+            "title": "This document"
+        },
+        {
+            "href": "localhost:5000/processes/Echo?f=text/html",
+            "rel": "alternate",
+            "type": "text/html",
+            "title": "This document as HTML"
+        }
+    ]
+    }     
+\end{lstlisting}\label{appendixEchoProcessDescriptionJSON}  

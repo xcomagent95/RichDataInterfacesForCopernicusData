@@ -75,8 +75,8 @@ def getAPIDefinition():
            request.args.get('f') == None): #check requested content-type from inline request
             response = render_template('html/apiDefinition.html') #render static api definition page
             return response, 200, {"link": "localhost:5000/apiDefinition?f=text/html", "resource": "apiDefinition"} #return response and okay with link and resource header
-        elif(request.content_type == "application/json" or #check requested content-type from request body 
-             request.args.get('f')=="application/json"): #check requested content-type from inline request
+        elif(request.content_type == "application/vnd.oai.openapi+json;version=3.0" or #check requested content-type from request body 
+             request.args.get('f')=="application/vnd.oai.openapi+json;version=3.0"): #check requested content-type from inline request
             file = open('templates/json/apiDefinition.json',) #open apiDefinition.json
             payload = json.load(file) #create response
             file.close() #close apiDefinition.json
@@ -91,28 +91,24 @@ def getAPIDefinition():
 @app.route('/processes', methods = ['GET']) #allowed methods: GET
 def getProcesses():
     app.logger.info('/processes') #add log entry when endpoint is called
-    if(request.args.get('limit') == None or #if no limit is set
-       int(request.args.get('limit')) <= 0 or #or limit value is not valid
-       int(request.args.get('limit')) > 1000): #or limit is to large
-        limit = 10 #set limit to default value
-    else:
-        limit = int(request.args.get('limit')) #retrive limit value from request
     try:
+        if(request.args.get('limit') == None or #if no limit is set
+       int(request.args.get('limit')) <= 0 or #or limit value is not valid
+       int(request.args.get('limit')) > 10000): #or limit is to large
+            limit = 10 #set limit to default value
+        else:
+            limit = int(request.args.get('limit')) #retrive limit value from request
         if(request.content_type == "text/html" or #check requested content-type from request body 
            request.args.get('f')=="text/html" or 
            request.args.get('f') == None): #check requested content-type from inline request
                 processList = [] #initialize list of processes
                 processDescriptions = os.listdir("templates/json/processes") #list registered process descriptions
-                counter = 0 #initialize counter
                 for i in processDescriptions: #iterate over registered process descriptions
                     file = open('templates/json/processes/' + i,) #open process description
                     process = json.load(file) #load the data from .json file
                     file.close() #close .json file
                     processList.append(process) #append process to list of processes
-                    counter += 1 #increase counter
-                    if(counter == limit): #check if counter has reached limit value
-                        break #if limit is reached break loop
-                response = render_template('html/processList.html', processes=processList) #render dynamic process list 
+                response = render_template('html/processList.html', processes=processList[0:limit]) #render dynamic process list 
                 return response, 200, {"link": "localhost:5000/processes?f=text/html", "resource": "processes"} #return response and ok with link and resource header
 
         elif(request.content_type == "application/json" or #check requested content-type from request body 
@@ -157,7 +153,7 @@ def getProcess(processID):
                 process = json.load(file) #load the data from .json file
                 file.close() #close processDescription.json
                 response = render_template("html/Process.html", process=process) #render dynamic process
-                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html", "resource": str(processID)} #return response and ok with link and resource header
+                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=text/html", "resource": "process - " + str(processID)} #return response and ok with link and resource header
             else:
                 exception = render_template('html/exception.html', title="No such process exception", description="Requested process could not be found", type="no-such-process")
                 return exception, 404, {"resource": "no-such-process"} #return not found if requested process is not found
@@ -168,7 +164,7 @@ def getProcess(processID):
                 payload = json.load(file) #load the data from .json file
                 file.close() #close ProcessDescription.json
                 response = jsonify(payload) #create response
-                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=application/json", "resource": str(processID)} #return response and ok with link and resource header
+                return response, 200, {"link": "localhost:5000/processes/" + str(processID) + "?f=application/json", "resource": "process - " + str(processID)} #return response and ok with link and resource header
             else:
                 exception = {"title": "No such process exception", "description": "Requested process could not be found", "type": "no-such-process"}
                 return exception, 404, {"resource": "no-such-process"} #return not found if requested process is not found 
@@ -236,7 +232,7 @@ def executeProcess(processID):
             f.close() #close file
 
             response = jsonify(status_file) #create response
-            return response, 201, {"location": "localhost:5000/jobs/" + jobID + "?f=application/json", "resource": "job"} #return response and ok and files created with location header
+            return response, 201, {"location": "localhost:5000/jobs/" + jobID + "?f=application/json", "resource": "job - " + str(jobID)} #return response and ok and files created with location header
         else:
             exception = {"title": "No such process exception", "description": "Requested process could not be found", "type": "no-such-process"}
             return exception, 404 #return not found if requested process is not found 
@@ -247,29 +243,28 @@ def executeProcess(processID):
 @app.route('/jobs', methods = ['GET']) #allowed methods: GET
 def getJobs():
     app.logger.info('/jobs') #add log entry when endpoint is called
-    if(request.args.get('limit') == None or #if no limit is set
-       int(request.args.get('limit')) <= 0 or #or limit value is not valid
-       int(request.args.get('limit')) > 1000): #or limit is to large
-        limit = 10 #set limit to default value
-    else:
-        limit = int(request.args.get('limit')) #retrieve limit value from request
-        
-    if(request.args.get('type') == None): #if no type parameter is passed
-        type = ["process"] #set type parameter to default
-    else: #if type parameter is passed
-        type = request.args.get('type') #set type parameter to passed value
-        
-    if(request.args.get('processID') == None): #if no processID parameter is passed
-        processes = ["Echo", "FloodMonitoring"] #set processID parameter to default
-    else: #if processID parameter is passed
-        processes = request.args.get('processID') #set processID parameter to passed value
-        
-    if(request.args.get('status') == None): #if no status parameter is passed
-        stati = ["accepted", "running", "successful", "failed", "dismissed"] #set stati parameter to default
-    else:
-        stati = request.args.get('status') #set stati parameter to passed value
-        
     try:
+        if(request.args.get('limit') == None or #if no limit is set
+           int(request.args.get('limit')) <= 0 or #or limit value is not valid
+           int(request.args.get('limit')) > 1000): #or limit is to large
+            limit = 10 #set limit to default value
+        else:
+            limit = int(request.args.get('limit')) #retrieve limit value from request
+            
+        if(request.args.get('type') == None): #if no type parameter is passed
+            type = ["process"] #set type parameter to default
+        else: #if type parameter is passed
+            type = request.args.get('type') #set type parameter to passed value
+            
+        if(request.args.get('processID') == None): #if no processID parameter is passed
+            processes = ["Echo", "FloodMonitoring"] #set processID parameter to default
+        else: #if processID parameter is passed
+            processes = request.args.get('processID') #set processID parameter to passed value
+            
+        if(request.args.get('status') == None): #if no status parameter is passed
+            stati = ["accepted", "running", "successful", "failed", "dismissed"] #set stati parameter to default
+        else:
+            stati = request.args.get('status') #set stati parameter to passed value
         if(request.content_type == "text/html" or #check requested content-type from request body 
            request.args.get('f')=="text/html" or 
            request.args.get('f') == None): #check requested content-type from inline request
@@ -302,7 +297,7 @@ def getJobs():
                     if(counter == limit): #check if counter has reached limit value
                         break #if limit is reached break loop
             response = render_template('html/jobs.html', status=jobList) #render dynamic job list 
-            return response, 200, {"link": "localhost:5000/jobs?f=text/html", "resource": "jobs", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link and resource header
+            return response, 200, {"link": "localhost:5000/jobs?f=text/html", "resource": "jobs"} #return response and ok with link and resource header
         
         
         elif(request.content_type == "application/json" or #check requested content-type from request body 
@@ -365,7 +360,7 @@ def getJobs():
                                    "title": "this document as HTML"}
                              ]}
             response = jsonify(jobs) #create response 
-            return response, 200, {"link": "localhost:5000/jobs?f=application/json", "resource": "jobs", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link and resource header
+            return response, 200, {"link": "localhost:5000/jobs?f=application/json", "resource": "jobs"} #return response and ok with link and resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except:
@@ -384,7 +379,7 @@ def getJob(jobID):
                     data = json.load(file) #create response   
                     file.close() #close status.josn
                     response = jsonify(data) #create response
-                    return  response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
+                    return  response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job - " + str(jobID)} #return response and ok with link und resource header
                 else:
                     exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
                     return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
@@ -396,7 +391,7 @@ def getJob(jobID):
                     job = json.load(file) #create response   
                     file.close() #close status.json
                     response = render_template("html/Job.html", job=job) #render dynamic job
-                    return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok
+                    return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job - " + str(jobID)} #return response and ok
                 else:
                     exception = render_template('html/exception.html', title="No such job exception", description="No job with the requested jobID could be found", type="no-such-job")
                     return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found
@@ -429,16 +424,16 @@ def getJob(jobID):
                             job = json.load(file) #create response   
                             file.close() #close status.json
                             response = render_template("html/Job.html", job=job) #render dynamic job
-                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job-dismissed", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok
+                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job-dismissed"} #return response and ok
                         else:
                             response = jsonify(data) #create response
-                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
+                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return response and ok with link und resource header
                     elif(request.content_type == "application/json" or #check requested content-type from request body
                          request.args.get('f')=="application/json"): #check requested content-type from inline request):
                         data = json.load(file) #load data from status.json 
                         file.close() #close status.json
                         response = jsonify(data) #create response
-                        return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return gone when job was already dismissed
+                        return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return gone when job was already dismissed
             else:
                 exception = {"title": "No such job exception", "description": "No job with the requested processID could be found", "type": "no-such-job"}
                 return exception, 404 #return not found if requested job is not found 
@@ -623,13 +618,13 @@ def getCoverage():
     try:
         if(request.content_type == "application/json" or #check requested content-type from request body
            request.args.get('f')=="application/json"): #check requested content-type from inline request
-            return coverageJSON, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
+            return coverageJSON, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage"} #return response and ok with link und resource header
             
         elif(request.content_type == "text/html" or #check requested content-type from request body
              request.args.get('f')=="text/html" or 
              request.args.get('f') == None): #check requested content-type from inline request
             response = render_template("html/coverage.html", coverages=coverages, bboxes=bboxes) #render dynamic coverage
-            return response, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
+            return response, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage"} #return response and ok with link und resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except Exception as e:

@@ -10,7 +10,7 @@ Weite Teile des Rich Data Interface wurden mithilfe des Flask-Frameworks umgeset
 \subsection{Struktur}
 Die Anwendung ist in vier Python-Scripte aufgeteilt. Im api.py Script ist die API der Anwendung definiert. 
 Die geordnete Abarbeitung der angelegten Jobs werden vom Script processing.py gesteuert. Die eigentlichen Prozesse sowie 
-Hilfsfunktionen befinden sich im utils.py Script. Das test.py Script kann dazu genuzt werden um die Stabilität und Standardkonformität der API zu testen.
+Hilfsfunktionen befinden sich im utils.py Script. Das test.py Script kann dazu genutzt werden um die Stabilität und Standardkonformität der API zu testen.
 
 Diese Scripte verwalten Dateien in einem einfachen Verzeichnissystem. Templates für statische Ressourcen befinden sich im Verzeichnis \textit{templates/}. HTML-Dateien 
 befinden sich im Verzeichnis \textit{templates/html/} und JSON-Dateien im Verzeichnis \textit{templates/json/}. Das Unterverzeichnis \textit{templates/json/processes/} enthält die 
@@ -29,11 +29,12 @@ Ressourcen sind die üer die Endpoints der API bereitgestellten Informationen un
 Die meisten angebotenen Ressourcen können um Media-Type \textit{text/html}, also als HTML-Dateien oder im Media-Type \textit{application/json} also als 
 JSON-Dateien angefragt werden. Um aus diesen Dateien einen Response zu generieren werden .html-Dateien zuvor mit der Methode \textit{render\_template()}, welcher auch 
 dynamische Inhalte übergeben werden können gerendert während .json-Dateien zunächst mit der Methode \textit{jsonify()} bearbeitet werden. Beide genannten Methoden
-geben ein Response-Objekt zurück welches versandt werden kann.  
+geben ein Response-Objekt zurück welches versandt werden kann. Mit Ausnahme des Process Execution und Results Endpoint können nicht in beide Media-Types angefragt werden.
+Die Auswahl der Media-Types erfolgt mithilfe des Parameters $f$ oder $content\_type$. 
 
 Die Struktur dieser Ressourcen ist in Schemata beschrieben. Diese definieren neben den Bezeichnungen für Elemente auch ihre Datentypen und 
 ob sie optional sind oder nicht. Jede Ressource enthält eine Verknüpfungen zu sich selbst mit der Relation \textit{self} und eine Verknüpfung 
-zur Ressource im jeweils anderen Media-Type mit der Relation \textit{alternate}. ??Übersicht über Ressourcen??
+zur Ressource im jeweils anderen Media-Type mit der Relation \textit{alternate}. 
 
 \subsection{Requirements Classes für Encodings}
 In der Requirements Class JSON wird definiert welche Ressourcen im Media-Type \textit{application/json} angefragt werden können. Dazu gehören alle Responses der 
@@ -46,7 +47,6 @@ entfällt in dieser Requirements-Class die Einschränkung auf bestimmte Endpunkt
 Media-Type \textit{text/html} unterstützen.\\
 Stellen Endpoints ihre Ressourcen sowohl den Media-Type \textit{application/json} als auch \textit{text/html} zur Verfügung so können Nutzer diesen über den optional Parameter
 \textit{f} oder \textit{content\_type} spezifizieren. Wird kein Media-Type über diese Parameter spezifiziert so wird standardmäßig der Media-Type \textit{text/html} verwendet. \\
-
 
 \subsection{Requirements Class Core}
 \subsubsection{HTTP 1.1}
@@ -86,9 +86,12 @@ den HTTP-Statuscodes 201 beziehungsweise 404. Der Standard erlaubt die Nutzung w
 
 \subsubsection{Limit Paramter}
 Der \textit{limit}-Parameter wird von den Endpoints Process List und Job List unterstützt. Mit ihm kann gesteuert werden wie viele Elemente im Response gelistet werden. 
-Der \textit{limit}-Parameter ist optional. Ist er nicht Teil eines Requests werden standardmäßig 10 Elemente zurückgegeben. Es können maximal 1000 Elemente angefragt werden.
-Ergibt die Überprüfung des \textit{limit}-Parameters das Werte außerhalb des gültigen Wertebereichs von 0 bis 1000 angefragt werden wird der Parameter auf 10 zurückgesetzt. 
-Ein Response kann weniger, aber nie mehr Elemente als durch den \textit{limit}-Parameter spezifiziert werden enthalten \ref{appendixlimityaml}. 
+Der \textit{limit}-Parameter ist optional. Ist er nicht Teil eines Requests werden standardmäßig zehn Elemente zurückgegeben. Es können maximal 1000 Elemente angefragt werden.
+Ergibt die Überprüfung des \textit{limit}-Parameters das Werte außerhalb des gültigen Wertebereichs von 0 bis 10000 angefragt werden wird der Parameter auf 10 zurückgesetzt. 
+Ein Response kann weniger, aber nie mehr Elemente als durch den \textit{limit}-Parameter spezifiziert werden enthalten (siehe Anhang \ref{appendixlimityaml}) 
+\cite{ogc_api_processes_core}. Die praktische Umsetzung erfolgt über eine Reihe von \textit{if}- und \textit{else-}-Abfragen. Dabei wird zunächst überprüft ob 
+der Parameter im Request spezifiziert ist. Ist dies nicht der Fall wird der Standardwert zehn verwendet. Ein spezifizierter Wert wird auf seine Gültigkeit überprüft. 
+Ist der Wert ungültig, also kleiner 0 oder größer 10000, wird ebenfalls der Standardwert verwendet.
 
 \subsubsection{API Landig Page}
 Der API Landing Page kann über den URL \textit{http://HOST:PORT/?f=<MEDIA-TYPE>} angefragt werden und liefert als Resource die 
@@ -97,42 +100,45 @@ Die einzig zulässige HTTP-Methode für diesen Endpoint ist die HTTP-Get Methode
 Die API Landing Page kann Eintrittspunkt zu allen anderen Funktionalitäten der Anwendung bezeichnet werden. Sie enthält Verknüpfungen zu den Endpoints, API Landing Page, API Definition, 
 Conformance, Process List, Process Description, Job List und Coverage.\\
 Die API Landing Page kann in den Media-Types \textit{text/html} (siehe Anhang \ref{appendixlandingPageHTML}) und \textit{application/json} 
-(siehe Anhang \ref{appendixlandingPageJSON}) abgerufen werden.\\
- 
+(siehe Anhang \ref{appendixlandingPageJSON}) abgerufen werden.
 Wird ein Request für gültig befunden so wird, je nach gewähltem Media-Type, ein passender Response generiert. 
-Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixLandingPage}). 
-
-!Pseudode!
+Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header 
+versandt (siehe Anhang \ref{appendixpsedoLandingPage} und \ref{appendixLandingPage}) \cite{ogc_api_processes_core}. 
 
 \subsubsection{API Definition}
-Der API Definition Endpoint kann über den URL \textit{http://HOST:PORT/api?f=<MEDIA-TYPE>} angefragt werden und liefert als Ressource die API Definition (siehe Anhang !ref einfügen!).
-Auch für diesen Endpoint ist die einzig zulässige HTTP-Methode Get. 
-Die API Definition enhält detailierte Informationen zur API. In ihr sind alle verfügbaren Endpoints mit ihren Parametern und Responses aufgeführt. Auch die API Definition kann in den Media-Types
-textit{text/html} (siehe Anhang !ref einfügen!) und \textit{application/json} (siehe Anhang !ref einfügen!) abgerufen werden.\\
-Nach einem gültigen Request wird ein zum angefrgten Media-Type passen Response generiert. Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixAPIDefinition}). 
+Der API Definition Endpoint kann über den URL \textit{http://HOST:PORT/api?f=<MEDIA-TYPE>} angefragt werden und liefert als Ressource die API Definition 
+(siehe Anhang !ref einfügen!). Auch für diesen Endpoint ist die einzig zulässige HTTP-Methode Get. 
+Die API Definition enthält detaillierte Informationen zur API. In ihr sind alle verfügbaren Endpoints mit ihren Parametern und Responses aufgeführt. Auch die API Definition kann in den Media-Types
+textit{text/html} (siehe Anhang !ref einfügen!) und \textit{application/vnd.oai.openapi+json;version=3.0} abgerufen werden.\\
+Die Erweiterung des Media-Types \textit{application/json} ergibt sich aus der Requirements-Class OpenAPI 3.0.\\
+Nach einem gültigen Request wird ein zum angefragten Media-Type passen Response generiert. 
+Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixpsedoAPIDefinition} und \ref{appendixAPIDefinition}). 
 
-!Pseudode!
+
 \subsubsection{Conformance Decalration}
-Der Endpoint Conformance Declaration kann über den URL \textit{http://HOST:PORT/conformance?f=<MEDIA-TYPE>} angefragt werden und liefert als Ressource die Conformance Declaration (siehe Anhang \ref{appendixconfClassesyaml}).
-Get ist ebenfalls die einzige zulässige HTTP-Methode für Requests an diesen Endpoint.
+Der Endpoint Conformance Declaration kann über den URL \textit{http://HOST:PORT/conformance?f=<MEDIA-TYPE>} angefragt werden und liefert als 
+Ressource die Conformance Declaration (siehe Anhang \ref{appendixconfClassesyaml}). Get ist ebenfalls die einzige zulässige HTTP-Methode für Requests an diesen Endpoint.
 
-Die Conformance Declaration enthält Verknüpfungen zu allen von der Anwendung implementierten Requiremnets Classes und steht in den Media-Types textit{text/html} (siehe Anhang \ref{appendixconfClassesHTML}) und 
+Die Conformance Declaration enthält Verknüpfungen zu allen von der Anwendung implementierten Requirements Classes und steht in den Media-Types textit{text/html} (siehe Anhang \ref{appendixconfClassesHTML}) und 
 \textit{application/json} (siehe Anhang \ref{appendixconfClassesJSON}) zu Verfügung.
 
-Gültige Requests Lösen die Generierung eines Responses im angefragten Media-Type aus. Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixConformance}).
-!Pseudode!
+Gültige Requests Lösen die Generierung eines Responses im angefragten Media-Type aus. 
+Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixpsedoConformance} und \ref{appendixConformance}).
+
+
 
 \subsubsection{Process List Endpoint}
-Der Process List Endpoint ist über den URL \textit{http://HOST:PORT/processes?f=<MEDIA-TYPE>&limit=<INTEGRER>} angefragt werden. 
-Request sind nur mit der HTTP-Methode Get zulässig. Als Ressource erhalten nutzer eine detaillierte Liste der durch die Anwendung agebotenen Prozesse (siehe Anhang \ref{appendixprocessListyaml}). In dieser Listee finden sich die Bezeichnungen, 
-Steueroptionen sowie die 
-Ein- und Ausgaben der Prozesse. Die Process Liste kann in den Media-Types \textit{text/html} (siehe Anhang \ref{appendixprocessListHTML}) und \textit{application/json} angefragt werden. 
+Der Process List Endpoint ist über den URL \textit{http://HOST:PORT/processes?f=<MEDIA-TYPE>\&limit=<INTEGRER>} angefragt werden. 
+Request sind nur mit der HTTP-Methode Get zulässig. Als Ressource erhalten Nutzer eine detaillierte Liste der durch die Anwendung angebotenen 
+Prozesse (siehe Anhang \ref{appendixprocessListyaml}). In dieser Listee finden sich die Bezeichnungen, 
+Steueroptionen sowie die Ein- und Ausgaben der Prozesse. Die Process Liste kann in den Media-Types \textit{text/html} (siehe Anhang \ref{appendixprocessListHTML}) 
+und \textit{application/json} angefragt werden. 
 
-Die Generierung eines Responses im angefrgten Media-Type wird nach einem gültigen Request gestartet. Dazu werden zunächst im \textit{templates/json/processes} Verzeichnis hinterlegten Prozess Beschreibungen geladen und in ein Array geschrieben. 
-Dieses kann nun falls der Media-Type \textit{application/json} zu einem Objekt hinzugefügt werden welches zusärtzlich die Verknüfungen zur Ressource enthält. Wurde der Media-Type \textit{text/html} angefragt wird das Array zusammen mit dem HTML-Template dem 
-gerendert. 
+Die Generierung eines Responses im angefragten Media-Type wird nach einem gültigen Request gestartet. 
+Dazu werden zunächst alle im \textit{templates/json/processes}-Verzeichnis hinterlegten Prozess Beschreibungen geladen und in ein Array geschrieben. 
+Dieses kann nun falls der Media-Type \textit{application/json} zu einem Objekt hinzugefügt werden welches zusätzlich die Verknüfungen zur Ressource enthält. 
+Wurde der Media-Type \textit{text/html} angefragt wird das Array zusammen mit dem HTML-Template dem gerendert. 
 Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{appendixProcessList}).
-!Pseudode!
 
 \subsubsection{Process Description Endpoint}
 Unter dem URL \textit{http://HOST:PORT/processes/<processID>?f=<MEDIA-TYPE>} kann der Process Description Endpoint angefragt werden. Welche Prozessdetails zurückgegeben werden hängt vom \textit{processID}-Paramter ab. Alle Prozesse werden über eine 
@@ -140,8 +146,8 @@ eindeutige Bezeichnung, die \textit{processID} gekennzeichnet. Sie kann der Proz
 Als Ressource liefert der Endpoint eine detaillierte Beschreibung des im Request spezifizierten Prozesses (siehe Anhang \ref{appendixoutputDescriptionyaml}). Diese Beschreibung enthält Informationen zu den Steueroptionen sowie den Ein- und Ausgaben des Prozesses.
 Wie die Prozess Liste kann die auch die Process Beschreibung im Media-Type \textit{text/html} oder \textit{application/json} angefragt werden. 
 Die Generierung eines Responses verläuft ähnlich der der Prozess Liste. Zunächst wird die Prozess Beschreibung des angefragten Prozesses geladen. Soll ein Response mit dem Media-Type \textit{application/json} generiert werden wird diese versandt. 
-Für Request mit dem Media-Type \textit{text/html} wird die Prozessbeschreibung zusammen mit einem Template an den Renderer übergegen. 
-!Pseudode!
+Für Request mit dem Media-Type \textit{text/html} wird die Prozessbeschreibung zusammen mit einem Template an den Renderer übergeben. 
+
 \subsubsection{Prozess Ausführung}
 ?Wie erreiche ich den Endpoint?
 ?Welche Ressource liefert der Endpoint?
@@ -156,7 +162,7 @@ Für Request mit dem Media-Type \textit{text/html} wird die Prozessbeschreibung 
 ?Was ist der Inhalt der Resource?
 ?Welche Media Types gibt es?
 ?Wie läuft die generierung des Response ab und was enthält dieser?
-!Pseudode!
+
 \subsubsection{Job Resultate}
 ?Wie erreiche ich den Endpoint?
 ?Welche Ressource liefert der Endpoint?
@@ -183,8 +189,15 @@ Für Request mit dem Media-Type \textit{text/html} wird die Prozessbeschreibung 
 ?Wie läuft die generierung des Response ab und was enthält dieser?
 !Pseudode!
 \subsection{Requirements Class OpenAPI 3.0}
-Der OGC API - Processes - Part 1: Core Standard macht über die eigentlichen Funktionen der API auch Vorgaben zur Art der Dokumentation der API. Hierfür soll der 
-OpenAPI 3.0 Standard genutzt werden. 
+Für die Dokumentation der API soll der OpenAPI 3.0 Standard genutzt werden \cite{ogc_api_processes_core}. 
+Dieser definiert eine sprachenunabhängige Schnittstellenbeschreibung für Web APIs \cite{open_api}. 
+Diese Schnittstellenbeschreibung ist dabei so formuliert das sie sowohl menschen- als auch maschienenlesbar ist. 
+Ziel dieser Dokumentationsweise ist es die API so leicht verständlich wie möglich zu machen und so die Benutzerfreundlichkeit zu steigern \cite{open_api}. \\ 
+Die Dokumentation soll sämtliche Endpoints mit den möglichen Responses und zu erwartenden HTTP-Statuscodes beschreiben. 
+Die Dokumentation der API der prototypischen Implementierung auf der Web-Seit SwaggerHub gepflegt. Die Dokumentation konnte von dort als HTML- 
+und JSON-Datei bezogen werden. Diese dienen nun als Repräsentationen der Ressource API Definition welche über den API Definition Endpoint angefragt werden kann. 
+
+
 \subsection{Prozesse}
 \subsubsection{Echo}
 Da eine standardkonforme API mindestens einen testbaren Prozess anbieten muss ist der Echo-Prozess ebenfalls Teil der prototypischen Implementierung. 
@@ -200,8 +213,7 @@ Als letzter Schritt wird der Job-Status, der Fortschritt, der Infotext sowie der
 \subsection{Zusätzliche Funktionalitäten}
 \subsubsection{Coverage} 
 Der nicht im Standard definierte Coverage Endpoint kann über den URL \textit{http://HOST:PORT/coverage?f=<MEDIA-TYPE>} erreicht werden. Als Ressource liefert er eine Liste aller Sentinel-1 Datensätze welche persistent gespiechert sind. 
-Jobs welche auf diese Datensätze zugreifen können schneller abgearbeitet werden da ein zeitaufwendiges herunterladen der Datensätze entfällt. Die Coverage Ressource kann nur mit der HTTP-Get Methode angefragt werden. 
-
-?Was ist der Inhalt der Resource?
-?Welche Media Types gibt es?
-?Wie läuft die generierung des Response ab und was enthält dieser?
+Jobs welche auf diese Datensätze zugreifen können schneller abgearbeitet werden da ein zeitaufwendiges Herunterladen der Datensätze entfällt. Die Coverage Ressource kann nur mit der HTTP-Get Methode angefragt werden. 
+Die Ressource die der Endpoint zur Verfügung stellt enthält eine Liste aller gespeicherten Sentinel-1 Datensätze. Diese werden mit ihrem Produktnamen und dem Datum der Aufnahme 
+und ihrer Bounding-BBox aufgeführt. Die Bounding-BBox gibt Aufschluss über die räumliche Ausdehnung des Datensatzes. 
+Über den Endpoint kann die Ressource in den Media-Types \textit{text/html} oder \textit{application/json} angefragt werden. 

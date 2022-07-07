@@ -128,12 +128,12 @@ dem die Antenne zusätzlich in Azimut-Richtung vor und zurück bewegt wird, um d
 Wenn der Wave Modus (WV) zu Einsatz kommt werden kleine, Vignetten genannte, Szenen im Stripmap Verfahren aufgenommen. Sie werden in regelmäßigen Abständen und
 wechselnden Depressionwinkeln aufgenommen (siehe Abbildung \ref{sar_modi_sentinel_1})\cite{tutorial_on_sar}\cite{sentinel_1_definition}.   
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Bilder/Aquisition_Modes.png}
-    \caption{Aufnahmemodi der Sentinel-1 Mission \cite{sentinel_1_overview}}
-    \label{sar_modi_sentinel_1}
-\end{figure}
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=\textwidth]{Bilder/Aquisition_Modes.png}
+%    \caption{Aufnahmemodi der Sentinel-1 Mission \cite{sentinel_1_overview}}
+%    \label{sar_modi_sentinel_1}
+%\end{figure}
 
 \begin{center}
 \begin{table}[H]
@@ -253,31 +253,41 @@ Schnittstellen sind gemeinsame Grenzen zwischen funktionalen Einheiten über die
 Ein Application Programming Interface erlaubt also den Austausch von Informationen zwischen zwei unterschiedlichen Programmen. 
 Genauer ausgedrückt erlaubt eine API einem Programm Funktionen eines anderen Programms zu nutzen \cite{geospatial_apis}. Zu bemerken ist hierbei das keines der beiden 
 Programme die programmatischen Details des jeweils anderen kennt oder kennen muss \cite{testbed_11}.
-Die Nutzung von APIs erlaubt die Modularisierung von Software in voneinander unabhängige, und untereinander austauschbare Module.\\
-Bei diesen kann es sich zum Beispiel um Web-Anwendungen handeln welche ihre Informationen über standardisierte Protokolle,
-zum Beispiel HTTP über das Internet austauschen. Nutzer erhalten Zugriff auf die bereitstellen Informationen indem die Anfragen, sogenannte Requests, an die API
-der Webanwendung senden. Die API beantwortet diesen Request mit einem Response welcher die im Request spezifizierten Informationen enthält.\\
+Die Nutzung von APIs erlaubt die Modularisierung von Anwendungen in voneinander unabhängige, und untereinander austauschbare Module.\\
+Bei diesen kann es sich zum Beispiel um Web-Anwendungen handeln welche ihre Ressourcen über standardisierte Protokolle,
+zum Beispiel HTTP über das Internet bereitstellen. Ressourcen können dabei unterschiedlichste Formen annehmen und zum Beispiel Webseiten oder zum Download 
+angebotene Dateien sein. Es kann sich aber um abstraktere Dinge wie Funktionen oder Prozesse handeln.
+Nutzer erhalten Zugriff auf die bereitstellen Ressourcen indem die Anfragen, sogenannte Requests, an die API
+der Webanwendung senden. Die API beantwortet diesen Request mit einem Response welcher die im Request spezifizierten Ressourcen enthält.\\
 
-!Hier Bild API!
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Bilder/api.png}
+    \caption{Modell einer Webanwendung mit API}
+    \label{api_model}
+\end{figure}
 
 Moderne Web-Anwendungen werden häufig nach dem REST Paradigma entwickelt. Dieses beschreibt einen 
 Softwarearchitekturstil für verteilte Hypermedia Systeme wie das Internet. Durch die Umsetzung dieses Paradigmas sollen Webanwendungen Eigenschaften wie 
 Skalierbarkeit, Ausfallsicherheit, Transparenz und Zuverlässigkeit erreicht werden. Außerdem sollen die Belange unterschiedlichen Anwendungen getrennt werden \cite{testbed_11}.\\ 
-Zudem definiert das REST Paradigma fünf Einschränkungen bezüglich der Konfiguration von Anwendungen und deren Kommunikation. So werden Server klar von Clients 
-abgegrenzt um die Skalierbarkeit der Server sicherzustellen. Stabile Schnittstellen zwischen Server und Client stellen zudem sicher das beide unabhängig voneinander 
-entwickelt werden können. 
+Zudem definiert das REST Paradigma fünf Einschränkungen bezüglich der Konfiguration von Anwendungen und deren Kommunikation. 
+
+So werden Server klar von Clients abgegrenzt um die Skalierbarkeit der Server sicherzustellen. 
+
+Stabile Schnittstellen zwischen Server und Client stellen zudem sicher das beide unabhängig voneinander entwickelt werden können. 
+
 Um die Skalierbarkeit weiter zu steigern sollen Anwendungen stateless miteinander kommunizieren. 
 Die bedeutet das alle Informationen die ein System zur Beantwortung eines Requests benötigt in selbigem enthalten sein müssen. 
-Um die performante Beantwortung von Requests zu steigern soll es möglich sein Responses zu speichern und wiederzuverwenden. Zu guter Letzt sollen Anwendungen ressourcenbasiert arbeiten und diese 
-mit wenigen, klar definierten Methoden abrufbar machen. Ressourcen können in unterschiedlichen Repräsentationen vorliegen. So kann eine 
-Ressource zum Beispiel als XML, JSON oder HTML verfügbar sein.
+Um die performante Beantwortung von Requests zu steigern soll es möglich sein Responses zu speichern und wiederzuverwenden. 
+
+Zu guter Letzt sollen Anwendungen ressourcenbasiert arbeiten und diese mit wenigen, klar definierten Methoden abrufbar machen. 
+Ressourcen können in unterschiedlichen Repräsentationen vorliegen. So kann eine Ressource zum Beispiel als XML, JSON oder HTML verfügbar sein.
 \subsubsection{Rich Data Interfaces}
 Der Begriff Rich Data Interface kann unter zwei Gesichtspunkten betrachtet werden. Einerseits kann darunter eine API verstanden werden welche 
 reich an Interaktionsmöglichkeiten ist, dem Nutzer also umfangreiche Funktionen zur Interaktion mit den durch die von der API angebotenen Ressourcen ermöglicht.
 Andererseits könnten die Ressourcen selber reich an Informationen sein. Reichhaltige Ressourcen können zum Beispiel vorprozsessierte Daten 
 sein welche von Nutzern direkt für weitere Analysen verwendet werden können ohne das diese selber die möglicherweise Aufwendige Vorprozsessierung durchführen müssen.\\ 
-Unter reichhaltigen Ressourcen können jedoch auch aus Rohdaten abgeleitete Produkte verstanden werden welche bestimmte, bereits in den Rohdaten vorhandene Aspekte 
-hervorheben oder bereits Daten ableiten welche einen bestimmten Sachverhalt klar abbilden. 
+Unter reichhaltigen Ressourcen können jedoch auch aus Rohdaten abgeleitete Produkte verstanden werden. 
 
 \subsection{OGC und OGC Standards}
 Das Open Geospatial Consortium (OGC) widmet sich der Aufgabe die Entwicklung von internationalen Standards und unterstützender Dienste welche die Interoperabilität im 
@@ -295,6 +305,7 @@ sowie die Auffindbarkeit und Durchsuchbarkeit dieser. Ein weiterer Bereich widme
 Der OGC API - Processes - Part 1: Core Standard soll das Bereitstellen von aufwendigen Prozessierungsaufgaben und ausführbaren Prozessen welche über eine Web API
  von anderen Programmen aufgerufen und gestartet werden können unterstützen \cite{ogc_api_processes_core}. Der Standard ist dabei von Konzepten des 
 OGC Web Processing Service 2.0 Interface Standards beeinflusst und bedient sich des REST Paradigmas sowie der Java Script Object Notation (JSON). \\
+
 Der Aufbau des OGC API - Processes - Part 1: Core Standards orientiert sich am OGC Spezifikationsmodell. Dieses beschreibt die modularen Komponenten eines Standards und 
 wie diese miteinander in Verbindung stehen \cite{ogc_specification_model}. Das Spezifikationsmodell definiert einen Standard als Teillösung eines Entwicklungsproblems.
 Diese Teillösung limitiert die Anzahl an möglichen Implementierungen. Ziel ist die Harmonisierung der Implementierungen und so die Interoperabilität zu steigern.
@@ -320,7 +331,7 @@ Die Requirements-Classes definieren hier Endpoints sowie deren Funktionen, Respo
 entsprechenden Test, welcher im Abstract Test Suit beschreiben ist, auf ihre korrekte Implementierung hin überprüft werden. 
 \subsection{Evaluationskriterien}
 Die Evaluation einer Implementierung einer API kann unter verschiedenen Gesichtspunkten erfolgen. Zum einen können technische Aspekte Effizienz, Skalierbarkeit,
-Stabilität und Wartbarkeit untersucht werden. Zu dieser technischen Bewertung einer API kann auch das Überprüfen der Standardkonformität gezählt werden.
+Stabilität und Wartbarkeit untersucht werden. Zu dieser technischen Bewertung einer API kann auch das Überprüfen der Standardkonformität gezählt werden. 
 Diese kann durch einen ebenfalls zu implementierenden Unit-Test teilweise überprüft werden da mache Testfälle des Test-Suits des Standards automatisch überprüft
 werden können \cite{ogc_api_processes_core}. Der Fokus der in dieser Arbeit durchgeführt Evaluation soll jedoch die Benutzbarkeit und Benutzerfreundlichkeit der 
 Implementierung sein. Dafür können die von Jakob Nielsen 1993 aufgestellten Heuristiken verwendet werden. Dabei handelt es sich um zehn Heuristiken unter denen 

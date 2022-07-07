@@ -1,82 +1,92 @@
 \babel@toc {ngerman}{}\relax 
-\contentsline {section}{\numberline {1}Einleitung}{5}{section.1}%
-\contentsline {subsection}{\numberline {1.1}Motivation}{5}{subsection.1.1}%
-\contentsline {subsection}{\numberline {1.2}Ziele}{5}{subsection.1.2}%
-\contentsline {subsection}{\numberline {1.3}Aufbau}{6}{subsection.1.3}%
-\contentsline {section}{\numberline {2}Grundlagen}{7}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Radarfernerkundung}{7}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Copernicus Programm}{10}{subsection.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.1}Ziele}{10}{subsubsection.2.2.1}%
-\contentsline {subsubsection}{\numberline {2.2.2}Aufbau}{10}{subsubsection.2.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.3}Sentinel 1}{11}{subsubsection.2.2.3}%
-\contentsline {subsubsection}{\numberline {2.2.4}Datenzugang}{13}{subsubsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.3}Überschwemmungsmonitoring}{13}{subsection.2.3}%
-\contentsline {subsection}{\numberline {2.4}Web Application Programming Interfaces}{15}{subsection.2.4}%
-\contentsline {subsubsection}{\numberline {2.4.1}Rich Data Interfaces}{16}{subsubsection.2.4.1}%
-\contentsline {subsection}{\numberline {2.5}OGC und OGC Standards}{16}{subsection.2.5}%
-\contentsline {subsection}{\numberline {2.6}OGC API - Processes - Part 1: Core}{17}{subsection.2.6}%
-\contentsline {subsection}{\numberline {2.7}Evaluationskriterien}{18}{subsection.2.7}%
-\contentsline {section}{\numberline {3}Implementierung}{19}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Softwarestack}{19}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Struktur}{19}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Ressourcen}{19}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Requirements Classes für Encodings}{20}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}Requirements Class Core}{20}{subsection.3.5}%
-\contentsline {subsubsection}{\numberline {3.5.1}HTTP 1.1}{20}{subsubsection.3.5.1}%
-\contentsline {subsubsection}{\numberline {3.5.2}Limit Paramter}{21}{subsubsection.3.5.2}%
-\contentsline {subsubsection}{\numberline {3.5.3}API Landig Page}{22}{subsubsection.3.5.3}%
-\contentsline {subsubsection}{\numberline {3.5.4}API Definition}{22}{subsubsection.3.5.4}%
-\contentsline {subsubsection}{\numberline {3.5.5}Conformance Decalration}{22}{subsubsection.3.5.5}%
-\contentsline {subsubsection}{\numberline {3.5.6}Process List Endpoint}{23}{subsubsection.3.5.6}%
-\contentsline {subsubsection}{\numberline {3.5.7}Process Description Endpoint}{23}{subsubsection.3.5.7}%
-\contentsline {subsubsection}{\numberline {3.5.8}Prozess Ausführung}{23}{subsubsection.3.5.8}%
-\contentsline {subsubsection}{\numberline {3.5.9}Job Status}{23}{subsubsection.3.5.9}%
-\contentsline {subsubsection}{\numberline {3.5.10}Job Resultate}{24}{subsubsection.3.5.10}%
-\contentsline {subsection}{\numberline {3.6}Requirements Class OGC Process Description}{24}{subsection.3.6}%
-\contentsline {subsection}{\numberline {3.7}Requirements Class Job List}{24}{subsection.3.7}%
-\contentsline {subsection}{\numberline {3.8}Requirements Class Dismiss}{24}{subsection.3.8}%
-\contentsline {subsection}{\numberline {3.9}Requirements Class OpenAPI 3.0}{24}{subsection.3.9}%
-\contentsline {subsection}{\numberline {3.10}Prozesse}{24}{subsection.3.10}%
-\contentsline {subsubsection}{\numberline {3.10.1}Echo}{24}{subsubsection.3.10.1}%
-\contentsline {subsubsection}{\numberline {3.10.2}Überflutungsmonitoring}{25}{subsubsection.3.10.2}%
-\contentsline {subsection}{\numberline {3.11}Zusätzliche Funktionalitäten}{25}{subsection.3.11}%
-\contentsline {subsubsection}{\numberline {3.11.1}Coverage}{25}{subsubsection.3.11.1}%
-\contentsline {section}{\numberline {4}Evaluation}{26}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Nielsen's Nutzbarkeitsheuristiken}{26}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Unit Testsuit}{26}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}OGC Compliance Test}{26}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Diskussion}{27}{section.5}%
-\contentsline {section}{\numberline {6}Ausblick}{28}{section.6}%
-\contentsline {section}{\numberline {7}Fazit}{29}{section.7}%
-\contentsline {section}{\numberline {A}Quellcodeverzeichnis}{32}{appendix.A}%
-\contentsline {subsection}{\numberline {A.1}Konfiguration von Werkzeug auf HTTP 1.1}{32}{subsection.A.1}%
-\contentsline {subsection}{\numberline {A.2}Quellcode Landing Page Endpoint}{32}{subsection.A.2}%
-\contentsline {subsection}{\numberline {A.3}Quellcode API Definition Endpoint}{33}{subsection.A.3}%
-\contentsline {subsection}{\numberline {A.4}Quellcode Conformance Endpoint}{34}{subsection.A.4}%
-\contentsline {subsection}{\numberline {A.5}Quellcode Process List Endpoint}{35}{subsection.A.5}%
-\contentsline {subsection}{\numberline {A.6}Quellcode Process Description Endpoint}{37}{subsection.A.6}%
-\contentsline {subsection}{\numberline {A.7}Quellcode Process Execution Endpoint}{38}{subsection.A.7}%
-\contentsline {subsection}{\numberline {A.8}Quellcode Echo Process}{40}{subsection.A.8}%
-\contentsline {section}{\numberline {B}Schemata}{40}{appendix.B}%
-\contentsline {subsection}{\numberline {B.1}landingPage.yaml}{40}{subsection.B.1}%
-\contentsline {subsection}{\numberline {B.2}confClasses.yaml}{40}{subsection.B.2}%
-\contentsline {subsection}{\numberline {B.3}processList.yaml}{41}{subsection.B.3}%
-\contentsline {subsection}{\numberline {B.4}limit.yaml}{41}{subsection.B.4}%
-\contentsline {subsection}{\numberline {B.5}link.yaml}{41}{subsection.B.5}%
-\contentsline {subsection}{\numberline {B.6}processList.yaml}{42}{subsection.B.6}%
-\contentsline {subsection}{\numberline {B.7}processSummary.yaml}{42}{subsection.B.7}%
-\contentsline {subsection}{\numberline {B.8}jobControlOptions.yaml}{43}{subsection.B.8}%
-\contentsline {subsection}{\numberline {B.9}transmissionMode.yaml}{43}{subsection.B.9}%
-\contentsline {subsection}{\numberline {B.10}process.yaml}{43}{subsection.B.10}%
-\contentsline {subsection}{\numberline {B.11}inputDescription.yaml}{43}{subsection.B.11}%
-\contentsline {subsection}{\numberline {B.12}outputDescription.yaml}{44}{subsection.B.12}%
-\contentsline {subsection}{\numberline {B.13}description.yaml}{44}{subsection.B.13}%
-\contentsline {subsection}{\numberline {B.14}jobList.yaml}{45}{subsection.B.14}%
-\contentsline {subsection}{\numberline {B.15}statusInfo.yaml}{45}{subsection.B.15}%
-\contentsline {subsection}{\numberline {B.16}statusCode.yaml}{46}{subsection.B.16}%
-\contentsline {section}{\numberline {C}Ressourcen}{46}{appendix.C}%
-\contentsline {subsection}{\numberline {C.1}landingPage.html}{46}{subsection.C.1}%
-\contentsline {subsection}{\numberline {C.2}landingPage.json}{48}{subsection.C.2}%
-\contentsline {subsection}{\numberline {C.3}confClasses.html}{49}{subsection.C.3}%
-\contentsline {subsection}{\numberline {C.4}confClasses.json}{50}{subsection.C.4}%
-\contentsline {subsection}{\numberline {C.5}processList.html}{50}{subsection.C.5}%
+\contentsline {section}{\numberline {1}Einleitung}{7}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Motivation}{7}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Ziele}{7}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Aufbau}{8}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Grundlagen}{9}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Radarfernerkundung}{9}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Copernicus Programm}{12}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Ziele}{12}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Aufbau}{12}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Sentinel 1}{13}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}Datenzugang}{14}{subsubsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.3}Überschwemmungsmonitoring}{15}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Web Application Programming Interfaces}{16}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {2.4.1}Rich Data Interfaces}{18}{subsubsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.5}OGC und OGC Standards}{18}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}OGC API - Processes - Part 1: Core}{19}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Evaluationskriterien}{20}{subsection.2.7}%
+\contentsline {section}{\numberline {3}Implementierung}{21}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Softwarestack}{21}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Struktur}{21}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Ressourcen}{21}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Requirements Classes für Encodings}{22}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Requirements Class Core}{22}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}HTTP 1.1}{22}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Limit Paramter}{23}{subsubsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.3}API Landig Page}{24}{subsubsection.3.5.3}%
+\contentsline {subsubsection}{\numberline {3.5.4}API Definition}{24}{subsubsection.3.5.4}%
+\contentsline {subsubsection}{\numberline {3.5.5}Conformance Decalration}{24}{subsubsection.3.5.5}%
+\contentsline {subsubsection}{\numberline {3.5.6}Process List Endpoint}{25}{subsubsection.3.5.6}%
+\contentsline {subsubsection}{\numberline {3.5.7}Process Description Endpoint}{25}{subsubsection.3.5.7}%
+\contentsline {subsubsection}{\numberline {3.5.8}Prozess Ausführung}{25}{subsubsection.3.5.8}%
+\contentsline {subsubsection}{\numberline {3.5.9}Job Status}{26}{subsubsection.3.5.9}%
+\contentsline {subsubsection}{\numberline {3.5.10}Job Resultate}{26}{subsubsection.3.5.10}%
+\contentsline {subsection}{\numberline {3.6}Requirements Class OGC Process Description}{26}{subsection.3.6}%
+\contentsline {subsection}{\numberline {3.7}Requirements Class Job List}{26}{subsection.3.7}%
+\contentsline {subsection}{\numberline {3.8}Requirements Class Dismiss}{26}{subsection.3.8}%
+\contentsline {subsection}{\numberline {3.9}Requirements Class OpenAPI 3.0}{26}{subsection.3.9}%
+\contentsline {subsection}{\numberline {3.10}Prozesse}{27}{subsection.3.10}%
+\contentsline {subsubsection}{\numberline {3.10.1}Echo}{27}{subsubsection.3.10.1}%
+\contentsline {subsubsection}{\numberline {3.10.2}Überflutungsmonitoring}{27}{subsubsection.3.10.2}%
+\contentsline {subsection}{\numberline {3.11}Zusätzliche Funktionalitäten}{27}{subsection.3.11}%
+\contentsline {subsubsection}{\numberline {3.11.1}Coverage}{27}{subsubsection.3.11.1}%
+\contentsline {section}{\numberline {4}Evaluation}{28}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Nielsen's Nutzbarkeitsheuristiken}{28}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Unit Testsuit}{28}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}OGC Compliance Test}{28}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Diskussion}{29}{section.5}%
+\contentsline {section}{\numberline {6}Ausblick}{30}{section.6}%
+\contentsline {section}{\numberline {7}Fazit}{31}{section.7}%
+\contentsline {section}{\numberline {A}Schemata}{34}{appendix.A}%
+\contentsline {subsection}{\numberline {A.1}Ablauf eines Requests an den API Landing Page Endpoint}{34}{subsection.A.1}%
+\contentsline {subsection}{\numberline {A.2}Ablauf eines Requests an den API Definition Endpoint}{35}{subsection.A.2}%
+\contentsline {subsection}{\numberline {A.3}Ablauf eines Requests an den Conformance Endpoint}{35}{subsection.A.3}%
+\contentsline {subsection}{\numberline {A.4}Ablauf eines Requests an den Process List Endpoint}{36}{subsection.A.4}%
+\contentsline {subsection}{\numberline {A.5}Ablauf eines Requests an den Process Description Endpoint}{37}{subsection.A.5}%
+\contentsline {subsection}{\numberline {A.6}Ablauf eines Requests an den Job Status Endpoint}{38}{subsection.A.6}%
+\contentsline {section}{\numberline {B}Quellcodeverzeichnis}{38}{appendix.B}%
+\contentsline {subsection}{\numberline {B.1}Konfiguration von Werkzeug auf HTTP 1.1}{38}{subsection.B.1}%
+\contentsline {subsection}{\numberline {B.2}Quellcode Landing Page Endpoint}{39}{subsection.B.2}%
+\contentsline {subsection}{\numberline {B.3}Quellcode API Definition Endpoint}{40}{subsection.B.3}%
+\contentsline {subsection}{\numberline {B.4}Quellcode Conformance Endpoint}{41}{subsection.B.4}%
+\contentsline {subsection}{\numberline {B.5}Quellcode Process List Endpoint}{42}{subsection.B.5}%
+\contentsline {subsection}{\numberline {B.6}Quellcode Process Description Endpoint}{44}{subsection.B.6}%
+\contentsline {subsection}{\numberline {B.7}Quellcode Process Execution Endpoint}{45}{subsection.B.7}%
+\contentsline {subsection}{\numberline {B.8}Quellcode Echo Process}{47}{subsection.B.8}%
+\contentsline {section}{\numberline {C}Schemata}{47}{appendix.C}%
+\contentsline {subsection}{\numberline {C.1}landingPage.yaml}{47}{subsection.C.1}%
+\contentsline {subsection}{\numberline {C.2}confClasses.yaml}{47}{subsection.C.2}%
+\contentsline {subsection}{\numberline {C.3}processList.yaml}{48}{subsection.C.3}%
+\contentsline {subsection}{\numberline {C.4}limit.yaml}{48}{subsection.C.4}%
+\contentsline {subsection}{\numberline {C.5}link.yaml}{48}{subsection.C.5}%
+\contentsline {subsection}{\numberline {C.6}processList.yaml}{49}{subsection.C.6}%
+\contentsline {subsection}{\numberline {C.7}processSummary.yaml}{49}{subsection.C.7}%
+\contentsline {subsection}{\numberline {C.8}jobControlOptions.yaml}{50}{subsection.C.8}%
+\contentsline {subsection}{\numberline {C.9}transmissionMode.yaml}{50}{subsection.C.9}%
+\contentsline {subsection}{\numberline {C.10}process.yaml}{50}{subsection.C.10}%
+\contentsline {subsection}{\numberline {C.11}inputDescription.yaml}{50}{subsection.C.11}%
+\contentsline {subsection}{\numberline {C.12}outputDescription.yaml}{51}{subsection.C.12}%
+\contentsline {subsection}{\numberline {C.13}description.yaml}{51}{subsection.C.13}%
+\contentsline {subsection}{\numberline {C.14}jobList.yaml}{52}{subsection.C.14}%
+\contentsline {subsection}{\numberline {C.15}statusInfo.yaml}{52}{subsection.C.15}%
+\contentsline {subsection}{\numberline {C.16}statusCode.yaml}{53}{subsection.C.16}%
+\contentsline {section}{\numberline {D}Ressourcen}{53}{appendix.D}%
+\contentsline {subsection}{\numberline {D.1}landingPage.html}{53}{subsection.D.1}%
+\contentsline {subsection}{\numberline {D.2}landingPage.json}{55}{subsection.D.2}%
+\contentsline {subsection}{\numberline {D.3}confClasses.html}{56}{subsection.D.3}%
+\contentsline {subsection}{\numberline {D.4}confClasses.json}{57}{subsection.D.4}%
+\contentsline {subsection}{\numberline {D.5}processList.html}{57}{subsection.D.5}%
+\contentsline {subsection}{\numberline {D.6}processDescription.html}{59}{subsection.D.6}%
+\contentsline {subsection}{\numberline {D.7}FloodMonitoringProcessDescription.json}{59}{subsection.D.7}%
+\contentsline {subsection}{\numberline {D.8}EchoProcessDescription.json}{61}{subsection.D.8}%
