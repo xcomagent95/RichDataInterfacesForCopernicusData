@@ -5,7 +5,12 @@
 Die prototypische Entwicklung eines leichtgewichtigen Rich Data Interface für Copernicus-Daten erfolgte im Rahmen dieser Arbeit mit der Programmiersprache Python.
 Diese ist nicht nur aufgrund ihrer Einfachheit vorteilhaft sondern erlaubt auch den Zugriff auf eine große Zahl von Packages für die unterschiedlichsten 
 Anwendungsfälle. 
-Weite Teile des Rich Data Interface wurden mithilfe des Flask-Frameworks umgesetzt. Dieses erlaubt das schnelle Entwickeln einer leichtgewichtigen API.   
+Weite Teile des Rich Data Interface wurden mithilfe des Flask-Frameworks umgesetzt. Dieses erlaubt das schnelle Entwickeln einer leichtgewichtigen API.  
+Neben Python Standard-Bibliotheken kommen nur wenige zusätzliche Packages zum Einsatz. Um zu Anfragen passende Sentinel-1 Datensätze aus dem 
+Copernicus-Access-Hub zu finden kommt das Package sentinelsat zum Einsatz. Das Herunterladen und die Verarbeitung der Sentinel-1 Datensätze wird jedoch 
+durch das Package snappy realisiert. Dieses ist ein Wrapper für die SNAP Software welche im Rahmen des Copernicus-Programmes kostenlos zur Verfügung 
+gestellt wird. Statistische Auswertungen der Radarbilder werden mit dem Package skimage durchgeführt. Da die Radarbilder jedoch auch zugeschnitten und 
+mathematisch zu kombinieren sind werden auch die Packages gdal, ogr und osr verwendet. 
 
 \subsection{Struktur}
 Die Anwendung ist in vier Python-Scripte aufgeteilt. Im api.py Script ist die API der Anwendung definiert. 
@@ -101,9 +106,10 @@ Die einzig zulässige HTTP-Methode für diesen Endpoint ist die HTTP-Get Methode
 Die API Landing Page kann als Eintrittspunkt zu allen anderen Funktionalitäten der Anwendung bezeichnet werden. Sie enthält Verknüpfungen zu den Endpoints, 
 API Landing Page, API Definition, Conformance, Process List, Process Description, Job List und Coverage.\\
 Die API Landing Page kann in den Media-Types \textit{text/html} (siehe Anhang \ref{RessourceLandingPageHTML}) und \textit{application/json} 
-(siehe Anhang \ref{RessourceLandingPageJSON}) abgerufen werden.
+(siehe Anhang \ref{RessourceLandingPageJSON}) abgerufen werden. \\
+
+
 Nach Überprüfung der durch einen Request verwendeten HTTP-Methode wird je nach gewähltem Media-Type, ein passender Response generiert. 
-Dazu wird entweder aus der landingPage.html beziehungsweise der landingPage.json ein Response erzeugt.
 Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header
 versandt (siehe Anhang \ref{PseudocodeLandingPage} und \ref{QuellcodeLandingPage}) \cite{ogc_api_processes_core}. 
 
@@ -113,6 +119,8 @@ Der API Definition Endpoint kann über den URL \textit{http://HOST:PORT/api?f=<M
 Auch für diesen Endpoint ist die einzig zulässige HTTP-Methode Get. 
 Die API Definition enthält detaillierte Informationen zur API. In ihr sind alle verfügbaren Endpoints mit ihren Parametern und Responses aufgeführt. 
 Auch die API Definition kann in den Media-Types \textit{text/html} und \textit{application/json} abgerufen werden.\\
+
+             
 Nach der Überprüfung der vom request verwendeten HTTP-Methode wird ein zum angefragten Media-Type passender Response aus der apiDefinition.html oder 
 apiDefinition.json generiert . 
 Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{PseudocodeAPIDefinition} und \ref{QuellcodeAPIDefinition}) 
@@ -122,9 +130,8 @@ Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versand
 Ein weiterer zur Requirements-Class Core gehörender Endpoint ist der Conformance Declaration Endpoint.
 Der Conformance Declaration Endpoint kann über den URL \textit{http://HOST:PORT/conformance?f=<MEDIA-TYPE>} angefragt werden und liefert als 
 Ressource die Conformance Declaration (siehe Anhang \ref{SchemaConfClassesyaml}). Get ist ebenfalls die einzige zulässige HTTP-Methode für Requests an diesen Endpoint.
-
 Die Conformance Declaration enthält Verknüpfungen zu allen von der Anwendung implementierten Requirements Classes und steht in den Media-Types textit{text/html} 
-(siehe Anhang \ref{RessourceConfClassesHTML}) und \textit{application/json} (siehe Anhang \ref{RessourceConfClassesJSON}) zu Verfügung.
+(siehe Anhang \ref{RessourceConfClassesHTML}) und \textit{application/json} (siehe Anhang \ref{RessourceConfClassesJSON}) zu Verfügung.\\
 
 Gültige Requests lösen die Generierung eines Responses im angefragten Media-Type aus. 
 Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{PseudocodeCoverage} und \ref{QuellcodeConformance})
@@ -132,11 +139,10 @@ Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versa
 
 \subsubsection{Process List Endpoint}
 Der ebenfalls zur Requirements-Class Core gehörende Process List Endpoint kann über den URL \textit{http://HOST:PORT/processes?f=<MEDIA-TYPE>\&limit=<INTEGRER>} 
-angefragt werden. 
-Request sind nur mit der HTTP-Methode Get zulässig. Als Ressource erhalten Nutzer eine detaillierte Liste der durch die Anwendung angebotenen 
+angefragt werden. Request sind nur mit der HTTP-Methode Get zulässig. Als Ressource erhalten Nutzer eine detaillierte Liste der durch die Anwendung angebotenen 
 Prozesse (siehe Anhang \ref{SchemaProcessListyaml}). In dieser Liste finden sich die Bezeichnungen, 
 Steueroptionen sowie die Ein- und Ausgaben der Prozesse. Die Process Liste kann in den Media-Types \textit{text/html} (siehe Anhang \ref{RessourceProcessListHTML}) 
-und \textit{application/json} angefragt werden. 
+und \textit{application/json} angefragt werden. \\
 
 Die Generierung eines Responses im angefragten Media-Type wird nach einem gültigen Request gestartet. 
 Dazu werden zunächst alle im \textit{templates/json/processes}-Verzeichnis hinterlegten Prozess Beschreibungen geladen und in ein Array geschrieben. 
@@ -154,9 +160,12 @@ Sie kann der Prozess Liste entnommen werden. Um eine Prozess Beschreibung anzufr
 Als Ressource liefert der Endpoint eine detaillierte Beschreibung des im Request spezifizierten Prozesses und enthält Informationen 
 zu den Steueroptionen sowie den Ein- und Ausgaben des Prozesses.. 
 Die Beschreibungen sind dabei so strukturiert wie durch die Requirements-Class OGC Process Description vorgegeben (siehe Anhang \ref{SchemaProcessyaml}). 
-Wie die Prozess Liste kann die auch die Process Beschreibung im Media-Type \textit{text/html} oder \textit{application/json} angefragt werden.
+Wie die Prozess Liste kann die auch die Process Beschreibung im Media-Type \textit{text/html} (siehe Anhang \ref{RessourceProcessDescriptionHTML}) 
+oder \textit{application/json} angefragt werden.
 Jeder Prozess der von der Anwendung angeboten wird muss eine eigene Prozess-Beschreibung haben (siehe Anhang \ref{RessourceEchoProcessDescriptionJSON} und 
-\ref{RessourceFloodMonitoringProcessDescriptionJSON}).  
+\ref{RessourceFloodMonitoringProcessDescriptionJSON}).\\
+
+
 Die Generierung eines Responses verläuft ähnlich der der Prozess Liste. Zunächst wird die Prozess Beschreibung des angefragten Prozesses geladen. 
 Soll ein Response mit dem Media-Type \textit{application/json} generiert werden wird diese versandt. 
 Für Request mit dem Media-Type \textit{text/html} wird die Prozessbeschreibung zusammen mit einem Template an den Renderer übergeben. 
@@ -164,19 +173,19 @@ Die so erzeugten Responses werden zusammen mit den Headern \textit{link}- und \t
 und \ref{QuellcodeProcessDescription} \cite{ogc_api_processes_core}.
 
 \subsubsection{Process Execution Endpoint}
-?Wie erreiche ich den Endpoint?
-?Welche Ressource liefert der Endpoint?
-?Welche HTTP-Methoden sind erlaubt?
-?Was ist der Inhalt der Resource?
-?Welche Media Types gibt es?
+Die Requirements-Class definiert auch die Funktionalitäten zum Ausführen der angebotenen Prozesse.
+Um Prozesse auszuführen können Requests mit der HTTP-Methode Post and den URL \textit{http://HOST:PORT/processes/<processID>/execution} gestellt werden.
+Dabei müssen die in der Prozess Beschreibung aufgeführten Inputs sowie die gewünschten Outputs im Request enthalten sein. 
+Diese werden zunächst verifiziert. Ein erfolgreicher Request resultiert in der Erstellung eines Jobs.              
+
 ?Wie läuft die generierung des Response ab und was enthält dieser?
 !Pseudode!
 
 \subsubsection{Job List Endpoint}
 Ein Aufruf des URL \textit{http://HOST:PORT/jobs?f=<MEDIA-TYPE>} liefert als Ressource eine Liste aller angelegten Jobs (siehe Anhang \ref{appendixjobListyaml}). 
-Die Job Liste kann nur mit der HTTP-Get Methode abgefragt werden. 
-?Was ist der Inhalt der Resource?
-?Welche Media Types gibt es?
+Die Job Liste kann nur mit der HTTP-Get Methode abgefragt werden. Die Ressource liefert eine Liste aller angelegten Jobs (siehe Anhang \ref{SchemaJobListyaml}). 
+Diese kann mit zusätzlichen Parametern eingeschränkt werden. Analog zur Prozess Liste kann die Job Liste im Media-Type \textit{text/html} (siehe Anhang \ref{RessourceJobListHTML})
+und \textit{application/json} angefragt werden. 
 ?Wie läuft die generierung des Response ab und was enthält dieser?
 !Pseudode!
 
@@ -185,9 +194,10 @@ Die Requirements-Class Core definiert auch den Job Endpoint.
 Requests an den Job Endpoint können an den URL \textit{http://HOST:PORT/jobs/<jobID>?f=<MEDIA-TYPE>} gestellt werden. 
 Welcher Job Status zurückgegeben werden soll wird über den \textit{jobID}-Parameter spezifiziert. 
 Die im Response enthaltenen Ressource ist der Job Status (siehe Anhang \ref{SchemaStatusInfoyaml}). Der Job Status kann nur mit der HTTP-Get Methode abgerufen werden. 
-Dieser kann unter anderem entnommen werden 
-ob ein und wann ein Job gestartet wurde, in welches Bearbeitungsschritt er sich befindet oder ob der Job bereits erfolgreich abgeschlossen 
-oder gescheitert ist. Die Job Status RRessource steht als \textit{text/html} und \textit{application/json} zur Verfügung. 
+Dieser kann unter anderem entnommen werden ob ein und wann ein Job gestartet wurde, in welches Bearbeitungsschritt er sich befindet oder ob der Job bereits 
+erfolgreich abgeschlossen oder gescheitert ist. 
+Die Job Status Ressource steht als \textit{text/html} (siehe Anhang \ref{RessourceJobHTML}) und \textit{application/json} zur Verfügung. 
+
 Wird im Request eine vorhandene \textit{jobID} angefragt wird die status.json aus dem \textit{jobs/<jobID>/} Verzeichnis geladen und je nach gewünschtem Media-Type 
 ein Response generiert. Wurde die Ressource im Media-Type \textit{text/html} angefragt wird ein HTML-Template zusammen mit der geladenen status.json 
 dem Renderer übergeben.
@@ -197,10 +207,10 @@ Soll ein Job abgebrochen werden kann der Job Endpoint mit der HTTP-Delete Method
 gesetzt. Dies sorgt für den Abbruch der Bearbeitung. 
 
 \subsubsection{Job Results Endpoint}
-Die Ergebnisse eines Jobs können unter dem URL \textit{http://HOST:PORT/jobs/<jobID>//results?f=<MEDIA-TYPE>} abgerufen werden. 
-?Welche Ressource liefert der Endpoint?
-?Welche HTTP-Methoden sind erlaubt?
-?Was ist der Inhalt der Resource?
+Die Ergebnisse eines erfolgreichen Jobs können unter dem URL \textit{http://HOST:PORT/jobs/<jobID>//results?f=<MEDIA-TYPE>} abgerufen werden. 
+Die bereitgestellten Ressourcen variieren je nach Prozess, gewähltem Output sowie dessen Transmission-Mode und Response-Type. Sie können 
+mit der HTTP-Get Methode abgerufen werden.
+
 ?Welche Media Types gibt es?
 ?Wie läuft die generierung des Response ab und was enthält dieser?
 !Pseudode!
@@ -228,11 +238,14 @@ Als letzter Schritt wird der Job-Status, der Fortschritt, der Infotext sowie der
 \subsubsection{Überflutungsmonitoring}
 \subsection{Zusätzliche Funktionalitäten}
 \subsubsection{Coverage} 
-Der nicht im Standard definierte Coverage Endpoint kann über den URL \textit{http://HOST:PORT/coverage?f=<MEDIA-TYPE>} erreicht werden. Als Ressource liefert er eine Liste aller Sentinel-1 Datensätze welche persistent gespiechert sind. 
-Jobs welche auf diese Datensätze zugreifen können schneller abgearbeitet werden da ein zeitaufwendiges Herunterladen der Datensätze entfällt. Die Coverage Ressource kann nur mit der HTTP-Get Methode angefragt werden. 
-Die Ressource die der Endpoint zur Verfügung stellt enthält eine Liste aller gespeicherten Sentinel-1 Datensätze. Diese werden mit ihrem Produktnamen und dem Datum der Aufnahme 
+Der nicht im Standard definierte Coverage Endpoint kann über den URL \textit{http://HOST:PORT/coverage?f=<MEDIA-TYPE>} mit der HTTP-Get Methode erreicht werden. 
+Als Ressource liefert er eine Liste aller Sentinel-1 Datensätze welche persistent gespiechert sind. 
+Jobs welche auf diese Datensätze zugreifen können schneller abgearbeitet werden da ein zeitaufwendiges Herunterladen der Datensätze entfällt. 
+Die Coverage Ressource kann nur mit der HTTP-Get Methode angefragt werden. 
+Die Ressource die der Endpoint zur Verfügung stellt enthält eine Liste aller gespeicherten Sentinel-1 Datensätze. 
+Diese werden mit ihrem Produktnamen und dem Datum der Aufnahme 
 und ihrer Bounding-BBox aufgeführt. Die Bounding-BBox gibt Aufschluss über die räumliche Ausdehnung des Datensatzes. 
-Über den Endpoint kann die Ressource in den Media-Types \textit{text/html} oder \textit{application/json} angefragt werden. 
+Über den Endpoint kann die Ressource in den Media-Types \textit{text/html} (siehe Anhang \ref{RessourceCoveragesHTML}) oder \textit{application/json} angefragt werden. 
 
 \subsubsection{Test Suit}
 Um die Funktionen der API und seine Standradkonformität testen zu können wurde ein Unit-Test oder test Suit aus dem im Standard beschriebenen Abstract Test Suit abgeleitet und 

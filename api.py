@@ -296,7 +296,7 @@ def getJobs():
                     counter += 1 #increase counter
                     if(counter == limit): #check if counter has reached limit value
                         break #if limit is reached break loop
-            response = render_template('html/jobs.html', status=jobList) #render dynamic job list 
+            response = render_template('html/jobList.html', status=jobList) #render dynamic job list 
             return response, 200, {"link": "localhost:5000/jobs?f=text/html", "resource": "jobs"} #return response and ok with link and resource header
         
         

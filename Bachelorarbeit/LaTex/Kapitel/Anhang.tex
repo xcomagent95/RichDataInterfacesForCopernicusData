@@ -2,8 +2,8 @@
 \restoregeometry
 \counterwithin{lstlisting}{section}
 
-\section{Pseudocode}
-\renewcommand{\lstlistingname}{Pseudocode}  
+\renewcommand{\lstlistingname}{Pseudocode} 
+\section{Pseudocode} 
 \subsection{Ablauf eines Requests an den API Landing Page Endpoint}
 \begin{algorithm}[H]
 \caption{Ablauf eines Requests an den API Landing Page Endpoint}\label{PseudocodeLandingPage}
@@ -1549,7 +1549,7 @@ enum:
         }
         }
     },
-    "links": [SSS
+    "links": [
         {
             "href": "localhost:5000/processes/Echo?f=application/json",
             "rel": "self",
@@ -1565,3 +1565,142 @@ enum:
     ]
     }     
 \end{lstlisting}\label{RessourceEchoProcessDescriptionJSON}  
+
+\subsection{jobList.html}
+\begin{lstlisting}[caption={jobList.html}, style = HTML]
+<!DOCTYPE html>
+<html>
+    <body>
+        {% block body %}
+        <p>
+            {% for status in status %}
+            <b>jobID:</b> {{status.jobID}}<br>
+                processID: {{status.processID}}<br>
+                Type: {{status.type}}<br>
+                Status: {{status.status}}<br>
+                Message: {{status.message}}<br>
+                Progress: {{status.progress}}<br>
+                Created: {{status.created}}<br>
+                Started: {{status.started}}
+            <p>
+                <b>links: </b><br>
+                    href:<a href="localhost:5000/jobs/{{status.jobID}}?f=text/html">
+                    localhost:5000/jobs/{{status.jobID}}?f=text/html</a><br>
+                    rel: status<br>
+                    type: text/html,<br>
+                    title: status as HTML<br>
+                    <br>
+                    href:<a href="localhost:5000/jobs/{{status.jobID}}?f=application/json">
+                    localhost:5000/jobs/{{status.jobID}}?f=application/json</a><br>
+                    rel: status<br>
+                    type: application/json,<br>
+                    title: status as JSON<br>
+            </p>
+            <p>=====================================================================</p>
+            {% endfor %}
+        </p>
+        {% endblock %}
+        <p><b>links:</b><br>
+            href:<a href="localhost:5000/jobs?f=text/html">
+            localhost:5000/jobs?f=text/html</a><br>
+            rel: self<br>
+            type: text/html<br>
+            title: This document<br>
+            <br>
+            href:<a href="localhost:5000/jobs?f=application/json">
+            localhost:5000/jobs?f=application/json</a><br>
+            rel: alternate<br>
+            type: application/json<br>
+            title: This document as JSON<br>
+        </p>
+    </body>
+</html>
+\end{lstlisting}\label{RessourceJobListHTML}  
+
+\subsection{job.html}
+\begin{lstlisting}[caption={job.html}, style = HTML]
+<!DOCTYPE html>
+<html>
+    <body>
+        <p>
+        <b>jobID: {{job.jobID}}</b><br>
+        <b>processID: {{job.processID}}</b><br>
+        Status: {{job.status}}<br>
+        Message: {{job.message}}<br>
+        Progress: {{job.progress}}<br>
+        Created: {{job.created}}<br>
+        Ctarted: {{job.started}}<br><br>
+        <b>links:</b>
+        <br>href: <a href="localhost:5000/jobs/{{job.jobID}}?f=text/html">
+        localhost:5000/jobs/{{job.jobID}}?f=text/html</a>
+        <br>rel: self
+        <br>title: Job Status
+        <br> type: text/html<br>
+        <br>href: <a href="localhost:5000/jobs/{{job.jobID}}?f=application/json">
+        localhost:5000/jobs/{{job.jobID}}?f=application/json</a>
+        <br>rel: alternate
+        <br>title: Job Status
+        <br>type: application/json
+        </p>
+    </body>
+</html>
+\end{lstlisting}\label{RessourceJobHTML}  
+
+\subsection{coverage.html}
+\begin{lstlisting}[caption={coverage.html}, style = HTML]
+<!DOCTYPE html>
+<html>
+	<body>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+		integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+		crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+		integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+		crossorigin=""></script>
+		<h1>coverage:</h1>
+		{% block body %}
+		<p>
+            {% for coverage in coverages %}
+            <b>Product:</b> {{coverage.name}}<br>
+			BBox: {{coverage.bbox}}<br>
+			Date: {{coverage.date}}<br>
+			<br>
+            {% endfor %}
+		</p>
+    	{% endblock %}
+		<div id="map" style="width: 600px; height: 400px"></div>
+		<script>
+			var map = L.map('map').setView([51.505, -0.09], 13);
+			L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			maxZoom: 19,
+			attribution: 'Copyright OpenStreetMap'
+			}).addTo(map);
+			
+			var bboxes = '{{bboxes}}'
+			var bboxesString = bboxes.replaceAll('&#39;', '"')
+			var bboxesJSON = JSON.parse(bboxesString)
+			
+			var coverage = L.featureGroup().addTo(map)
+			for (var i=0; i < bboxesJSON.length; i++) {
+				name = bboxesJSON[i].features[0].properties.name
+				date = bboxesJSON[i].features[0].properties.date
+				console.log(name)
+				layer = L.geoJSON(bboxesJSON[i]).bindPopup("Name: " + name + "<br>Date: " + date, {maxWidth: "auto"})
+				layer.addTo(coverage)
+			}
+			map.fitBounds(coverage.getBounds())
+		</script>
+		<p><b>links:</b><br>
+			href:<a href="localhost:5000/coverage?f=text/html">localhost:5000/coverage?f=text/html</a><br>
+			rel: self<br>
+			type: text/html<br>
+			title: This document<br>
+			<br>
+			href:<a href="localhost:5000/coverage?f=application/json">localhost:5000/coverage?f=application/json</a><br>
+			rel: alternate<br>
+			type: application/json<br>
+			title: This document as JSON<br>
+		</p>
+	</body>
+</html>
+\end{lstlisting}\label{RessourceCoveragesHTML}  

@@ -20,8 +20,8 @@ from snappy import GPF
 from osgeo import gdal, ogr, osr
 from gdalconst import GA_ReadOnly
 
-from scipy import ndimage
-import matplotlib.pyplot as plt
+#from scipy import ndimage
+#import matplotlib.pyplot as plt
 from skimage.filters import threshold_isodata
 from skimage.filters import threshold_yen
 from skimage.filters import threshold_otsu
