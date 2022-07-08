@@ -2,16 +2,15 @@
 \restoregeometry
 \counterwithin{lstlisting}{section}
 
-\section{Schemata}
+\section{Pseudocode}
 \renewcommand{\lstlistingname}{Pseudocode}  
-
 \subsection{Ablauf eines Requests an den API Landing Page Endpoint}
 \begin{algorithm}[H]
-\caption{Ablauf eines Requests an den API Landing Page Endpoint}\label{appendixpsedoLandingPage}
+\caption{Ablauf eines Requests an den API Landing Page Endpoint}\label{PseudocodeLandingPage}
 \scriptsize
 \begin{algorithmic}     
-    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
-    \STATE Encoding $\gets$ Anfrage.f
+    \STATE HTTP-Methode $\gets$ Request.HTTP-Methode
+    \STATE Encoding $\gets$ Request.f
     \IF{HTTP-Methode != GET}
         \RETURN{HTTP-Statuscode 405}
     \ELSE{}
@@ -21,13 +20,13 @@
             \STATE Response $\gets$ render\_template(templates/html/landingPage.html)
             \STATE Link-Header $\gets$ http://HOST:PORT/?f=text/html
             \STATE Resource-Header $\gets$ landingPage
-            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
         \ELSIF{Encoding == application/json}
             \STATE JSON $\gets$ open(templates/json/landingPage.json)
             \STATE Response $\gets$ jsonify(Datei)
             \STATE Link-Header $\gets$ http://HOST:PORT/?f=application/json
             \STATE Resource-Header $\gets$ landingPage
-            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
         \ELSE{}
             \RETURN{HTTP-Statuscode 406}
         \ENDIF{}
@@ -42,11 +41,11 @@
 
 \subsection{Ablauf eines Requests an den API Definition Endpoint}
 \begin{algorithm}[H]
-\caption{Ablauf eines Requests an den API Definition Endpoint}\label{appendixpsedoAPIDefinition}
+\caption{Ablauf eines Requests an den API Definition Endpoint}\label{PseudocodeAPIDefinition}
 \scriptsize
 \begin{algorithmic}     
-    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
-    \STATE Encoding $\gets$ Anfrage.f
+    \STATE HTTP-Methode $\gets$ Request.HTTP-Methode
+    \STATE Encoding $\gets$ Request.f
     \IF{HTTP-Methode != GET}
         \RETURN{HTTP-Statuscode 405}
     \ELSE{}
@@ -56,13 +55,13 @@
             \STATE Response $\gets$ render\_template(templates/html/apiDefinition.html)
             \STATE Link-Header $\gets$ http://HOST:PORT/api?f=text/html
             \STATE Resource-Header $\gets$ apiDefinition
-            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
         \ELSIF{Encoding == application/json}
             \STATE JSON $\gets$ open(templates/json/apiDefinition.json)
             \STATE Response $\gets$ jsonify(Datei)
             \STATE Link-Header $\gets$ http://HOST:PORT/api?f=application/json
             \STATE Resource-Header $\gets$ apiDefinition
-            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
         \ELSE{}
             \RETURN{HTTP-Statuscode 406}
         \ENDIF{}
@@ -77,11 +76,11 @@
     
 \subsection{Ablauf eines Requests an den Conformance Endpoint}
 \begin{algorithm}[H]
-\caption{Ablauf eines Requests an den Conformance Endpoint}\label{appendixpsedoConformance}
+\caption{Ablauf eines Requests an den Conformance Endpoint}\label{PseudocodeConformance}
 \scriptsize
 \begin{algorithmic}     
-    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
-    \STATE Encoding $\gets$ Anfrage.f
+    \STATE HTTP-Methode $\gets$ Request.HTTP-Methode
+    \STATE Encoding $\gets$ Request.f
     \IF{HTTP-Methode != GET}
         \RETURN{HTTP-Statuscode 405}
     \ELSE{}
@@ -91,13 +90,13 @@
             \STATE Response $\gets$ render\_template(templates/html/confClasses.html)
             \STATE Link-Header $\gets$ http://HOST:PORT/conformance?f=text/html
             \STATE Resource-Header $\gets$ conformance
-            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
         \ELSIF{Encoding == application/json}
             \STATE JSON $\gets$ open(templates/json/confClasses.json)
             \STATE Response $\gets$ jsonify(Datei)
             \STATE Link-Header $\gets$ http://HOST:PORT/conformance?f=application/json
             \STATE Resource-Header $\gets$ conformance
-            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
         \ELSE{}
             \RETURN{HTTP-Statuscode 406}
         \ENDIF{}
@@ -112,12 +111,12 @@
 
 \subsection{Ablauf eines Requests an den Process List Endpoint}
 \begin{algorithm}[H]
-\caption{Ablauf eines Requests an den Process List Endpoint}\label{appendixpsedoProcessList}
+\caption{Ablauf eines Requests an den Process List Endpoint}\label{PseudocodeProcessList}
 \scriptsize
 \begin{algorithmic}     
-    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
-    \STATE Encoding $\gets$ Anfrage.f
-    \STATE Limit $\gets$ Anfrage.limit
+    \STATE HTTP-Methode $\gets$ Request.HTTP-Methode
+    \STATE Encoding $\gets$ Request.f
+    \STATE Limit $\gets$ Request.limit
     \IF{HTTP-Methode != GET}
         \RETURN{HTTP-Statuscode 405}
     \ELSE{}
@@ -130,7 +129,7 @@
             \ENDIF
         \IF{Encoding == text/html \OR Encoding == None}
             \STATE Process List $\gets$ []
-            \STATE Processes $\gets$ List of Process descriptions in templates/json/processes
+            \STATE Processes $\gets$ Process Descriptions in templates/json/processes
             \FOR{Process \textbf{in} Processes}
                 \STATE JSON $\gets$ open(jobs/Job-ID/status.json)
                 \STATE Process List \textbf{append} JSON
@@ -138,7 +137,7 @@
             \STATE Response $\gets$ render\_template(templates/html/processList.html, Process List[0:Limit])
             \STATE Link-Header $\gets$ http://HOST:PORT/processList?f=application/json
             \STATE Resource-Header $\gets$ processList
-            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
         \ELSIF{Encoding == application/json}
             \STATE Process List $\gets$ []
             \STATE Processes $\gets$ List of Process descriptions in templates/json/processes
@@ -146,11 +145,11 @@
                 \STATE JSON $\gets$ open(jobs/Job-ID/status.json)
                 \STATE Process Liste \textbf{append} JSON
             \ENDFOR{}
-            \STATE \textbf{add} Links \textbf{to} Process Liste
+            \STATE \textbf{add} Links to self and alternate \textbf{to} Process Liste
             \STATE Response $\gets$ jsonify(Process Liste[0:Limit])
             \STATE Link-Header $\gets$ http://HOST:PORT/processList?f=application/json
             \STATE Resource-Header $\gets$ processList
-            \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
         \ELSE{}
             \RETURN{HTTP-Statuscode 406}
         \ENDIF{}
@@ -165,12 +164,12 @@
 
 \subsection{Ablauf eines Requests an den Process Description Endpoint}
 \begin{algorithm}[H]
-\caption{Ablauf eines Requests an den Process Description Endpoint}\label{appendixpsedoProcessDescription}
+\caption{Ablauf eines Requests an den Process Description Endpoint}\label{PseudocodeProcessDescription}
 \scriptsize
 \begin{algorithmic}     
-    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
-    \STATE Encoding $\gets$ Anfrage.f
-    \STATE Process-ID $\gets$ Anfrage.processID
+    \STATE HTTP-Methode $\gets$ Request.HTTP-Methode
+    \STATE Encoding $\gets$ Request.f
+    \STATE Process-ID $\gets$ Request.processID
     \IF{HTTP-Methode != GET}
         \RETURN{HTTP-Statuscode 405}
     \ELSE{}
@@ -181,8 +180,8 @@
                     \STATE JSON $\gets$ open(json/processes/Process-ID.json)
                     \STATE Response $\gets$ render\_template(templates/html/process.html, JSON)
                     \STATE Link-Header $\gets$ http://HOST:PORT/processes/<processID>?f=text/html
-                    \STATE Resource-Header $\gets$ Process-ID
-                    \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+                    \STATE Resource-Header $\gets$ process - Process-ID
+                    \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
                 \ELSE{}
                     \STATE Exception $\gets$ No such process exception
                     \STATE Resource-Header $\gets$ no-such-process
@@ -193,8 +192,8 @@
                     \STATE JSON $\gets$ open(json/processes/Process-ID.json)
                     \STATE Response $\gets$ jsonify(JSON)
                     \STATE Link-Header $\gets$ http://HOST:PORT/processes/<processID>?f=application/json
-                    \STATE Resource-Header $\gets$ Process-ID
-                    \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
+                    \STATE Resource-Header $\gets$ process - Process-ID
+                    \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
                 \ELSE{}
                     \STATE Exception $\gets$ No such process exception
                     \STATE Resource-Header $\gets$ no-such-process
@@ -212,10 +211,28 @@
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Ablauf eines Requests an den Job Status Endpoint}
+\subsection{Ablauf eines Requests an den Process Execution Endpoint}
+\begin{algorithm}[H]
+\caption{Ablauf eines Requests an den Process Execution Endpoint}\label{PseudocodeProcessExecution}
+\scriptsize
+\begin{algorithmic}  
+    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode       
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Ablauf eines Requests an den Job List Endpoint}
 \begin{algorithm}[H]
 \scriptsize
-\caption{Ablauf eines Requests an den Job Status Endpoint}\label{appendixpsedoJobStatus}
+\caption{Ablauf eines Requests an den Job List Endpoint}\label{PseudocodeJobList}
+\begin{algorithmic}     
+    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Ablauf eines Requests an den Job Endpoint}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Ablauf eines Requests an den Job Status Endpoint}\label{PseudocodeJobStatus}
 \begin{algorithmic}     
     \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
     \STATE Encoding $\gets$ Anfrage.f
@@ -230,6 +247,54 @@
 \end{algorithmic}
 \end{algorithm}
 
+\subsection{Ablauf eines Requests an den Job Results Endpoint}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Ablauf eines Requests an den Job Results Endpoint}\label{PseudocodeJobResults}
+\begin{algorithmic}     
+    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
+
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Ablauf eines Requests an den Coverage Endpoint}
+\begin{algorithm}[H]
+\scriptsize
+\caption{Ablauf eines Requests an den Coverage Endpoint}\label{PseudocodeCoverage}
+\begin{algorithmic}     
+\STATE HTTP-Methode $\gets$ Request.HTTP-Methode
+\STATE Encoding $\gets$ Request.f
+\IF{HTTP-Methode != GET}
+    \RETURN{HTTP-Statuscode 405}
+\ELSE{}
+    \STATE \hskip0.5em \textbf{try}
+    \begin{ALC@g}
+        \STATE KML $\gets$ KML-Files in data/coverage/
+        \STATE Coverages $\gets$ []
+		\STATE BBoxes $\gets$ []
+        \FOR{File \textbf{in} KML}
+                \STATE Data $\gets$ open(File)
+                \STATE Dataset $\gets$ {Data.Name, Data.BBox, Data.Date}
+                \STATE BBox $\gets$ Data.BBox
+                \STATE Coverages \textbf{append} Dataset
+                \STATE BBoxes \textbf{append} BBox as .geojson
+        \ENDFOR{}
+        \IF{Encoding == text/html \OR Encoding == None}
+            \STATE x
+        \ELSIF{Encoding == application/json}
+            \STATE y
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+    \end{ALC@g}
+    \STATE \hskip0.5em \textbf{exept}
+    \begin{ALC@g}
+        \RETURN{HTTP-Statuscode 500}
+    \end{ALC@g}
+\ENDIF{}   
+\end{algorithmic}
+\end{algorithm}
+
 \renewcommand{\lstlistingname}{Quellcode}
 \section{Quellcodeverzeichnis}
 \subsection{Konfiguration von Werkzeug auf HTTP 1.1}
@@ -239,7 +304,7 @@
     from werkzeug.serving import BaseWSGIServer
     WSGIRequestHandler.protocol_version = "HTTP/1.1"
     BaseWSGIServer.protocol_version = "HTTP/1.1"
-\end{lstlisting}\label{appendixconfWerkzeug}
+\end{lstlisting}\label{QuellcodeconfWerkzeug}
 
 \subsection{Quellcode Landing Page Endpoint}
 \begin{lstlisting}[caption={Landing Page Endpoint}, style = Python]
@@ -269,7 +334,7 @@ def getLandingPage():
             return "HTTP status code 406: not acceptable", 406 
         except:
             return "HTTP status code 500: internal server error", 500 
-\end{lstlisting}\label{appendixLandingPage}
+\end{lstlisting}\label{QuellcodeLandingPage}
 
 \newpage
 \subsection{Quellcode API Definition Endpoint}
@@ -299,7 +364,7 @@ def getAPIDefinition():
             return "HTTP status code 406: not acceptable", 406 
     except:
         return "HTTP status code 500: internal server error", 500
-\end{lstlisting}\label{appendixAPIDefinition}
+\end{lstlisting}\label{QuellcodeAPIDefinition}
 
 \newpage
 \subsection{Quellcode Conformance Endpoint}
@@ -329,7 +394,7 @@ def getConformance():
             return "HTTP status code 406: not acceptable", 406 
     except:
         return "HTTP status code 500: internal server error", 500
-\end{lstlisting}\label{appendixConformance}   
+\end{lstlisting}\label{QuellcodeConformance}   
 
 \newpage
 \subsection{Quellcode Process List Endpoint}
@@ -394,7 +459,7 @@ def getProcesses():
             return "HTTP status code 406: not acceptable", 406 
     except:
         return "HTTP status code 500: internal server error", 500 
-\end{lstlisting}\label{appendixProcessList}   
+\end{lstlisting}\label{QuellcodeProcessList}   
 \newpage
 \subsection{Quellcode Process Description Endpoint}
 \begin{lstlisting}[caption={Process Description Endpoint}, style = Python]
@@ -448,7 +513,7 @@ def getProcess(processID):
             return "HTTP status code 406: not acceptable", 406
     except:
         return "HTTP status code 500: internal server error", 500 
-\end{lstlisting}\label{appendixProcessDescription}      
+\end{lstlisting}\label{QuellcodeProcessDescription}      
 
 \newpage
 \subsection{Quellcode Process Execution Endpoint}
@@ -521,7 +586,15 @@ def executeProcess(processID):
             return exception, 404 
     except:
         return "HTTP status code 500: internal server error", 500
-\end{lstlisting}\label{appendixProcessExecution}   
+\end{lstlisting}\label{QuellcodeProcessExecution}   
+
+\newpage
+\subsection{Quellcode Job List Endpoint}
+\begin{lstlisting}[caption={Job List Endpoint}, style = Python]
+#job endpoint for status and dismiss
+@app.route('/jobs/<jobID>', methods = ['GET', 'DELETE']) 
+def getJob(jobID):
+\end{lstlisting}\label{QuellcodeJobList}  
 
 \newpage
 \subsection{Quellcode Job Endpoint}
@@ -608,7 +681,23 @@ def getJob(jobID):
                 return exception, 404 #return not found if requested job is not found 
         except:            
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
-\end{lstlisting}\label{appendixJob}  
+\end{lstlisting}\label{QuellcodeJob}  
+
+\newpage
+\subsection{Quellcode Job Results Endpoint}
+\begin{lstlisting}[caption={Job Results Endpoint}, style = Python]
+#job endpoint for status and dismiss
+@app.route('/jobs/<jobID>', methods = ['GET', 'DELETE']) 
+def getJob(jobID):
+\end{lstlisting}\label{QuellcodeJobResults}  
+
+\newpage
+\subsection{Quellcode Coverage Endpoint}
+\begin{lstlisting}[caption={Coverage Endpoint}, style = Python]
+#job endpoint for status and dismiss
+@app.route('/jobs/<jobID>', methods = ['GET', 'DELETE']) 
+def getJob(jobID):
+\end{lstlisting}\label{QuellcodeCoverage}  
 
 \newpage
 \subsection{Quellcode Echo Process}
@@ -637,7 +726,7 @@ def echoProcess(job):
         f.close() #close file
     updateStatus(job.path + '/status.json', "successful", "Step 1 of 1 completed", "100")
     setFinished(job.path + '/status.json')
-\end{lstlisting}\label{appendixEchoProcess}  
+\end{lstlisting}\label{QuellcodeEchoProcess}  
 
 \section{Schemata}
 \renewcommand{\lstlistingname}{Schema}  
@@ -657,7 +746,7 @@ properties:
     type: array
     items:
       $ref: "link.yaml"
-\end{lstlisting}\label{appendixlandngPageyaml}  
+\end{lstlisting}\label{SchemaLandngPageyaml}  
 
 \subsection{confClasses.yaml}
 \begin{lstlisting}[caption={confClasses.yaml}, style = JSON]
@@ -670,7 +759,7 @@ properties:
     items:
         type: string
         example: "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core"
-\end{lstlisting}\label{appendixconfClassesyaml}  
+\end{lstlisting}\label{SchemaConfClassesyaml}  
 
 \subsection{processList.yaml}
 \begin{lstlisting}[caption={processList.yaml}, style = JSON]
@@ -687,7 +776,7 @@ properties:
     type: array
     items:
       $ref: "link.yaml"
-\end{lstlisting}\label{appendixprocessListyaml}  
+\end{lstlisting}\label{SchemaProcessListyaml}  
 
 \subsection{limit.yaml}
 \begin{lstlisting}[caption={limit.yaml}, style = JSON]
@@ -701,7 +790,7 @@ schema:
   default: 10
 style: form
 explode: false
-\end{lstlisting}\label{appendixlimityaml}  
+\end{lstlisting}\label{SchemaLimityaml}  
 
 \subsection{link.yaml}
 \begin{lstlisting}[caption={link.yaml}, style = JSON]
@@ -722,7 +811,7 @@ properties:
     example: en
   title:
     type: string
-\end{lstlisting}\label{appendixlinkyaml}  
+\end{lstlisting}\label{SchemaLinkyaml}  
 
 \subsection{processList.yaml}
 \begin{lstlisting}[caption={processList.yaml}, style = JSON]
@@ -739,7 +828,7 @@ properties:
     type: array
     items:
         $ref: "link.yaml"
-\end{lstlisting}\label{appendixprocessListyaml}  
+\end{lstlisting}\label{SchemaProcessListyaml}  
 
 \subsection{processSummary.yaml}
 \begin{lstlisting}[caption={processSummary.yaml}, style = JSON]
@@ -766,7 +855,7 @@ allOf:
           type: array
           items:
             $ref: "link.yaml"
-\end{lstlisting}\label{appendixprocessSummaryyaml} 
+\end{lstlisting}\label{SchemaProcessSummaryyaml} 
 
 \subsection{jobControlOptions.yaml}
 \begin{lstlisting}[caption={jobControlOptions.yaml}, style = JSON]
@@ -775,7 +864,7 @@ enum:
     - sync-execute
     - async-execute
     - dismiss
-\end{lstlisting}\label{appendixjobControlOptionsyaml} 
+\end{lstlisting}\label{SchemaJobControlOptionsyaml} 
 
 \subsection{transmissionMode.yaml}
 \begin{lstlisting}[caption={transmissionMode.yaml}, style = JSON]
@@ -785,7 +874,7 @@ enum:
     - reference
 default:
     - value
-\end{lstlisting}\label{appendixtransmissionModeyaml} 
+\end{lstlisting}\label{SchemaTransmissionModeyaml} 
 
 \subsection{process.yaml}
 \begin{lstlisting}[caption={process.yaml}, style = JSON]
@@ -799,7 +888,7 @@ allOf:
       outputs:
         additionalProperties:
           $ref: "outputDescription.yaml"
-\end{lstlisting}\label{appendixprocessyaml} 
+\end{lstlisting}\label{SchemaProcessyaml} 
 
 \subsection{inputDescription.yaml}
 \begin{lstlisting}[caption={inputDescription.yaml}, style = JSON]
@@ -821,7 +910,7 @@ allOf:
             - "unbounded"
     schema:
         $ref: "schema.yaml"
-\end{lstlisting}\label{appendixinputDescriptionyaml} 
+\end{lstlisting}\label{SchemaInputDescriptionyaml} 
 
 \subsection{outputDescription.yaml}
 \begin{lstlisting}[caption={outputDescription.yaml}, style = JSON]
@@ -833,7 +922,7 @@ allOf:
     properties:
     schema:
         $ref: "schema.yaml"
-\end{lstlisting}\label{appendixoutputDescriptionyaml} 
+\end{lstlisting}\label{SchemaOutputDescriptionyaml} 
 
 \subsection{description.yaml}
 \begin{lstlisting}[caption={description.yaml}, style = JSON]
@@ -860,7 +949,7 @@ properties:
             type: array
             items:
                 $ref: "additionalParameter.yaml"
-\end{lstlisting}\label{appendixdescriptionyaml} 
+\end{lstlisting}\label{SchemaDescriptionyaml} 
 
 \subsection{jobList.yaml}
 \begin{lstlisting}[caption={jobList.yaml}, style = JSON]
@@ -877,7 +966,7 @@ properties:
     type: array
     items:
         $ref: "link.yaml"
-\end{lstlisting}\label{appendixjobListyaml} 
+\end{lstlisting}\label{SchemaJobListyaml} 
 
 \subsection{statusInfo.yaml}
 \begin{lstlisting}[caption={statusInfo.yaml}, style = JSON]
@@ -919,7 +1008,7 @@ properties:
         type: array
         items:
             $ref: "link.yaml"
-\end{lstlisting}\label{appendixstatusInfoyaml}
+\end{lstlisting}\label{SchemaStatusInfoyaml}
 
 \subsection{statusCode.yaml}
 \begin{lstlisting}[caption={statusCode.yaml}, style = JSON]
@@ -931,7 +1020,7 @@ enum:
     - successful
     - failed
     - dismissed
-\end{lstlisting}\label{appendixstatusCodeyaml}
+\end{lstlisting}\label{SchemaStatusCodeyaml}
 
 \section{Ressourcen}
 \renewcommand{\lstlistingname}{Ressource}
@@ -1027,7 +1116,7 @@ enum:
 		</p>
 	</body>
 </html>
-\end{lstlisting}\label{appendixlandingPageHTML}  
+\end{lstlisting}\label{RessourceLandingPageHTML}  
 
 \subsection{landingPage.json}
 \begin{lstlisting}[caption={landingPage.json}, style = JSON]
@@ -1106,7 +1195,7 @@ enum:
     }
     ]
 }
-\end{lstlisting}\label{appendixlandingPageJSON}  
+\end{lstlisting}\label{RessourceLandingPageJSON}  
 
 \subsection{confClasses.html}
 \begin{lstlisting}[caption={confClasses.html}, style = HTML]
@@ -1142,7 +1231,7 @@ enum:
             </p>
     </body>
 </html>
-\end{lstlisting}\label{appendixconfClassesHTML}  
+\end{lstlisting}\label{RessourceConfClassesHTML}  
 
 \subsection{confClasses.json}
 \begin{lstlisting}[caption={confClasses.json}, style = JSON]
@@ -1170,7 +1259,7 @@ enum:
         }
     ]
 }
-\end{lstlisting}\label{appendixconfClassesJSON}  
+\end{lstlisting}\label{RessourceConfClassesJSON}  
 
 \subsection{processList.html}
 \begin{lstlisting}[caption={processList.html}, style = HTML]
@@ -1249,7 +1338,7 @@ enum:
         </p>
     </body>
 </html>
-\end{lstlisting}\label{appendixprocessListHTML}  
+\end{lstlisting}\label{RessourceProcessListHTML}  
 
 \subsection{processDescription.html}
 \begin{lstlisting}[caption={processDescription.html}, style = HTML]
@@ -1297,7 +1386,7 @@ enum:
 		</p>
 	</body>
 <html>
-\end{lstlisting}\label{appendixprocessDescriptionHTML}  
+\end{lstlisting}\label{RessourceProcessDescriptionHTML}  
 
 \subsection{FloodMonitoringProcessDescription.json}
 \begin{lstlisting}[caption={FloodMonitoringProcessDescription.json}, style = JSON]
@@ -1414,7 +1503,7 @@ enum:
 	}
   ]
 }
-\end{lstlisting}\label{appendixFloodMonitoringProcessDescriptionJSON}  
+\end{lstlisting}\label{RessourceFloodMonitoringProcessDescriptionJSON}  
 
 \subsection{EchoProcessDescription.json}
 \begin{lstlisting}[caption={EchoProcessDescription.json}, style = JSON]
@@ -1460,7 +1549,7 @@ enum:
         }
         }
     },
-    "links": [
+    "links": [SSS
         {
             "href": "localhost:5000/processes/Echo?f=application/json",
             "rel": "self",
@@ -1475,4 +1564,4 @@ enum:
         }
     ]
     }     
-\end{lstlisting}\label{appendixEchoProcessDescriptionJSON}  
+\end{lstlisting}\label{RessourceEchoProcessDescriptionJSON}  

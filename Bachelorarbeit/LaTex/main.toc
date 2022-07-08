@@ -32,58 +32,65 @@
 \contentsline {subsubsection}{\numberline {3.7.6}Process Execution Endpoint}{26}{subsubsection.3.7.6}%
 \contentsline {subsubsection}{\numberline {3.7.7}Job List Endpoint}{26}{subsubsection.3.7.7}%
 \contentsline {subsubsection}{\numberline {3.7.8}Job Endpoint}{26}{subsubsection.3.7.8}%
-\contentsline {subsubsection}{\numberline {3.7.9}Job Results Endpoint}{26}{subsubsection.3.7.9}%
-\contentsline {subsection}{\numberline {3.8}Domumentation}{26}{subsection.3.8}%
+\contentsline {subsubsection}{\numberline {3.7.9}Job Results Endpoint}{27}{subsubsection.3.7.9}%
+\contentsline {subsection}{\numberline {3.8}Domumentation}{27}{subsection.3.8}%
 \contentsline {subsection}{\numberline {3.9}Prozesse}{27}{subsection.3.9}%
 \contentsline {subsubsection}{\numberline {3.9.1}Echo}{27}{subsubsection.3.9.1}%
-\contentsline {subsubsection}{\numberline {3.9.2}Überflutungsmonitoring}{27}{subsubsection.3.9.2}%
-\contentsline {subsection}{\numberline {3.10}Zusätzliche Funktionalitäten}{27}{subsection.3.10}%
-\contentsline {subsubsection}{\numberline {3.10.1}Coverage}{27}{subsubsection.3.10.1}%
+\contentsline {subsubsection}{\numberline {3.9.2}Überflutungsmonitoring}{28}{subsubsection.3.9.2}%
+\contentsline {subsection}{\numberline {3.10}Zusätzliche Funktionalitäten}{28}{subsection.3.10}%
+\contentsline {subsubsection}{\numberline {3.10.1}Coverage}{28}{subsubsection.3.10.1}%
 \contentsline {subsubsection}{\numberline {3.10.2}Test Suit}{28}{subsubsection.3.10.2}%
 \contentsline {section}{\numberline {4}Evaluation}{29}{section.4}%
 \contentsline {section}{\numberline {5}Diskussion}{30}{section.5}%
 \contentsline {section}{\numberline {6}Ausblick}{31}{section.6}%
 \contentsline {section}{\numberline {7}Fazit}{32}{section.7}%
-\contentsline {section}{\numberline {A}Schemata}{35}{appendix.A}%
+\contentsline {section}{\numberline {A}Pseudocode}{35}{appendix.A}%
 \contentsline {subsection}{\numberline {A.1}Ablauf eines Requests an den API Landing Page Endpoint}{35}{subsection.A.1}%
 \contentsline {subsection}{\numberline {A.2}Ablauf eines Requests an den API Definition Endpoint}{36}{subsection.A.2}%
 \contentsline {subsection}{\numberline {A.3}Ablauf eines Requests an den Conformance Endpoint}{36}{subsection.A.3}%
 \contentsline {subsection}{\numberline {A.4}Ablauf eines Requests an den Process List Endpoint}{37}{subsection.A.4}%
 \contentsline {subsection}{\numberline {A.5}Ablauf eines Requests an den Process Description Endpoint}{38}{subsection.A.5}%
-\contentsline {subsection}{\numberline {A.6}Ablauf eines Requests an den Job Status Endpoint}{38}{subsection.A.6}%
-\contentsline {section}{\numberline {B}Quellcodeverzeichnis}{39}{appendix.B}%
-\contentsline {subsection}{\numberline {B.1}Konfiguration von Werkzeug auf HTTP 1.1}{39}{subsection.B.1}%
-\contentsline {subsection}{\numberline {B.2}Quellcode Landing Page Endpoint}{39}{subsection.B.2}%
-\contentsline {subsection}{\numberline {B.3}Quellcode API Definition Endpoint}{40}{subsection.B.3}%
-\contentsline {subsection}{\numberline {B.4}Quellcode Conformance Endpoint}{41}{subsection.B.4}%
-\contentsline {subsection}{\numberline {B.5}Quellcode Process List Endpoint}{42}{subsection.B.5}%
-\contentsline {subsection}{\numberline {B.6}Quellcode Process Description Endpoint}{44}{subsection.B.6}%
-\contentsline {subsection}{\numberline {B.7}Quellcode Process Execution Endpoint}{45}{subsection.B.7}%
-\contentsline {subsection}{\numberline {B.8}Quellcode Job Endpoint}{47}{subsection.B.8}%
-\contentsline {subsection}{\numberline {B.9}Quellcode Echo Process}{49}{subsection.B.9}%
-\contentsline {section}{\numberline {C}Schemata}{49}{appendix.C}%
-\contentsline {subsection}{\numberline {C.1}landingPage.yaml}{49}{subsection.C.1}%
-\contentsline {subsection}{\numberline {C.2}confClasses.yaml}{49}{subsection.C.2}%
-\contentsline {subsection}{\numberline {C.3}processList.yaml}{50}{subsection.C.3}%
-\contentsline {subsection}{\numberline {C.4}limit.yaml}{50}{subsection.C.4}%
-\contentsline {subsection}{\numberline {C.5}link.yaml}{50}{subsection.C.5}%
-\contentsline {subsection}{\numberline {C.6}processList.yaml}{51}{subsection.C.6}%
-\contentsline {subsection}{\numberline {C.7}processSummary.yaml}{51}{subsection.C.7}%
-\contentsline {subsection}{\numberline {C.8}jobControlOptions.yaml}{52}{subsection.C.8}%
-\contentsline {subsection}{\numberline {C.9}transmissionMode.yaml}{52}{subsection.C.9}%
-\contentsline {subsection}{\numberline {C.10}process.yaml}{52}{subsection.C.10}%
-\contentsline {subsection}{\numberline {C.11}inputDescription.yaml}{52}{subsection.C.11}%
-\contentsline {subsection}{\numberline {C.12}outputDescription.yaml}{53}{subsection.C.12}%
-\contentsline {subsection}{\numberline {C.13}description.yaml}{53}{subsection.C.13}%
-\contentsline {subsection}{\numberline {C.14}jobList.yaml}{54}{subsection.C.14}%
-\contentsline {subsection}{\numberline {C.15}statusInfo.yaml}{54}{subsection.C.15}%
-\contentsline {subsection}{\numberline {C.16}statusCode.yaml}{55}{subsection.C.16}%
-\contentsline {section}{\numberline {D}Ressourcen}{55}{appendix.D}%
-\contentsline {subsection}{\numberline {D.1}landingPage.html}{55}{subsection.D.1}%
-\contentsline {subsection}{\numberline {D.2}landingPage.json}{57}{subsection.D.2}%
-\contentsline {subsection}{\numberline {D.3}confClasses.html}{58}{subsection.D.3}%
-\contentsline {subsection}{\numberline {D.4}confClasses.json}{59}{subsection.D.4}%
-\contentsline {subsection}{\numberline {D.5}processList.html}{59}{subsection.D.5}%
-\contentsline {subsection}{\numberline {D.6}processDescription.html}{61}{subsection.D.6}%
-\contentsline {subsection}{\numberline {D.7}FloodMonitoringProcessDescription.json}{61}{subsection.D.7}%
-\contentsline {subsection}{\numberline {D.8}EchoProcessDescription.json}{63}{subsection.D.8}%
+\contentsline {subsection}{\numberline {A.6}Ablauf eines Requests an den Process Execution Endpoint}{38}{subsection.A.6}%
+\contentsline {subsection}{\numberline {A.7}Ablauf eines Requests an den Job List Endpoint}{38}{subsection.A.7}%
+\contentsline {subsection}{\numberline {A.8}Ablauf eines Requests an den Job Endpoint}{39}{subsection.A.8}%
+\contentsline {subsection}{\numberline {A.9}Ablauf eines Requests an den Job Results Endpoint}{39}{subsection.A.9}%
+\contentsline {subsection}{\numberline {A.10}Ablauf eines Requests an den Coverage Endpoint}{39}{subsection.A.10}%
+\contentsline {section}{\numberline {B}Quellcodeverzeichnis}{40}{appendix.B}%
+\contentsline {subsection}{\numberline {B.1}Konfiguration von Werkzeug auf HTTP 1.1}{40}{subsection.B.1}%
+\contentsline {subsection}{\numberline {B.2}Quellcode Landing Page Endpoint}{40}{subsection.B.2}%
+\contentsline {subsection}{\numberline {B.3}Quellcode API Definition Endpoint}{41}{subsection.B.3}%
+\contentsline {subsection}{\numberline {B.4}Quellcode Conformance Endpoint}{42}{subsection.B.4}%
+\contentsline {subsection}{\numberline {B.5}Quellcode Process List Endpoint}{43}{subsection.B.5}%
+\contentsline {subsection}{\numberline {B.6}Quellcode Process Description Endpoint}{45}{subsection.B.6}%
+\contentsline {subsection}{\numberline {B.7}Quellcode Process Execution Endpoint}{46}{subsection.B.7}%
+\contentsline {subsection}{\numberline {B.8}Quellcode Job List Endpoint}{48}{subsection.B.8}%
+\contentsline {subsection}{\numberline {B.9}Quellcode Job Endpoint}{49}{subsection.B.9}%
+\contentsline {subsection}{\numberline {B.10}Quellcode Job Results Endpoint}{51}{subsection.B.10}%
+\contentsline {subsection}{\numberline {B.11}Quellcode Coverage Endpoint}{52}{subsection.B.11}%
+\contentsline {subsection}{\numberline {B.12}Quellcode Echo Process}{53}{subsection.B.12}%
+\contentsline {section}{\numberline {C}Schemata}{53}{appendix.C}%
+\contentsline {subsection}{\numberline {C.1}landingPage.yaml}{53}{subsection.C.1}%
+\contentsline {subsection}{\numberline {C.2}confClasses.yaml}{53}{subsection.C.2}%
+\contentsline {subsection}{\numberline {C.3}processList.yaml}{54}{subsection.C.3}%
+\contentsline {subsection}{\numberline {C.4}limit.yaml}{54}{subsection.C.4}%
+\contentsline {subsection}{\numberline {C.5}link.yaml}{54}{subsection.C.5}%
+\contentsline {subsection}{\numberline {C.6}processList.yaml}{55}{subsection.C.6}%
+\contentsline {subsection}{\numberline {C.7}processSummary.yaml}{55}{subsection.C.7}%
+\contentsline {subsection}{\numberline {C.8}jobControlOptions.yaml}{56}{subsection.C.8}%
+\contentsline {subsection}{\numberline {C.9}transmissionMode.yaml}{56}{subsection.C.9}%
+\contentsline {subsection}{\numberline {C.10}process.yaml}{56}{subsection.C.10}%
+\contentsline {subsection}{\numberline {C.11}inputDescription.yaml}{56}{subsection.C.11}%
+\contentsline {subsection}{\numberline {C.12}outputDescription.yaml}{57}{subsection.C.12}%
+\contentsline {subsection}{\numberline {C.13}description.yaml}{57}{subsection.C.13}%
+\contentsline {subsection}{\numberline {C.14}jobList.yaml}{58}{subsection.C.14}%
+\contentsline {subsection}{\numberline {C.15}statusInfo.yaml}{58}{subsection.C.15}%
+\contentsline {subsection}{\numberline {C.16}statusCode.yaml}{59}{subsection.C.16}%
+\contentsline {section}{\numberline {D}Ressourcen}{59}{appendix.D}%
+\contentsline {subsection}{\numberline {D.1}landingPage.html}{59}{subsection.D.1}%
+\contentsline {subsection}{\numberline {D.2}landingPage.json}{61}{subsection.D.2}%
+\contentsline {subsection}{\numberline {D.3}confClasses.html}{62}{subsection.D.3}%
+\contentsline {subsection}{\numberline {D.4}confClasses.json}{63}{subsection.D.4}%
+\contentsline {subsection}{\numberline {D.5}processList.html}{63}{subsection.D.5}%
+\contentsline {subsection}{\numberline {D.6}processDescription.html}{65}{subsection.D.6}%
+\contentsline {subsection}{\numberline {D.7}FloodMonitoringProcessDescription.json}{65}{subsection.D.7}%
+\contentsline {subsection}{\numberline {D.8}EchoProcessDescription.json}{67}{subsection.D.8}%

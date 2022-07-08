@@ -562,60 +562,60 @@ def downloadFile(jobID, requestedFile):
 
 @app.route('/coverage', methods = ["GET"])
 def getCoverage():
-    kmlFiles = os.listdir('data/coverage/')
-    coverages = []
-    bboxes = []
-    for i in kmlFiles:
-        tree = ET.parse('data/coverage/' + i)
-        root = tree.getroot()
-        bbox = root[0][1][1][2][0].text
-        name = i[:-4]
-        date = i[17:21] + '.' + i[21:23] + '.' + i[23:25]
-        dataset = {'name': name,
-                   'bbox': bbox,
-                   'date': date}
-        coverages.append(dataset)
-        bboxArray = bbox.split()
-        coordinates = []
-        for i in bboxArray:
-            rawCoords = i.replace(',', ' ')
-            coords = rawCoords.split()
-            coordinates.append(float(coords[0]))
-            coordinates.append(float(coords[1]))
-        geojson = {"type": "FeatureCollection", "features": [{
-                  "type": "Feature",
-                  "properties": {
-                      "name": name,
-                      "date": date},
-                  "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [
-                      [
-                        [
-                          coordinates[0], coordinates[1]
-                        ],
-                        [
-                          coordinates[2], coordinates[3]
-                        ],
-                        [
-                          coordinates[4], coordinates[5]
-                        ],
-                        [
-                          coordinates[6], coordinates[7]
-                        ],
-                        [
-                          coordinates[0], coordinates[1]
-                        ]
-                      ]
-                    ]
-                  }
-                }
-              ]
-            }
-        bboxes.append(geojson)
-    coverageJSON = {'coverages': coverages}
-        
-    try:
+	try:
+		kmlFiles = os.listdir('data/coverage/')
+		coverages = []
+		bboxes = []
+		for i in kmlFiles:
+			tree = ET.parse('data/coverage/' + i)
+			root = tree.getroot()
+			bbox = root[0][1][1][2][0].text
+			name = i[:-4]
+			date = i[17:21] + '.' + i[21:23] + '.' + i[23:25]
+			dataset = {'name': name,
+					   'bbox': bbox,
+					   'date': date}
+			coverages.append(dataset)
+			bboxArray = bbox.split()
+			coordinates = []
+			for i in bboxArray:
+				rawCoords = i.replace(',', ' ')
+				coords = rawCoords.split()
+				coordinates.append(float(coords[0]))
+				coordinates.append(float(coords[1]))
+			geojson = {"type": "FeatureCollection", "features": [{
+					  "type": "Feature",
+					  "properties": {
+						  "name": name,
+						  "date": date},
+					  "geometry": {
+						"type": "Polygon",
+						"coordinates": [
+						  [
+							[
+							  coordinates[0], coordinates[1]
+							],
+							[
+							  coordinates[2], coordinates[3]
+							],
+							[
+							  coordinates[4], coordinates[5]
+							],
+							[
+							  coordinates[6], coordinates[7]
+							],
+							[
+							  coordinates[0], coordinates[1]
+							]
+						  ]
+						]
+					  }
+					}
+				  ]
+				}
+			bboxes.append(geojson)
+		coverageJSON = {'coverages': coverages}
+     
         if(request.content_type == "application/json" or #check requested content-type from request body
            request.args.get('f')=="application/json"): #check requested content-type from inline request
             return coverageJSON, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage"} #return response and ok with link und resource header
