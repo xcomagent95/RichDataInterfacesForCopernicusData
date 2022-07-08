@@ -75,8 +75,8 @@ def getAPIDefinition():
            request.args.get('f') == None): #check requested content-type from inline request
             response = render_template('html/apiDefinition.html') #render static api definition page
             return response, 200, {"link": "localhost:5000/apiDefinition?f=text/html", "resource": "apiDefinition"} #return response and okay with link and resource header
-        elif(request.content_type == "application/vnd.oai.openapi+json;version=3.0" or #check requested content-type from request body 
-             request.args.get('f')=="application/vnd.oai.openapi+json;version=3.0"): #check requested content-type from inline request
+        elif(request.content_type == "application/json" or #check requested content-type from request body 
+             request.args.get('f')=="application/json"): #check requested content-type from inline request
             file = open('templates/json/apiDefinition.json',) #open apiDefinition.json
             payload = json.load(file) #create response
             file.close() #close apiDefinition.json
@@ -188,7 +188,6 @@ def executeProcess(processID):
             #create job directories        
             os.mkdir("jobs/" + jobID) #directory for current job
             os.mkdir("jobs/" + jobID + "/results/") #results directory for current job
-
             #create job.json
             job_file = {"jobID": str(jobID), #set jobID
                         "processID": str(processID), #set processID
@@ -236,7 +235,8 @@ def executeProcess(processID):
         else:
             exception = {"title": "No such process exception", "description": "Requested process could not be found", "type": "no-such-process"}
             return exception, 404 #return not found if requested process is not found 
-    except:
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 
 #jobs endpoint    

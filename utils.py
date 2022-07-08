@@ -289,7 +289,7 @@ def parseInput(processID, data):
         
         #check transmission mode
         if("response" in data):
-            if(data["outputs"]["outgoingEcho"]["transmissionMode"] not in process["outgoingEcho"]):
+            if(data["outputs"]["outgoingEcho"]["transmissionMode"] not in process["outputTransmission"]):
                 response = False
         
         #check media type
@@ -341,7 +341,7 @@ def parseInput(processID, data):
                     return response
                 outputs.append([i, data["outputs"][i]["format"]["mediaType"], data["outputs"][i]["transmissionMode"]])
         response = [inputs, responseType, outputs]
-        return response
+    return response
 
 def loginCopernicusHub(job):
     api = SentinelAPI(job.input[2], job.input[3]) #create api object

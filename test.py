@@ -9,54 +9,55 @@ import os
 import datetime
 import shutil
 
+
 def createTestJob(jobID, status, progress):
-    #create job directories        
-    os.mkdir("jobs/" + jobID) #directory for current job
-    os.mkdir("jobs/" + jobID + "/results/") #results directory for current job
-    os.mkdir("jobs/" + jobID + "/downloads/") #download directory for current job
-
-    #create job.json
-    job_file = {"jobID": jobID, #set jobID
-                "processID": "Echo", #set processID
-                "input": "successfulJobTest", #set input parameters
-                "responseType": "raw", #set response type (raw or document)
-                "resultMediaType": "ápplication", #set result mediatype
-                "path": "jobs/" + jobID, #set job path
-                "results": "jobs/" + jobID + "/results/", #set results path
-                "downloads": "jobs/" + jobID + "/downloads/"} #set downloads path
-    json.dumps(job_file, indent=4) #dump content
-    with open("jobs/" + jobID + "/job.json", 'w') as f: #create file
-        json.dump(job_file, f) #write content
-    f.close() #close file  
-
-    #create status.json
-    status_file = {"jobID": jobID, #set jobID
-                   "processID": "Echo", #set processID
-                   "status": status, #set initial status
-                   "message": "This is a test job", #set initial message
-                   "type": "process", #set type of job
-                   "progress": 100, #set unitial progress
-                   "created": str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), #set created timestamp
-                   "started": "none", #set initial started timestamp
-                   "finished": "none", #set initial finished tiestamp
-                   "links": [ #add links to self and alternate
-                       {
-                           "href": "localhost:5000/jobs/" + jobID + "?f=application/json",
-                            "rel": "self",
-                            "type": "application/json",
-                            "title": "this document as JSON"},
-                        {
-                            "href": "localhost:5000/jobs/" + jobID + "?f=text/html",
-                            "rel": "alternate",
-                            "type": "text/html",
-                            "title": "this document as HTML"
-                        }
-                        ]}
-    json.dumps(status_file, indent=4) #dump content
-    with open("jobs/" + jobID + "/status.json", 'w') as f: #create file
-        json.dump(status_file, f) #write content
-    f.close() #close file
-
+        #create job directories        
+        os.mkdir("jobs/" + jobID) #directory for current job
+        os.mkdir("jobs/" + jobID + "/results/") #results directory for current job
+        os.mkdir("jobs/" + jobID + "/downloads/") #download directory for current job
+    
+        #create job.json
+        job_file = {"jobID": jobID, #set jobID
+                    "processID": "Echo", #set processID
+                    "input": "successfulJobTest", #set input parameters
+                    "responseType": "raw", #set response type (raw or document)
+                    "resultMediaType": "ápplication", #set result mediatype
+                    "path": "jobs/" + jobID, #set job path
+                    "results": "jobs/" + jobID + "/results/", #set results path
+                    "downloads": "jobs/" + jobID + "/downloads/"} #set downloads path
+        json.dumps(job_file, indent=4) #dump content
+        with open("jobs/" + jobID + "/job.json", 'w') as f: #create file
+            json.dump(job_file, f) #write content
+        f.close() #close file  
+    
+        #create status.json
+        status_file = {"jobID": jobID, #set jobID
+                       "processID": "Echo", #set processID
+                       "status": status, #set initial status
+                       "message": "This is a test job", #set initial message
+                       "type": "process", #set type of job
+                       "progress": 100, #set unitial progress
+                       "created": str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")), #set created timestamp
+                       "started": "none", #set initial started timestamp
+                       "finished": "none", #set initial finished tiestamp
+                       "links": [ #add links to self and alternate
+                           {
+                               "href": "localhost:5000/jobs/" + jobID + "?f=application/json",
+                                "rel": "self",
+                                "type": "application/json",
+                                "title": "this document as JSON"},
+                            {
+                                "href": "localhost:5000/jobs/" + jobID + "?f=text/html",
+                                "rel": "alternate",
+                                "type": "text/html",
+                                "title": "this document as HTML"
+                            }
+                            ]}
+        json.dumps(status_file, indent=4) #dump content
+        with open("jobs/" + jobID + "/status.json", 'w') as f: #create file
+            json.dump(status_file, f) #write content
+        f.close() #close file
+    
 def createTestResult(jobID, input):
     result ={"result": "input",
              "message": "This is an echo"}
@@ -65,6 +66,12 @@ def createTestResult(jobID, input):
         json.dump(result, f) #write content
         f.close() #close file
         pass
+
+#create api subprocess
+api = subprocess.Popen(['python', 'api.py']) #start the api in a subprocess
+print("API running...")
+
+class testSuit(unittest.TestCase):
     
     logging.info("------------------> new test run <------------------")  
     #Test "/"
@@ -116,7 +123,6 @@ def createTestResult(jobID, input):
         request = requests.get('http://localhost:5000/api?f=application/json')
         status_code = request.status_code
         self.assertEqual(status_code, 200)
-        
         request = requests.get('http://localhost:5000/api?f=text/html')
         status_code = request.status_code
         self.assertEqual(status_code, 200)
@@ -210,7 +216,7 @@ def createTestResult(jobID, input):
         resource = request.headers["resource"]
         content_type = request.headers["Content-Type"]
         self.assertEqual(content_type, "application/json")
-        self.assertEqual(resource, 'Echo')
+        self.assertEqual(resource, 'process - Echo')
         self.assertEqual(status_code, 200)
         
         request = requests.get('http://localhost:5000/processes/Echo?f=text/html')
@@ -218,7 +224,7 @@ def createTestResult(jobID, input):
         resource = request.headers["resource"]
         content_type = request.headers["Content-Type"]
         self.assertEqual(content_type, "text/html; charset=utf-8")
-        self.assertEqual(resource, 'Echo')
+        self.assertEqual(resource, 'process - Echo')
         self.assertEqual(status_code, 200)
         logging.info("--> abstract test a13 & a14 passed")  
     
@@ -247,7 +253,7 @@ def createTestResult(jobID, input):
         
         #Echo execution
         logging.info("--> abstract test a34 started")  
-        request = requests.post('http://localhost:5000/processes/Echo/execution', json={'inputs':{'echo':'test'}, 'outputs':{'complexObjectOutput': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'})
+        request = requests.post('http://localhost:5000/processes/Echo/execution', json={'inputs':{'echo':'test'}, 'outputs':{'outgoingEcho': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'})
         status_code = request.status_code
         self.assertEqual(status_code, 201)
         logging.info("--> abstract test a34 passed")   
@@ -265,7 +271,7 @@ def createTestResult(jobID, input):
         resource = request.headers["resource"]
         content_type = request.headers["Content-Type"]
         self.assertEqual(content_type, "application/json")
-        self.assertEqual(resource, 'job')
+        self.assertEqual(resource, 'job - testJob')
         self.assertEqual(status_code, 200)
         
         request = requests.get('http://localhost:5000/jobs/testJob?f=text/html')
@@ -273,7 +279,7 @@ def createTestResult(jobID, input):
         resource = request.headers["resource"]
         content_type = request.headers["Content-Type"]
         self.assertEqual(content_type, "text/html; charset=utf-8")
-        self.assertEqual(resource, 'job')
+        self.assertEqual(resource, 'job - testJob')
         self.assertEqual(status_code, 200)
         logging.info("--> abstract test a35 & a36 passed")
         
@@ -547,4 +553,4 @@ if __name__ == '__main__':
     shutil.rmtree('jobs/runningJob')
     shutil.rmtree('jobs/successfulJob')
     shutil.rmtree('jobs/testJob')
-    
+    api.kill()

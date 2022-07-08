@@ -214,49 +214,18 @@
 
 \subsection{Ablauf eines Requests an den Job Status Endpoint}
 \begin{algorithm}[H]
-\caption{Ablauf eines Requests an den Job Status Endpoint}\label{appendixpsedoProcessDescription}
 \scriptsize
+\caption{Ablauf eines Requests an den Job Status Endpoint}\label{appendixpsedoJobStatus}
 \begin{algorithmic}     
     \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
     \STATE Encoding $\gets$ Anfrage.f
     \STATE Job-ID $\gets$ Anfrage.jobID
-    \IF{HTTP-Methode != GET}
-        \RETURN{HTTP-Statuscode 405}
+    \IF{HTTP-Methode == GET}
+        \STATE Test
+    \ELSIF{HTTP-Methode == DELETE}
+        \STATE Test
     \ELSE{}
-        \STATE \hskip0.5em \textbf{try}
-        \begin{ALC@g}
-            \IF{Encoding == text/html \OR Encoding == None}
-                \IF{templates/json/processes/Job-ID.json exists}
-                    \STATE JSON $\gets$ open(jobs/Job-ID/status.json)
-                    \STATE Response $\gets$ render\_template(templates/html/job.html, JSON)
-                    \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<jobID>?f=text/html
-                    \STATE Resource-Header $\gets$ job - Job-ID
-                    \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
-                \ELSE{}
-                    \STATE Exception $\gets$ No such job exception
-                    \STATE Resource-Header $\gets$ no-such-job
-                    \RETURN{HTTP-Statuscode 404 \AND Exception mit Resource-Header}
-                \ENDIF{}
-            \ELSIF{Encoding == application/json}
-                \IF{templates/json/processes/Job-ID.json exists}
-                \STATE JSON $\gets$ open(jobs/Job-ID/status.json)
-                    \STATE Response $\gets$ jsonify(JSON)
-                    \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<jobID>?f=application/json
-                    \STATE Resource-Header $\gets$ job - Job-ID
-                    \RETURN{HTTP-Statuscode 200 \AND Antwort mit Link- und Resource-Header}
-                \ELSE{}
-                    \STATE Exception $\gets$ No such job exception
-                    \STATE Resource-Header $\gets$ no-such-job
-                    \RETURN{HTTP-Statuscode 404 \AND Exception mit Resource-Header}
-                \ENDIF{}
-        \ELSE{}
-            \RETURN{HTTP-Statuscode 406}
-        \ENDIF{}
-        \end{ALC@g}
-        \STATE \hskip0.5em \textbf{exept}
-        \begin{ALC@g}
-            \RETURN{HTTP-Statuscode 500}
-        \end{ALC@g}
+        \RETURN{HTTP-Statuscode 405}
     \ENDIF{}
 \end{algorithmic}
 \end{algorithm}
@@ -553,6 +522,93 @@ def executeProcess(processID):
     except:
         return "HTTP status code 500: internal server error", 500
 \end{lstlisting}\label{appendixProcessExecution}   
+
+\newpage
+\subsection{Quellcode Job Endpoint}
+\begin{lstlisting}[caption={Job Endpoint}, style = Python]
+#job endpoint for status and dismiss
+@app.route('/jobs/<jobID>', methods = ['GET', 'DELETE']) 
+def getJob(jobID):
+    if(request.method == 'GET'):
+        app.logger.info('[GET] /jobs/' + jobID)
+        try:
+            if(request.content_type == "application/json" or 
+                request.args.get('f')=="application/json"): 
+                if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
+                    file = open('jobs/' + str(jobID) + '/status.json')
+                    data = json.load(file) 
+                    file.close() 
+                    response = jsonify(data) 
+                    return  response, 200, {"link": "localhost:5000/jobs/" 
+                    + str(jobID) 
+                    + "?f=application/json",
+                     "resource": "job - " 
+                     + str(jobID)} 
+                else:
+                    exception = {"title": "No such job exception", 
+                    "description": "No job with the requested jobID could be found", 
+                    "type": "no-such-job"}
+                    return exception, 404, {"resource": "no-such-job"} 
+            elif(request.content_type == "text/html" or
+                    request.args.get('f')=="text/html" or 
+                    request.args.get('f') == None): 
+                if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
+                    file = open('jobs/' + str(jobID) + '/status.json') 
+                    job = json.load(file) #create response   
+                    file.close() #close status.json
+                    response = render_template("html/Job.html", job=job)
+                    return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) 
+                    + "?f=text/html", 
+                    "resource": "job - " 
+                    + str(jobID)} 
+                else:
+                    exception = render_template('html/exception.html', title="No such job exception", description="No job with the requested jobID could be found", type="no-such-job")
+                    return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found
+            else:
+                return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
+        except:
+            return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
+        
+    if(request.method == 'DELETE'):
+        app.logger.info('[DELETE] /jobs/' + jobID) #add log entry when endpoint is called
+        try:       
+            if(os.path.exists('jobs/' + str(jobID) + '/status.json')): #check if jobID exists
+                with open('jobs/' + str(jobID) + '/status.json', "r") as f: #open status.json
+                    file = json.load(f) #load data from status.json
+                    if(file["status"] != "dismissed"): #if job is not dismissed
+                        file["status"] = "dismissed" #set status to dismissed
+                        file["message"] = "job dismissed" #set emssage to dismissed
+                        f.close() #close status.json
+                        with open('jobs/' + str(jobID) + '/status.json', "w") as f: #write status.json
+                            json.dump(file, f) #dump content
+                            f.close() #close status.json                    
+                        file = open('jobs/' + str(jobID) + '/status.json') #open status.json
+                        data = json.load(file) #load data from status.json 
+                        file.close() #close status.json
+                        
+                        if(request.content_type == "text/html" or #check requested content-type from request body
+                            request.args.get('f')=="text/html" or 
+                            request.args.get('f') == None):
+                            file = open('jobs/' + str(jobID) + '/status.json') #open status.json
+                            job = json.load(file) #create response   
+                            file.close() #close status.json
+                            response = render_template("html/Job.html", job=job) #render dynamic job
+                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job-dismissed"} #return response and ok
+                        else:
+                            response = jsonify(data) #create response
+                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return response and ok with link und resource header
+                    elif(request.content_type == "application/json" or #check requested content-type from request body
+                            request.args.get('f')=="application/json"): #check requested content-type from inline request):
+                        data = json.load(file) #load data from status.json 
+                        file.close() #close status.json
+                        response = jsonify(data) #create response
+                        return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return gone when job was already dismissed
+            else:
+                exception = {"title": "No such job exception", "description": "No job with the requested processID could be found", "type": "no-such-job"}
+                return exception, 404 #return not found if requested job is not found 
+        except:            
+            return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
+\end{lstlisting}\label{appendixJob}  
 
 \newpage
 \subsection{Quellcode Echo Process}
