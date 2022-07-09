@@ -277,10 +277,38 @@
         \STATE \hskip0.5em \textbf{try}
         \begin{ALC@g}
             \IF{jobs/<Job-ID>/status.json \textbf{exists}}
-                \STATE Job $\gets$ open(joobs/<Job-ID>/status.json)
+                \STATE Job $\gets$ open(jobs/<Job-ID>/status.json)
                 \IF{Job.status != dismissed}
+                    \STATE Job $\gets$ open(jobs/<Job-ID>/status.json)
+                    \IF{Encoding == text/html \OR Encoding == None}
+                        \STATE Response $\gets$ render\_template(templates/html/job.html)
+                        \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=text/html
+                        \STATE Resource-Header $\gets$ job-dismissed
+                        \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
+                    \ELSIF{Encoding == application/json}
+                        \STATE Response $\gets$ jsonify(Job)
+                        \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=application/json
+                        \STATE Resource-Header $\gets$ job-dismissed
+                        \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
+                    \ELSE{
+                        \RETURN{HTTP-Statuscode 406}
+                    }
+                    \ENDIF
                 \ELSE{}
-                    \STATE Do
+                    \IF{Encoding == text/html \OR Encoding == None}
+                        \STATE Response $\gets$ render\_template(templates/html/job.html)
+                        \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=text/html
+                        \STATE Resource-Header $\gets$ job-dismissed
+                        \RETURN{HTTP-Statuscode 410 \AND Response with Link- and Resource-Header}
+                    \ELSIF{Encoding == application/json}
+                        \STATE Response $\gets$ jsonify(Job)
+                        \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=application/json
+                        \STATE Resource-Header $\gets$ job-dismissed
+                        \RETURN{HTTP-Statuscode 410 \AND Response with Link- and Resource-Header}
+                    \ELSE{
+                        \RETURN{HTTP-Statuscode 406}
+                    }
+                    \ENDIF{}
                 \ENDIF{}
             \ELSE{}
                 \STATE Exception $\gets$ No such job exception

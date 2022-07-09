@@ -429,6 +429,8 @@ def getJob(jobID):
                          request.args.get('f')=="application/json"):
                             response = jsonify(data) #create response
                             return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return response and ok with link und resource header
+                        else:
+                            return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
                     else: #check requested content-type from inline request
                         if(request.content_type == "text/html" or #check requested content-type from request body
                          request.args.get('f')=="text/html" or 
@@ -445,6 +447,8 @@ def getJob(jobID):
                             file.close() #close status.json
                             response = jsonify(data) #create response
                             return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return gone when job was already dismissed
+                        else:
+                            return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported   
             else:
                 exception = {"title": "No such job exception", "description": "No job with the requested processID could be found", "type": "no-such-job"}
                 return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
