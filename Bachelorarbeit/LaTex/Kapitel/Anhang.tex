@@ -9,7 +9,7 @@
 \caption{Ablauf eines Requests an den API Landing Page Endpoint}\label{PseudocodeLandingPage}
 \scriptsize
 \begin{algorithmic}     
-    \STATE HTTP-Methode $\gets$ Request.HTTP-Methode
+    \STATE HTTP-Methode $\gets$ Request.HTTP-Method
     \STATE Encoding $\gets$ Request.f
     \IF{HTTP-Methode != GET}
         \RETURN{HTTP-Statuscode 405}
@@ -20,13 +20,13 @@
             \STATE Response $\gets$ render\_template(templates/html/landingPage.html)
             \STATE Link-Header $\gets$ http://HOST:PORT/?f=text/html
             \STATE Resource-Header $\gets$ landingPage
-            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
         \ELSIF{Encoding == application/json}
             \STATE JSON $\gets$ open(templates/json/landingPage.json)
             \STATE Response $\gets$ jsonify(Datei)
             \STATE Link-Header $\gets$ http://HOST:PORT/?f=application/json
             \STATE Resource-Header $\gets$ landingPage
-            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
         \ELSE{}
             \RETURN{HTTP-Statuscode 406}
         \ENDIF{}
@@ -44,7 +44,7 @@
 \caption{Ablauf eines Requests an den API Definition Endpoint}\label{PseudocodeAPIDefinition}
 \scriptsize
 \begin{algorithmic}     
-    \STATE HTTP-Methode $\gets$ Request.HTTP-Methode
+    \STATE HTTP-Methode $\gets$ Request.HTTP-Method
     \STATE Encoding $\gets$ Request.f
     \IF{HTTP-Methode != GET}
         \RETURN{HTTP-Statuscode 405}
@@ -55,13 +55,13 @@
             \STATE Response $\gets$ render\_template(templates/html/apiDefinition.html)
             \STATE Link-Header $\gets$ http://HOST:PORT/api?f=text/html
             \STATE Resource-Header $\gets$ apiDefinition
-            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
         \ELSIF{Encoding == application/json}
             \STATE JSON $\gets$ open(templates/json/apiDefinition.json)
             \STATE Response $\gets$ jsonify(Datei)
             \STATE Link-Header $\gets$ http://HOST:PORT/api?f=application/json
             \STATE Resource-Header $\gets$ apiDefinition
-            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
         \ELSE{}
             \RETURN{HTTP-Statuscode 406}
         \ENDIF{}
@@ -79,7 +79,7 @@
 \caption{Ablauf eines Requests an den Conformance Endpoint}\label{PseudocodeConformance}
 \scriptsize
 \begin{algorithmic}     
-    \STATE HTTP-Methode $\gets$ Request.HTTP-Methode
+    \STATE HTTP-Methode $\gets$ Request.HTTP-Method
     \STATE Encoding $\gets$ Request.f
     \IF{HTTP-Methode != GET}
         \RETURN{HTTP-Statuscode 405}
@@ -90,13 +90,13 @@
             \STATE Response $\gets$ render\_template(templates/html/confClasses.html)
             \STATE Link-Header $\gets$ http://HOST:PORT/conformance?f=text/html
             \STATE Resource-Header $\gets$ conformance
-            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
         \ELSIF{Encoding == application/json}
             \STATE JSON $\gets$ open(templates/json/confClasses.json)
             \STATE Response $\gets$ jsonify(Datei)
             \STATE Link-Header $\gets$ http://HOST:PORT/conformance?f=application/json
             \STATE Resource-Header $\gets$ conformance
-            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
         \ELSE{}
             \RETURN{HTTP-Statuscode 406}
         \ENDIF{}
@@ -114,7 +114,7 @@
 \caption{Ablauf eines Requests an den Process List Endpoint}\label{PseudocodeProcessList}
 \scriptsize
 \begin{algorithmic}     
-    \STATE HTTP-Methode $\gets$ Request.HTTP-Methode
+    \STATE HTTP-Methode $\gets$ Request.HTTP-Method
     \STATE Encoding $\gets$ Request.f
     \STATE Limit $\gets$ Request.limit
     \IF{HTTP-Methode != GET}
@@ -122,7 +122,7 @@
     \ELSE{}
         \STATE \hskip0.5em \textbf{try}
         \begin{ALC@g}
-            \IF{Limit == None \OR Limit <= 0 \OR Limit > 10000}
+            \IF{Limit == None \OR Limit <= 0 \OR Limit > 100000}
                 \STATE Limit $\gets$ 10
             \ELSE{}
                 \STATE Limit $\gets$ Anfrage.limit
@@ -137,7 +137,7 @@
             \STATE Response $\gets$ render\_template(templates/html/processList.html, Process List[0:Limit])
             \STATE Link-Header $\gets$ http://HOST:PORT/processList?f=application/json
             \STATE Resource-Header $\gets$ processList
-            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
         \ELSIF{Encoding == application/json}
             \STATE Process List $\gets$ []
             \STATE Processes $\gets$ List of Process descriptions in templates/json/processes
@@ -149,7 +149,7 @@
             \STATE Response $\gets$ jsonify(Process Liste[0:Limit])
             \STATE Link-Header $\gets$ http://HOST:PORT/processList?f=application/json
             \STATE Resource-Header $\gets$ processList
-            \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
+            \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
         \ELSE{}
             \RETURN{HTTP-Statuscode 406}
         \ENDIF{}
@@ -167,7 +167,7 @@
 \caption{Ablauf eines Requests an den Process Description Endpoint}\label{PseudocodeProcessDescription}
 \scriptsize
 \begin{algorithmic}     
-    \STATE HTTP-Methode $\gets$ Request.HTTP-Methode
+    \STATE HTTP-Methode $\gets$ Request.HTTP-Method
     \STATE Encoding $\gets$ Request.f
     \STATE Process-ID $\gets$ Request.processID
     \IF{HTTP-Methode != GET}
@@ -176,28 +176,28 @@
         \STATE \hskip0.5em \textbf{try}
         \begin{ALC@g}
             \IF{Encoding == text/html \OR Encoding == None}
-                \IF{templates/json/processes/Process-ID.json exists}
-                    \STATE JSON $\gets$ open(json/processes/Process-ID.json)
+                \IF{templates/json/processes/<Process-ID>ProcessDescription.json \textbf{exists}}
+                    \STATE JSON $\gets$ open(templates/json/processes/<Process-ID>ProcessDescription.json)
                     \STATE Response $\gets$ render\_template(templates/html/process.html, JSON)
                     \STATE Link-Header $\gets$ http://HOST:PORT/processes/<processID>?f=text/html
                     \STATE Resource-Header $\gets$ process - Process-ID
-                    \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
+                    \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
                 \ELSE{}
                     \STATE Exception $\gets$ No such process exception
                     \STATE Resource-Header $\gets$ no-such-process
-                    \RETURN{HTTP-Statuscode 404 \AND Exception mit Resource-Header}
+                    \RETURN{HTTP-Statuscode 404 \AND Exception with Resource-Header}
                 \ENDIF{}
             \ELSIF{Encoding == application/json}
-                \IF{templates/json/processes/Process-ID.json exists}
-                    \STATE JSON $\gets$ open(json/processes/Process-ID.json)
+                \IF{templates/json/processes/<Process-ID>ProcessDescription.json \textbf{exists}}
+                    \STATE JSON $\gets$ open(templates/json/processes/<Process-ID>ProcessDescription.json)
                     \STATE Response $\gets$ jsonify(JSON)
-                    \STATE Link-Header $\gets$ http://HOST:PORT/processes/<processID>?f=application/json
+                    \STATE Link-Header $\gets$ http://HOST:PORT/processes/<Process-ID>?f=application/json
                     \STATE Resource-Header $\gets$ process - Process-ID
-                    \RETURN{HTTP-Statuscode 200 \AND Response mit Link- und Resource-Header}
+                    \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
                 \ELSE{}
                     \STATE Exception $\gets$ No such process exception
                     \STATE Resource-Header $\gets$ no-such-process
-                    \RETURN{HTTP-Statuscode 404 \AND Exception mit Resource-Header}
+                    \RETURN{HTTP-Statuscode 404 \AND Exception with Resource-Header}
                 \ENDIF{}
         \ELSE{}
             \RETURN{HTTP-Statuscode 406}
@@ -234,13 +234,64 @@
 \scriptsize
 \caption{Ablauf eines Requests an den Job Status Endpoint}\label{PseudocodeJobStatus}
 \begin{algorithmic}     
-    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Methode
-    \STATE Encoding $\gets$ Anfrage.f
-    \STATE Job-ID $\gets$ Anfrage.jobID
+    \STATE HTTP-Methode $\gets$ Anfrage.HTTP-Method
+    \STATE Encoding $\gets$ Request.f
+    \STATE Job-ID $\gets$ Request.jobID
     \IF{HTTP-Methode == GET}
-        \STATE Test
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{Encoding == text/html \OR Encoding == None}
+                \IF{jobs/<Job-ID>/status.json \textbf{exists}}
+                \STATE JSON $\gets$ open(jobs/<Job-ID>/status.json)
+                \STATE Response $\gets$ render\_template(templates/html/job.html, JSON)
+                \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=text/html
+                    \STATE Resource-Header $\gets$ job - <Job-ID>
+                    \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
+                \ELSE{}
+                    \STATE Exception $\gets$ No such job exception
+                    \STATE Resource-Header $\gets$ no-such-job
+                    \RETURN{HTTP-Statuscode 404 \AND Exception with Resource-Header}
+                \ENDIF{}
+            \ELSIF{Encoding == application/json}
+                \IF{jobs/<Job-ID>/status.json \textbf{exists}}
+                    \STATE Job $\gets$ open(jobs/<Job-ID>/status.json)
+                    \STATE \textbf{add} Links to self and alternate \textbf{to} Job
+                    \STATE Response $\gets$ jsonify(Job)
+                    \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=application/json
+                    \STATE Resource-Header $\gets$ job - <Job-ID>
+                    \RETURN{HTTP-Statuscode 200 \AND Response with Link- and Resource-Header}
+                \ELSE{}
+                    \STATE Exception $\gets$ No such job exception
+                    \STATE Resource-Header $\gets$ no-such-job
+                    \RETURN{HTTP-Statuscode 404 \AND Exception with Resource-Header}
+                \ENDIF
+            \ELSE{}
+                \RETURN{HTTP-Statuscode 406}
+            \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
     \ELSIF{HTTP-Methode == DELETE}
-        \STATE Test
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{jobs/<Job-ID>/status.json \textbf{exists}}
+                \STATE Job $\gets$ open(joobs/<Job-ID>/status.json)
+                \IF{Job.status != dismissed}
+                \ELSE{}
+                    \STATE Do
+                \ENDIF{}
+            \ELSE{}
+                \STATE Exception $\gets$ No such job exception
+                \STATE Resource-Header $\gets$ no-such-job
+                \RETURN{HTTP-Statuscode 404 \AND Exception with Resource-Header}
+            \ENDIF
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
     \ELSE{}
         \RETURN{HTTP-Statuscode 405}
     \ENDIF{}

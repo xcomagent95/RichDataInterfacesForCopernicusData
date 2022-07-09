@@ -425,18 +425,29 @@ def getJob(jobID):
                             file.close() #close status.json
                             response = render_template("html/Job.html", job=job) #render dynamic job
                             return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job-dismissed"} #return response and ok
-                        else:
+                        elif(request.content_type == "application/json" or #check requested content-type from request body
+                         request.args.get('f')=="application/json"):
                             response = jsonify(data) #create response
                             return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return response and ok with link und resource header
-                    elif(request.content_type == "application/json" or #check requested content-type from request body
-                         request.args.get('f')=="application/json"): #check requested content-type from inline request):
-                        data = json.load(file) #load data from status.json 
-                        file.close() #close status.json
-                        response = jsonify(data) #create response
-                        return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return gone when job was already dismissed
+                    else: #check requested content-type from inline request
+                        if(request.content_type == "text/html" or #check requested content-type from request body
+                         request.args.get('f')=="text/html" or 
+                         request.args.get('f') == None):
+                            file = open('jobs/' + str(jobID) + '/status.json') #open status.json
+                            job = json.load(file) #create response   
+                            file.close() #close status.json
+                            response = render_template("html/Job.html", job=job) #render dynamic job
+                            return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job-dismissed"} #return response and ok
+                        elif(request.content_type == "application/json" or #check requested content-type from request body
+                         request.args.get('f')=="application/json"):
+                            file = open('jobs/' + str(jobID) + '/status.json') #open status.json
+                            data = json.load(file) #load data from status.json 
+                            file.close() #close status.json
+                            response = jsonify(data) #create response
+                            return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return gone when job was already dismissed
             else:
                 exception = {"title": "No such job exception", "description": "No job with the requested processID could be found", "type": "no-such-job"}
-                return exception, 404 #return not found if requested job is not found 
+                return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
         except:            
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
 
@@ -560,6 +571,7 @@ def downloadFile(jobID, requestedFile):
         else:
             return 500 #internal server error
 
+"""
 @app.route('/coverage', methods = ["GET"])
 def getCoverage():
 	try:
@@ -616,10 +628,8 @@ def getCoverage():
 			bboxes.append(geojson)
 		coverageJSON = {'coverages': coverages}
      
-        if(request.content_type == "application/json" or #check requested content-type from request body
-           request.args.get('f')=="application/json"): #check requested content-type from inline request
+        if(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type from request body
             return coverageJSON, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage"} #return response and ok with link und resource header
-            
         elif(request.content_type == "text/html" or #check requested content-type from request body
              request.args.get('f')=="text/html" or 
              request.args.get('f') == None): #check requested content-type from inline request
@@ -630,7 +640,7 @@ def getCoverage():
     except Exception as e:
         print(e)
         return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
-    
+"""    
 
          
 #run application

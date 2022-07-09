@@ -10,6 +10,8 @@ curl -X GET -H "Content-Type:application/json" "localhost:5000/processes"
 curl -X GET -H "Content-Type:text/html" "localhost:5000/processes/Echo" 
 curl -X GET -H "Content-Type:application/json" "localhost:5000/processes/Echo" 
 
+
+
 #Echo raw
 curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'echo':'test'}, 'outputs':{'outgoingEcho': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/Echo/execution"
 #Echo document
@@ -41,3 +43,5 @@ curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d
 
 #Oberhausen
 curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'preDate':'20220405', 'postDate':'20220412', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [51.54060265946126, 6.705732599335177, 51.59961800575529, 6.579675768733238]}}, 'outputs':{'floodMask': {'format': {'mediaType': 'application=zip'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
+
+curl -X DELETE -H "Content-Type:application/json" -H -H "Accept: application/json" "localhost:5000/jobs/61b3dcfa-e2d0-4c5b-a797-bb3a8a291896?f=application/json"  
