@@ -7,15 +7,20 @@ Diese ist nicht nur aufgrund ihrer Einfachheit vorteilhaft sondern erlaubt auch 
 Anwendungsfälle. 
 Weite Teile des Rich Data Interface wurden mithilfe des Flask-Frameworks umgesetzt. Dieses erlaubt das schnelle Entwickeln einer leichtgewichtigen API.  
 Neben Python Standard-Bibliotheken kommen nur wenige zusätzliche Packages zum Einsatz. Um zu Anfragen passende Sentinel-1 Datensätze aus dem 
-Copernicus-Access-Hub zu finden kommt das Package sentinelsat zum Einsatz. Das Herunterladen und die Verarbeitung der Sentinel-1 Datensätze wird jedoch 
-durch das Package snappy realisiert. Dieses ist ein Wrapper für die SNAP Software welche im Rahmen des Copernicus-Programmes kostenlos zur Verfügung 
-gestellt wird. Statistische Auswertungen der Radarbilder werden mit dem Package skimage durchgeführt. Da die Radarbilder jedoch auch zugeschnitten und 
+Copernicus-Access-Hub zu finden kommt das Package sentinelsat zum Einsatz. Das Herunterladen der Sentinel-1 Datensätze erfolgt ebenfalls mit diesem Package. 
+Die Prozessierungen der Sentinel-1 Daten werden mit dem Package snappy durchgeführt. 
+Dieses ist ein Wrapper für die SNAP Software welche im Rahmen des Copernicus-Programmes kostenlos zur Verfügung 
+gestellt wird. Mit snappy lassen sich die Funktionen der Sentinel-1 Toolbox in Python verwenden. 
+Statistische Auswertungen der Radarbilder werden mit dem Package skimage durchgeführt. Da die Radarbilder jedoch auch zugeschnitten und 
 mathematisch zu kombinieren sind werden auch die Packages gdal, ogr und osr verwendet. 
 
 \subsection{Struktur}
 Die Anwendung ist in vier Python-Scripte aufgeteilt. Im api.py Script ist die API der Anwendung definiert. 
-Die geordnete Abarbeitung der angelegten Jobs werden vom Script processing.py gesteuert. Die eigentlichen Prozesse sowie 
-Hilfsfunktionen befinden sich im utils.py Script. Das test.py Script kann dazu genutzt werden um die Stabilität und Standardkonformität der API zu testen.
+Die geordnete Abarbeitung der angelegten Jobs werden vom Script processing.py nach dem Modell der Queue gesteuert. 
+Dies bedeutet das zeitgleich nur ein Job ausgeführt wird. Nach dessen Beendigung wird der älteste angelegte Job gewählt und bearbeitet.
+Die eigentlichen Prozesse sowie 
+Hilfsfunktionen befinden sich im utils.py Script. Dazu zählen auch die eigentlichen Prozesse sowie Parser für 
+ihre Eingabedaten. Das test.py Script kann dazu genutzt werden um die Stabilität und Standardkonformität der API zu testen und enthält des Test-Suit.
 
 Diese Scripte verwalten Dateien in einem einfachen Verzeichnissystem. Templates für statische Ressourcen befinden sich im Verzeichnis \textit{templates/}. HTML-Dateien 
 befinden sich im Verzeichnis \textit{templates/html/} und JSON-Dateien im Verzeichnis \textit{templates/json/}. Das Unterverzeichnis \textit{templates/json/processes/} enthält die 
@@ -30,14 +35,15 @@ Insgesamt handelt es sich bei der prototypischen Implementierung eines Rich Data
 Zugriff auf diese Ressourcen erhalten Nutzer über eine OGC API - Processes - Part 1: Core standardkonforme API. 
 
 \subsection{Ressourcen}
-Ressourcen sind die üer die Endpoints der API bereitgestellten Informationen und Dateien. Sie können in unterschiedlichen Repräsentationen vorliegen.
+Ressourcen sind die über die Endpoints der API bereitgestellten Informationen und Dateien. Sie können in unterschiedlichen Repräsentationen vorliegen.
 Die meisten angebotenen Ressourcen können um Media-Type \textit{text/html}, also als HTML-Dateien oder im Media-Type \textit{application/json} also als 
 JSON-Dateien angefragt werden. Um aus diesen Dateien einen Response zu generieren werden .html-Dateien zuvor mit der Methode \textit{render\_template()}, welcher auch 
-dynamische Inhalte übergeben werden können gerendert während .json-Dateien zunächst mit der Methode \textit{jsonify()} bearbeitet werden. Beide genannten Methoden
+dynamische Inhalte übergeben werden können gerendert während .json-Dateien zunächst geladen und anschließend 
+mit der Methode \textit{jsonify()} bearbeitet werden. Beide genannten Methoden
 geben ein Response-Objekt zurück welches zusammen mit Headern und einem HTTP-Statuscode versandt werden kann. \\
 
 Die Struktur dieser Ressourcen ist in Schemata beschrieben. Diese definieren neben den Bezeichnungen für Elemente auch ihre Datentypen und 
-ob sie optional sind oder nicht. Jede Ressource enthält eine Verknüpfungen zu sich selbst mit der Relation \textit{self} und gegebenenfalls eine Verknüpfung 
+ob sie optional sind oder nicht. Jede Ressource enthält zudem eine Verknüpfungen zu sich selbst mit der Relation \textit{self} und gegebenenfalls eine Verknüpfung 
 zur Ressource im jeweils anderen Media-Type mit der Relation \textit{alternate}. 
 
 \subsection{Encodings}
@@ -46,7 +52,7 @@ Endpunkte API Landing Page, API Definition, Conformance Deklaration, Prozess Lis
 HTTP-Statuscode 200 versandt werden. Da die prototypische Implementierung auch die Endpunkte Job Liste und Coverage bereitstellt können die korrespondierenden
 Ressourcen auch im Media-Type \textit{application/json} angefragt werden.\\
 
-In der Requirements-Class HTML werden analog zu Requirements Class JSON jene Ressourcen definiert welche im Media-Type \textit{text/html} angefragt werden können. Jedoch
+In der Requirements-Class HTML werden analog zur Requirements Class JSON jene Ressourcen definiert welche im Media-Type \textit{text/html} angefragt werden können. Jedoch
 entfällt in dieser Requirements-Class die Einschränkung auf bestimmte Endpunkte und alle Responses welche mit dem HTTP-Statuscode 200 versandt werden müssen den 
 Media-Type \textit{text/html} unterstützen.\\
 Stellen Endpoints ihre Ressourcen sowohl den Media-Type \textit{application/json} als auch \textit{text/html} zur Verfügung so können Nutzer diesen über den optional Parameter
@@ -89,7 +95,7 @@ den HTTP-Statuscodes 201 beziehungsweise 404. Der Standard erlaubt die Nutzung w
 
 \subsection{Limit Parameter}
 Der \textit{limit}-Parameter wird von den Endpoints Process List und Job List unterstützt
-und wird in der requirements-Class Core definiert. Mit ihm kann gesteuert werden wie viele Elemente im Response gelistet werden. 
+und wird in der Requirements-Class Core definiert. Mit ihm kann gesteuert werden wie viele Elemente im Response gelistet werden. 
 Der \textit{limit}-Parameter ist optional. Ist er nicht Teil eines Requests werden standardmäßig zehn Elemente zurückgegeben. Es können maximal 1000 Elemente angefragt werden.
 Ergibt die Überprüfung des \textit{limit}-Parameters das Werte außerhalb des gültigen Wertebereichs von 0 bis 10000 angefragt werden wird der Parameter auf 10 zurückgesetzt. 
 Ein Response kann weniger, aber nie mehr Elemente als durch den \textit{limit}-Parameter spezifiziert werden enthalten (siehe Anhang \ref{appendixlimityaml}) 
@@ -208,11 +214,11 @@ gesetzt. Dies sorgt für den Abbruch der Bearbeitung.
 
 \subsubsection{Job Results Endpoint}
 Die Ergebnisse eines erfolgreichen Jobs können unter dem URL \textit{http://HOST:PORT/jobs/<jobID>//results?f=<MEDIA-TYPE>} abgerufen werden. 
-Die bereitgestellten Ressourcen variieren je nach Prozess, gewähltem Output sowie dessen Transmission-Mode und Response-Type. Sie können 
-mit der HTTP-Get Methode abgerufen werden.
+Die bereitgestellten Ressourcen variieren je nach Prozess, gewähltem Output sowie dessen Transmission-Mode, \textit{value} oer \textit{refference} und Response-Type
+\textit{document} oder \textit{raw}. Sie können mit der HTTP-Get Methode abgerufen werden.
 
-?Welche Media Types gibt es?
-?Wie läuft die generierung des Response ab und was enthält dieser?
+Wird ein Request akzeptiert wird zunächst geprüft ob die Job-ID überhaupt existiert und der Job bereits den Job-Status \textit{successful} aufweist. 
+Es folgt die Generierung eines Result-Dokuments oder eines Download-Links. 
 !Pseudode!
 
 \subsection{Domumentation}
@@ -251,3 +257,5 @@ und ihrer Bounding-BBox aufgeführt. Die Bounding-BBox gibt Aufschluss über die
 Um die Funktionen der API und seine Standradkonformität testen zu können wurde ein Unit-Test oder test Suit aus dem im Standard beschriebenen Abstract Test Suit abgeleitet und 
 implementiert. Zu bemerken ist dabei das der prototypische implementierte Test-Suit lediglich einige maschienentestbare Testfälle abdeckt. 
 Werden nun Änderungen am Programm vorgenommen kann mit der Ausführung dieses Test-Suits einfach die Funktionalität und Stabilität der API überprüft werden. 
+
+In der prototypischen Implementierung werden die Test mit dem Package unittest umgesetzt.  
