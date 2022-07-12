@@ -275,7 +275,7 @@ und zuverlässig wie möglich werden \cite{api_design} \cite{testbed_11}.
 Ein zentraler Begriff ist der der Ressourcen. Eine Ressource ist eine abstrakte Datenstruktur welche in verschiedenen konkreten Repräsentationen vorliegen kann. 
 Typische Formate für Repräsentationen sind XML, JSON oder HTML. 
 Ressourcen haben eine eindeutige URI welche häufig die Gestalt eines URL annimmt. 
-Die Interaktion mit Ressourcen erfolgen mit den HTTP-Methoden Get, Post, Put und Delete über das \cite{api_design}.  
+Die Interaktion mit Ressourcen erfolgen mit den HTTP-Methoden Get, Post, Put und Delete \cite{api_design}.  
 Als RESTful bezeichnete Systeme sollen zudem stateless operieren. Dies bedeutet das alle für Beantwortung eines Requests nötigen Informationen im Request selber enthalten sind. 
 Zusätzlich hängt der Erfolg oder Misserfolg eines Requests nicht von dem Ergebnis eines Anderen ab \cite{api_design, testbed_11}. 
 Allerdings sollen Responses zwischengespeichert werden können um häufig auftretenden Requests schneller beantworten zu können \cite{testbed_11}.
@@ -306,39 +306,50 @@ sowie die Auffindbarkeit und Durchsuchbarkeit dieser. Ein weiterer Bereich widme
 \subsection{OGC API - Processes - Part 1: Core}
 Der OGC API - Processes - Part 1: Core Standard soll das Bereitstellen von aufwendigen Prozessierungsaufgaben und ausführbaren Prozessen welche über eine Web API
  von anderen Programmen aufgerufen und gestartet werden können unterstützen \cite{ogc_api_processes_core}. Der Standard ist dabei von Konzepten des 
-OGC Web Processing Service 2.0 Interface Standards beeinflusst und bedient sich des REST Paradigmas sowie der Java Script Object Notation (JSON). \\
+OGC Web Processing Service 2.0 Interface Standards beeinflusst und bedient sich des REST Architekturstils sowie der Java Script Object Notation (JSON). \\
 
 Der Aufbau des OGC API - Processes - Part 1: Core Standards orientiert sich am OGC Spezifikationsmodell. Dieses beschreibt die modularen Komponenten eines Standards und 
-wie diese miteinander in Verbindung stehen \cite{ogc_specification_model}. Das Spezifikationsmodell definiert einen Standard als Teillösung eines Entwicklungsproblems.
+wie diese miteinander in Verbindung stehen \cite{ogc_specification_model}. 
+Das Spezifikationsmodell definiert einen Standard als Teillösung eines Entwicklungsproblems.
 Diese Teillösung limitiert die Anzahl an möglichen Implementierungen. Ziel ist die Harmonisierung der Implementierungen und so die Interoperabilität zu steigern.
+
 Der OGC API - Processes - Part 1: Core Standard formuliert Requirements, Recommendations und fasst diese zu Requirements-Classes zusammen welche wiederum 
 ein Standardisierungsziel beschreiben. Requirements beschrieben Eigenschaften oder Vorgehensweisen die die Implementierung umsetzen muss um standardkonform zu sein. 
 Recommendations sind hingegen nicht verpflichtend beschreiben aber aus Sicht der Autoren empfehlenswerte Eigenschaften oder Vorgehensweisen \cite{ogc_specification_model}. 
+
 Jedes Requirement kann mit einem ebenfalls im Standard definierten Conformance-Test-Case überprüft werden. Diese Tests können zu Conformance-Test-Modules zusammengefasst 
 welche alle Test zum prüfen einer Requirements-Class umfassen. Die Gesamtheit dieser Conformance-Test-Modules wird auch als Conformance-Test-Class bezeichnet. Alle vom 
-Standard Conformance-Test-Classes werden im Conformance-Suit zusammengefasst \cite{ogc_specification_model}. Erfüllt eine Implementierung alle im Conformance-Suit definierten 
-Tests kann sie mit einem Certificate of Conformance für die implementierten Requirements-Classes versehen werden. Requirements, Recommendation und Conformance-Suit bilden 
-gemeinsam eine Spezifikation welche nach der Anerkennung durch ein legitimes Gremium wie das OGC als Standard angesehen werden.
-Der OGC API - Processes - Part 1: Core Standard definiert sieben Requirements-Classes. Die Requirements-Class Core beschreibt dabei die Kernfunktionalitäten welche 
-von standardkonformen Implementierungen umgesetzt werden. Da dem Nutzer mit diesen Kernfunktionalitäten Ressourcen zugänglich gemacht werden sollen werden in den 
-Requirements-Classes JSON und HTML Repräsentationen dieser Ressourcen in JSON und HTML definiert \cite{ogc_api_processes_core}. Die Requirements-Class Core macht keine
-expliziten Vorgaben für die Beschreibung einer standardkonformen API. Solche Vorgaben finden sich in der nicht verpflichtend umzusetzenden Requirements-Class
-OpenAPI Specification 3.0. Diese definiert wie implementierte APIs mithilfe der OpenAPI 3.0 Spezifikation beschrieben und dokumentiert werden können \cite{ogc_api_processes_core}.
-Ebenso werden in der Core Requirements-Class keine expliziten Vorgaben zur Beschreibung der angebotenen Prozesse gemacht. Da der Standard primär, aber nicht
-ausschließlich, zum Breitstellen von Diensten aus dem Bereich der Geoinformatik genutzt werden soll wird in der Requirements-Class OGC Process Description die Nutzung des 
-OGC Processes Description Formats zum Beschreiben von angebotenen Prozessen empfohlen \cite{ogc_api_processes_core}. 
+Standard definierten Conformance-Test-Classes werden im Conformance-Suit zusammengefasst \cite{ogc_specification_model}. 
+Erfüllt eine Implementierung alle im Conformance-Suit definierten Tests kann sie mit einem Certificate of Conformance für die implementierten Requirements-Classes 
+versehen werden. Requirements, Recommendation und Conformance-Suit bilden gemeinsam eine Spezifikation welche nach der Anerkennung durch ein legitimes 
+Gremium wie das OGC als Standard angesehen werden.
+
+Der OGC API - Processes - Part 1: Core Standard definiert sieben Requirements-Classes welche Endpoints sowie deren Funktionen, Responses und mögliche Fehlersituationen
+umfassen.  
+Die Requirements-Class Core beschreibt dabei die Kernfunktionalitäten welche 
+von standardkonformen Implementierungen umgesetzt werden. 
+
+Da dem Nutzer mit diesen Kernfunktionalitäten Ressourcen zugänglich gemacht werden sollen werden in den 
+Requirements-Classes JSON und HTML Repräsentationen dieser Ressourcen in JSON und HTML definiert \cite{ogc_api_processes_core}. 
+
+Die Requirements-Class Core macht keine expliziten Vorgaben für die Beschreibung einer standardkonformen API. 
+Solche Vorgaben finden sich in der Requirements-Class OpenAPI Specification 3.0. 
+Diese definiert wie implementierte APIs mithilfe der OpenAPI 3.0 Spezifikation beschrieben und dokumentiert werden sollen \cite{ogc_api_processes_core}.
+
+Da der Standard primär, aber nicht ausschließlich, zum Breitstellen von Diensten aus dem Bereich der Geoinformatik genutzt werden 
+soll wird in der Requirements-Class OGC Process Description die Nutzung des OGC Processes Description Formats zum Beschreiben von angebotenen Prozessen empfohlen \cite{ogc_api_processes_core}. 
+
 Zusätzliche Funktionen werden in den Requirements-Classes Job-List, Callback und Dismiss beschreiben. Sie beschreiben zusätzliche Ressourcen und Interaktionsmöglichkeiten 
 mit den auszuführenden Instanzen eines Prozesses welche als Jobs bezeichnet werden \cite{ogc_api_processes_core}.
-Die Requirements-Classes definieren hier Endpoints sowie deren Funktionen, Responses und mögliche Fehlersituationen. Jede implementierte Requirements-Class kann mit einem 
-entsprechenden Test, welcher im Abstract Test Suit beschreiben ist, auf ihre korrekte Implementierung hin überprüft werden. 
+
 \subsection{Evaluationskriterien}
 Die Evaluation einer Implementierung einer API kann unter verschiedenen Gesichtspunkten erfolgen. Zum einen können technische Aspekte Effizienz, Skalierbarkeit,
 Stabilität und Wartbarkeit untersucht werden. Zu dieser technischen Bewertung einer API kann auch das Überprüfen der Standardkonformität gezählt werden. 
 Diese kann durch einen ebenfalls zu implementierenden Unit-Test teilweise überprüft werden da mache Testfälle des Test-Suits des Standards automatisch überprüft
 werden können \cite{ogc_api_processes_core}. Der Fokus der in dieser Arbeit durchgeführt Evaluation soll jedoch die Benutzbarkeit und Benutzerfreundlichkeit der 
 Implementierung sein. Dafür können die von Jakob Nielsen 1993 aufgestellten Heuristiken verwendet werden. Dabei handelt es sich um zehn Heuristiken unter denen 
-eine Schnittstelle betrachtet werden kann \cite{usability_engineering}. Die Heuristiken decken unter anderem die Themenfelder Verständlichkeit, Fehlerbehandlung und 
-Fehlervermeidung, Dokumentation und Konsistenz ab \cite{usability_engineering}. 
+eine Schnittstelle betrachtet werden kann \cite{usability_engineering}. Die Heuristiken decken unter anderem die Themenfelder Verständlichkeit, Fehlerbehandlung, 
+Dokumentation und Konsistenz ab \cite{usability_engineering}. 
 
 
 

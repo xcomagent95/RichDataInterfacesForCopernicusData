@@ -35,15 +35,16 @@ Insgesamt handelt es sich bei der prototypischen Implementierung eines Rich Data
 Zugriff auf diese Ressourcen erhalten Nutzer über eine OGC API - Processes - Part 1: Core standardkonforme API. 
 
 \subsection{Ressourcen}
-Ressourcen sind die über die Endpoints der API bereitgestellten Informationen und Dateien. Sie können in unterschiedlichen Repräsentationen vorliegen.
+Ressourcen sind die über die Endpoints der API bereitgestellten Informationen und Dateien. Sie können in unterschiedlichen Repräsentationen vorliegen. 
+Die Ressourcen werden vom OGC API - Processes - Part 1: Core Standard mittels Schemata im .yaml-Format beschrieben. 
+Diese definieren neben den Bezeichnungen für Elemente auch ihre Datentypen und ob sie optional sind oder nicht. 
 Die meisten angebotenen Ressourcen können um Media-Type \textit{text/html}, also als HTML-Dateien oder im Media-Type \textit{application/json} also als 
 JSON-Dateien angefragt werden. Um aus diesen Dateien einen Response zu generieren werden .html-Dateien zuvor mit der Methode \textit{render\_template()}, welcher auch 
 dynamische Inhalte übergeben werden können gerendert während .json-Dateien zunächst geladen und anschließend 
 mit der Methode \textit{jsonify()} bearbeitet werden. Beide genannten Methoden
 geben ein Response-Objekt zurück welches zusammen mit Headern und einem HTTP-Statuscode versandt werden kann. \\
 
-Die Struktur dieser Ressourcen ist in Schemata beschrieben. Diese definieren neben den Bezeichnungen für Elemente auch ihre Datentypen und 
-ob sie optional sind oder nicht. Jede Ressource enthält zudem eine Verknüpfungen zu sich selbst mit der Relation \textit{self} und gegebenenfalls eine Verknüpfung 
+Jede Ressource enthält zudem eine Verknüpfungen zu sich selbst mit der Relation \textit{self} und gegebenenfalls eine Verknüpfung 
 zur Ressource im jeweils anderen Media-Type mit der Relation \textit{alternate}. 
 
 \subsection{Encodings}
@@ -94,6 +95,7 @@ des Programmcodes antwortet die Anwendung mit dem HTTP-Statuscode 500. Werden du
 den HTTP-Statuscodes 201 beziehungsweise 404. Der Standard erlaubt die Nutzung weiterer HTTP-Statuscodes \cite{ogc_api_processes_core}.
 
 \subsection{Limit Parameter}
+%Limit in Endpoints
 Der \textit{limit}-Parameter wird von den Endpoints Process List und Job List unterstützt
 und wird in der Requirements-Class Core definiert. Mit ihm kann gesteuert werden wie viele Elemente im Response gelistet werden. 
 Der \textit{limit}-Parameter ist optional. Ist er nicht Teil eines Requests werden standardmäßig zehn Elemente zurückgegeben. Es können maximal 1000 Elemente angefragt werden.
@@ -113,11 +115,14 @@ Die API Landing Page kann als Eintrittspunkt zu allen anderen Funktionalitäten 
 API Landing Page, API Definition, Conformance, Process List, Process Description, Job List und Coverage.\\
 Die API Landing Page kann in den Media-Types \textit{text/html} (siehe Anhang \ref{RessourceLandingPageHTML}) und \textit{application/json} 
 (siehe Anhang \ref{RessourceLandingPageJSON}) abgerufen werden. \\
-
-
-Nach Überprüfung der durch einen Request verwendeten HTTP-Methode wird je nach gewähltem Media-Type, ein passender Response generiert. 
-Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header
-versandt (siehe Anhang \ref{PseudocodeLandingPage} und \ref{QuellcodeLandingPage}) \cite{ogc_api_processes_core}. 
+Ein an den API Landing Page Endpoint gerichteter Request wird zunächst auf die verwendetet HTT-Methode hin überprüft. Handelt es sich nicht um die HTTP-Get 
+Methode wird der HTTP-Statuscode 405 als Response versandt. Im nächsten Schritt erfolgt die Prüfung des angefragten Media-Types. Enthält der Parameter \textit{f} 
+oder der Parameter \textit{content\_type} einen nicht unterstützten Media-Type wird als Response der HTTP-Statuscode 406 versandt. Wird der Media-Type nicht spezifiziert oder
+\textit{text/html} angefragt wird die landingPage.html an die Funktion an den Renderer übergeben um ein Response-Objekt zu erzeugen. Spezifiziert der Request 
+den Media-Type \textit{application/json} wird das Response-Objekt aus der landingPage.json erzeugt. Dieses wird mit dem HTTP-STatuscode 200 sowie den Headern
+\textit{resource} und \textit{link} versandt. Ersterer enthält den Wert \textit{landingPage} während letzterer den URL zur API Landing Page im angefragten Media-Type 
+enthält. Kommt es während der Ausführung zu einem Fehler im Programmcode wird mit dem HTTP-Statuscode 500 geantwortet
+ (siehe Anhang \ref{PseudocodeLandingPage} und \ref{QuellcodeLandingPage}) \cite{ogc_api_processes_core}. 
 
 \subsubsection{API Definition Endpoint}
 Der API Definition Endpoint gehört ebenfalls zu Requirements-Class Core.
@@ -126,7 +131,7 @@ Auch für diesen Endpoint ist die einzig zulässige HTTP-Methode Get.
 Die API Definition enthält detaillierte Informationen zur API. In ihr sind alle verfügbaren Endpoints mit ihren Parametern und Responses aufgeführt. 
 Auch die API Definition kann in den Media-Types \textit{text/html} und \textit{application/json} abgerufen werden.\\
 
-             
+%Ablauf             
 Nach der Überprüfung der vom request verwendeten HTTP-Methode wird ein zum angefragten Media-Type passender Response aus der apiDefinition.html oder 
 apiDefinition.json generiert . 
 Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{PseudocodeAPIDefinition} und \ref{QuellcodeAPIDefinition}) 
@@ -139,6 +144,7 @@ Ressource die Conformance Declaration (siehe Anhang \ref{SchemaConfClassesyaml})
 Die Conformance Declaration enthält Verknüpfungen zu allen von der Anwendung implementierten Requirements Classes und steht in den Media-Types textit{text/html} 
 (siehe Anhang \ref{RessourceConfClassesHTML}) und \textit{application/json} (siehe Anhang \ref{RessourceConfClassesJSON}) zu Verfügung.\\
 
+%Ablauf
 Gültige Requests lösen die Generierung eines Responses im angefragten Media-Type aus. 
 Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{PseudocodeCoverage} und \ref{QuellcodeConformance})
 \cite{ogc_api_processes_core}.
@@ -150,6 +156,7 @@ Prozesse (siehe Anhang \ref{SchemaProcessListyaml}). In dieser Liste finden sich
 Steueroptionen sowie die Ein- und Ausgaben der Prozesse. Die Process Liste kann in den Media-Types \textit{text/html} (siehe Anhang \ref{RessourceProcessListHTML}) 
 und \textit{application/json} angefragt werden. \\
 
+%Ablauf
 Die Generierung eines Responses im angefragten Media-Type wird nach einem gültigen Request gestartet. 
 Dazu werden zunächst alle im \textit{templates/json/processes}-Verzeichnis hinterlegten Prozess Beschreibungen geladen und in ein Array geschrieben. 
 Dieses kann nun falls der Media-Type \textit{application/json} zu einem Objekt hinzugefügt werden welches zusätzlich die Verknüpfungen zur Ressource enthält. 
@@ -164,14 +171,14 @@ Welche Prozessdetails zurückgegeben werden hängt vom \textit{processID}-Parame
 eindeutige Bezeichnung, die \textit{processID} gekennzeichnet. 
 Sie kann der Prozess Liste entnommen werden. Um eine Prozess Beschreibung anzufragen darf nur die HTTP-Get Methode verwendet werden.   
 Als Ressource liefert der Endpoint eine detaillierte Beschreibung des im Request spezifizierten Prozesses und enthält Informationen 
-zu den Steueroptionen sowie den Ein- und Ausgaben des Prozesses.. 
+zu den Steueroptionen sowie den Ein- und Ausgaben des Prozesses.
 Die Beschreibungen sind dabei so strukturiert wie durch die Requirements-Class OGC Process Description vorgegeben (siehe Anhang \ref{SchemaProcessyaml}). 
 Wie die Prozess Liste kann die auch die Process Beschreibung im Media-Type \textit{text/html} (siehe Anhang \ref{RessourceProcessDescriptionHTML}) 
 oder \textit{application/json} angefragt werden.
 Jeder Prozess der von der Anwendung angeboten wird muss eine eigene Prozess-Beschreibung haben (siehe Anhang \ref{RessourceEchoProcessDescriptionJSON} und 
 \ref{RessourceFloodMonitoringProcessDescriptionJSON}).\\
 
-
+%Ablauf
 Die Generierung eines Responses verläuft ähnlich der der Prozess Liste. Zunächst wird die Prozess Beschreibung des angefragten Prozesses geladen. 
 Soll ein Response mit dem Media-Type \textit{application/json} generiert werden wird diese versandt. 
 Für Request mit dem Media-Type \textit{text/html} wird die Prozessbeschreibung zusammen mit einem Template an den Renderer übergeben. 
@@ -179,21 +186,23 @@ Die so erzeugten Responses werden zusammen mit den Headern \textit{link}- und \t
 und \ref{QuellcodeProcessDescription} \cite{ogc_api_processes_core}.
 
 \subsubsection{Process Execution Endpoint}
-Die Requirements-Class definiert auch die Funktionalitäten zum Ausführen der angebotenen Prozesse.
+Die Requirements-Class Core definiert auch die Funktionalität zum Ausführen der angebotenen Prozesse.
 Um Prozesse auszuführen können Requests mit der HTTP-Methode Post and den URL \textit{http://HOST:PORT/processes/<processID>/execution} gestellt werden.
 Dabei müssen die in der Prozess Beschreibung aufgeführten Inputs sowie die gewünschten Outputs im Request enthalten sein. 
 Diese werden zunächst verifiziert. Ein erfolgreicher Request resultiert in der Erstellung eines Jobs.              
 
+%Ablauf
 ?Wie läuft die generierung des Response ab und was enthält dieser?
-!Pseudode!
 
 \subsubsection{Job List Endpoint}
-Ein Aufruf des URL \textit{http://HOST:PORT/jobs?f=<MEDIA-TYPE>} liefert als Ressource eine Liste aller angelegten Jobs (siehe Anhang \ref{appendixjobListyaml}). 
-Die Job Liste kann nur mit der HTTP-Get Methode abgefragt werden. Die Ressource liefert eine Liste aller angelegten Jobs (siehe Anhang \ref{SchemaJobListyaml}). 
-Diese kann mit zusätzlichen Parametern eingeschränkt werden. Analog zur Prozess Liste kann die Job Liste im Media-Type \textit{text/html} (siehe Anhang \ref{RessourceJobListHTML})
+Ein Aufruf des URL \textit{http://HOST:PORT/jobs?f=<MEDIA-TYPE>} liefert als Ressource eine Liste aller angelegten Jobs (siehe Anhang \ref{SchemaJobListyaml}). 
+Die Job Liste kann nur mit der HTTP-Get Methode abgefragt werden.
+Diese kann mit zusätzlichen Parametern eingeschränkt werden. 
+Analog zur Prozess Liste kann die Job Liste im Media-Type \textit{text/html} (siehe Anhang \ref{RessourceJobListHTML})
 und \textit{application/json} angefragt werden. 
+
+%Ablauf
 ?Wie läuft die generierung des Response ab und was enthält dieser?
-!Pseudode!
 
 \subsubsection{Job Endpoint}
 Die Requirements-Class Core definiert auch den Job Endpoint.
@@ -204,6 +213,7 @@ Dieser kann unter anderem entnommen werden ob ein und wann ein Job gestartet wur
 erfolgreich abgeschlossen oder gescheitert ist. 
 Die Job Status Ressource steht als \textit{text/html} (siehe Anhang \ref{RessourceJobHTML}) und \textit{application/json} zur Verfügung. 
 
+%Ablauf
 Wird im Request eine vorhandene \textit{jobID} angefragt wird die status.json aus dem \textit{jobs/<jobID>/} Verzeichnis geladen und je nach gewünschtem Media-Type 
 ein Response generiert. Wurde die Ressource im Media-Type \textit{text/html} angefragt wird ein HTML-Template zusammen mit der geladenen status.json 
 dem Renderer übergeben.
@@ -214,9 +224,10 @@ gesetzt. Dies sorgt für den Abbruch der Bearbeitung.
 
 \subsubsection{Job Results Endpoint}
 Die Ergebnisse eines erfolgreichen Jobs können unter dem URL \textit{http://HOST:PORT/jobs/<jobID>//results?f=<MEDIA-TYPE>} abgerufen werden. 
-Die bereitgestellten Ressourcen variieren je nach Prozess, gewähltem Output sowie dessen Transmission-Mode, \textit{value} oer \textit{refference} und Response-Type
+Die bereitgestellten Ressourcen variieren je nach Prozess, gewähltem Output sowie dessen Transmission-Mode, \textit{value} oder \textit{refference} und Response-Type
 \textit{document} oder \textit{raw}. Sie können mit der HTTP-Get Methode abgerufen werden.
 
+%Ablauf
 Wird ein Request akzeptiert wird zunächst geprüft ob die Job-ID überhaupt existiert und der Job bereits den Job-Status \textit{successful} aufweist. 
 Es folgt die Generierung eines Result-Dokuments oder eines Download-Links. 
 !Pseudode!
@@ -228,7 +239,7 @@ Diese Schnittstellenbeschreibung ist dabei so formuliert das sie sowohl menschen
 Ziel dieser Dokumentationsweise ist es die API so leicht verständlich wie möglich zu machen und so die Benutzerfreundlichkeit zu steigern \cite{open_api}. \\ 
 Die Dokumentation soll sämtliche Endpoints mit den möglichen Responses und zu erwartenden HTTP-Statuscodes beschreiben. 
 Die Dokumentation der API der prototypischen Implementierung auf der Web-Seit SwaggerHub gepflegt. Die Dokumentation konnte von dort als HTML- 
-und JSON-Datei bezogen werden. Diese dienen nun als Repräsentationen der Ressource API Definition welche über den API Definition Endpoint angefragt werden kann. 
+und JSON-Datei bezogen werden. Diese dienen als Repräsentationen der Ressource API Definition welche über den API Definition Endpoint angefragt werden kann. 
 
 \subsection{Prozesse}
 \subsubsection{Echo}
@@ -240,22 +251,20 @@ Andernfalls wird der \textit{started}-Eintrag in der status.json mit dem aktuell
 Schlägt dies fehl wird der \textit{status}-Eintrag in der status.json auf \textit{failed} gesetzt und der Ausführung abgebrochen. 
 Anschließend wartet das Programm fünf Sekunden. Nach einer erneuten Prüfung des Job-Status wird das Ergebnis als .json in das \textit{results/}-Verzeichnis des Jobs geschrieben.
 Diese results.json enthält den Eingabewert und die Nachricht das es sich um ein Echo handelt. 
-Als letzter Schritt wird der Job-Status, der Fortschritt, der Infotext sowie der Beendigungszeitpunkt in der Status-Datei des Jobs aktualisiert \ref{QuellcodeEchoProcess}. 
+Als letzter Schritt wird der Job-Status, der Fortschritt, der Infotext sowie der Beendigungszeitpunkt in der Status-Datei des Jobs aktualisiert \ref{QuellcodeEchoProcess}.
+
 \subsubsection{Überflutungsmonitoring}
 \subsection{Zusätzliche Funktionalitäten}
 \subsubsection{Coverage} 
 Der nicht im Standard definierte Coverage Endpoint kann über den URL \textit{http://HOST:PORT/coverage?f=<MEDIA-TYPE>} mit der HTTP-Get Methode erreicht werden. 
-Als Ressource liefert er eine Liste aller Sentinel-1 Datensätze welche persistent gespiechert sind. 
+Als Ressource liefert er eine Liste aller Sentinel-1 Datensätze welche persistent gespeichert sind. 
 Jobs welche auf diese Datensätze zugreifen können schneller abgearbeitet werden da ein zeitaufwendiges Herunterladen der Datensätze entfällt. 
 Die Coverage Ressource kann nur mit der HTTP-Get Methode angefragt werden. 
-Die Ressource die der Endpoint zur Verfügung stellt enthält eine Liste aller gespeicherten Sentinel-1 Datensätze. 
 Diese werden mit ihrem Produktnamen und dem Datum der Aufnahme 
 und ihrer Bounding-BBox aufgeführt. Die Bounding-BBox gibt Aufschluss über die räumliche Ausdehnung des Datensatzes. 
-Über den Endpoint kann die Ressource in den Media-Types \textit{text/html} (siehe Anhang \ref{RessourceCoveragesHTML}) oder \textit{application/json} angefragt werden. 
+Die Ressource kann in den Media-Types \textit{text/html} (siehe Anhang \ref{RessourceCoveragesHTML}) oder \textit{application/json} angefragt werden. 
 
 \subsubsection{Test Suit}
 Um die Funktionen der API und seine Standradkonformität testen zu können wurde ein Unit-Test oder test Suit aus dem im Standard beschriebenen Abstract Test Suit abgeleitet und 
 implementiert. Zu bemerken ist dabei das der prototypische implementierte Test-Suit lediglich einige maschienentestbare Testfälle abdeckt. 
 Werden nun Änderungen am Programm vorgenommen kann mit der Ausführung dieses Test-Suits einfach die Funktionalität und Stabilität der API überprüft werden. 
-
-In der prototypischen Implementierung werden die Test mit dem Package unittest umgesetzt.  
