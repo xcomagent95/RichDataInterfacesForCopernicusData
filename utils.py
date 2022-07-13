@@ -91,43 +91,79 @@ def floodMonitoringProcess(job):
     if(checkForDismissal(job.path + '/status.json') == True):
         return
     
-    api = loginCopernicusHub(job)
-    updateStatus(job.path + '/status.json', "running", "Step 3 of 10 completed", "30")
+    try:
+        api = loginCopernicusHub(job)
+        updateStatus(job.path + '/status.json', "running", "Step 3 of 10 completed", "30")
+    except:
+        updateStatus(job.path + '/status.json', "failed", "Login to Copernicus Hub was not successful", "0")
+        return
+        
     if(checkForDismissal(job.path + '/status.json') == True):
         return
     
-    pre_product = getProduct(api, job, pre_date_t0, pre_date_t1)
-    print(datasets)
-    print(pre_product[1] + ".tif")
-    print(pre_product[1] + ".tif" not in datasets)
+    try:
+        pre_product = getProduct(api, job, pre_date_t0, pre_date_t1)
+    except:
+        updateStatus(job.path + '/status.json', "failed", "Pre-Dataset could not be retrieved", "0")
+        return
+    
     if(pre_product[1] + ".zip" not in datasets):
         retrieveProduct(api, pre_product[0], pre_product[1], job.downloads)
         updateStatus(job.path + '/status.json', "running", "Step 4 of 10 completed", "40")
     
-    calibrateProductSNAP(pre_product[1], job)
+    try:
+        calibrateProductSNAP(pre_product[1], job)
+    except:
+        updateStatus(job.path + '/status.json', "failed", "Pre-Dataset could not be calibrated", "0")
+        return
+        
     updateStatus(job.path + '/status.json', "running", "Step 5 of 10 completed", "50")
     
     if(checkForDismissal(job.path + '/status.json') == True):
         return
     
-    post_product = getProduct(api, job, post_date_t0, post_date_t1)
+    try:
+        post_product = getProduct(api, job, post_date_t0, post_date_t1)
+    except:
+        updateStatus(job.path + '/status.json', "failed", "Post-Dataset could not be retrieved", "0")
+        return
+    
     if(post_product[1] + ".zip" not in datasets):
         retrieveProduct(api, post_product[0], post_product[1], job.downloads)
         updateStatus(job.path + '/status.json', "running", "Step 6 of 10 completed", "60")
     
-    calibrateProductSNAP(post_product[1], job)
+    try:
+        calibrateProductSNAP(post_product[1], job)
+    except:
+        updateStatus(job.path + '/status.json', "failed", "Pre-Dataset could not be calibrated", "0")
+        return
+        
     updateStatus(job.path + '/status.json', "running", "Step 7 of 10 completed", "70")
         
     if(checkForDismissal(job.path + '/status.json') == True):
         return
     
-    ndsiSNAP(job, pre_product[1], post_product[1])
+    try:
+        ndsiSNAP(job, pre_product[1], post_product[1])
+    except:
+        updateStatus(job.path + '/status.json', "failed", "NDSI could not be calculated", "0")
+        return
+    
     updateStatus(job.path + '/status.json', "running", "Step 8 of 10 completed", "80")
     
-    clipProductSNAP(job)
+    try:
+        clipProductSNAP(job)
+    except:
+        updateStatus(job.path + '/status.json', "failed", "NDSI could not be clipped", "0")
+        return
     updateStatus(job.path + '/status.json', "running", "Step 9 of 10 completed", "90")
     
-    theresholdSNAP(job)
+    try:
+        theresholdSNAP(job)
+    except:
+        updateStatus(job.path + '/status.json', "failed", "Threshold could not be calculated", "0")
+        return
+    
     updateStatus(job.path + '/status.json', "running", "Step 10 of 10 completed", "100")
     setFinished(job.path + '/status.json')
 

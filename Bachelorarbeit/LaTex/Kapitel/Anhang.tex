@@ -1101,6 +1101,27 @@ enum:
     - dismissed
 \end{lstlisting}\label{SchemaStatusCodeyaml}
 
+\subsection{exception.yaml}
+\begin{lstlisting}[caption={exception.yaml}, style = JSON]
+title: Exception Schema
+description: JSON schema for exceptions based on RFC 7807
+type: object
+required:
+  - type
+properties:
+  type:
+    type: string
+  title:
+    type: string
+  status:
+    type: integer
+  detail:
+    type: string
+  instance:
+    type: string
+additionalProperties: true
+\end{lstlisting}\label{SchemaExceptionyaml}
+
 \section{Ressourcen}
 \renewcommand{\lstlistingname}{Ressource}
 \subsection{landingPage.html}

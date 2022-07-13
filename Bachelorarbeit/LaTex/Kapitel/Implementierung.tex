@@ -28,10 +28,15 @@ Beschreibungen der von der Anwendung angebotenen Prozesse.
 Die Anwendung erlaubt das persistente hinterlegen von Sentinel-1 Datensätzen um zeitaufwendiges Herunterladen zu vermeiden. Diese Datensätze können im Verzeichnis \textit{data/} abgelegt werden. Jeder Sentinel-1 Datensatz enthält eine .kml-Datei welche 
 Metadaten zum Datensatz enthält. Diese werden im Unterverzeichnis \textit{data/coverage/} abgelegt. 
 Jeder angelegte Job, also jede auszuführende Instanz eines Prozesses erhält ein einzigartiges Verzeichnis innerhalb des Verzeichnisses \textit{jobs/}. In diesem 
-Verzeichnis befinden sich eine Status- und Job-Datei sowie ein Footprint. Neben diesen Dateien enthält jedes Job-Verzeichnis ein Unterverzeichnis \textit{results/} in dem
-die Ergebnisse des jeweiligen Jobs abgelegt werden.
+Verzeichnis befinden sich eine Status- und eine Job-Datei sowie ein weitere für die Bearbeitung des Jobs benötigte Dateien. 
+Neben diesen Dateien enthält jedes Job-Verzeichnis ein Unterverzeichnis \textit{results/} in dem die Ergebnisse des jeweiligen Jobs abgelegt werden.
 
-%Bild einfügen%
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Bilder/folders.png}
+    \caption{Struktur der prototypischen Implementierung \cite{structure}}
+    \label{structure}
+\end{figure}
 
 Insgesamt handelt es sich bei der prototypischen Implementierung eines Rich Data Interfaces for Copernicus-Daten also um eine Anwendung welche Überschwemmungsmasken und Daten zur Hochwasseranalyse als Ressourcen bereitstellt.
 Zugriff auf diese Ressourcen erhalten Nutzer über eine OGC API - Processes - Part 1: Core standardkonforme API. 
@@ -63,7 +68,6 @@ Stellen Endpoints ihre Ressourcen sowohl den Media-Type \textit{application/json
 
 \subsection{HTTP 1.1}
 Die Umsetzung des Requirements HTTP 1.1 (RFC 2616) aus der Requirements-Class Core verlangt das die API exklusiv das HTTP 1.1 unterstützt. 
-Falls die API ebenfalls HTTPS unterstützt muss ebenfalls HTTP over TLS (RFC 2818) eingehalten werden. 
 Das Flask-Framework nutzt standardmäßig das HTTP 1.0. Teil des Flask-Frameworks ist die WSGI Bibliothek Werkzeug welche
 das Implementieren von Webanwendungen erlaubt. Um die verwendete HTTP-Version von 1.0 auf 1.1 umzustellen müssen Variablen 
 in Werkzeug angepasst werden. Nach dem Import der Module WSGIRequestHandler und BaseWSGIServer kann in beiden die 
@@ -95,17 +99,6 @@ Alle erfolgreichen Anfragen welche eine Resource liefern mit dem HTTP-Statuscode
 in Antworten mit dem Status-Code 405 während Anfragen für nicht unterstütze Media-Types mit dem Status-Code 406 beantwortet werden. Kommt es zu Fehlern bei der Ausführung 
 des Programmcodes antwortet die Anwendung mit dem HTTP-Statuscode 500. Werden durch eine Anfrage Ressourcen neu erzeugt oder nicht gefunden antwortet die Anwendung mit 
 den HTTP-Statuscodes 201 beziehungsweise 404. Der Standard erlaubt die Nutzung weiterer HTTP-Statuscodes \cite{ogc_api_processes_core}.
-
-\subsection{Limit Parameter}
-%Limit in Endpoints
-Der \textit{limit}-Parameter wird von den Endpoints Process List und Job List unterstützt
-und wird in der Requirements-Class Core definiert. Mit ihm kann gesteuert werden wie viele Elemente im Response gelistet werden. 
-Der \textit{limit}-Parameter ist optional. Ist er nicht Teil eines Requests werden standardmäßig zehn Elemente zurückgegeben. Es können maximal 1000 Elemente angefragt werden.
-Ergibt die Überprüfung des \textit{limit}-Parameters das Werte außerhalb des gültigen Wertebereichs von 0 bis 10000 angefragt werden wird der Parameter auf 10 zurückgesetzt. 
-Ein Response kann weniger, aber nie mehr Elemente als durch den \textit{limit}-Parameter spezifiziert werden enthalten (siehe Anhang \ref{appendixlimityaml}) 
-\cite{ogc_api_processes_core}. Die praktische Umsetzung erfolgt über eine Reihe von \textit{if}- und \textit{else-}-Abfragen. Dabei wird zunächst überprüft ob 
-der Parameter im Request spezifiziert ist. Ist dies nicht der Fall wird der Standardwert zehn verwendet. Ein spezifizierter Wert wird auf seine Gültigkeit überprüft. 
-Ist der Wert ungültig, also kleiner 0 oder größer 10000, wird ebenfalls der Standardwert verwendet \cite{ogc_api_processes_core}.
 
 \subsection{Endpoints}
 \subsubsection{API Landig Page Endpoint}
@@ -167,13 +160,20 @@ Prozesse (siehe Anhang \ref{SchemaProcessListyaml}). In dieser Liste finden sich
 Steueroptionen sowie die Ein- und Ausgaben der Prozesse. Die Process Liste kann in den Media-Types \textit{text/html} (siehe Anhang \ref{RessourceProcessListHTML}) 
 und \textit{application/json} angefragt werden. \\
 
-%Ablauf
-Die Generierung eines Responses im angefragten Media-Type wird nach einem gültigen Request gestartet. 
-Dazu werden zunächst alle im \textit{templates/json/processes}-Verzeichnis hinterlegten Prozess Beschreibungen geladen und in ein Array geschrieben. 
-Dieses kann nun falls der Media-Type \textit{application/json} zu einem Objekt hinzugefügt werden welches zusätzlich die Verknüpfungen zur Ressource enthält. 
-Wurde der Media-Type \textit{text/html} angefragt wird das Array zusammen mit dem HTML-Template dem gerendert. 
-Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{PseudocodeProcessList} und \ref{QuellcodeProcessList}) 
-\cite{ogc_api_processes_core}.
+Wie bei der Beantwortung von Requests an die bereits vorgestellten Endpoints werden Requests mit unzulässigen HTTP-Methoden oder nicht unterstützten Media-Types,
+welche ebenfalls mit den Parametern \textit{f} oder \textit{content\_type} spezifiziert werden, 
+mit Responses welche die HTTP-Statuscodes 405 beziehungsweise 406 enthalten beantwortet.  
+Zusätzlich erfolgt allerdings eine Prüfung des \textit{limit}-Parameters. Dieser kann dazu verwendet werden die Liste auf eine spezifizierte Anzahl von 
+Objekten einzuschränken. Wird ein Limit kleiner 0 oder größer 10000 spezifiziert wird der Wert auf den Standardwert 10 gesetzt. 
+Unabhängig vom gewählten Media-Type werden zunächst alle Prozess Beschreibungen aus dem Verzeichnis \textit{/templates/json/processes/} geladen und in einem 
+Array gespeichert. Soll der Response im Media-Type \textit{text/html} versandt werden wird dieses mit dem \textit{limit}-Parameter eingeschränkt und dem Renderer 
+zusammen mit der processList.html übergeben. Das entstehende Response-Objekt wird zusammen mit \textit{resource}- und \textit{link}-Header sowie dem 
+HTTP-Statuscode 200 versandt. Für Generierung eines Responses im Media-Type \textit{application/json} wird das auf das spezifizierte Limit eingeschränkte 
+Array zum einem JSON-Objekt hinzugefügt welches noch um die Verknüpfungen \textit{self} und \textit{alternate} ergänzt wird. Aus diesem Objekt wird ein 
+Response-Objekt generiert welches zusammen mit den beiden Headern \textit{link} und \textit{resource} und dem HTTP-Statuscode 200 versandt wird. 
+Der \textit{resource}-Header enthält dabei den Wert \textit{processes}. 
+Treten während der beschriebenen Schritte Fehler auf wird ein Response mit dem HTTP-Statuscode 500 versandt (siehe Anhang \ref{PseudocodeProcessList} und
+ \ref{QuellcodeProcessList}) \cite{ogc_api_processes_core}.
 
 \subsubsection{Process Description Endpoint}
 Unter dem URL \textit{http://HOST:PORT/processes/<processID>?f=<MEDIA-TYPE>} kann der Process Description Endpoint angefragt werden. 
@@ -189,12 +189,18 @@ oder \textit{application/json} angefragt werden.
 Jeder Prozess der von der Anwendung angeboten wird muss eine eigene Prozess-Beschreibung haben (siehe Anhang \ref{RessourceEchoProcessDescriptionJSON} und 
 \ref{RessourceFloodMonitoringProcessDescriptionJSON}).\\
 
-%Ablauf
-Die Generierung eines Responses verläuft ähnlich der der Prozess Liste. Zunächst wird die Prozess Beschreibung des angefragten Prozesses geladen. 
-Soll ein Response mit dem Media-Type \textit{application/json} generiert werden wird diese versandt. 
-Für Request mit dem Media-Type \textit{text/html} wird die Prozessbeschreibung zusammen mit einem Template an den Renderer übergeben. 
-Die so erzeugten Responses werden zusammen mit den Headern \textit{link}- und \textit{resource} versandt (siehe Anhang \ref{PseudocodeProcessDescription} 
-und \ref{QuellcodeProcessDescription} \cite{ogc_api_processes_core}.
+Wird von diesem Endpoint ein Response generiert werden zunächst die verwendete HTTP-Methode sowie der angefragte Media-Type, welcher über die 
+Parameter \textit{f} oder \textit{content\_type} spezifiziert wird, überprüft. Ungültige beziehungsweise nicht unterstützte HTTP-Methoden 
+und Media-Types werden durch Responses mit den HTTP-Statuscodes 405 beziehungsweise 406 beantwortet.  
+Im nächsten Schritt wird geprüft der über den Parameter \textit{processID} spezifizierte Prozess überhaupt in der Anwendung registriert ist. 
+Ist dies nicht der Fall wird als Response eine Exception (siehe Anhang \ref{SchemaExceptionyaml})
+mit dem HTTP-Statuscode 200 und einem \textit{resource}-Header mit dem Wert \textit{no-such-process} versandt. 
+Existiert die spezifizierte \textit{processID} wird die korrespondiere Prozess Beschreibung geladen. Um ein Response-Objekt zu generieren 
+wird je nach spezifiziertem Media-Type werden entweder dem Renderer die process.html zusammen mit der geladenen Prozess Beschreibung übergeben oder 
+direkt aus dieser ein solches generiert. 
+Das Response-Objekt wird zusammen mit dem HTTP-Statuscode 200 sowie den \textit{resource} und \textit{link} Headern versandt. 
+Der \textit{resource}-Header enthält den Wert \textit{process - <processID>}. Fehler werden durch Responses mit dem HTTP-Statuscode 500 
+abgefangen siehe Anhang \ref{PseudocodeProcessDescription} und \ref{QuellcodeProcessDescription} \cite{ogc_api_processes_core}.
 
 \subsubsection{Process Execution Endpoint}
 Die Requirements-Class Core definiert auch die Funktionalität zum Ausführen der angebotenen Prozesse.
