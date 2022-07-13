@@ -31,6 +31,8 @@ Jeder angelegte Job, also jede auszuführende Instanz eines Prozesses erhält ei
 Verzeichnis befinden sich eine Status- und Job-Datei sowie ein Footprint. Neben diesen Dateien enthält jedes Job-Verzeichnis ein Unterverzeichnis \textit{results/} in dem
 die Ergebnisse des jeweiligen Jobs abgelegt werden.
 
+%Bild einfügen%
+
 Insgesamt handelt es sich bei der prototypischen Implementierung eines Rich Data Interfaces for Copernicus-Daten also um eine Anwendung welche Überschwemmungsmasken und Daten zur Hochwasseranalyse als Ressourcen bereitstellt.
 Zugriff auf diese Ressourcen erhalten Nutzer über eine OGC API - Processes - Part 1: Core standardkonforme API. 
 
@@ -115,6 +117,7 @@ Die API Landing Page kann als Eintrittspunkt zu allen anderen Funktionalitäten 
 API Landing Page, API Definition, Conformance, Process List, Process Description, Job List und Coverage.\\
 Die API Landing Page kann in den Media-Types \textit{text/html} (siehe Anhang \ref{RessourceLandingPageHTML}) und \textit{application/json} 
 (siehe Anhang \ref{RessourceLandingPageJSON}) abgerufen werden. \\
+
 Ein an den API Landing Page Endpoint gerichteter Request wird zunächst auf die verwendetet HTT-Methode hin überprüft. Handelt es sich nicht um die HTTP-Get 
 Methode wird der HTTP-Statuscode 405 als Response versandt. Im nächsten Schritt erfolgt die Prüfung des angefragten Media-Types. Enthält der Parameter \textit{f} 
 oder der Parameter \textit{content\_type} einen nicht unterstützten Media-Type wird als Response der HTTP-Statuscode 406 versandt. Wird der Media-Type nicht spezifiziert oder
@@ -122,7 +125,7 @@ oder der Parameter \textit{content\_type} einen nicht unterstützten Media-Type 
 den Media-Type \textit{application/json} wird das Response-Objekt aus der landingPage.json erzeugt. Dieses wird mit dem HTTP-STatuscode 200 sowie den Headern
 \textit{resource} und \textit{link} versandt. Ersterer enthält den Wert \textit{landingPage} während letzterer den URL zur API Landing Page im angefragten Media-Type 
 enthält. Kommt es während der Ausführung zu einem Fehler im Programmcode wird mit dem HTTP-Statuscode 500 geantwortet
- (siehe Anhang \ref{PseudocodeLandingPage} und \ref{QuellcodeLandingPage}) \cite{ogc_api_processes_core}. 
+(siehe Anhang \ref{PseudocodeLandingPage} und \ref{QuellcodeLandingPage}) \cite{ogc_api_processes_core}. 
 
 \subsubsection{API Definition Endpoint}
 Der API Definition Endpoint gehört ebenfalls zu Requirements-Class Core.
@@ -130,24 +133,32 @@ Der API Definition Endpoint kann über den URL \textit{http://HOST:PORT/api?f=<M
 Auch für diesen Endpoint ist die einzig zulässige HTTP-Methode Get. 
 Die API Definition enthält detaillierte Informationen zur API. In ihr sind alle verfügbaren Endpoints mit ihren Parametern und Responses aufgeführt. 
 Auch die API Definition kann in den Media-Types \textit{text/html} und \textit{application/json} abgerufen werden.\\
-
-%Ablauf             
-Nach der Überprüfung der vom request verwendeten HTTP-Methode wird ein zum angefragten Media-Type passender Response aus der apiDefinition.html oder 
-apiDefinition.json generiert . 
-Dieser wird zusammen mit dem \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{PseudocodeAPIDefinition} und \ref{QuellcodeAPIDefinition}) 
+   
+Requests an den API Definition Endpoint werden ebenfalls zunächst auf die verwendete HTTP-Methode hin überprüft. Wird nicht HTTP-Get verwendet wird als 
+Response der HTTP-Statuscode 405 versandt. Wird im Request mittels des Parameters \textit{f} 
+oder \textit{content\_type} ein nicht unterstützter Media-Type angefragt wird ein Response mit dem HTTP-Statuscode 406 versandt. 
+Requests welche keinen oder einen unterstützten Media-Type spezifizieren lösen die Generierung eines Response-Objektes aus entweder der apiDefinition.html oder 
+apiDefinition.json aus. Der \textit{resource}-Header erhält den Wert \textit{apiDefinition}. Dieser wird als Teil des Responses mit dem HTTP-Statuscode 200 versandt.
+Ebenfalls Teil dieses Responses ist ein \textit{link}-Header welche einen zum request passenden URL enthält. Auch diese Endpoint fängt Fehler bei der
+Ausführung mit dem versenden des HTTP-Statuscodes 500 ab (siehe Anhang \ref{PseudocodeAPIDefinition} und \ref{QuellcodeAPIDefinition}) 
 \cite{ogc_api_processes_core}. 
 
 \subsubsection{Conformance Declaration Endpoint}
 Ein weiterer zur Requirements-Class Core gehörender Endpoint ist der Conformance Declaration Endpoint.
 Der Conformance Declaration Endpoint kann über den URL \textit{http://HOST:PORT/conformance?f=<MEDIA-TYPE>} angefragt werden und liefert als 
 Ressource die Conformance Declaration (siehe Anhang \ref{SchemaConfClassesyaml}). Get ist ebenfalls die einzige zulässige HTTP-Methode für Requests an diesen Endpoint.
-Die Conformance Declaration enthält Verknüpfungen zu allen von der Anwendung implementierten Requirements Classes und steht in den Media-Types textit{text/html} 
+Die Conformance Declaration enthält Verknüpfungen zu allen von der Anwendung implementierten Requirements Classes und steht in den Media-Types \textit{text/html} 
 (siehe Anhang \ref{RessourceConfClassesHTML}) und \textit{application/json} (siehe Anhang \ref{RessourceConfClassesJSON}) zu Verfügung.\\
 
-%Ablauf
-Gültige Requests lösen die Generierung eines Responses im angefragten Media-Type aus. 
-Der Response wird zusammen mit \textit{link}- und \textit{resource}-Header versandt (siehe Anhang \ref{PseudocodeCoverage} und \ref{QuellcodeConformance})
-\cite{ogc_api_processes_core}.
+Wie bereits beschrieben wird ein ankommender Request zunächst auf die von ihm verwendete HTTP-Methode überprüft und bei nicht Zulässigkeit dieser mit dem 
+HTTP-Statuscode 405 geantwortet. Ebenso erfolgt eine Überprüfung des mit dem Parameter \textit{f} oder \textit{content\_type}
+spezifizierten Media-Types wobei die Anfrage eines nicht unterstützten Media-Types in einem 
+Response mit dem HTTP-Statuscode 406 resultiert. Je nach im Request spezifizierten Media-Type wird das Response-Objekt entweder aus der confClasses.html oder 
+der confClasses.json generiert. Der \textit{resource}-Header
+enthält den Wert \textit{conformance} während der \textit{link}-Header eine zum Request identische URL enthält. Response-Objekt und Header werden mit dem 
+HTTP-Statuscode 200 versandt. Auftretende Fehler werden mit einem Response mit dem HTTP-Statuscode 500 abgefangen
+(siehe Anhang \ref{PseudocodeConformance} und \ref{QuellcodeConformance}) \cite{ogc_api_processes_core}.
+
 
 \subsubsection{Process List Endpoint}
 Der ebenfalls zur Requirements-Class Core gehörende Process List Endpoint kann über den URL \textit{http://HOST:PORT/processes?f=<MEDIA-TYPE>\&limit=<INTEGRER>} 
