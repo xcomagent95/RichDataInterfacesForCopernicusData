@@ -108,8 +108,12 @@ def floodMonitoringProcess(job):
         return
     
     if(pre_product[1] + ".zip" not in datasets):
-        retrieveProduct(api, pre_product[0], pre_product[1], job.downloads)
-        updateStatus(job.path + '/status.json', "running", "Step 4 of 10 completed", "40")
+        retrievalStatus = retrieveProduct(api, pre_product[0], pre_product[1], job.downloads)
+        if(retrievalStatus == True):
+            updateStatus(job.path + '/status.json', "running", "Step 4 of 10 completed", "40")
+        else:
+            updateStatus(job.path + '/status.json', "failed", "Pre-Dataset is stored in LTA", "0")
+            return
     
     try:
         calibrateProductSNAP(pre_product[1], job)
@@ -129,8 +133,12 @@ def floodMonitoringProcess(job):
         return
     
     if(post_product[1] + ".zip" not in datasets):
-        retrieveProduct(api, post_product[0], post_product[1], job.downloads)
-        updateStatus(job.path + '/status.json', "running", "Step 6 of 10 completed", "60")
+        retrievalStatus = retrieveProduct(api, post_product[0], post_product[1], job.downloads)
+        if(retrievalStatus == True):
+            updateStatus(job.path + '/status.json', "running", "Step 6 of 10 completed", "40")
+        else:
+            updateStatus(job.path + '/status.json', "failed", "Post-Dataset is stored in LTA", "0")
+            return
     
     try:
         calibrateProductSNAP(post_product[1], job)
@@ -395,8 +403,12 @@ def getProduct(api, job, t0, t1):
 
 def retrieveProduct(api, product_id, product_name, downloads_path):
     #tiff_filter = products.make_path_filter("*/measurement/*-iw-grd-vv-*-*-*-*-*.tif") #define .tif filter
-    api.download(product_id, directory_path="data/", checksum=False) #download full product
-    getKML(product_name)
+    try:
+        api.download(product_id, directory_path="data/", checksum=False) #download full product
+        getKML(product_name)
+        return True
+    except LTATriggered:
+        return False
     
 def calibrateProductSNAP(product_id, job):
     product = snappy.ProductIO.readProduct("data/" + product_id + '.zip')

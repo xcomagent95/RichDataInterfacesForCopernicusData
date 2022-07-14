@@ -26,13 +26,11 @@ app = Flask(__name__) #initialize application
 def getLandingPage():
     app.logger.info('/') #add log entry when endpoint is called
     try:
-        if(request.content_type == "text/html" or #check requested content-type from request body
-           request.args.get('f')=="text/html" or 
+        if(request.args.get('f')=="text/html" or 
            request.args.get('f') == None): #check requested content-type from inline request
             response = render_template('html/landingPage.html') #render static landing page
             return response, 200, {"link": "localhost:5000/?f=text/html", "resource": "landingPage"} #return response and okay with link and resource header
-        elif(request.content_type == "application/json" or #check requested content-type from request body
-             request.args.get('f')=="application/json"): #check requested content-type from inline request
+        elif(request.args.get('f')=="application/json"): #check requested content-type from inline request
             file = open('templates/json/landingPage.json',) #open landingPage.json
             payload = json.load(file) #create payload 
             file.close() #close landingPage.json
@@ -48,8 +46,7 @@ def getLandingPage():
 def getConformance():
     app.logger.info('/conformance') #add log entry when endpoint is called
     try:
-        if(request.content_type == "text/html" or #check requested content-type from request body
-           request.args.get('f')=="text/html" or 
+        if(request.args.get('f')=="text/html" or 
            request.args.get('f') == None): #check requested content-type from inline request
             response = render_template('html/confClasses.html') #render static conformance page
             return response, 200, {"link": "localhost:5000/conformance?f=text/html", "resource": "conformance"} #return response and okay with link and resource header
@@ -70,13 +67,11 @@ def getConformance():
 def getAPIDefinition():
     app.logger.info('/api') #add log entry when endpoint is called
     try:
-        if(request.content_type == "text/html" or #check requested content-type from request body 
-           request.args.get('f')=="text/html" or 
+        if(request.args.get('f')=="text/html" or 
            request.args.get('f') == None): #check requested content-type from inline request
             response = render_template('html/apiDefinition.html') #render static api definition page
             return response, 200, {"link": "localhost:5000/apiDefinition?f=text/html", "resource": "apiDefinition"} #return response and okay with link and resource header
-        elif(request.content_type == "application/json" or #check requested content-type from request body 
-             request.args.get('f')=="application/json"): #check requested content-type from inline request
+        elif(request.args.get('f')=="application/json"): #check requested content-type from inline request
             file = open('templates/json/apiDefinition.json',) #open apiDefinition.json
             payload = json.load(file) #create response
             file.close() #close apiDefinition.json
@@ -98,8 +93,7 @@ def getProcesses():
             limit = 10 #set limit to default value
         else:
             limit = int(request.args.get('limit')) #retrive limit value from request
-        if(request.content_type == "text/html" or #check requested content-type from request body 
-           request.args.get('f')=="text/html" or 
+        if(request.args.get('f')=="text/html" or 
            request.args.get('f') == None): #check requested content-type from inline request
                 processList = [] #initialize list of processes
                 processDescriptions = os.listdir("templates/json/processes") #list registered process descriptions
@@ -111,8 +105,7 @@ def getProcesses():
                 response = render_template('html/processList.html', processes=processList[0:limit]) #render dynamic process list 
                 return response, 200, {"link": "localhost:5000/processes?f=text/html", "resource": "processes"} #return response and ok with link and resource header
 
-        elif(request.content_type == "application/json" or #check requested content-type from request body 
-             request.args.get('f')=="application/json"): #check requested content-type from inline request
+        elif(request.args.get('f')=="application/json"): #check requested content-type from inline request
             processList = [] #initialize list of processes
             processDescriptions = os.listdir("templates/json/processes") #list registered process descriptions                 
             for i in processDescriptions: #iterate over registered process descriptions
@@ -145,8 +138,7 @@ def getProcesses():
 def getProcess(processID):
     app.logger.info('/processes/' + processID) #add log entry when endpoint is called
     try:
-        if(request.content_type == "text/html" or #check requested content-type from request body 
-           request.args.get('f')=="text/html" or 
+        if(request.args.get('f')=="text/html" or 
            request.args.get('f') == None): #check requested content-type from inline request
             if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')): #check if process description exists
                 file = open('templates/json/processes/' + str(processID) + 'ProcessDescription.json',) #open processDescription.json
@@ -157,8 +149,7 @@ def getProcess(processID):
             else:
                 exception = render_template('html/exception.html', title="No such process exception", description="Requested process could not be found", type="no-such-process")
                 return exception, 404, {"resource": "no-such-process"} #return not found if requested process is not found
-        elif(request.content_type == "application/json" or #check requested content-type from request body 
-             request.args.get('f')=="application/json"): #check requested content-type from inline request
+        elif(request.args.get('f')=="application/json"): #check requested content-type from inline request
             if(os.path.exists('templates/json/processes/' + str(processID) + 'ProcessDescription.json')): #check if process description exists
                 file = open('templates/json/processes/' + str(processID) + 'ProcessDescription.json',) #open ProcessDescription.json
                 payload = json.load(file) #load the data from .json file
@@ -265,8 +256,7 @@ def getJobs():
             stati = ["accepted", "running", "successful", "failed", "dismissed"] #set stati parameter to default
         else:
             stati = request.args.get('status') #set stati parameter to passed value
-        if(request.content_type == "text/html" or #check requested content-type from request body 
-           request.args.get('f')=="text/html" or 
+        if(request.args.get('f')=="text/html" or 
            request.args.get('f') == None): #check requested content-type from inline request
             jobs = os.listdir("jobs/") #list created jobs 
             print(jobs)
@@ -300,8 +290,7 @@ def getJobs():
             return response, 200, {"link": "localhost:5000/jobs?f=text/html", "resource": "jobs"} #return response and ok with link and resource header
         
         
-        elif(request.content_type == "application/json" or #check requested content-type from request body 
-             request.args.get('f')=="application/json" or 
+        elif(request.args.get('f')=="application/json" or 
              request.args.get('f') == None): #check requested content-type from inline request
             jobList = os.listdir('jobs/') #list created jobs       
             count = 0 #initialize counter  
@@ -372,8 +361,7 @@ def getJob(jobID):
     if(request.method == 'GET'): #if get request is recieved
         app.logger.info('[GET] /jobs/' + jobID) #add log entry when endpoint is called
         try:
-            if(request.content_type == "application/json" or #check requested content-type from request body
-               request.args.get('f')=="application/json"): #check requested content-type from inline request
+            if(request.args.get('f')=="application/json"): #check requested content-type from inline request
                 if(os.path.exists('jobs/' + str(jobID) + '/status.json')): #check if requested job exists
                     file = open('jobs/' + str(jobID) + '/status.json') #open status.json
                     data = json.load(file) #create response   
@@ -383,8 +371,7 @@ def getJob(jobID):
                 else:
                     exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
                     return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
-            elif(request.content_type == "text/html" or #check requested content-type from request body
-                 request.args.get('f')=="text/html" or 
+            elif(request.args.get('f')=="text/html" or 
                  request.args.get('f') == None): #check requested content-type from inline request
                 if(os.path.exists('jobs/' + str(jobID) + '/status.json')):
                     file = open('jobs/' + str(jobID) + '/status.json') #open status.json
@@ -417,31 +404,27 @@ def getJob(jobID):
                         data = json.load(file) #load data from status.json 
                         file.close() #close status.json
                         
-                        if(request.content_type == "text/html" or #check requested content-type from request body
-                         request.args.get('f')=="text/html" or 
+                        if(request.args.get('f')=="text/html" or 
                          request.args.get('f') == None):
                             file = open('jobs/' + str(jobID) + '/status.json') #open status.json
                             job = json.load(file) #create response   
                             file.close() #close status.json
                             response = render_template("html/Job.html", job=job) #render dynamic job
                             return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job-dismissed"} #return response and ok
-                        elif(request.content_type == "application/json" or #check requested content-type from request body
-                         request.args.get('f')=="application/json"):
+                        elif(request.args.get('f')=="application/json"):
                             response = jsonify(data) #create response
                             return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return response and ok with link und resource header
                         else:
                             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
                     else: #check requested content-type from inline request
-                        if(request.content_type == "text/html" or #check requested content-type from request body
-                         request.args.get('f')=="text/html" or 
+                        if(request.args.get('f')=="text/html" or 
                          request.args.get('f') == None):
                             file = open('jobs/' + str(jobID) + '/status.json') #open status.json
                             job = json.load(file) #create response   
                             file.close() #close status.json
                             response = render_template("html/Job.html", job=job) #render dynamic job
                             return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job-dismissed"} #return response and ok
-                        elif(request.content_type == "application/json" or #check requested content-type from request body
-                         request.args.get('f')=="application/json"):
+                        elif(request.args.get('f')=="application/json"):
                             file = open('jobs/' + str(jobID) + '/status.json') #open status.json
                             data = json.load(file) #load data from status.json 
                             file.close() #close status.json
@@ -575,78 +558,74 @@ def downloadFile(jobID, requestedFile):
         else:
             return 500 #internal server error
 
-"""
 @app.route('/coverage', methods = ["GET"])
 def getCoverage():
-	try:
-		kmlFiles = os.listdir('data/coverage/')
-		coverages = []
-		bboxes = []
-		for i in kmlFiles:
-			tree = ET.parse('data/coverage/' + i)
-			root = tree.getroot()
-			bbox = root[0][1][1][2][0].text
-			name = i[:-4]
-			date = i[17:21] + '.' + i[21:23] + '.' + i[23:25]
-			dataset = {'name': name,
-					   'bbox': bbox,
-					   'date': date}
-			coverages.append(dataset)
-			bboxArray = bbox.split()
-			coordinates = []
-			for i in bboxArray:
-				rawCoords = i.replace(',', ' ')
-				coords = rawCoords.split()
-				coordinates.append(float(coords[0]))
-				coordinates.append(float(coords[1]))
-			geojson = {"type": "FeatureCollection", "features": [{
-					  "type": "Feature",
-					  "properties": {
-						  "name": name,
-						  "date": date},
-					  "geometry": {
-						"type": "Polygon",
-						"coordinates": [
-						  [
-							[
-							  coordinates[0], coordinates[1]
-							],
-							[
-							  coordinates[2], coordinates[3]
-							],
-							[
-							  coordinates[4], coordinates[5]
-							],
-							[
-							  coordinates[6], coordinates[7]
-							],
-							[
-							  coordinates[0], coordinates[1]
-							]
-						  ]
-						]
-					  }
-					}
-				  ]
-				}
-			bboxes.append(geojson)
-		coverageJSON = {'coverages': coverages}
-     
-        if(request.content_type == "application/json" or request.args.get('f')=="application/json"): #check requested content-type from request body
-            return coverageJSON, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage"} #return response and ok with link und resource header
-        elif(request.content_type == "text/html" or #check requested content-type from request body
-             request.args.get('f')=="text/html" or 
-             request.args.get('f') == None): #check requested content-type from inline request
+    kmlFiles = os.listdir('data/coverage/')
+    coverages = []
+    bboxes = []
+    for i in kmlFiles:
+        tree = ET.parse('data/coverage/' + i)
+        root = tree.getroot()
+        bbox = root[0][1][1][2][0].text
+        name = i[:-4]
+        date = i[17:21] + '.' + i[21:23] + '.' + i[23:25]
+        dataset = {'name': name,
+                   'bbox': bbox,
+                   'date': date}
+        coverages.append(dataset)
+        bboxArray = bbox.split()
+        coordinates = []
+        for i in bboxArray:
+            rawCoords = i.replace(',', ' ')
+            coords = rawCoords.split()
+            coordinates.append(float(coords[0]))
+            coordinates.append(float(coords[1]))
+        geojson = {"type": "FeatureCollection", "features": [{
+                  "type": "Feature",
+                  "properties": {
+                      "name": name,
+                      "date": date},
+                  "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                      [
+                        [
+                          coordinates[0], coordinates[1]
+                        ],
+                        [
+                          coordinates[2], coordinates[3]
+                        ],
+                        [
+                          coordinates[4], coordinates[5]
+                        ],
+                        [
+                          coordinates[6], coordinates[7]
+                        ],
+                        [
+                          coordinates[0], coordinates[1]
+                        ]
+                      ]
+                    ]
+                  }
+                }
+              ]
+            }
+        bboxes.append(geojson)
+    coverageJSON = {'coverages': coverages}
+        
+    try:
+        if(request.args.get('f')=="application/json"): #check requested content-type from inline request
+            return coverageJSON, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
+            
+        elif(request.args.get('f')=="text/html" or request.args.get('f') == None): #check requested content-type from inline request
             response = render_template("html/coverage.html", coverages=coverages, bboxes=bboxes) #render dynamic coverage
-            return response, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage"} #return response and ok with link und resource header
+            return response, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except Exception as e:
         print(e)
-        return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
-"""    
-
-         
+        return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong    
+    
 #run application
 if __name__ == '__main__':
     app.run(port=5000, debug=True, use_reloader=False) 
