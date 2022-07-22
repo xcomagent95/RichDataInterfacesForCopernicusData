@@ -90,6 +90,16 @@
               }
             }
           },
+          "405": {
+            "description": "method not allowed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "406": {
             "description": "not acceptable",
             "content": {
@@ -148,6 +158,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/processList"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "method not allowed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -226,6 +246,16 @@
               }
             }
           },
+          "405": {
+            "description": "method not allowed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "406": {
             "description": "not acceptable",
             "content": {
@@ -270,6 +300,72 @@
               "type": "integer",
               "default": 10
             }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "status of the jobs to be listed",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "type of the jobs to be listed",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "processID",
+            "in": "query",
+            "description": "processID of the jobs to listed",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datetime",
+            "in": "query",
+            "description": "datetime or interval the created timestamp of a job must match",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minDuration",
+            "in": "query",
+            "description": "minimal duration of listed jobs",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "maxDuration",
+            "in": "query",
+            "description": "maximal duration of listed jobs",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
@@ -284,6 +380,16 @@
               "application//json": {
                 "schema": {
                   "$ref": "#/components/schemas/jobList"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "method not allowed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -378,6 +484,16 @@
               }
             }
           },
+          "405": {
+            "description": "method not allowed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "500": {
             "description": "internal server error",
             "content": {
@@ -438,6 +554,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/exception"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "method not allowed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -509,6 +635,16 @@
               }
             }
           },
+          "405": {
+            "description": "method not allowed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "410": {
             "description": "gone",
             "content": {
@@ -573,6 +709,16 @@
               }
             }
           },
+          "405": {
+            "description": "method not allowed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "500": {
             "description": "internal server error",
             "content": {
@@ -604,7 +750,17 @@
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Coverage"
+                  "$ref": "#/components/schemas/Coverages"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "method not allowed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }

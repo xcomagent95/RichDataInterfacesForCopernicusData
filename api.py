@@ -38,7 +38,8 @@ def getLandingPage():
             return response, 200, {"link": "localhost:5000/?f=application/json", "resource": "landingPage"} #return response and okay with link and resource header
         else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
-    except:
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #retrurn internal server error if something went wrong
 
 #conformance endpoint
@@ -59,7 +60,8 @@ def getConformance():
             return response, 200, {"link": "localhost:5000/conformance?f=application/json", "resource": "conformance"} #return response and okay with link and resource header
         else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
-    except:
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
     
 #api endpoint
@@ -79,7 +81,8 @@ def getAPIDefinition():
             return response, 200, {"link": "localhost:5000/api?f=application/json", "resource": "apiDefinition"} #return response and okay with link and resource header
         else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
-    except:
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 
 #processes endpoint
@@ -130,7 +133,8 @@ def getProcesses():
             return response, 200, {"link": "localhost:5000/processes?f=application/json", "resource": "processes"} #return response and ok with link and resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
-    except:
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
   
 #process endpoint
@@ -161,7 +165,8 @@ def getProcess(processID):
                 return exception, 404, {"resource": "no-such-process"} #return not found if requested process is not found 
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
-    except:
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 
 #execute endpoint
@@ -256,11 +261,10 @@ def getJobs():
             stati = ["accepted", "running", "successful", "failed", "dismissed"] #set stati parameter to default
         else:
             stati = request.args.get('status') #set stati parameter to passed value
+			
         if(request.args.get('f')=="text/html" or 
            request.args.get('f') == None): #check requested content-type from inline request
             jobs = os.listdir("jobs/") #list created jobs 
-            print(jobs)
-            counter = 0 #initialize counter  
             jobList = [] #initialize list of jobs   
             print(jobs)
             for i in jobs: #iterate over created jobs
@@ -283,17 +287,13 @@ def getJobs():
                    minDurationParam == True and #check min duration
                    maxDurationParam == True): #check max duration
                     jobList.append(status) #add job to list of jobs
-                    counter += 1 #increase counter
-                    if(counter == limit): #check if counter has reached limit value
-                        break #if limit is reached break loop
-            response = render_template('html/jobList.html', status=jobList) #render dynamic job list 
+            response = render_template('html/jobList.html', status=jobList[0:limit]) #render dynamic job list 
             return response, 200, {"link": "localhost:5000/jobs?f=text/html", "resource": "jobs"} #return response and ok with link and resource header
         
         
         elif(request.args.get('f')=="application/json" or 
              request.args.get('f') == None): #check requested content-type from inline request
             jobList = os.listdir('jobs/') #list created jobs       
-            count = 0 #initialize counter  
             jobArray = [] #initialize list of jobs  
             for i in jobList: #iterate over created jobs
                 file = open('jobs/' + i + "/status.json",) #open status.sjon
@@ -334,10 +334,7 @@ def getJobs():
                                }]
                            }
                     jobArray.append(job) #append job to list of jobs
-                    count += 1 #increase counter
-                if count == limit: #check if counter has reached limit value
-                    break #if limit is reached break loop
-            jobs = {"jobs": jobArray, #create response payload
+            jobs = {"jobs": jobArray[0:limit], #create response payload
                     "links": [ #add links to self and alternate 
                                   {"href": "localhost:5000/jobs?f=application/json",
                                    "rel": "self",
@@ -352,7 +349,8 @@ def getJobs():
             return response, 200, {"link": "localhost:5000/jobs?f=application/json", "resource": "jobs"} #return response and ok with link and resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
-    except:
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #retrun internal server error if something went wrong
 
 #job endpoint for status and dismiss
@@ -384,7 +382,8 @@ def getJob(jobID):
                     return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found
             else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
-        except:
+        except Exception:
+            traceback.print_exc()
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
         
     if(request.method == 'DELETE'):
@@ -410,10 +409,10 @@ def getJob(jobID):
                             job = json.load(file) #create response   
                             file.close() #close status.json
                             response = render_template("html/Job.html", job=job) #render dynamic job
-                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job-dismissed"} #return response and ok
+                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job - " + str(jobID) + "dismissed"} #return response and ok
                         elif(request.args.get('f')=="application/json"):
                             response = jsonify(data) #create response
-                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return response and ok with link und resource header
+                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job - " + str(jobID) + "dismissed"} #return response and ok with link und resource header
                         else:
                             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
                     else: #check requested content-type from inline request
@@ -423,19 +422,26 @@ def getJob(jobID):
                             job = json.load(file) #create response   
                             file.close() #close status.json
                             response = render_template("html/Job.html", job=job) #render dynamic job
-                            return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job-dismissed"} #return response and ok
+                            return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job - " + str(jobID) + "dismissed"} #return response and ok
                         elif(request.args.get('f')=="application/json"):
                             file = open('jobs/' + str(jobID) + '/status.json') #open status.json
                             data = json.load(file) #load data from status.json 
                             file.close() #close status.json
                             response = jsonify(data) #create response
-                            return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job-dismissed"} #return gone when job was already dismissed
+                            return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job - " + str(jobID) + "dismissed"} #return gone when job was already dismissed
                         else:
                             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported   
             else:
-                exception = {"title": "No such job exception", "description": "No job with the requested processID could be found", "type": "no-such-job"}
-                return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
-        except:            
+                if(request.args.get('f')=="text/html" or request.args.get('f') == None):
+                    exception = render_template('html/exception.html', title="No such job exception", description="No job with the requested jobID could be found", type="no-such-job")
+                    return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found
+                elif(request.args.get('f')=="application/json"):
+                    exception = {"title": "No such job exception", "description": "No job with the requested processID could be found", "type": "no-such-job"}
+                    return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
+                else:
+                    return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported   
+        except Exception:   
+            traceback.print_exc()
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
 
 @app.route('/jobs/<jobID>/results', methods = ["GET"]) #allowed methods: GET
@@ -534,7 +540,7 @@ def getResults(jobID):
                 else:
                     exception = {"title": "Results not ready exception", "description": "The results with the requested jobID are not ready", "type": "result-not-ready"} 
                     return exception, 404, {"resource": "results-not-ready"} #return not found if requested job results are not ready
-        except:
+        except Exception:
             traceback.print_exc()
             return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
     else:
@@ -622,8 +628,8 @@ def getCoverage():
             return response, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
-    except Exception as e:
-        print(e)
+    except Exception:
+        traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong    
     
 #run application

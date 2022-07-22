@@ -320,6 +320,9 @@
     <h4 class="field-label">200</h4>
     ok
         <a href="#String">String</a>
+    <h4 class="field-label">405</h4>
+    method not allowed
+        <a href="#String">String</a>
     <h4 class="field-label">406</h4>
     not acceptable
         <a href="#String">String</a>
@@ -366,6 +369,9 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     ok
+        <a href="#String">String</a>
+    <h4 class="field-label">405</h4>
+    method not allowed
         <a href="#String">String</a>
     <h4 class="field-label">406</h4>
     not acceptable
@@ -422,6 +428,9 @@
     <h4 class="field-label">404</h4>
     not found / no such job
         <a href="#exception">exception</a>
+    <h4 class="field-label">405</h4>
+    method not allowed
+        <a href="#String">String</a>
     <h4 class="field-label">410</h4>
     gone
         <a href="#statusInfo">statusInfo</a>
@@ -491,6 +500,9 @@
     <h4 class="field-label">404</h4>
     not found / no such process
         <a href="#exception">exception</a>
+    <h4 class="field-label">405</h4>
+    method not allowed
+        <a href="#String">String</a>
     <h4 class="field-label">500</h4>
     internal server error
         <a href="#String">String</a>
@@ -512,7 +524,19 @@
     <div class="field-items">
       <div class="param">limit (optional)</div>
       
-            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; number of jobs to get default: 10 </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; number of jobs to get default: 10 </div>      <div class="param">status (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; status of the jobs to be listed </div>      <div class="param">type (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; type of the jobs to be listed </div>      <div class="param">processID (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; processID of the jobs to listed </div>      <div class="param">datetime (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; datetime or interval the created timestamp of a job must match </div>      <div class="param">minDuration (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; minimal duration of listed jobs </div>      <div class="param">maxDuration (optional)</div>
+      
+            <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; maximal duration of listed jobs </div>    </div>  <!-- field-items -->
 
 
     <h3 class="field-label">Return type</h3>
@@ -539,6 +563,9 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     ok
+        <a href="#String">String</a>
+    <h4 class="field-label">405</h4>
+    method not allowed
         <a href="#String">String</a>
     <h4 class="field-label">406</h4>
     not acceptable
@@ -595,6 +622,9 @@
     <h4 class="field-label">404</h4>
     not found / no such process
         <a href="#String">String</a>
+    <h4 class="field-label">405</h4>
+    method not allowed
+        <a href="#String">String</a>
     <h4 class="field-label">406</h4>
     not acceptable
         <a href="#String">String</a>
@@ -646,6 +676,9 @@
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
     ok
+        <a href="#String">String</a>
+    <h4 class="field-label">405</h4>
+    method not allowed
         <a href="#String">String</a>
     <h4 class="field-label">406</h4>
     not acceptable
@@ -703,6 +736,9 @@
     <h4 class="field-label">404</h4>
     not found / no such job or job failed or results not ready
         <a href="#exception">exception</a>
+    <h4 class="field-label">405</h4>
+    method not allowed
+        <a href="#String">String</a>
     <h4 class="field-label">500</h4>
     internal server error
         <a href="#String">String</a>
@@ -754,6 +790,9 @@
         <a href="#String">String</a>
     <h4 class="field-label">404</h4>
     not found / no such job
+        <a href="#String">String</a>
+    <h4 class="field-label">405</h4>
+    method not allowed
         <a href="#String">String</a>
     <h4 class="field-label">406</h4>
     not acceptable
