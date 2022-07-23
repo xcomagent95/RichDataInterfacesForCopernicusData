@@ -51,8 +51,7 @@ def getConformance():
            request.args.get('f') == None): #check requested content-type from inline request
             response = render_template('html/confClasses.html') #render static conformance page
             return response, 200, {"link": "localhost:5000/conformance?f=text/html", "resource": "conformance"} #return response and okay with link and resource header
-        elif(request.content_type == "application/json" or #check requested content-type from request body
-             request.args.get('f')=="application/json"): #check requested content-type from inline request
+        elif(request.args.get('f')=="application/json"): #check requested content-type from inline request
             file = open('templates/json/confClasses.json',) #open ConfClasses.json
             payload = json.load(file) #create response
             file.close() #close ConfClasses.json
@@ -447,8 +446,8 @@ def getJob(jobID):
 @app.route('/jobs/<jobID>/results', methods = ["GET"]) #allowed methods: GET
 def getResults(jobID):
     app.logger.info('/jobs/' + jobID + '/results') #add log entry when endpoint is called
-    if(os.path.exists('jobs/' + str(jobID))):
-        try:            
+    try:         
+		if(os.path.exists('jobs/' + str(jobID))):
             file = open('jobs/' + str(jobID) + "/status.json",) #open status.json
             status = json.load(file) #load the data from .json file
             file.close() #close .json file
@@ -540,12 +539,12 @@ def getResults(jobID):
                 else:
                     exception = {"title": "Results not ready exception", "description": "The results with the requested jobID are not ready", "type": "result-not-ready"} 
                     return exception, 404, {"resource": "results-not-ready"} #return not found if requested job results are not ready
-        except Exception:
-            traceback.print_exc()
-            return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
-    else:
-        exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
-        return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
+		else:
+			exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
+			return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
+	except Exception:
+        traceback.print_exc()
+        return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
 
 @app.route('/download/<jobID>/<requestedFile>', methods = ["GET"])
 def downloadFile(jobID, requestedFile):

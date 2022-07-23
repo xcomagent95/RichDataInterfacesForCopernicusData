@@ -112,7 +112,7 @@ def floodMonitoringProcess(job):
         if(retrievalStatus == True):
             updateStatus(job.path + '/status.json', "running", "Step 4 of 10 completed", "40")
         else:
-            updateStatus(job.path + '/status.json', "failed", "Pre-Dataset is stored in LTA", "0")
+            updateStatus(job.path + '/status.json', "failed", "Pre-Dataset is stored in long term storage", "0")
             return
     
     try:
@@ -137,7 +137,7 @@ def floodMonitoringProcess(job):
         if(retrievalStatus == True):
             updateStatus(job.path + '/status.json', "running", "Step 6 of 10 completed", "40")
         else:
-            updateStatus(job.path + '/status.json', "failed", "Post-Dataset is stored in LTA", "0")
+            updateStatus(job.path + '/status.json', "failed", "Post-Dataset is stored in long term storage", "0")
             return
     
     try:
