@@ -260,91 +260,69 @@ def getJobs():
             stati = ["accepted", "running", "successful", "failed", "dismissed"] #set stati parameter to default
         else:
             stati = request.args.get('status') #set stati parameter to passed value
+		
+        jobs = os.listdir('jobs/') #list created jobs       
+        jobList = [] #initialize list of jobs  
+        for i in jobs: #iterate over created jobs
+            file = open('jobs/' + i + "/status.json",) #open status.sjon
+            status = json.load(file) #load the data from .json file
+            file.close() #close .json file
 			
+            jobCreationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") #retrieve job creation date and covert to correct format
+            datetimeParam = utils.checkCreationDate(jobCreationDate, request) #check creation date with request
+			
+            durationParams = utils.checkDuration(status, request) #check duration with request
+            minDurationParam = durationParams[0] #set min duration
+            maxDurationParam = durationParams[1] #set max duration
+			
+            if(status["type"] in type and #check type
+               status["processID"] in processes and #check processID
+               status["status"] in stati and #check status
+               datetimeParam == True and #check datetime
+               minDurationParam == True and #check min duration
+               maxDurationParam == True): #check max duration
+				#create job entry
+                job = {"jobID": status["jobID"], #set jobID
+					   "processID": status["processID"], #set processID
+					   "type": status["type"], #set type
+					   "status": status["status"], #set status
+					   "message": status["message"], #set message
+					   "created": status["created"], #set created
+					   "links": [{ #add links to status file in json and html encodings
+							   "href": "localhost:5000/jobs/" + status["jobID"] + "?f=application/json",
+							   "rel": "status",
+							   "type": "application/json",
+							   "title": "Job status as JSON"
+						   },
+						   {
+							   "href": "localhost:5000/jobs/" + status["jobID"] + "?f=text/html",
+							   "rel": "status",
+							   "type": "text/html",
+							   "title": "Job status as HTML"
+						   }]
+					   }
+                jobList.append(job) #append job to list of jobs
+		
         if(request.args.get('f')=="text/html" or 
            request.args.get('f') == None): #check requested content-type from inline request
-            jobs = os.listdir("jobs/") #list created jobs 
-            jobList = [] #initialize list of jobs   
-            print(jobs)
-            for i in jobs: #iterate over created jobs
-                file = open('jobs/' + i + "/status.json",) #open status.sjon
-                status = json.load(file) #load the data from .json file
-                file.close() #close .json file
-                
-                jobCreationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") #retrieve job creation date and covert to correct format
-                datetimeParam = utils.checkCreationDate(jobCreationDate, request) #check creation date with request
-                
-                durationParams = utils.checkDuration(status, request) #check duration with request
-                minDurationParam = durationParams[0] #set min duration
-                maxDurationParam = durationParams[1] #set max duration
-                
-                #check if job conforms to reuqest parameters
-                if(status["type"] in type and #check type
-                   status["processID"] in processes and #check processID
-                   status["status"] in stati and #check status
-                   datetimeParam == True and #check datetime
-                   minDurationParam == True and #check min duration
-                   maxDurationParam == True): #check max duration
-                    jobList.append(status) #add job to list of jobs
             response = render_template('html/jobList.html', status=jobList[0:limit]) #render dynamic job list 
             return response, 200, {"link": "localhost:5000/jobs?f=text/html", "resource": "jobs"} #return response and ok with link and resource header
         
         
-        elif(request.args.get('f')=="application/json" or 
-             request.args.get('f') == None): #check requested content-type from inline request
-            jobList = os.listdir('jobs/') #list created jobs       
-            jobArray = [] #initialize list of jobs  
-            for i in jobList: #iterate over created jobs
-                file = open('jobs/' + i + "/status.json",) #open status.sjon
-                status = json.load(file) #load the data from .json file
-                file.close() #close .json file
-                
-                jobCreationDate = datetime.datetime.strptime(str(status["created"]), "%Y-%m-%d %H:%M:%S") #retrieve job creation date and covert to correct format
-                datetimeParam = utils.checkCreationDate(jobCreationDate, request) #check creation date with request
-                
-                durationParams = utils.checkDuration(status, request) #check duration with request
-                minDurationParam = durationParams[0] #set min duration
-                maxDurationParam = durationParams[1] #set max duration
-                
-                if(status["type"] in type and #check type
-                  status["processID"] in processes and #check processID
-                  status["status"] in stati and #check status
-                  datetimeParam == True and #check datetime
-                  minDurationParam == True and #check min duration
-                  maxDurationParam == True): #check max duration
-                    #create job entry
-                    job = {"jobID": status["jobID"], #set jobID
-                           "processID": status["processID"], #set processID
-                           "type": status["type"], #set type
-                           "status": status["status"], #set status
-                           "message": status["message"], #set message
-                           "created": status["created"], #set created
-                           "links": [{ #add links to status file in json and html encodings
-                                   "href": "localhost:5000/jobs/" + status["jobID"] + "?f=application/json",
-                                   "rel": "status",
-                                   "type": "application/json",
-                                   "title": "Job status as JSON"
-                               },
-                               {
-                                   "href": "localhost:5000/jobs/" + status["jobID"] + "?f=text/html",
-                                   "rel": "status",
-                                   "type": "text/html",
-                                   "title": "Job status as HTML"
-                               }]
-                           }
-                    jobArray.append(job) #append job to list of jobs
-            jobs = {"jobs": jobArray[0:limit], #create response payload
-                    "links": [ #add links to self and alternate 
-                                  {"href": "localhost:5000/jobs?f=application/json",
-                                   "rel": "self",
-                                   "type": "application/json",
-                                   "title": "this document as JSON"},
-                                  {"href": "localhost:5000/jobs?f=text/html",
-                                   "rel": "alternate",
-                                   "type": "text/html",
-                                   "title": "this document as HTML"}
-                             ]}
-            response = jsonify(jobs) #create response 
+        elif(request.args.get('f')=="application/json"): #check requested content-type from inline request
+            temp = jobList[0:limit]
+            jobList = {"jobs": temp, #create response payload
+    				"links": [ #add links to self and alternate 
+    							  {"href": "localhost:5000/jobs?f=application/json",
+    							   "rel": "self",
+    							   "type": "application/json",
+    							   "title": "this document as JSON"},
+    							  {"href": "localhost:5000/jobs?f=text/html",
+    							   "rel": "alternate",
+    							   "type": "text/html",
+    							   "title": "this document as HTML"}
+    						 ]}		
+            response = jsonify(jobList) #create response 
             return response, 200, {"link": "localhost:5000/jobs?f=application/json", "resource": "jobs"} #return response and ok with link and resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
@@ -447,7 +425,7 @@ def getJob(jobID):
 def getResults(jobID):
     app.logger.info('/jobs/' + jobID + '/results') #add log entry when endpoint is called
     try:         
-		if(os.path.exists('jobs/' + str(jobID))):
+        if(os.path.exists('jobs/' + str(jobID))):
             file = open('jobs/' + str(jobID) + "/status.json",) #open status.json
             status = json.load(file) #load the data from .json file
             file.close() #close .json file
@@ -539,92 +517,101 @@ def getResults(jobID):
                 else:
                     exception = {"title": "Results not ready exception", "description": "The results with the requested jobID are not ready", "type": "result-not-ready"} 
                     return exception, 404, {"resource": "results-not-ready"} #return not found if requested job results are not ready
-		else:
-			exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
-			return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
-	except Exception:
+        else:
+            exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
+            return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
+    except Exception:
         traceback.print_exc()
         return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong
 
 @app.route('/download/<jobID>/<requestedFile>', methods = ["GET"])
 def downloadFile(jobID, requestedFile):
-    if(os.path.exists('jobs/' + str(jobID))):
-        file = open('jobs/' + str(jobID) + "/status.json",) #open status.json
-        status = json.load(file) #load the data from .json file
-        file.close() #close .json file:
-        file = open('jobs/' + str(jobID) + "/job.json",) #open job.json
-        job = json.load(file) #load the data from .json file
-        file.close() #close .json file  
-        if(job["processID"] == "FloodMonitoring"): #check processID
-            if(str(requestedFile) == "bin"):
-                return send_file('jobs/' + str(jobID) + '/results/bin.tif', mimetype='application/tiff'), 200 #send raw file
-            elif(str(requestedFile) == 'ndsi'):
-                return send_file('jobs/' + str(jobID) + '/results/ndsi_clipped.tif', mimetype='application/tiff'), 200 #send raw file
+    try:
+        if(os.path.exists('jobs/' + str(jobID))):
+            file = open('jobs/' + str(jobID) + "/status.json",) #open status.json
+            status = json.load(file) #load the data from .json file
+            file.close() #close .json file:
+            file = open('jobs/' + str(jobID) + "/job.json",) #open job.json
+            job = json.load(file) #load the data from .json file
+            file.close() #close .json file  
+            if(job["processID"] == "FloodMonitoring"): #check processID
+                if(str(requestedFile) == "bin"):
+                    return send_file('jobs/' + str(jobID) + '/results/bin.tif', mimetype='application/tiff'), 200 #send raw file
+                elif(str(requestedFile) == 'ndsi'):
+                    return send_file('jobs/' + str(jobID) + '/results/ndsi_clipped.tif', mimetype='application/tiff'), 200 #send raw file
+                else:
+                    exception = {"title": "No such file exception", "description": "No file could be found", "type": "no-such-file"}
+                    return exception, 404, {"resource": "no-such-file"} #return not found if requested job is not found 
+            else:
+                return "HTTP status code 501: not implemented", 501
         else:
-            return 500 #internal server error
+            exception = {"title": "No such job exception", "description": "No job with the requested jobID could be found", "type": "no-such-job"}
+            return exception, 404, {"resource": "no-such-job"} #return not found if requested job is not found 
+    except Exception:
+        traceback.print_exc()
+        return "HTTP status code 500: internal server error", 500 #return internal server error if something went wrong:
 
 @app.route('/coverage', methods = ["GET"])
 def getCoverage():
-    kmlFiles = os.listdir('data/coverage/')
-    coverages = []
-    bboxes = []
-    for i in kmlFiles:
-        tree = ET.parse('data/coverage/' + i)
-        root = tree.getroot()
-        bbox = root[0][1][1][2][0].text
-        name = i[:-4]
-        date = i[17:21] + '.' + i[21:23] + '.' + i[23:25]
-        dataset = {'name': name,
-                   'bbox': bbox,
-                   'date': date}
-        coverages.append(dataset)
-        bboxArray = bbox.split()
-        coordinates = []
-        for i in bboxArray:
-            rawCoords = i.replace(',', ' ')
-            coords = rawCoords.split()
-            coordinates.append(float(coords[0]))
-            coordinates.append(float(coords[1]))
-        geojson = {"type": "FeatureCollection", "features": [{
-                  "type": "Feature",
-                  "properties": {
-                      "name": name,
-                      "date": date},
-                  "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [
-                      [
-                        [
-                          coordinates[0], coordinates[1]
-                        ],
-                        [
-                          coordinates[2], coordinates[3]
-                        ],
-                        [
-                          coordinates[4], coordinates[5]
-                        ],
-                        [
-                          coordinates[6], coordinates[7]
-                        ],
-                        [
-                          coordinates[0], coordinates[1]
-                        ]
-                      ]
-                    ]
-                  }
-                }
-              ]
-            }
-        bboxes.append(geojson)
-    coverageJSON = {'coverages': coverages}
-        
     try:
-        if(request.args.get('f')=="application/json"): #check requested content-type from inline request
-            return coverageJSON, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
-            
-        elif(request.args.get('f')=="text/html" or request.args.get('f') == None): #check requested content-type from inline request
+        kmlFiles = os.listdir('data/coverage/')
+        coverages = []
+        bboxes = []
+        for i in kmlFiles:
+            tree = ET.parse('data/coverage/' + i)
+            root = tree.getroot()
+            bbox = root[0][1][1][2][0].text
+            name = i[:-4]
+            date = i[17:21] + '.' + i[21:23] + '.' + i[23:25]
+            dataset = {'name': name,
+					   'bbox': bbox,
+					   'date': date}
+            coverages.append(dataset)
+            bboxArray = bbox.split()
+            coordinates = []
+            for i in bboxArray:
+                rawCoords = i.replace(',', ' ')
+                coords = rawCoords.split()
+                coordinates.append(float(coords[0]))
+                coordinates.append(float(coords[1]))
+            geojson = {"type": "FeatureCollection", "features": [{
+					  "type": "Feature",
+					  "properties": {
+						  "name": name,
+						  "date": date},
+					  "geometry": {
+						"type": "Polygon",
+						"coordinates": [
+						  [
+							[
+							  coordinates[0], coordinates[1]
+							],
+							[
+							  coordinates[2], coordinates[3]
+							],
+							[
+							  coordinates[4], coordinates[5]
+							],
+							[
+							  coordinates[6], coordinates[7]
+							],
+							[
+							  coordinates[0], coordinates[1]
+							]
+						  ]
+						]
+					  }
+					}
+				  ]
+				}
+            bboxes.append(geojson)
+        coverageJSON = {'coverages': coverages}
+        if(request.args.get('f')=="text/html" or request.args.get('f') == None): #check requested content-type from inline request
             response = render_template("html/coverage.html", coverages=coverages, bboxes=bboxes) #render dynamic coverage
-            return response, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage", "Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"} #return response and ok with link und resource header
+            return response, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage"} #return response and ok with link und resource header
+        elif(request.args.get('f')=="application/json"): #check requested content-type from inline request
+            response = jsonify(coverageJSON)
+            return response, 200, {"link": "localhost:5000/coverage?f=application/json", "resource": "coverage"} #return response and ok with link und resource header
         else:
             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except Exception:
