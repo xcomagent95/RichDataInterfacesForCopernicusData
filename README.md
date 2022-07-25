@@ -65,18 +65,18 @@ with Normal-ized Difference Sigma-Naught Index and Shannon’s Entropy [Online].
 Verfügbar unter: https://doi.org/10.3390/rs12091384 (Zugriff am: 1. März
 2022).
 
-### Installation
+## Installation
 Um die Anwendung starten zu können wird ein Python-Environment mit der Python Version 3.6 benötigt. 
 Die benötigten Packages können der environment.yaml entnommen werden. 
 Zusätzlich muss die von der ESA kostenlos zur Verfügung gestellten Software SNAP installiert und der 
 Python-Wrapper snappy konfiguriert sein. Für eine Vereinfachte Installation werden Plattformen wie 
 Anaconda empfohlen.
 
-### Betrieb
+## Betrieb
 Die Anwendung kann mit der run.py getstartet werden. Zum Testen der Anwendeung kann ein beliebiger Browser oder das
 Kommandozeilen-Werkzeug cURL verwendet werden. 
 
-## Landing-Page
+### Landing-Page
 Ersten Anlaufpunkt für Nutzer sollte die Landig-Page der API sein. Über diese können alle anderen Endpints erreicht werden. 
 Die Landing-Page kann unter folgendem URL erreicht werden:
 ```
@@ -87,7 +87,7 @@ curl -X GET "localhost:5000/?f=text/html"
 curl -X GET "localhost:5000/?f=application/json"
 ```
 
-## API-Definition
+### API-Definition
 Der API-Definition kann entnommen wie die Endpoints der API zu verwenden sind, welchen Schemata die 
 Ressourcen entsprechen und welche Responses zu erwarten sind. 
 Die API-Definition kann unter folgendem URL erreicht werden:
@@ -99,7 +99,7 @@ curl -X GET "localhost:5000/api?f=text/html"
 curl -X GET "localhost:5000/api?f=application/json"
 ```
 
-## Conformance-Declaration
+### Conformance-Declaration
 Nutzer können die Standardkonformietät der API über den Conformance Endpoint einsehen. 
 Dort werden alle Requirements-Classes gelistet weclhe von der Anwendung implementiert werden.
 Die Conformance Declaration kann unter folgendem URL erreicht werden:
@@ -111,28 +111,44 @@ curl -X GET "localhost:5000/conformance?f=text/html"
 curl -X GET "localhost:5000/conformance?f=application/json" 
 ```
 
-## Process List
+### Process List
+Nutzer können über den Process List Endpoint detaillierte Informationen zu den 
+von Anwendung bereitgesteöllten Prozessen erhalten. 
+Die Process List kann unter folgendem URL erreicht werden:
+```
+#Retrieve Process List as HTML
+curl -X GET "localhost:5000/processes?f=text/html" 
+
+#Retrieve Process List as JSON
+curl -X GET "localhost:5000/processes?f=application/json" 
+```
+### Process Description
 ```
 ```
-## Process Description
-```
-```
-## Process Excecution
+### Process Excecution
 ```
 ```
 
-# Echo
-# Flood Monitoring
+#### Echo
+#### Flood Monitoring
 
-## Job List
+### Job List
 ```
 ```
-## Job Status
+### Job Status
 ```
 ```
-## Job Results
+### Job Results
 ```
 ```
-## Coverage
+### Coverage
+Um einzusehen welche Sentinel-1 Datensätze persistent von der Anwendung gespeichert wurden und 
+daher nicht heruntergeladen werden müssen, kann der Coverage Endpoint angefragt werden.
+Die Coverage kann unter folgendem URL erreicht werden:
 ```
+#Retrieve Coverage as HTML
+curl -X GET "localhost:5000/coverage?f=text/html"
+
+#Retrieve Coverage as JSON
+curl -X GET "localhost:5000/coverage?f=application/json"
 ```
