@@ -57,148 +57,151 @@ def readJob(jobFile):
     return jobObject #return job object
 
 def floodMonitoringProcess(job):
-    setStarted(job.path + '/status.json')
-    datasets = datasets = os.listdir("data/")
-    if(checkForDismissal(job.path + '/status.json') == True):
-        return
-    
-    footprint ={"type": "FeatureCollection","features": [{
-                    "type": "Feature",
-                    "properties": {},
-                    "geometry": {
-                        "type": "Polygon",
-                            "coordinates": [[
-                                [float(job.input[4]),float(job.input[5])],
-                                [float(job.input[6]),float(job.input[5])],
-                                [float(job.input[6]),float(job.input[7])],
-                                [float(job.input[4]),float(job.input[7])],
-                                [float(job.input[4]),float(job.input[5])]
-                            ]]}}]}
-    json.dumps(footprint, indent=4)
-    with open(job.path + "/footprint.geojson", 'w') as f:
-        json.dump(footprint, f)
-        f.close()
-        
-    updateStatus(job.path + '/status.json', "running", "Step 1 of 10 completed", "10")
-
-    pre_date_t0 = datetime.date(int(job.input[0][0:4]), int(job.input[0][4:6]), int(job.input[0][6:]))
-    pre_date_t1 = pre_date_t0 + datetime.timedelta(days=1)
-    post_date_t0 = datetime.date(int(job.input[1][0:4]), int(job.input[1][4:6]), int(job.input[1][6:]))
-    post_date_t1 = post_date_t0 + datetime.timedelta(days=1)
-     
-    updateStatus(job.path + '/status.json', "running", "Step 2 of 10 completed", "20")
-    
-    if(checkForDismissal(job.path + '/status.json') == True):
-        return
-    
-    try:
-        api = loginCopernicusHub(job)
-        updateStatus(job.path + '/status.json', "running", "Step 3 of 10 completed", "30")
-    except:
-        updateStatus(job.path + '/status.json', "failed", "Login to Copernicus Hub was not successful", "0")
-        return
-        
-    if(checkForDismissal(job.path + '/status.json') == True):
-        return
-    
-    try:
-        pre_product = getProduct(api, job, pre_date_t0, pre_date_t1)
-    except:
-        updateStatus(job.path + '/status.json', "failed", "Pre-Dataset could not be retrieved", "0")
-        return
-    
-    if(pre_product[1] + ".zip" not in datasets):
-        retrievalStatus = retrieveProduct(api, pre_product[0], pre_product[1], job.downloads)
-        if(retrievalStatus == True):
-            updateStatus(job.path + '/status.json', "running", "Step 4 of 10 completed", "40")
-        else:
-            updateStatus(job.path + '/status.json', "failed", "Pre-Dataset is stored in long term storage", "0")
-            return
-    
-    try:
-        calibrateProductSNAP(pre_product[1], job)
-    except:
-        updateStatus(job.path + '/status.json', "failed", "Pre-Dataset could not be calibrated", "0")
-        return
-        
-    updateStatus(job.path + '/status.json', "running", "Step 5 of 10 completed", "50")
-    
-    if(checkForDismissal(job.path + '/status.json') == True):
-        return
-    
-    try:
-        post_product = getProduct(api, job, post_date_t0, post_date_t1)
-    except:
-        updateStatus(job.path + '/status.json', "failed", "Post-Dataset could not be retrieved", "0")
-        return
-    
-    if(post_product[1] + ".zip" not in datasets):
-        retrievalStatus = retrieveProduct(api, post_product[0], post_product[1], job.downloads)
-        if(retrievalStatus == True):
-            updateStatus(job.path + '/status.json', "running", "Step 6 of 10 completed", "40")
-        else:
-            updateStatus(job.path + '/status.json', "failed", "Post-Dataset is stored in long term storage", "0")
-            return
-    
-    try:
-        calibrateProductSNAP(post_product[1], job)
-    except:
-        updateStatus(job.path + '/status.json', "failed", "Pre-Dataset could not be calibrated", "0")
-        return
-        
-    updateStatus(job.path + '/status.json', "running", "Step 7 of 10 completed", "70")
-        
-    if(checkForDismissal(job.path + '/status.json') == True):
-        return
-    
-    try:
-        ndsiSNAP(job, pre_product[1], post_product[1])
-    except:
-        updateStatus(job.path + '/status.json', "failed", "NDSI could not be calculated", "0")
-        return
-    
-    updateStatus(job.path + '/status.json', "running", "Step 8 of 10 completed", "80")
-    
-    try:
-        clipProductSNAP(job)
-    except:
-        updateStatus(job.path + '/status.json', "failed", "NDSI could not be clipped", "0")
-        return
-    updateStatus(job.path + '/status.json', "running", "Step 9 of 10 completed", "90")
-    
-    try:
-        theresholdSNAP(job)
-    except:
-        updateStatus(job.path + '/status.json', "failed", "Threshold could not be calculated", "0")
-        return
-    
-    updateStatus(job.path + '/status.json', "running", "Step 10 of 10 completed", "100")
-    setFinished(job.path + '/status.json')
-
-def echoProcess(job):
 	try:
-		if(checkForDismissal(job.path + '/status.json') == True):
-			return
-		
 		setStarted(job.path + '/status.json')
+		datasets = datasets = os.listdir("data/")
+		if(checkForDismissal(job.path + '/status.json') == True):
+			return
 		
-		
-			input = job.input[0]
-			time.sleep(5)
-		
+		footprint ={"type": "FeatureCollection","features": [{
+						"type": "Feature",
+						"properties": {},
+						"geometry": {
+							"type": "Polygon",
+								"coordinates": [[
+									[float(job.input[4]),float(job.input[5])],
+									[float(job.input[6]),float(job.input[5])],
+									[float(job.input[6]),float(job.input[7])],
+									[float(job.input[4]),float(job.input[7])],
+									[float(job.input[4]),float(job.input[5])]
+								]]}}]}
+		json.dumps(footprint, indent=4)
+		with open(job.path + "/footprint.geojson", 'w') as f:
+			json.dump(footprint, f)
+			f.close()
+			
+		updateStatus(job.path + '/status.json', "running", "Step 1 of 10 completed", "10")
+
+		pre_date_t0 = datetime.date(int(job.input[0][0:4]), int(job.input[0][4:6]), int(job.input[0][6:]))
+		pre_date_t1 = pre_date_t0 - datetime.timedelta(days=1)
+		post_date_t0 = datetime.date(int(job.input[1][0:4]), int(job.input[1][4:6]), int(job.input[1][6:]))
+		post_date_t1 = post_date_t0 + datetime.timedelta(days=1)
+		 
+		updateStatus(job.path + '/status.json', "running", "Step 2 of 10 completed", "20")
 		
 		if(checkForDismissal(job.path + '/status.json') == True):
 			return
 		
-		result ={"result": input,
-				 "message": "This is an echo"}
-		json.dumps(result, indent=4)
-		with open(job.results + "result.json", 'w') as f: #create file
-			json.dump(result, f) #write content
-			f.close() #close file
-		updateStatus(job.path + '/status.json', "successful", "Step 1 of 1 completed", "100")
+		try:
+			api = loginCopernicusHub(job)
+			updateStatus(job.path + '/status.json', "running", "Step 3 of 10 completed", "30")
+		except:
+			updateStatus(job.path + '/status.json', "failed", "Login to Copernicus Hub was not successful", "0")
+			return
+			
+		if(checkForDismissal(job.path + '/status.json') == True):
+			return
+		
+		try:
+			pre_product = getProduct(api, job, pre_date_t0, pre_date_t1)
+		except:
+			updateStatus(job.path + '/status.json', "failed", "Pre-Dataset could not be found", "0")
+			return
+		
+		if(pre_product[1] + ".zip" not in datasets):
+			retrievalStatus = retrieveProduct(api, pre_product[0], pre_product[1], job.downloads)
+			if(retrievalStatus == True):
+				updateStatus(job.path + '/status.json', "running", "Step 4 of 10 completed", "40")
+			else:
+				updateStatus(job.path + '/status.json', "failed", "Pre-Dataset is stored in long term storage", "0")
+				return
+		
+		try:
+			calibrateProductSNAP(pre_product[1], job)
+		except:
+			updateStatus(job.path + '/status.json', "failed", "Pre-Dataset could not be calibrated", "0")
+			return
+			
+		updateStatus(job.path + '/status.json', "running", "Step 5 of 10 completed", "50")
+		
+		if(checkForDismissal(job.path + '/status.json') == True):
+			return
+		
+		try:
+			post_product = getProduct(api, job, post_date_t0, post_date_t1)
+		except:
+			updateStatus(job.path + '/status.json', "failed", "Post-Dataset could not be found", "0")
+			return
+		
+		if(post_product[1] + ".zip" not in datasets):
+			retrievalStatus = retrieveProduct(api, post_product[0], post_product[1], job.downloads)
+			if(retrievalStatus == True):
+				updateStatus(job.path + '/status.json', "running", "Step 6 of 10 completed", "40")
+			else:
+				updateStatus(job.path + '/status.json', "failed", "Post-Dataset is stored in long term storage", "0")
+				return
+		
+		try:
+			calibrateProductSNAP(post_product[1], job)
+		except:
+			updateStatus(job.path + '/status.json', "failed", "Pre-Dataset could not be calibrated", "0")
+			return
+			
+		updateStatus(job.path + '/status.json', "running", "Step 7 of 10 completed", "70")
+			
+		if(checkForDismissal(job.path + '/status.json') == True):
+			return
+		
+		try:
+			ndsiSNAP(job, pre_product[1], post_product[1])
+		except:
+			updateStatus(job.path + '/status.json', "failed", "NDSI could not be calculated", "0")
+			return
+		
+		updateStatus(job.path + '/status.json', "running", "Step 8 of 10 completed", "80")
+		
+		try:
+			clipProductSNAP(job)
+		except:
+			updateStatus(job.path + '/status.json', "failed", "NDSI could not be clipped", "0")
+			return
+		updateStatus(job.path + '/status.json', "running", "Step 9 of 10 completed", "90")
+		
+		try:
+			theresholdSNAP(job)
+		except:
+			updateStatus(job.path + '/status.json', "failed", "Threshold could not be calculated", "0")
+			return
+		
+		updateStatus(job.path + '/status.json', "running", "Step 10 of 10 completed", "100")
 		setFinished(job.path + '/status.json')
 	except:
+		updateStatus(job.path + '/status.json', "failed", "The job has failed", "-")
+		return
+def echoProcess(job):
+    try:
+        if(checkForDismissal(job.path + '/status.json') == True):
+            return
+		
+        setStarted(job.path + '/status.json')
+		
+		
+        input = job.input[0]
+        time.sleep(5)
+		
+		
+        if(checkForDismissal(job.path + '/status.json') == True):
+            return
+		
+        result ={"result": input,
+				 "message": "This is an echo"}
+        json.dumps(result, indent=4)
+        with open(job.results + "result.json", 'w') as f: #create file
+            json.dump(result, f) #write content
+            f.close() #close file
+        updateStatus(job.path + '/status.json', "successful", "Step 1 of 1 completed", "100")
+        setFinished(job.path + '/status.json')
+    except:
         updateStatus(job.path + '/status.json', "failed", "The job has failed", "-")
         return
 
@@ -415,12 +418,7 @@ def retrieveProduct(api, product_id, product_name, downloads_path):
 def calibrateProductSNAP(product_id, job):
     product = snappy.ProductIO.readProduct("data/" + product_id + '.zip')
     
-   #apply orbit file
-    parameters = snappy.HashMap()
-    parameters.put('Apply-Orbit-File', True)
-    apply_orbit_file = GPF.createProduct('Apply-Orbit-File', parameters, product)
-    
-     #apply orbit file
+    #apply orbit file
     parameters = snappy.HashMap()
     parameters.put('Apply-Orbit-File', True)
     apply_orbit_file = GPF.createProduct('Apply-Orbit-File', parameters, product)
