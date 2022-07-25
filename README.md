@@ -64,3 +64,7 @@ am: 2. März 2022).
 with Normal-ized Difference Sigma-Naught Index and Shannon’s Entropy [Online].
 Verfügbar unter: https://doi.org/10.3390/rs12091384 (Zugriff am: 1. März
 2022).
+
+### Installation
+
+### Betrieb

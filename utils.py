@@ -83,7 +83,7 @@ def floodMonitoringProcess(job):
 		updateStatus(job.path + '/status.json', "running", "Step 1 of 10 completed", "10")
 
 		pre_date_t0 = datetime.date(int(job.input[0][0:4]), int(job.input[0][4:6]), int(job.input[0][6:]))
-		pre_date_t1 = pre_date_t0 - datetime.timedelta(days=1)
+		pre_date_t1 = pre_date_t0 + datetime.timedelta(days=1)
 		post_date_t0 = datetime.date(int(job.input[1][0:4]), int(job.input[1][4:6]), int(job.input[1][6:]))
 		post_date_t1 = post_date_t0 + datetime.timedelta(days=1)
 		 
