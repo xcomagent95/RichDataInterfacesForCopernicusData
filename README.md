@@ -99,7 +99,7 @@ curl -X GET "localhost:5000/api?f=text/html"
 curl -X GET "localhost:5000/api?f=application/json"
 ```
 
-## Conformance
+## Conformance-Declaration
 Nutzer können die Standardkonformietät der API über den Conformance Endpoint einsehen. 
 Dort werden alle Requirements-Classes gelistet weclhe von der Anwendung implementiert werden.
 Die Conformance Declaration kann unter folgendem URL erreicht werden:
@@ -107,7 +107,32 @@ Die Conformance Declaration kann unter folgendem URL erreicht werden:
 #Retrieve Conformance Declaration as HTML
 curl -X GET "localhost:5000/conformance?f=text/html" 
 
-
 #Retrieve Conformance Declaration as JSON
 curl -X GET "localhost:5000/conformance?f=application/json" 
+```
+
+## Process List
+```
+```
+## Process Description
+```
+```
+## Process Excecution
+```
+```
+
+# Echo
+# Flood Monitoring
+
+## Job List
+```
+```
+## Job Status
+```
+```
+## Job Results
+```
+```
+## Coverage
+```
 ```
