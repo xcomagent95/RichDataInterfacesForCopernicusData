@@ -1,5 +1,8 @@
-curl -X GET -H "Content-Type:text/html" "localhost:5000/"
-curl -X GET -H "Content-Type:application/json" "localhost:5000/"
+curl -X GET "localhost:5000/?f=text/html"
+curl -X GET "localhost:5000/?f=application/json"
+
+curl -X GET "localhost:5000/api?f=text/html"
+curl -X GET "localhost:5000/api?f=application/json"
 
 curl -X GET -H "Content-Type:text/html" "localhost:5000/conformance" 
 curl -X GET -H "Content-Type:application/json" "localhost:5000/conformance" 

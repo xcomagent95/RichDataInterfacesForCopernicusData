@@ -66,5 +66,48 @@ Verfügbar unter: https://doi.org/10.3390/rs12091384 (Zugriff am: 1. März
 2022).
 
 ### Installation
+Um die Anwendung starten zu können wird ein Python-Environment mit der Python Version 3.6 benötigt. 
+Die benötigten Packages können der environment.yaml entnommen werden. 
+Zusätzlich muss die von der ESA kostenlos zur Verfügung gestellten Software SNAP installiert und der 
+Python-Wrapper snappy konfiguriert sein. Für eine Vereinfachte Installation werden Plattformen wie 
+Anaconda empfohlen.
 
 ### Betrieb
+Die Anwendung kann mit der run.py getstartet werden. Zum Testen der Anwendeung kann ein beliebiger Browser oder das
+Kommandozeilen-Werkzeug cURL verwendet werden. 
+
+## Landing-Page
+Ersten Anlaufpunkt für Nutzer sollte die Landig-Page der API sein. Über diese können alle anderen Endpints erreicht werden. 
+Die Landing-Page kann unter folgendem URL erreicht werden:
+```
+#Retrieve Landing-Page as HTML
+curl -X GET "localhost:5000/?f=text/html"
+
+#Retrieve Landing-Page as JSON
+curl -X GET "localhost:5000/?f=application/json"
+```
+
+## API-Definition
+Der API-Definition kann entnommen wie die Endpoints der API zu verwenden sind, welchen Schemata die 
+Ressourcen entsprechen und welche Responses zu erwarten sind. 
+Die API-Definition kann unter folgendem URL erreicht werden:
+```
+#Retrieve API-Definition as HTML
+curl -X GET "localhost:5000/api?f=text/html"
+
+#Retrieve API-Definition as JSON
+curl -X GET "localhost:5000/api?f=application/json"
+```
+
+## Conformance
+Nutzer können die Standardkonformietät der API über den Conformance Endpoint einsehen. 
+Dort werden alle Requirements-Classes gelistet weclhe von der Anwendung implementiert werden.
+Die Conformance Declaration kann unter folgendem URL erreicht werden:
+```
+#Retrieve Conformance Declaration as HTML
+curl -X GET "localhost:5000/conformance?f=text/html" 
+
+
+#Retrieve Conformance Declaration as JSON
+curl -X GET "localhost:5000/conformance?f=application/json" 
+```
