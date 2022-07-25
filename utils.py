@@ -176,29 +176,31 @@ def floodMonitoringProcess(job):
     setFinished(job.path + '/status.json')
 
 def echoProcess(job):
-    if(checkForDismissal(job.path + '/status.json') == True):
-        return
-    
-    setStarted(job.path + '/status.json')
-    
-    try:
-        input = job.input[0]
-        time.sleep(5)
-    except:
+	try:
+		if(checkForDismissal(job.path + '/status.json') == True):
+			return
+		
+		setStarted(job.path + '/status.json')
+		
+		
+			input = job.input[0]
+			time.sleep(5)
+		
+		
+		if(checkForDismissal(job.path + '/status.json') == True):
+			return
+		
+		result ={"result": input,
+				 "message": "This is an echo"}
+		json.dumps(result, indent=4)
+		with open(job.results + "result.json", 'w') as f: #create file
+			json.dump(result, f) #write content
+			f.close() #close file
+		updateStatus(job.path + '/status.json', "successful", "Step 1 of 1 completed", "100")
+		setFinished(job.path + '/status.json')
+	except:
         updateStatus(job.path + '/status.json', "failed", "The job has failed", "-")
         return
-    
-    if(checkForDismissal(job.path + '/status.json') == True):
-        return
-    
-    result ={"result": input,
-             "message": "This is an echo"}
-    json.dumps(result, indent=4)
-    with open(job.results + "result.json", 'w') as f: #create file
-        json.dump(result, f) #write content
-        f.close() #close file
-    updateStatus(job.path + '/status.json', "successful", "Step 1 of 1 completed", "100")
-    setFinished(job.path + '/status.json')
 
 def checkForDismissal(path):
     with open(path, "r") as f:

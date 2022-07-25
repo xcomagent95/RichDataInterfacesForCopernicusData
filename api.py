@@ -442,7 +442,7 @@ def getResults(jobID):
                         payload = json.load(file) #create response
                         file.close() #close apiDefinition.json
                         
-                        result = {"complexObjectOutput": payload}
+                        result = {"outgoingEcho": payload}
                         
                         json.dumps(result, indent=4) #dump content
                         with open("jobs/" + jobID + "/results/resultsDocument.json", 'w') as f: #create file

@@ -12,35 +12,35 @@
   "inputs": {
     "preDate": {
       "title": "preDate",
-      "description": "The input value",
+      "description": "Date of the Dataset before a flood event occured which has be in the format yyyymmdd",
       "schema": {
         "type": "string"
       }
 	},
 	"postDate": {
       "title": "postDate",
-      "description": "The input value",
+      "description": "Date of the Dataset after a flood event occured which has be in the format yyyymmdd",
       "schema": {
         "type": "string"
       }
 	},
 	"username": {
       "title": "username",
-      "description": "The input value",
+      "description": "Username of the Copernicus Open Access Hub Account to used",
       "schema": {
         "type": "string"
       }
 	},
 	"password": {
       "title": "password",
-      "description": "The input value",
+      "description": "Password of the Copernicus Open Access Hub Account to used",
       "schema": {
         "type": "string"
       }
 	},
 	"bbox": {
-		"title": "Bounding Box Input Example",
-		"description": "This is an example of a BBOX literal input.",
+		"title": "Bounding Box",
+		"description": "Bounding Box of the area to be examined",
 			"schema": {
 				"type": "object",
 				"required": [
@@ -78,8 +78,8 @@
   },
   "outputs": {
    "bin": {
-	  "title": "outputDocument",
-	  "description": "The output document",
+	  "title": "bin",
+	  "description": "A binray flood mask of the specified area and timestamps",
       "schema": {
 			"type": "string",
 			"contentEncoding": "binary",
@@ -87,8 +87,8 @@
       }
     },
 	"ndsi": {
-	  "title": "outputDocument",
-	  "description": "The output document",
+	  "title": "ndsi",
+	  "description": "The NDSI of the specified area and timestamps",
       "schema": {
 			"type": "string",
 			"contentEncoding": "binary",
