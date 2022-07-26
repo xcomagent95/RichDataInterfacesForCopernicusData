@@ -273,6 +273,9 @@
     <h4 class="field-label">200</h4>
     ok
         <a href="#String">String</a>
+    <h4 class="field-label">405</h4>
+    method not allowed
+        <a href="#String">String</a>
     <h4 class="field-label">406</h4>
     not acceptable
         <a href="#String">String</a>
@@ -808,12 +811,12 @@
 
   <h3>Table of Contents</h3>
   <ol>
-    <li><a href="#Coverage"><code>Coverage</code></a></li>
-    <li><a href="#Coverages"><code>Coverages</code></a></li>
     <li><a href="#additionalParameter"><code>additionalParameter</code></a></li>
     <li><a href="#bbox"><code>bbox</code></a></li>
     <li><a href="#binaryInputValue"><code>binaryInputValue</code></a></li>
     <li><a href="#confClasses"><code>confClasses</code></a></li>
+    <li><a href="#coverage"><code>coverage</code></a></li>
+    <li><a href="#coverages"><code>coverages</code></a></li>
     <li><a href="#descriptionType"><code>descriptionType</code></a></li>
     <li><a href="#exception"><code>exception</code> - Exception Schema</a></li>
     <li><a href="#execute"><code>execute</code></a></li>
@@ -843,23 +846,6 @@
     <li><a href="#transmissionMode"><code>transmissionMode</code></a></li>
   </ol>
 
-  <div class="model">
-    <h3><a name="Coverage"><code>Coverage</code></a> <a class="up" href="#__Models">Up</a></h3>
-    
-    <div class="field-items">
-      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">date (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-<div class="param">bbox (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="Coverages"><code>Coverages</code></a> <a class="up" href="#__Models">Up</a></h3>
-    
-    <div class="field-items">
-      <div class="param">coverages (optional)</div><div class="param-desc"><span class="param-type"><a href="#Coverage">array[Coverage]</a></span>  </div>
-<div class="param">links (optional)</div><div class="param-desc"><span class="param-type"><a href="#link">array[link]</a></span>  </div>
-    </div>  <!-- field-items -->
-  </div>
   <div class="model">
     <h3><a name="additionalParameter"><code>additionalParameter</code></a> <a class="up" href="#__Models">Up</a></h3>
     
@@ -891,6 +877,23 @@
     
     <div class="field-items">
       <div class="param">conformsTo </div><div class="param-desc"><span class="param-type"><a href="#string">array[String]</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="coverage"><code>coverage</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">date (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">bbox (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="coverages"><code>coverages</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">coverages (optional)</div><div class="param-desc"><span class="param-type"><a href="#coverage">array[coverage]</a></span>  </div>
+<div class="param">links (optional)</div><div class="param-desc"><span class="param-type"><a href="#link">array[link]</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">

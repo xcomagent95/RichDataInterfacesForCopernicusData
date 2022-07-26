@@ -10,9 +10,14 @@ curl -X GET "localhost:5000/conformance?f=application/json"
 curl -X GET "localhost:5000/processes?f=text/html" 
 curl -X GET "localhost:5000/processes?f=application/json" 
 
-curl -X GET -H "Content-Type:text/html" "localhost:5000/processes/Echo" 
-curl -X GET -H "Content-Type:application/json" "localhost:5000/processes/Echo" 
+curl -X GET "localhost:5000/processes/Echo?f=text/html" 
+curl -X GET "localhost:5000/processes/Echo?f=application/json" 
 
+curl -X GET "localhost:5000/processes/FloodMonitoring?f=text/html" 
+curl -X GET "localhost:5000/processes/FloodMonitoring?f=application/json" 
+
+curl -X GET "localhost:5000/jobs?f=text/html" 
+curl -X GET "localhost:5000/jobs?f=application/json" 
 
 
 #Echo raw

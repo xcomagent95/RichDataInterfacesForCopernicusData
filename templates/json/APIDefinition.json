@@ -44,6 +44,16 @@
               }
             }
           },
+          "405": {
+            "description": "method not allowed",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "406": {
             "description": "not acceptable",
             "content": {
@@ -750,7 +760,7 @@
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Coverages"
+                  "$ref": "#/components/schemas/coverages"
                 }
               }
             }
@@ -1672,13 +1682,13 @@
           }
         ]
       },
-      "Coverages": {
+      "coverages": {
         "type": "object",
         "properties": {
           "coverages": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Coverage"
+              "$ref": "#/components/schemas/coverage"
             }
           },
           "links": {
@@ -1689,7 +1699,7 @@
           }
         }
       },
-      "Coverage": {
+      "coverage": {
         "type": "object",
         "properties": {
           "name": {

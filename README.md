@@ -99,6 +99,9 @@ curl -X GET "localhost:5000/api?f=text/html"
 curl -X GET "localhost:5000/api?f=application/json"
 ```
 
+Alternativ kann die API-Definition unter folgendem Link 
+eingesehen werden: https://app.swaggerhub.com/apis/RDIForCopernicusData/RichDataInterfaceForCopernicusData/1.0.0
+
 ### Conformance-Declaration
 Nutzer können die Standardkonformietät der API über den Conformance Endpoint einsehen. 
 Dort werden alle Requirements-Classes gelistet weclhe von der Anwendung implementiert werden.
@@ -123,7 +126,21 @@ curl -X GET "localhost:5000/processes?f=text/html"
 curl -X GET "localhost:5000/processes?f=application/json" 
 ```
 ### Process Description
+Eine detaillierte Beschreibung der Prozesse kann über den Process Description
+Endpoint angefragt werden. 
+Die Process Beschreibungen können unter folgendem URL erreicht werden:
 ```
+#Retrieve Echo Process Description as HTML 
+curl -X GET "localhost:5000/processes/Echo?f=text/html" 
+
+#Retrieve Echo Process Description as JSON
+curl -X GET "localhost:5000/processes/Echo?f=application/json" 
+
+#Retrieve Echo Process Description as HTML 
+curl -X GET "localhost:5000/processes/FloodMonitoring?f=text/html" 
+
+#Retrieve Echo Process Description as JSON
+curl -X GET "localhost:5000/processes/FloodMonitoring?f=application/json" 
 ```
 ### Process Excecution
 ```
@@ -133,7 +150,36 @@ curl -X GET "localhost:5000/processes?f=application/json"
 #### Flood Monitoring
 
 ### Job List
+In der Job Liste werden alle von Nutzern algelegte Jobs aufgeführt. 
+Die Liste kann nach unterschiedlichen Kriterien eingeschränkt werden.
+Die Job List ist unter folgendem URL abrrufbar:
 ```
+#Retrieve Job List as HTML
+curl -X GET "localhost:5000/jobs?f=text/html" 
+
+#Retrieve Job List as HTML
+curl -X GET "localhost:5000/jobs?f=application/json" 
+
+#Additional Parameters
+type:
+- process
+process: 
+- Echo
+- FloodMonitoring
+status: 
+- accepted
+- running
+- successful
+- failed
+- dismissed
+datetime:
+- datetime: date-time / interval
+- interval: interval-closed / interval-open-start / interval-open-end
+- interval-closed: date-time "/" date-time
+- interval-open-start: [".."] "/" date-time
+- interval-open-end: date-time "/" [".."]
+minDuration: integer
+maxDuration: integer
 ```
 ### Job Status
 ```

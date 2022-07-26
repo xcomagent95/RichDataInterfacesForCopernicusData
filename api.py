@@ -15,9 +15,6 @@ from werkzeug.serving import BaseWSGIServer
 WSGIRequestHandler.protocol_version = "HTTP/1.1"
 BaseWSGIServer.protocol_version = "HTTP/1.1"
 
-#define Port
-#define Host
-
 #initialize app
 app = Flask(__name__) #initialize application
 
