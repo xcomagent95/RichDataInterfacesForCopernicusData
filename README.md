@@ -246,11 +246,7 @@ Eine dieser Gemeinden ist der Ort Demydow. Das Ausmaß der Überflutung lässt s
 curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220102', 'postDate':'20220604', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [50.68209876799218, 30.373870053936805, 50.75296226636879, 30.29868237792831]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"	
 ```
 
-
-## Example 2
-Der Monsun sort in weiten Teile Asiens für das anschwellen der Flüsse und für Überschwemmungen. So auch im in Bagladesch gelegenen Ort Zakiganj.
-Wie weit der Fluss Kushiyara 2022 über die Ufer getreten ist kann mit dieser Anwendung untersucht werden:
-```
-curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220429', 'postDate':'20220523', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [24.88758327590919, 92.32762841659967, 24.930683245328627, 92.25032491801463]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"	
-
-```
+![Alt-Text](/example/bin.tiff)
+![Alt-Text](/example/ndsi.tiff)
+![Alt-Text](/example/S1A_IW_GRDH_1SDV_20220102T154616_20220102T154647_041284_04E832_8581.tif)
+![Alt-Text](/example/S1A_IW_GRDH_1SDV_20220604T041155_20220604T041220_043508_0531E0_8A7C.tif)
