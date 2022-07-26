@@ -146,12 +146,16 @@ curl -X GET "localhost:5000/processes/FloodMonitoring?f=application/json"
 Nutzer können über den Process Execution Endpoint Prozesse Instanziieren
 und so Jobs generieren.
 Das erzeugen eines Jobs kann über folgenden URL erfolgen:
+
+#### Echo
 ```
 #Echo with raw Output
 curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'echo':'test'}, 'outputs':{'outgoingEcho': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/Echo/execution"
 #Echo with document Output
 curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'echo':'test'}, 'outputs':{'outgoingEcho': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/Echo/execution"
-
+```
+#### Flood Monitoring
+```
 Flood Monitoring wih ndsi as raw Output
 curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/FloodMonitoring/execution"
 
@@ -160,10 +164,16 @@ curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'202203
 
 Flood Monitoring wih ndsi and bin as raw Output
 curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/FloodMonitoring/execution"
-```
 
-#### Echo
-#### Flood Monitoring
+Flood Monitoring wih ndsi as document Output
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
+
+Flood Monitoring wih bin as document Output
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
+
+Flood Monitoring wih ndsi and bin as document Output
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
+```
 
 ### Job List
 In der Job Liste werden alle von Nutzern algelegte Jobs aufgeführt. 
@@ -203,7 +213,6 @@ Detailierte Informationen zum Bearbeitungsstand eines Jobs können Nutzer über
 den Job Status Endpoint erhalten. 
 Der Status eines Jobs ist unter folgendem URL abrrufbar:
 ```
-
 #Retrieve Job Status as HTML
 curl -X GET "localhost:5000/jobs/<jobID>?f=text/html" 
 
@@ -227,4 +236,17 @@ curl -X GET "localhost:5000/coverage?f=text/html"
 
 #Retrieve Coverage as JSON
 curl -X GET "localhost:5000/coverage?f=application/json"
+```
+## Example 1 
+#Demydow:
+```
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220102', 'postDate':'20220604', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [50.68209876799218, 30.373870053936805, 50.75296226636879, 30.29868237792831]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"	
+```
+After successful completion of the job we can rerieve the results:
+
+## Example 2
+#Zakiganj
+```
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220429', 'postDate':'20220523', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [24.88758327590919, 92.32762841659967, 24.930683245328627, 92.25032491801463]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"	
+
 ```

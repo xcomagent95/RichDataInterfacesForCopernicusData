@@ -19,6 +19,9 @@ curl -X GET "localhost:5000/processes/FloodMonitoring?f=application/json"
 curl -X GET "localhost:5000/jobs?f=text/html" 
 curl -X GET "localhost:5000/jobs?f=application/json" 
 
+curl -X GET "localhost:5000/jobs/<jobID>?f=text/html" 
+curl -X GET "localhost:5000/jobs/<jobID>?f=application/json" 
+
 
 #Echo raw
 curl -X POST -H "Content-Type:application/json" -H "Accept: application/json" -d "{'inputs':{'echo':'test'}, 'outputs':{'outgoingEcho': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/Echo/execution"
