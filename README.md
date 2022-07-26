@@ -143,7 +143,23 @@ curl -X GET "localhost:5000/processes/FloodMonitoring?f=text/html"
 curl -X GET "localhost:5000/processes/FloodMonitoring?f=application/json" 
 ```
 ### Process Excecution
+Nutzer können über den Process Execution Endpoint Prozesse Instanziieren
+und so Jobs generieren.
+Das erzeugen eines Jobs kann über folgenden URL erfolgen:
 ```
+#Echo with raw Output
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'echo':'test'}, 'outputs':{'outgoingEcho': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/Echo/execution"
+#Echo with document Output
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'echo':'test'}, 'outputs':{'outgoingEcho': {'format': {'mediaType': 'application/json'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/Echo/execution"
+
+Flood Monitoring wih ndsi as raw Output
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/FloodMonitoring/execution"
+
+Flood Monitoring wih bin as raw Output
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/FloodMonitoring/execution"
+
+Flood Monitoring wih ndsi and bin as raw Output
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/FloodMonitoring/execution"
 ```
 
 #### Echo
