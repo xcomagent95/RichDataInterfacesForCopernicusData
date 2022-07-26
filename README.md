@@ -157,7 +157,7 @@ Die Job List ist unter folgendem URL abrrufbar:
 #Retrieve Job List as HTML
 curl -X GET "localhost:5000/jobs?f=text/html" 
 
-#Retrieve Job List as HTML
+#Retrieve Job List as JSON
 curl -X GET "localhost:5000/jobs?f=application/json" 
 
 #Additional Parameters
@@ -173,7 +173,8 @@ status:
 - failed
 - dismissed
 datetime:
-- datetime: date-time / interval
+- date-time: yyyy"-"mm"-"dd"T"hh":"mm":"ss2
+- date-time: date-time / interval
 - interval: interval-closed / interval-open-start / interval-open-end
 - interval-closed: date-time "/" date-time
 - interval-open-start: [".."] "/" date-time
@@ -182,10 +183,23 @@ minDuration: integer
 maxDuration: integer
 ```
 ### Job Status
+Detailierte Informationen zum Bearbeitungsstand eines Jobs können Nutzer über 
+den Job Status Endpoint erhalten. 
+Der Status eines Jobs ist unter folgendem URL abrrufbar:
 ```
+
+#Retrieve Job Status as HTML
+curl -X GET "localhost:5000/jobs/<jobID>?f=text/html" 
+
+#Retrieve Job Status as JSON
+curl -X GET "localhost:5000/jobs/<jobID>?f=application/json" 
 ```
 ### Job Results
+Wurde ein Job erfolgreich abgeschlossen können die Ergebnisse der 
+Prozesierung unter folgendem URL abgerufen werden:
 ```
+#Retrieve Job Results
+curl -X GET "localhost:5000/jobs/<jobID>/results
 ```
 ### Coverage
 Um einzusehen welche Sentinel-1 Datensätze persistent von der Anwendung gespeichert wurden und 
