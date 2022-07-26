@@ -238,14 +238,18 @@ curl -X GET "localhost:5000/coverage?f=text/html"
 curl -X GET "localhost:5000/coverage?f=application/json"
 ```
 ## Example 1 
-#Demydow:
+:
+Währedn der Invasion der Ukraine durch die rissische Föderation haben sich manche ukrainischen Gemeinden dazu entschieden ihre Äcker und 
+Wiesen zu überfluten um das vorrücken russischer Truppen mit schwerem militärischem Gerät zu erschweren.
+Eine dieser Gemeinden ist der Ort Demydow. Das Ausmaß der Überflutung lässt sich mit dieser Anwendung untersuchen: 
 ```
 curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220102', 'postDate':'20220604', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [50.68209876799218, 30.373870053936805, 50.75296226636879, 30.29868237792831]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"	
 ```
-After successful completion of the job we can rerieve the results:
+
 
 ## Example 2
-#Zakiganj
+Der Monsun sort in weiten Teile Asiens für das anschwellen der Flüsse und für Überschwemmungen. So auch im in Bagladesch gelegenen Ort Zakiganj.
+Wie weit der Fluss Kushiyara 2022 über die Ufer getreten ist kann mit dieser Anwendung untersucht werden:
 ```
 curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220429', 'postDate':'20220523', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [24.88758327590919, 92.32762841659967, 24.930683245328627, 92.25032491801463]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"	
 
