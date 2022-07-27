@@ -157,22 +157,22 @@ curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'echo':'test'}, '
 #### Flood Monitoring
 ```
 Flood Monitoring wih ndsi as raw Output
-curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/FloodMonitoring/execution"
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'<username>', 'password':'<password>', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/FloodMonitoring/execution"
 
 Flood Monitoring wih bin as raw Output
-curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/FloodMonitoring/execution"
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'<username>', 'password':'<password>', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/FloodMonitoring/execution"
 
 Flood Monitoring wih ndsi and bin as raw Output
-curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/FloodMonitoring/execution"
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'<username>', 'password':'<password>', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'raw'}" "localhost:5000/processes/FloodMonitoring/execution"
 
 Flood Monitoring wih ndsi as document Output
-curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'<username>', 'password':'<password>', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
 
 Flood Monitoring wih bin as document Output
-curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'<username>', 'password':'<password>', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
 
 Flood Monitoring wih ndsi and bin as document Output
-curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220305', 'postDate':'20220329', 'username':'<username>', 'password':'<password>', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"
 ```
 
 ### Job List
@@ -242,14 +242,21 @@ Während der Invasion der Ukraine durch die russische Föderation haben sich man
 Wiesen zu überfluten, um das Vorrücken russischer Truppen mit schwerem militärischem Gerät zu erschweren.
 Eine dieser Gemeinden ist der Ort Demydow. Das Ausmaß der Überflutung lässt sich mit dieser Anwendung untersuchen: 
 ```
-curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220102', 'postDate':'20220604', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [50.68209876799218, 30.373870053936805, 50.75296226636879, 30.29868237792831]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"	
+curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220102', 'postDate':'20220604', 'username':'<username>', 'password':'<password>', 'bbox': {'bbox': [50.68209876799218, 30.373870053936805, 50.75296226636879, 30.29868237792831]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"	
 ```
 Wird der Job akzeptiert und bearbeitet werden zunächst Sentinel-1 Datensätze vor und nach dem Überschwemmungsereignis heruntergelden, kalibriert und zugeschnitten.
-![Pre-Datensatz](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/pre.tif "Pre-Datensatz")
-![Post-Datensatz](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/post.tif "Post-Datensatz")
+![Pre-Datensatz](https://github.com/<username>/RichDataInterfacesForCopernicusData/blob/dev/example/pre.tif "Pre-Datensatz")
+![Post-Datensatz](https://github.com/<username>/RichDataInterfacesForCopernicusData/blob/dev/example/post.tif "Post-Datensatz")
 
 Aus diesen beiden Radarbildern wird der normalized Difference Sigma-Naught Index berechnet. 
-![NDSI](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/ndsi.tif "NDSI")
+![NDSI](https://github.com/<username>/RichDataInterfacesForCopernicusData/blob/dev/example/ndsi.tif "NDSI")
 
 Aus diesem kann eine binäre Überflutungsmaske abgeleitet werden.
-![Flood-Mask](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/bin.tif "Flood-Mask")
+![Flood-Mask](https://github.com/<username>/RichDataInterfacesForCopernicusData/blob/dev/example/bin.tif "Flood-Mask")
+
+## Anmerkungen
+Um mithilfe der Anwendung Überschwemmungsmonitoring zu betrieben wird ein gültiger Zugang zum Copernicus Open Access Hub benötigt.
+Daten, welche im Copernicus Open Access Hub im Long Term Storage gespeichert sind, können nicht direkt von der Anwendung genutzt werden. 
+Sie können jedoch auf der Webseite heruntergeladen und im Data-Verzeichnis gespeichert werden. Legt man zusätzlich die in diesen 
+Datensätzen befindliche .kml-Datei in den Coverages-Ordner können diese von der Anwendung genutzt werden ohne dass ein erneutes Herunterladen 
+notwendig wird. 
