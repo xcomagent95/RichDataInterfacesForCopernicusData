@@ -238,19 +238,18 @@ curl -X GET "localhost:5000/coverage?f=text/html"
 curl -X GET "localhost:5000/coverage?f=application/json"
 ```
 ## Example 1 
-:
-Währedn der Invasion der Ukraine durch die rissische Föderation haben sich manche ukrainischen Gemeinden dazu entschieden ihre Äcker und 
-Wiesen zu überfluten um das vorrücken russischer Truppen mit schwerem militärischem Gerät zu erschweren.
+Während der Invasion der Ukraine durch die russische Föderation haben sich manche ukrainischen Gemeinden dazu entschieden ihre Äcker und 
+Wiesen zu überfluten, um das Vorrücken russischer Truppen mit schwerem militärischem Gerät zu erschweren.
 Eine dieser Gemeinden ist der Ort Demydow. Das Ausmaß der Überflutung lässt sich mit dieser Anwendung untersuchen: 
 ```
 curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220102', 'postDate':'20220604', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [50.68209876799218, 30.373870053936805, 50.75296226636879, 30.29868237792831]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"	
 ```
 Wird der Job akzeptiert und bearbeitet werden zunächst Sentinel-1 Datensätze vor und nach dem Überschwemmungsereignis heruntergelden, kalibriert und zugeschnitten.
-![Pre-Datensatz](/example/S1A_IW_GRDH_1SDV_20220102T154616_20220102T154647_041284_04E832_8581.tif)
-![Post-Datensatz](/example/S1A_IW_GRDH_1SDV_20220604T041155_20220604T041220_043508_0531E0_8A7C.tif)
+![Alt text](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/Example/S1A_IW_GRDH_1SDV_20220102T154616_20220102T154647_041284_04E832_8581.tif "Pre-Datensatz")
+![Alt text](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/Example/S1A_IW_GRDH_1SDV_20220604T041155_20220604T041220_043508_0531E0_8A7C.tif "Post-Datensatz")
 
 Aus diesen beiden Radarbildern wird der normalized Difference Sigma-Naught Index berechnet. 
-![NDSI](/example/ndsi.tiff)
+![Alt text](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/Example/ndsi_clipped.tiff "NDSI")
 
 Aus diesem kann eine binäre Überflutungsmaske abgeleitet werden.
-![Flood-Mask](/example/bin.tiff)
+![Alt text](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/Example/bin.tiff "Flood-Mask")
