@@ -245,11 +245,11 @@ Eine dieser Gemeinden ist der Ort Demydow. Das Ausmaß der Überflutung lässt s
 curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220102', 'postDate':'20220604', 'username':'xcomagent95', 'password':'alex@copernicus95', 'bbox': {'bbox': [50.68209876799218, 30.373870053936805, 50.75296226636879, 30.29868237792831]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"	
 ```
 Wird der Job akzeptiert und bearbeitet werden zunächst Sentinel-1 Datensätze vor und nach dem Überschwemmungsereignis heruntergelden, kalibriert und zugeschnitten.
-![Alt text](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/Example/S1A_IW_GRDH_1SDV_20220102T154616_20220102T154647_041284_04E832_8581.tif "Pre-Datensatz")
-![Alt text](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/Example/S1A_IW_GRDH_1SDV_20220604T041155_20220604T041220_043508_0531E0_8A7C.tif "Post-Datensatz")
+![Pre-Datensatz](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/pre.tif "Pre-Datensatz")
+![Post-Datensatz](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/post.tif "Post-Datensatz")
 
 Aus diesen beiden Radarbildern wird der normalized Difference Sigma-Naught Index berechnet. 
-![Alt text](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/Example/ndsi_clipped.tiff "NDSI")
+![NDSI](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/ndsi.tif "NDSI")
 
 Aus diesem kann eine binäre Überflutungsmaske abgeleitet werden.
-![Alt text](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/Example/bin.tiff "Flood-Mask")
+![Flood-Mask](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/bin.tif "Flood-Mask")
