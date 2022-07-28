@@ -10,6 +10,7 @@ import traceback
 import logging
 import xml.etree.ElementTree as ET
 
+#set HTTP Version to HTTP 1.1
 from werkzeug.serving import WSGIRequestHandler
 from werkzeug.serving import BaseWSGIServer
 WSGIRequestHandler.protocol_version = "HTTP/1.1"
