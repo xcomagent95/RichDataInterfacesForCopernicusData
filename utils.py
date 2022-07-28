@@ -546,15 +546,3 @@ def getKML(productName):
     
     shutil.move('data/' + productName + '.SAFE/preview/map-overlay.kml', 'data/coverage/' + productName + '.kml')
     shutil.rmtree('data/' + productName + '.SAFE')
-
-#check ndsi    
-#data = {'inputs': {'preDate': '20220305', 'postDate': '20220329', 'username': 'xcomagent95', 'password': 'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs': {'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}
-#print(parseInput("FloodMonitoring", data))
-
-#check bin
-#data = {'inputs': {'preDate': '20220305', 'postDate': '20220329', 'username': 'xcomagent95', 'password': 'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs': {'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}
-#print(parseInput("FloodMonitoring", data))
-
-#check both
-#data = {'inputs': {'preDate': '20220305', 'postDate': '20220329', 'username': 'xcomagent95', 'password': 'alex@copernicus95', 'bbox': {'bbox': [45.39797509700767, 12.508695088734772, 45.51987960173298, 12.155327635797713]}}, 'outputs': {'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}
-#print(parseInput("FloodMonitoring", data))
