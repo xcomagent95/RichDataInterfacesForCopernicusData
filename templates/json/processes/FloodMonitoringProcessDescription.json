@@ -98,16 +98,21 @@
   },
   "links": [
 	{
-		"href": "localhost:5000/processes/Echo?f=application/json",
+		"href": "localhost:5000/processes/FloodMonitoring?f=application/json",
 		"rel": "self",
 		"type": "application/json",
 		"title": "This document"
 	},
 	{
-		"href": "localhost:5000/processes/Echo?f=text/html",
+		"href": "localhost:5000/processes/FloodMonitoring?f=text/html",
 		"rel": "alternate",
 		"type": "text/html",
 		"title": "This document as HTML"
+	},
+	{
+		"href": "localhost:5000/processes/FloodMonitoring/execution",
+		"rel": "localhost:5000/processes/FloodMonitoring/execution",
+		"title": "Execute endpoint"
 	}
   ]
 }

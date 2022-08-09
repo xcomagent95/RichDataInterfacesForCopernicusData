@@ -52,6 +52,11 @@
 		"rel": "alternate",
 		"type": "text/html",
 		"title": "This document as HTML"
-	}
+	},
+  {
+    "href": "localhost:5000/processes/Echo/execution",
+    "rel": "localhost:5000/processes/Echo/execution",
+    "title": "Execute endpoint"
+  }
   ]
 }
