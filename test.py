@@ -71,6 +71,7 @@ def createTestResult(jobID, input):
 api = subprocess.Popen(['python', 'api.py']) #start the api in a subprocess
 print("API running...")
 
+print("Test Suit running...")
 class testSuit(unittest.TestCase):
     
     logging.info("------------------> new test run <------------------")  
@@ -542,7 +543,7 @@ class testSuit(unittest.TestCase):
         request = requests.delete('http://localhost:5000/jobs/dismissedJob')
         status_code = request.status_code
         resource = request.headers["resource"]
-        self.assertEqual(resource, 'job-dismissed')
+        self.assertEqual(resource, 'job - dismissedJob - dismissed')
         self.assertEqual(status_code, 200)
         logging.info("--> abstract test a81 & a82 passed")    
     

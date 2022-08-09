@@ -224,7 +224,7 @@ def executeProcess(processID):
             f.close() #close file
 
             response = jsonify(status_file) #create response
-            return response, 201, {"location": "localhost:5000/jobs/" + jobID + "?f=application/json", "resource": "job - " + str(jobID)} #return response and ok and files created with location header
+            return response, 201, {"location": "localhost:5000/jobs/" + jobID + "?f=application/json", "resource": "job - " + str(jobID) + "created"} #return response and ok and files created with location header
         else:
             exception = {"title": "No such process exception", "description": "Requested process could not be found", "type": "no-such-process"}
             return exception, 404 #return not found if requested process is not found 
@@ -384,10 +384,10 @@ def getJob(jobID):
                             job = json.load(file) #create response   
                             file.close() #close status.json
                             response = render_template("html/Job.html", job=job) #render dynamic job
-                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job - " + str(jobID) + "dismissed"} #return response and ok
+                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job - " + str(jobID) + " - dismissed"} #return response and ok
                         elif(request.args.get('f')=="application/json"):
                             response = jsonify(data) #create response
-                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job - " + str(jobID) + "dismissed"} #return response and ok with link und resource header
+                            return response, 200, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job - " + str(jobID) + " - dismissed"} #return response and ok with link und resource header
                         else:
                             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
                     else: #check requested content-type from inline request
@@ -397,13 +397,13 @@ def getJob(jobID):
                             job = json.load(file) #create response   
                             file.close() #close status.json
                             response = render_template("html/Job.html", job=job) #render dynamic job
-                            return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job - " + str(jobID) + "dismissed"} #return response and ok
+                            return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=text/html", "resource": "job - " + str(jobID) + " - dismissed"} #return response and ok
                         elif(request.args.get('f')=="application/json"):
                             file = open('jobs/' + str(jobID) + '/status.json') #open status.json
                             data = json.load(file) #load data from status.json 
                             file.close() #close status.json
                             response = jsonify(data) #create response
-                            return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job - " + str(jobID) + "dismissed"} #return gone when job was already dismissed
+                            return response, 410, {"link": "localhost:5000/jobs/" + str(jobID) + "?f=application/json", "resource": "job - " + str(jobID) + " - dismissed"} #return gone when job was already dismissed
                         else:
                             return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported   
             else:
