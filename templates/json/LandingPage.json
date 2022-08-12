@@ -12,9 +12,9 @@
 		"title": "This document as HTML"
 	},
 	{
-		"href": "localhost:5000/api?f=application/json",
+		"href": "localhost:5000/api?f=application/vnd.oai.openapi+json;version=3.0",
 		"rel": "service-desc",
-		"type": "application/json",
+		"type": "application/vnd.oai.openapi+json;version=3.0",
 		"title": "API definition for this endpoint as JSON"
 	},
 	{

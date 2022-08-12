@@ -70,12 +70,12 @@ def getAPIDefinition():
            request.args.get('f') == None): #check requested content-type from inline request
             response = render_template('html/apiDefinition.html') #render static api definition page
             return response, 200, {"link": "localhost:5000/apiDefinition?f=text/html", "resource": "apiDefinition"} #return response and okay with link and resource header
-        elif(request.args.get('f')=="application/json"): #check requested content-type from inline request
+        elif(request.args.get('f')=="application/vnd.oai.openapi json;version=3.0"): #check requested content-type from inline request
             file = open('templates/json/apiDefinition.json',) #open apiDefinition.json
             payload = json.load(file) #create response
             file.close() #close apiDefinition.json
             response = jsonify(payload) #create response
-            return response, 200, {"link": "localhost:5000/api?f=application/json", "resource": "apiDefinition"} #return response and okay with link and resource header
+            return response, 200, {"link": "localhost:5000/api?f=application/vnd.oai.openapi+json;version=3.0", "resource": "apiDefinition"} #return response and okay with link and resource header
         else:
                 return "HTTP status code 406: not acceptable", 406 #return not acceptable if requested content-type is not supported
     except Exception:
