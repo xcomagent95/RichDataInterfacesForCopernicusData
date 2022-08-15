@@ -1,0 +1,70 @@
+%Präambel
+\documentclass[12pt, a4paper]{article} %Dokumentenklasse: Seitenformat und Schriftgröße
+\usepackage{mathptmx}
+\usepackage[T1]{fontenc} %Pakete für die Zeichenbelegung und Schriftart Times New Roman
+\usepackage[utf8]{inputenc} %Paket für die Zeichenkodierung (WICHTIG: auf Kodierung des Editors achten!!!)
+\usepackage[german, ngerman]{babel}	%Paket für die Silbentrennung (letztgenannte Sprache ist Standard)
+\usepackage{csquotes} %Paket für Anführungszeichen
+\usepackage{graphics, graphicx} %Paket für die Einbindung von Grafiken
+\usepackage{amssymb, amsmath, amstext} %Pakete für Formeln
+\usepackage[left=2.5cm, right=4cm, top=2.5cm, bottom=2.5cm]{geometry} %Einstellung der Seitenränder
+\setlength{\parindent}{0em} %kein Einzug
+\usepackage[onehalfspacing]{setspace}	%Paket für die Zeilenabstände
+
+\usepackage{url} %Paket für Hyperlinks
+\usepackage{acronym} % Paket für Abkürzungen
+\usepackage[breaklinks=true, linktocpage=true]{hyperref} %Software-Paket für Verlinken von Querverweisen, URLs, DOIs etc.
+\hypersetup{ %modifiziere Link-Farben im Dokument
+    colorlinks,
+    citecolor=black,
+    filecolor=blue,
+    linkcolor=blue,
+    urlcolor=blue
+}
+\usepackage{cite}
+
+%Dokument
+\begin{document}
+\newgeometry{left=2cm, right=2cm, top=2.5cm, bottom=2.5cm}
+\thispagestyle{empty}
+\begin{center}
+\includegraphics[width=6cm]{Bilder/wwu_logo.png} \hspace{1.3cm} 
+\includegraphics[width=6cm]{Bilder/ifgi_logo.png}
+
+\vspace{3cm}
+
+Westfälische Wilhelms-Universität Münster
+
+Institut für Geoinformatik 
+
+\vspace{3cm}
+
+\textbf{\large Proposal für eine Bachelorarbeit} 
+
+im Fach Geoinformatik
+\vspace{1cm}
+
+\textbf{\large Rich Data Interfaces for Copernicus Data}
+
+\vspace{1cm}
+
+
+Themensteller: Prof. Dr. Albert Remke\\
+Betreuer: Dr. Christian Knoth, Dipl.-Geoinf. Matthes Rieke\\
+Ausgabetermin: tbd.\\
+Abgabetermin: tbd.\\
+\vspace{0.5cm}
+Vorgelegt von: Alexander Nicolas Pilz\\
+Geboren: 06.12.1995\\
+Telefonnummer: 0176 96982246\\
+E-Mail-Adresse:	apilz@uni-muenster.de\\
+Matrikelnummer: 512 269\\
+Studiengang: Bachelor Geoinformatik\\
+Fachsemester: 6. Semester\\
+
+\end{center}
+\input{Kapitel/Proposal.tex}
+\input{Kapitel/Literatur.tex}
+\input{Kapitel/Abschlusserklärung.tex}
+
+\end{document}

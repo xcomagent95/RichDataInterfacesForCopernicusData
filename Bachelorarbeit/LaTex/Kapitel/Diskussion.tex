@@ -1,0 +1,83 @@
+\newpage
+\restoregeometry
+\section{Diskussion}
+%Frage
+%Im Rahmen dieser Arbeit sollte untersucht werden, ob sich der OGC API - Processes - Part 1: Core Standard dazu eignet 
+%unter Verwendung der Programmiersprache Python APIs für Rich Data Interfaces zu entwickeln, welche das Verarbeiten von Daten des Copernicus Programmes erlauben. 
+%Ein weiterer Teil der Untersuchung ist die Betrachtung der Nutzerfreundlichkeit einer solchen Anwendungen. \\
+%Dazu wurde eine prototypische Anwendung in der Programmiersprache Python entwickelt. Die prototypische Anwendung ermöglicht es Nutzer*innen 
+%über eine OGC API - Processes - Part 1: Core standardkonforme API Überschwemmungsmonitoring auf Basis von Daten der Sentinel-1 Mission 
+%zu betreiben. \\
+
+%Umsetzung
+%Die API ist dabei weitestgehend mit dem \verb|flask|-Framework realisiert worden. Die API setzt dabei einen Großteil der im 
+%OGC API - Processes - Part 1: Core Standard definierten Requirements um.
+%Die Kopplung zu den Daten der Sentinel-1 Mission erfolgt mit dem \verb|sentinelsat|-Package. Dabei werden zu den Anfragen passende Datensätze aus
+%dem Copernicus Open Access Hub gesucht und heruntergeladen. Alternativ erlaubt die Anwendung auch das persistente Hinterlegen von 
+%Sentinel-1 Datensätzen. 
+%Das geometrische und radiometrische Kalibrieren der Sentinel-1 Datensätze erfolgt mit dem Python-Wrapper \verb|snappy|. Dieser erlaubt die Nutzung der
+%Funktionen der Sentinel-1 Toolbox der SNAP. 
+%Das auf Basis der kalibrierten Sentinel-1 Datensätze durchgeführte Überschwemmungsmonitoring erzeugt binäre Überschwemmungsmasken aus dem NDSI.
+%Die dazu nötigen bandmathematischen und statistischen Berechnungen werden mit den Python-Packages \verb|skimage| und \verb|osgeo| durchgeführt. 
+%Die Untersuchung der Nutzerfreundlichkeit der Anwendung erfolgte auf Basis der von Nielsen vorgeschlagenen Heuristiken. \\
+
+%Bewertung
+Die prototypisch implementierte OGC API - Processes - Part 1: Core standardkonforme API konnte zeigen, dass die im Standard formulierten 
+Ziele erreicht werden. Die API erlaubt Nutzer*innen mit wenigen, einfach zu bedienenden Endpoints Prozesse, welche Geodaten erzeugen oder 
+verarbeiten, zu starten, zu überwachen und deren Ergebnisse abzurufen. Dabei werden die Architekturstile REST und HATEOAS berücksichtigt. 
+Die angebotenen Ressourcen stehen in menschen- und maschinenlesbaren Formaten zur Verfügung und enthalten Verknüpfungen zu anderen 
+Ressourcen.
+Die prototypische Anwendung konnte zeigen, dass sich das \verb|flask|-Framework gut dazu eignet, auf wenige Funktionen beschränkte APIs zu entwickeln. 
+Endpoints und die mit ihnen verknüpften Funktionen lassen sich mit geringem Aufwand implementieren. Dabei können die bereitgestellten Ressourcen 
+auch dynamische Inhalte enthalten.
+Das Copernicus Open Access Hub ist als Datenquelle zu Daten des Copernicus-Programmes geeignet. Das \verb|sentinelsat|-Package ermöglicht einfaches 
+Auffinden von geeigneten Datensätzen. Sofern diese sich nicht im Langzeitarchiv befinden, können diese direkt heruntergeladen werden. Die 
+Limitierungen des Langzeitarchivs können durch das persistente Speichern von Datensätzen umgangen werden. Die räumliche und 
+zeitliche Abdeckung wird dann jedoch durch den zur Verfügung stehenden Speicherplatz beschränkt. 
+Die SNAP Plattform und der Python-Wrapper \verb|snappy| ermöglichen eine vollständige Kalibrierung von Sentinel-1 Datensätzen. 
+Die nötige Installation und Konfiguration der Plattform wirken sich allerdings 
+auch nachteilig auf die Eigenschaften der prototypischen Anwendung aus. So wird zum Beispiel die Python Version eingeschränkt. Auch gestaltet sich 
+etwaige Containerisierung aufwendig. Zu bemerken ist jedoch, dass für das Kalibrieren von Sentinel-1 Datensätzen kaum alternative Lösungen oder 
+Python-Packages zur Verfügung stehen. Allerdings stellen manche DIAS Plattformen bereits kalibrierte Datensätze zur Verfügung. Die Verwendung  
+dieser spart zwar die Installation und Konfiguration von SNAP, nimmt Entwicklern allerdings die Möglichkeit, Einfluss auf die Kalibrierungen zu nehmen.
+Das implementierte Verfahren zum Überschwemmungsmonitoring auf Basis der Daten der Sentinel-1 Mission erlaubt ein Detektieren von Überschwemmungen. 
+Die Berechnung des NDSI und dessen Binärisierung anhand eines Schwellwertes kann leicht mit den Python-Packages \verb|skimage| und \verb|osgeo| 
+implementiert werden. Allerdings schwankt die Qualität der Ergebnisse stark. So liefert das gewählte Schwellwertverfahren die verlässlichsten Schwellwerte, 
+wenn der NDSI eine stark bimodale Verteilung aufweist. Ist diese nur schwach oder gar nicht vorhanden, kann es zu einer wenig brauchbaren Binärisierung kommen. 
+Die Ausprägung der Bimodalität hängt dabei vom gewählten Raumausschnitt sowie dem Verhältnis von überfluteten zu trockenliegenden Flächen in diesem ab. 
+Da die Anwendung die Ausgabe von NDSI und binärer Überschwemmungsmaske erlaubt, können Nutzer*innen sowohl analysebereite als auch interpretationsfähige Daten 
+beziehen.  \\
+
+Die Evaluation der Nutzbarkeit der prototypischen Anwendung offenbarte, dass diese für Anwendungen erstrebenswerte Eigenschaften aufweist. Zum einen ist die 
+Anwendung detailliert dokumentiert. Zum anderen werden Nutzer*innen bereits in vielfältiger Weise über den Stand seiner gestarteten Prozesse informiert. 
+Ein wichtiger Aspekt computergestützter Verfahren ist ihre Reproduzierbarkeit. Das Committee on Reproducibility and Replicability in Science definiert 
+ein vorgestelltes computergestütztes Verfahren als reproduzierbar, wenn mit identischen Eingaben und unter gleichen Systembedingungen identische Resultate erzielt werden können.  
+Dies bedeutet zunächst, dass die verwendete Software quelloffen und kostenlos zur Verfügung steht, um Interessierte in die Lage zu versetzen, das vorgestellte Verfahren
+selbst durchzuführen. Um dies so einfach wie möglich zu machen, sollte die verwendete Software detailliert dokumentiert sein. Ein besonderes Augenmerk sollte dabei auf den 
+zugrundeliegenden Daten, den verwendeten Methoden und der ursprünglichen Systemumgebung liegen \cite{reproducibility}.
+Die API der prototypischen Implementierung ist durch die Dokumente der OGC und die API-Definition gut und ausführlich dokumentiert. Diese gewährleisten zusätzlich das Nutzer*innen 
+die Bedienung der API schnell erlernen können. 
+Die zum Überschwemmungsmonitoring verwendeten Methoden in dieser Arbeit und den im Rahmen dieser Arbeit zurate gezogenen Arbeiten ausführlich beschrieben. Sie stehen jedoch nicht 
+gesammelter und aufbereiteter Form  zur Verfügung. Die verwendete Systemumgebung kann aus der 
+der Anwendung beigefügten \verb|environment.yaml| nachvollzogen werden. \\
+
+%Beschränkungen
+Da die prototypisch implementierte API den OGC API - Processes - Part 1: Core Standard nicht vollständig umsetzt, konnten nicht alle beschriebenen 
+Funktionen getestet werden. Dazu zählen die Callback Funktionalität, die Ausgabe von Ergebnissen im Response-Typ \verb|reference| und ein 
+vollständiger Test-Suit.
+Im Rahmen dieser Arbeit wurden nur Daten aus dem Copernicus Open Access Hub bezogen. Zur Struktur und Qualität der von den DIAS Plattformen 
+bereitgestellten Daten kann keine Aussage gemacht werden. 
+Da die Evaluation der Anwendung auf heuristischer Basis erfolgte, sind die vorgestellten Ergebnisse subjektiv und vom Evaluierenden abhängig. Außerdem 
+wurden nur Nutzbarkeitsaspekte betrachtet. Eine Evaluierung von technischen Aspekten ist nicht erfolgt. 
+Ein Vergleich mit anderen Implementierungen welche zum Beispiel andere Frameworks verwenden oder in anderen Programmiersprachen verfasst sind ist aus 
+Gründen des Umfangs ebenfalls nicht Teil dieser Arbeit. 
+
+%Mit Hinblick auf die Beschränkungen der prototypischen Anwendung scheint es sinnvoll andere Programmiersprachen wie R und Java zu erproben da auch für diese 
+%eine Vielzahl von Packages und Bibliotheken zur Verfügung stehen um Webanwendungen und Prozesse zu entwickeln. 
+%Darüber hinaus scheint die Erprobung der DIAS Plattformen als Datenquelle für Copernicus Daten sinnvoll.
+%Um die Verlässlichkeit der Ergebnisse des Überschwemmungsmonitorings zu verbessern, sollten andere, stabilere Verfahren zur Extraktion von 
+%Überschwemmungsmasken gefunden und erprobt werden.  
+%Um die Evaluation der Anwendung zu verbessern, sollten in Ergänzung zu Heuristiken auch vergleichbare Metriken gefunden und angewandt werden. 
+%Neben der Evaluation der Nutzbarkeit sollten auch technische Aspekte wie Skalierbarkeit, Wartbarkeit und Erweiterbarkeit untersucht werden. 
+
+

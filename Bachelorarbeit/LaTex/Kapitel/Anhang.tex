@@ -1,0 +1,710 @@
+\newpage
+\restoregeometry
+
+\makeatletter
+\newenvironment{breakablealgorithm}
+  {% \begin{breakablealgorithm}
+   \begin{center}
+     \refstepcounter{algorithm}% New algorithm
+     \hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+     \renewcommand{\caption}[2][\relax]{% Make a new \caption
+       {\raggedright\textbf{\fname@algorithm~\thealgorithm} ##2\par}%
+       \ifx\relax##1\relax % #1 is \relax
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+       \else % #1 is not \relax
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+       \fi
+       \kern2pt\hrule\kern2pt
+     }
+  }{% \end{breakablealgorithm}
+     \kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+   \end{center}
+  }
+\makeatother
+
+\counterwithin{lstlisting}{section}
+\renewcommand{\lstlistingname}{Pseudocode} 
+\section{Pseudocode} 
+\subsection{Ablauf eines Requests an den API Landing Page Endpoint}
+\begin{breakablealgorithm}
+\caption{Ablauf eines Requests an den API Landing Page Endpoint}\label{PseudocodeLandingPage}
+\scriptsize
+\begin{algorithmic} 
+    \STATE \textbf{Input:} Request    
+    \IF{Request.HTTP-Method != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+        \IF{Request.f == text/html \OR Request.f == None}
+            \STATE Response $\gets$ render\_template(templates/html/landingPage.html)
+            \STATE Link-Header $\gets$ http://HOST:PORT/?f=text/html
+            \STATE Resource-Header $\gets$ landingPage
+            \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+        \ELSIF{Request.f == application/json}
+            \STATE JSON $\gets$ open(templates/json/landingPage.json)
+            \STATE Response $\gets$ jsonify(JSON)
+            \STATE Link-Header $\gets$ http://HOST:PORT/?f=application/json
+            \STATE Resource-Header $\gets$ landingPage
+            \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{except}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\subsection{Ablauf eines Requests an den API Definition Endpoint}
+\begin{breakablealgorithm}
+\caption{Ablauf eines Requests an den API Definition Endpoint}\label{PseudocodeAPIDefinition}
+\scriptsize
+\begin{algorithmic}     
+    \STATE \textbf{Input:} Request   
+    \IF{Request.HTTP-Method != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+        \IF{Request.f == text/html \OR Request.f == None}
+            \STATE Response $\gets$ render\_template(templates/html/apiDefinition.html)
+            \STATE Link-Header $\gets$ http://HOST:PORT/api?f=text/html
+            \STATE Resource-Header $\gets$ apiDefinition
+            \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+        \ELSIF{Request.f == application/json}
+            \STATE JSON $\gets$ open(templates/json/apiDefinition.json)
+            \STATE Response $\gets$ jsonify(JSON)
+            \STATE Link-Header $\gets$ http://HOST:PORT/api?f=application/json
+            \STATE Resource-Header $\gets$ apiDefinition
+            \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{except}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\newpage
+\subsection{Ablauf eines Requests an den Conformance Endpoint}
+\begin{breakablealgorithm}
+\caption{Ablauf eines Requests an den Conformance Endpoint}\label{PseudocodeConformance}
+\scriptsize
+\begin{algorithmic}    
+    \STATE \textbf{Input:} Request    
+    \IF{Request.HTTP-Method != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+        \IF{Request.f == text/html \OR Request.f == None}
+            \STATE Response $\gets$ render\_template(templates/html/confClasses.html)
+            \STATE Link-Header $\gets$ http://HOST:PORT/conformance?f=text/html
+            \STATE Resource-Header $\gets$ conformance
+            \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+        \ELSIF{Request.f == application/json}
+            \STATE JSON $\gets$ open(templates/json/confClasses.json)
+            \STATE Response $\gets$ jsonify(JSON)
+            \STATE Link-Header $\gets$ http://HOST:PORT/conformance?f=application/json
+            \STATE Resource-Header $\gets$ conformance
+            \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{except}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\newpage
+\subsection{Ablauf eines Requests an den Process List Endpoint}
+\begin{breakablealgorithm}
+\caption{Ablauf eines Requests an den Process List Endpoint}\label{PseudocodeProcessList}
+\scriptsize
+\begin{algorithmic}    
+    \STATE \textbf{Input:} Request    
+    \IF{Request.HTTP-Method != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{Request.limit == None \OR Request.limit <= 0 \OR Request.limit > 100000}
+                \STATE Limit $\gets$ 10
+            \ELSE{}
+                \STATE Limit $\gets$ Anfrage.limit
+            \ENDIF
+        \IF{Request.f == text/html \OR Request.f == None}
+            \STATE Process List $\gets$ []
+            \STATE Processes $\gets$ Process Descriptions in templates/json/processes
+            \FOR{Process \textbf{in} Processes}
+                \STATE JSON $\gets$ open(templates/json/processes/<Process>ProcessDescription.json)
+                \STATE Process List \textbf{append} JSON
+            \ENDFOR{}
+            \STATE Response $\gets$ render\_template(templates/html/processList.html, Process List[0:Limit])
+            \STATE Link-Header $\gets$ http://HOST:PORT/processList?f=text/html
+            \STATE Resource-Header $\gets$ processList
+            \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+        \ELSIF{Request.f == application/json}
+            \STATE Process List $\gets$ []
+            \STATE Processes $\gets$ List of Process descriptions in templates/json/processes
+            \FOR{Process \textbf{in} Processes}
+                \STATE JSON $\gets$ open(templates/json/processes/<Process>ProcessDescription.json)
+                \STATE Process List \textbf{append} JSON
+            \ENDFOR{}
+            \STATE \textbf{add} Links to self and alternate \textbf{to} Process List
+            \STATE Response $\gets$ jsonify(Process List[0:Limit])
+            \STATE Link-Header $\gets$ http://HOST:PORT/processList?f=application/json
+            \STATE Resource-Header $\gets$ processList
+            \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{except}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\newpage
+\subsection{Ablauf eines Requests an den Process Description Endpoint}
+\begin{breakablealgorithm}
+\caption{Ablauf eines Requests an den Process Description Endpoint}\label{PseudocodeProcessDescription}
+\scriptsize
+\begin{algorithmic}     
+    \STATE \textbf{Input:} Request, Process-ID   
+    \IF{Request.HTTP-Method != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{Request.f == text/html \OR Request.f == None}
+                \IF{templates/json/processes/<Process-ID>ProcessDescription.json \textbf{exists}}
+                    \STATE JSON $\gets$ open(templates/json/processes/<Process-ID>ProcessDescription.json)
+                    \STATE Response $\gets$ render\_template(templates/html/process.html, JSON)
+                    \STATE Link-Header $\gets$ http://HOST:PORT/processes/<Process-ID>?f=text/html
+                    \STATE Resource-Header $\gets$ process - Request.<Process-ID>
+                    \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+                \ELSE{}
+                    \STATE Exception $\gets$ No such process exception
+                    \STATE Resource-Header $\gets$ no-such-process
+                    \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+                \ENDIF{}
+            \ELSIF{Request.f == application/json}
+                \IF{templates/json/processes/<Process-ID>ProcessDescription.json \textbf{exists}}
+                    \STATE JSON $\gets$ open(templates/json/processes/<Process-ID>ProcessDescription.json)
+                    \STATE Response $\gets$ jsonify(JSON)
+                    \STATE Link-Header $\gets$ http://HOST:PORT/processes/<Process-ID>?f=application/json
+                    \STATE Resource-Header $\gets$ process - Request.<Process-ID>
+                    \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+                \ELSE{}
+                    \STATE Exception $\gets$ No such process exception
+                    \STATE Resource-Header $\gets$ no-such-process
+                    \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+                \ENDIF{}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\newpage
+\subsection{Ablauf eines Requests an den Process Execution Endpoint}
+\begin{breakablealgorithm}
+\caption{Ablauf eines Requests an den Process Execution Endpoint}\label{PseudocodeProcessExecution}
+\scriptsize
+\begin{algorithmic}  
+    \STATE \textbf{Input:} Request, Process-ID    
+    \IF{Request.HTTP-Methode != POST}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{templates/json/processes/<Process-ID>ProcessDescription.json \textbf{exists}}   
+                \STATE Input Parameters $\gets$ parse(Request.Parameters)
+                \IF{Input Parameters == False}
+                    \RETURN{HTTP-Statuscode 400}
+                \ELSE{}
+                    \STATE Job-ID $\gets$ generateUUID()
+                    \STATE \textbf{create} Job Directory
+                    \STATE \textbf{create} Results Directory
+                    \STATE \textbf{create} status.json
+                    \STATE \textbf{create} job.json
+                    \STATE Response $\gets$ jsonify(status.json)
+                    \STATE Location-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=application/json
+                    \STATE Resource-Header $\gets$ job - Job-ID
+                    \RETURN{Response with Location- and Resource-Header \AND HTTP-Statuscode 201}
+                \ENDIF{}
+            \ELSE{}
+                \STATE Exception $\gets$ No such process exception
+                \STATE Resource-Header $\gets$ no-such-process
+                \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+            \ENDIF{}
+        \end{ALC@g}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}   
+    \ENDIF{}     
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\newpage
+\subsection{Ablauf eines Requests an den Job List Endpoint}
+\begin{breakablealgorithm}
+\scriptsize
+\caption{Ablauf eines Requests an den Job List Endpoint}\label{PseudocodeJobList}
+\begin{algorithmic}     
+    \STATE \textbf{Input:} Request
+    \IF{Request.HTTP-Method != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{Request.limit == None \OR Request.limit <= 0 \OR Request.limit > 100000}
+                \STATE Limit $\gets$ 10
+            \ELSE{}
+                \STATE Limit $\gets$ Request.limit
+            \ENDIF
+            \IF{Request.type == None}
+                \STATE Type = [process]
+            \ELSE{}
+                \STATE Type = Request.type
+            \ENDIF{}
+
+            \IF{Request.processID == None}
+                \STATE Process-ID = [Echo, FloodMonitoring]
+            \ELSE{}
+                \STATE Process-ID = request.processID
+            \ENDIF{}
+
+            \IF{Request.status == None}
+                \STATE Status = [accepted, running, successful, failed, dismissed]
+            \ELSE{}
+                \STATE Status = request.status
+            \ENDIF{}
+            \STATE Jobs $\gets$ Jobs in jobs/
+            \STATE Job List $\gets$ []
+            \FOR{Job \textbf{in} Jobs}
+                \STATE JSON $\gets$ open(jobs/Job/status.json)
+                \STATE Creation $\gets$ checkCreationDate(JSON.created, Request)
+                \STATE Duration $\gets$ checkDuration(JSON, Request)
+                \IF{JSON.type \textbf(in) Type \AND JSON.processID \textbf(in) Process-ID \AND JSON.status \textbf{in} Status
+                    \AND Creation == True \AND Duration[0] == True \AND Duration[1] == True}
+                    \STATE Job List \textbf{append} JSON
+                \ENDIF{}
+            \ENDFOR{}
+
+            \IF{Request.f == text/html \OR Request.f == None}
+                \STATE Response $\gets$ render\_template(templates/html/jobList.html, Job List[0:Limit])
+                \STATE Link-Header $\gets$ http://HOST:PORT/jobs?f=text/html
+                \STATE Resource-Header $\gets$ jobs
+                \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+            \ELSIF{Request.f == application/json}
+                \STATE \textbf{add} Links to self and alternate \textbf{to} Job List
+                \STATE Response $\gets$ jsonify(Job Liste[0:Limit])
+                \STATE Link-Header $\gets$ http://HOST:PORT/jobs?f=application/json
+                \STATE Resource-Header $\gets$ jobs
+                \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+            \ELSE{}
+                \RETURN{HTTP-Statuscode 406}
+            \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\newpage
+\subsection{Ablauf eines Requests an den Job Endpoint mit HTTP-Methode Get}
+\begin{breakablealgorithm}
+\scriptsize
+\caption{Ablauf eines Requests an den Job Status Endpoint mit HTTP-Methode Get}\label{PseudocodeJobStatusGET}
+\begin{algorithmic}     
+    \STATE \textbf{Input:} Request, Job-ID   
+    \IF{Request.HTTP-Method == GET}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{Request.f == text/html \OR Request.f == None}
+                \IF{jobs/<Job-ID>/status.json \textbf{exists}}
+                \STATE JSON $\gets$ open(jobs/<Job-ID>/status.json)
+                \STATE Response $\gets$ render\_template(templates/html/job.html, JSON)
+                \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=text/html
+                    \STATE Resource-Header $\gets$ job - <Job-ID>
+                    \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+                \ELSE{}
+                    \STATE Exception $\gets$ No such job exception
+                    \STATE Resource-Header $\gets$ no-such-job
+                    \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+                \ENDIF{}
+            \ELSIF{Request.f == application/json}
+                \IF{jobs/<Job-ID>/status.json \textbf{exists}}
+                    \STATE Job $\gets$ open(jobs/<Job-ID>/status.json)
+                    \STATE \textbf{add} Links to self and alternate \textbf{to} Job
+                    \STATE Response $\gets$ jsonify(Job)
+                    \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=application/json
+                    \STATE Resource-Header $\gets$ job - <Job-ID>
+                    \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+                \ELSE{}
+                    \STATE Exception $\gets$ No such job exception
+                    \STATE Resource-Header $\gets$ no-such-job
+                    \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+                \ENDIF
+            \ELSE{}
+                \RETURN{HTTP-Statuscode 406}
+            \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ELSIF{Request.HTTP-Method == DELETE}
+        \STATE Handling of Request using HTTP DELETE
+    \ELSE{}
+        \RETURN{HTTP-Statuscode 405}
+    \ENDIF{}
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\newpage
+\subsection{Ablauf eines Requests an den Job Endpoint mit HTTP-Methode Delete}
+\begin{breakablealgorithm}
+\scriptsize
+\caption{Ablauf eines Requests an den Job Status Endpoint mit HTTP-Methode Delete}\label{PseudocodeJobStatusDELETE}
+\begin{algorithmic}     
+    \STATE \textbf{Input:} Request, Job-ID   
+    \IF{Request.HTTP-Method == GET}
+        \STATE Handling of Request using HTTP GET
+    \ELSIF{Request.HTTP-Method == DELETE}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{jobs/<Job-ID>/status.json \textbf{exists}}
+                \STATE Job $\gets$ open(jobs/<Job-ID>/status.json)
+                \IF{Job.status != dismissed}
+                    \STATE Job $\gets$ open(jobs/<Job-ID>/status.json)
+                    \IF{Encoding == text/html \OR Encoding == None}
+                        \STATE Response $\gets$ render\_template(templates/html/job.html)
+                        \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=text/html
+                        \STATE Resource-Header $\gets$ job-dismissed
+                        \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+                    \ELSIF{Encoding == application/json}
+                        \STATE Response $\gets$ jsonify(Job)
+                        \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=application/json
+                        \STATE Resource-Header $\gets$ job-dismissed
+                        \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+                    \ELSE{
+                        \RETURN{HTTP-Statuscode 406}
+                    }
+                    \ENDIF
+                \ELSE{}
+                    \IF{Encoding == text/html \OR Encoding == None}
+                        \STATE Response $\gets$ render\_template(templates/html/job.html)
+                        \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=text/html
+                        \STATE Resource-Header $\gets$ job-dismissed
+                        \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 410}
+                    \ELSIF{Encoding == application/json}
+                        \STATE Response $\gets$ jsonify(Job)
+                        \STATE Link-Header $\gets$ http://HOST:PORT/jobs/<Job-ID>?f=application/json
+                        \STATE Resource-Header $\gets$ job-dismissed
+                        \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 410}
+                    \ELSE{
+                        \RETURN{HTTP-Statuscode 406}
+                    }
+                    \ENDIF{}
+                \ENDIF{}
+            \ELSE{}
+                \STATE Exception $\gets$ No such job exception
+                \STATE Resource-Header $\gets$ no-such-job
+                \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+            \ENDIF
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ELSE{}
+        \RETURN{HTTP-Statuscode 405}
+    \ENDIF{}
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\newpage
+\subsection{Ablauf eines Requests an den Job Results Endpoint}
+\begin{breakablealgorithm}
+\scriptsize
+\caption{Ablauf eines Requests an den Job Results Endpoint}\label{PseudocodeJobResults}
+\begin{algorithmic}    
+    \STATE \textbf{Input:} Request, Job-ID    
+    \IF{Request.HTTP-Method != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+    \STATE \hskip0.5em \textbf{try}
+    \begin{ALC@g}
+        \IF{jobs/<Job-ID>/status.json \textbf{exists}}
+            \STATE Job Jobfile $\gets$ open(jobs/<Job-ID/job.json)
+            \STATE Job Status $\gets$ open(jobs/<Job-ID/status.json)
+            \IF{Job Jobfile.processID == Echo}
+                \IF{Job Status.status == successful}
+                    \IF{Job Jobfile.responseType == raw}
+                        \RETURN{jobs/<jobID>/results/result.json \AND  HTTP-Statuscode 200}
+                    \ELSE{}
+                    \STATE Result-Value $\gets$ open(jobs/<Job-ID>/results/result.json)
+                    \STATE \textbf{embed} Results-Value \textbf{into} Result-Document
+                    \RETURN Result-Document \AND HTTP-Statuscode 200
+                    \ENDIF{}
+                \ELSIF{Job Status.status == failed}
+                    \STATE Exception $\gets$ job failed exception
+                    \STATE Resource-Header $\gets$ job-failed
+                    \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+                \ELSE{}
+                    \STATE Exception $\gets$ results not ready exception
+                    \STATE Resource-Header $\gets$ results-not-ready
+                    \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+                \ENDIF{}
+            \ELSIF{Job Jobfile.processID == FloodMonitoring}
+                \IF{Job Status.status == successful}
+                    \IF{Job Jobfile.responseType == raw}
+                        \IF{bin.tif \AND ndsi.tif are requested}
+                            \STATE ZIP
+                            \STATE \textbf{add} ndsi.tif \AND bin.tif \textbf{to} ZIP 
+                            \RETURN{ZIP \AND HTTP-Statuscode 200}
+                        \ELSIF{ndsi.tif is requested}
+                            \RETURN{ndsi.tif \AND HTTP-Statuscode 200}
+                        \ELSIF{bin.tif is requested}
+                            \RETURN{bin.tif \AND HTTP-Statuscode 200}
+                        \ENDIF{}
+                    \ELSE{}
+                        \IF{bin.tif \AND ndsi.tif are requested}
+                            \STATE bin-Base64 $\gets$ encodeImageBase64(bin.tif)
+                            \STATE ndsi-Base64 $\gets$ encodeImageBase64(ndsi.tif)
+                            \STATE \textbf{embed} bin-Base64 \AND ndsi-Base64 \textbf{into} Result-Document
+                            \STATE \textbf{add} Download-Links \textbf{to} Result-Document
+                            \RETURN{Result-Document \AND HTTP-Statuscode 200}
+                        \ELSIF{ndsi.tif is requested}
+                            \STATE ndsi-Base64 $\gets$ encodeImageBase64(ndsi.tif)
+                            \STATE \textbf{embed} ndsi-Base64 \textbf{into} Result-Document
+                            \STATE \textbf{add} Download-Link \textbf{to} Result-Document
+                            \RETURN{Result-Document \AND HTTP-Statuscode 200}
+                        \ELSIF{bin.tif is requested}
+                            \STATE bin-Base64 $\gets$ encodeImageBase64(bin.tif)
+                            \STATE \textbf{embed} bin-Base64 \textbf{into} Result-Document
+                            \STATE \textbf{add} Download-Links \textbf{to} Result-Document
+                            \RETURN{Result-Document \AND HTTP-Statuscode 200}
+                        \ENDIF{}
+                    \ENDIF{}
+                \ELSIF{Job Status.status == failed}
+                    \STATE Exception $\gets$ job failed exception
+                    \STATE Resource-Header $\gets$ job-failed
+                    \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+                \ELSE{}
+                    \STATE Exception $\gets$ results not ready exception
+                    \STATE Resource-Header $\gets$ results-not-ready
+                    \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+                \ENDIF{}
+            \ENDIF{}
+        \ELSE{}
+            \STATE Exception $\gets$ No such job exception
+            \STATE Resource-Header $\gets$ no-such-job
+            \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+        \ENDIF{}
+    \end{ALC@g}
+    \STATE \hskip0.5em \textbf{exept}
+    \begin{ALC@g}
+        \RETURN{HTTP-Statuscode 500}
+    \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\newpage
+\subsection{Ablauf eines Requests an den Coverage Endpoint}
+\begin{breakablealgorithm}
+\scriptsize
+\caption{Ablauf eines Requests an den Coverage Endpoint}\label{PseudocodeCoverage}
+\begin{algorithmic}  
+\STATE \textbf{Input:} Request
+\IF{Request.HTTP-Methode != GET}
+    \RETURN{HTTP-Statuscode 405}
+\ELSE{}
+    \STATE \hskip0.5em \textbf{try}
+    \begin{ALC@g}
+        \STATE KML $\gets$ KML-Files in data/coverage/
+        \STATE Coverages $\gets$ []
+		\STATE BBoxes $\gets$ []
+        \FOR{File \textbf{in} KML}
+                \STATE KML $\gets$ open(File)
+                \STATE Product $\gets$ {KML.Name, KML.BBox, KML.Date}
+                \STATE BBox $\gets$ KML.BBox
+                \STATE Coverages \textbf{append} Dataset
+                \STATE BBoxes \textbf{append} BBox as .geojson
+        \ENDFOR{}
+        \IF{Request.f == text/html \OR Request.f == None}
+            \STATE Response $\gets$ render\_template(templates/html/coverage.html, Coverages, BBoxes)
+            \STATE Link-Header $\gets$ http://HOST:PORT/coverage?f=text/html
+            \STATE Resource-Header $\gets$ coverage
+            \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+        \ELSIF{Request.f == application/json}
+            \STATE Response $\gets$ jsonify(Coverages)
+            \STATE Link-Header $\gets$ http://HOST:PORT/coverage?f=application/json
+            \STATE Resource-Header $\gets$ coverage
+            \RETURN{Response with Link- and Resource-Header \AND HTTP-Statuscode 200}
+        \ELSE{}
+            \RETURN{HTTP-Statuscode 406}
+        \ENDIF{}
+    \end{ALC@g}
+    \STATE \hskip0.5em \textbf{exept}
+    \begin{ALC@g}
+        \RETURN{HTTP-Statuscode 500}
+    \end{ALC@g}
+\ENDIF{}   
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\subsection{Ablauf eines Requests an den Download Endpoint}
+\begin{breakablealgorithm}
+\scriptsize
+\caption{Ablauf eines Requests an den Download Endpoint}\label{PseudocodeDownload}
+\begin{algorithmic}   
+    \STATE \textbf{Input:} Request, Job-ID, requested File
+        \IF{Request.HTTP-Methode != GET}
+        \RETURN{HTTP-Statuscode 405}
+    \ELSE{}
+        \STATE \hskip0.5em \textbf{try}
+        \begin{ALC@g}
+            \IF{jobs/<Job-ID>/ \textbf{exists}}
+                \STATE Status-JSON $\gets$ open(jobs/<Job-ID>/status.json)
+                \STATE Job-JSON $\gets$ open(jobs/<Job-ID>/status.json)
+                    \IF{Job-JSON.processID == FloodMonitoring}
+                        \IF{<requested File> == bin}
+                            \RETURN{bin.tif \AND HTTP-Statuscode 200}
+                        \ELSIF{<requested File> == ndsi}
+                            \RETURN{ndsi.tif \AND HTTP-Statuscode 200}
+                        \ELSE{}
+                            \STATE Exception $\gets$ No such file exception
+                            \STATE Resource-Header $\gets$ no-such-file
+                            \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+                        \ENDIF{}
+                    \ELSE{}
+                        \RETURN{HTTP-Statuscode 501}
+                    \ENDIF{}
+                \ELSE{}
+                \STATE Exception $\gets$ No such job exception
+                \STATE Resource-Header $\gets$ no-such-job
+                \RETURN{Exception with Resource-Header \AND HTTP-Statuscode 404}
+            \ENDIF{}
+        \end{ALC@g}
+        \STATE \hskip0.5em \textbf{exept}
+        \begin{ALC@g}
+            \RETURN{HTTP-Statuscode 500}
+        \end{ALC@g}
+    \ENDIF{}
+\end{algorithmic}
+\end{breakablealgorithm}
+
+\subsection{Echo Prozess}
+\begin{breakablealgorithm}
+\scriptsize
+\caption{Ablauf eines Echo Prozesses}\label{PseudocodeEcho}
+\begin{algorithmic}   
+    \STATE \textbf{Input:} Job
+    \STATE \hskip0.5em \textbf{try}
+    \begin{ALC@g}
+        \STATE \textbf{Break} \textbf{If} Job.Status == dismissed 
+        \STATE Job.Started = now()
+        \STATE \textbf{Wait} 5 Seconds
+        \STATE \textbf{Break} \textbf{If} Job.Status == dismissed 
+        \STATE \textbf{Create} result.json
+        \STATE Job.Finished = now()
+    \end{ALC@g}
+    \STATE \hskip0.5em \textbf{exept}
+    \begin{ALC@g}
+        \STATE Job.Status = failed
+    \end{ALC@g}
+\end{algorithmic}
+
+\newpage
+\end{breakablealgorithm}
+\subsection{Überschwemmungmonitoring Prozess}
+\begin{breakablealgorithm}
+\scriptsize
+\caption{Ablauf eines Überschwemmungmonitoring Prozesses}\label{PseudocodeFlood}
+\begin{algorithmic}   
+    \STATE \textbf{Input:} Job
+    \STATE \hskip0.5em \textbf{try}
+    \begin{ALC@g}
+        \STATE Job.Started = now()
+        \STATE \textbf{break} \textbf{if} Job.Status == dismissed 
+        \STATE \emph{\#Setup Processing}
+        \STATE \textbf{create} footprint.geojson \textbf{from} Job.Input.BBOX
+        \STATE Pre-Timeframe $\gets$ \textbf{from} Job.Input.preDate
+        \STATE Post-Timframe $\gets$ \textbf{from} Job.Input.postDate
+        \STATE \textbf{break} \textbf{if} Job.Status == dismissed 
+        \STATE API $\gets$ Login at Copernicus Open Access Hub \textbf{with} Job.Input.Credentials
+        \STATE \textbf{break} \textbf{if} Job.Status == dismissed 
+        \STATE \emph{\#Retrieve and Calibrate Pre-Product}
+        \STATE Pre-Product $\gets$ getProduct(API, Pre-Timeframe, Job.Input.BBOX)
+        \STATE \textbf{break} \textbf{if} no matching Product could be found
+        \IF{Pre-Dataset \NOT \textbf{in} Datastore}
+            \STATE Pre-Dataset $\gets$ retrieveProduct(API, Pre-Product)
+            \STATE \textbf{break} \textbf{If} Pre-Product \textbf{in} Long Term Archive
+        \ENDIF{}
+        \STATE \textbf{apply} Orbit-File to Pre-Dataset
+        \STATE \textbf{clip} Pre-Dataset with footprint.geojson
+        \STATE \textbf{remove} thermal Noise from Pre-Dataset
+        \STATE \textbf{convert} VV Band \textbf{to} $\sigma_0$ Values
+        \STATE \textbf{perform} Speckle-Filtering \textbf{with} 5x5 Lee-Sigma-Filter 
+        \STATE \textbf{perform} Terrain-Correction with Ellipsoid
+        \STATE \textbf{store} calibrated Pre-Dataset \textbf{as} GeoTIFF
+        \STATE \textbf{break} \textbf{if} Job.Status == dismissed 
+        \STATE \emph{\#Retrieve and Calibrate Post-Product}
+        \STATE Post-Product $\gets$ getProduct(API, Post-Timeframe, Job.Input.BBOX)
+        \STATE \textbf{break} \textbf{if} no matching Product could be found
+        \IF{Post-Product \NOT \textbf{in} Datastore}
+            \STATE Post-Dataset $\gets$ retrieveProduct(API, Post-Product)
+            \STATE \textbf{break} \textbf{if} Post-Product \textbf{in} Long Term Archive
+        \ENDIF{}
+        \STATE \textbf{apply} Orbit-File \textbf{to} Post-Dataset
+        \STATE \textbf{clip} Post-Dataset \textbf{with} footprint.geojson
+        \STATE \textbf{remove} thermal Noise \textbf{from} Post-Dataset
+        \STATE \textbf{convert} VV Band \textbf{to} $\sigma_0$ Values
+        \STATE \textbf{perform} Speckle-Filtering \textbf{with} 5x5 Lee-Sigma-Filter 
+        \STATE \textbf{perform} Terrain-Correction \textbf{with} Ellipsoid
+        \STATE \textbf{store} calibrated Post-Dataset \textbf{as} GeoTIFF
+        \STATE \textbf{break} \textbf{if} Job.Status == dismissed 
+        \STATE \emph{\#Calculate and Threshold NDSI}
+        \STATE NDSI $\gets$ calculateNDSI(calibrated Pre- and Post-Dataset)
+        \STATE \textbf{store} NDSI \textbf{as} ndsi.tif
+        \STATE \textbf{clip} NDSI \textbf{with} footprint.geojson
+        \STATE Threshold $\gets$ Threshold NDSI with Ostsus-Method
+        \STATE Flood-Mask $\gets$ Binarize NDSI with Threshold  
+        \STATE \textbf{store} Flood-Mask \textbf{as} bin.tif
+        \STATE Job.Finished = now()
+    \end{ALC@g}
+    \STATE \hskip0.5em \textbf{except}
+    \begin{ALC@g}
+        \STATE Job.Status = failed
+    \end{ALC@g}
+\end{algorithmic}
+\end{breakablealgorithm}

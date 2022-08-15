@@ -1,0 +1,316 @@
+\newpage
+\restoregeometry
+\section{Grundlagen}
+\subsection{Radarfernerkundung}
+Bei der Radarfernerkundung werden vom Radarsystem in regelmäßigen Abständen elektromagnetische Signale ausgesandt. Nach dem Senden eines Signals 
+folgt ein Zeitfenster, indem die Plattform auf Echos des ausgesandten Signals wartet.
+Trifft das ausgesandte Signal auf eine Oberfläche, zum Beispiel 
+die Erdoberfläche, wird ein Bruchteil in Richtung Empfänger reflektiert und als Echo vom Fernerkundungssystem empfangen \cite{tutorial_on_sar}.
+
+Die Radarfernerkundung gehört zu den aktiven Fernerkundungsmethoden, da hier im Gegensatz zur optischen Fernerkundung nicht nur 
+von Oberflächen reflektierte Strahlung von anderen Strahlungsquellen wie der Sonne aufgenommen wird, sondern das Fernerkundungssystem 
+selbst als Strahlungsquelle dient. Messungen können daher tageszeitnähbandgig erfolgen. Bildgebende Radarsysteme werden auf mobilen Plattformen 
+montiert und blicken seitlich auf die zu beobachtende Oberfläche \cite{tutorial_on_sar} (siehe Abbildung \ref{sar_prinzip}). 
+%Die Flugrichtung wird Azimut und die Blickrichtung als Slant Range bezeichnet \cite{tutorial_on_sar} (Abbildung 1). 
+
+Die Eigenschaften des reflektierten Signals hängen sowohl von Parametern des Aufnahmesystems als auch von Parametern der reflektierenden Oberfläche ab.
+So werden in der Radarfernerkundung verschiedene Frequenzbänder verwendet, welche sich in Frequenz und Wellenlänge unterscheiden. Da sich die Wechselwirkungen zwischen Signalen 
+unterschiedlicher Frequenzbänder und den reflektierenden Oberflächen unterscheiden, können so unterschiedliche Aspekte der beobachteten Oberflächen hervorgehoben werden. 
+Dabei kommen in der Regel Wellenlängen von 0,75m bis 120m zum Einsatz. %(siehe Tabelle \ref{frequenzbaender}).
+Mit einer größeren Wellenlänge kann ein Medium auch tiefer durchdrungen werden. 
+Außerdem werden Wolken, Dunst und Rauch durchdrungen, was den zusätzlichen Vorteil bietet, wetterunabhängig Messungen durchführen zu können \cite{einfuehrung_in_fernerkundung}.
+
+%\begin{table}[H]
+%    \caption{Gängige Frequenz-Bänder in der Radarfernerkundung \cite{tutorial_on_sar}}
+%    \centering
+%    \begin{tabular}{c|c c c c c c c } 
+%        Frequenzband & Ka & Ku & X & C & S & L & P\\ 
+%        \hline
+%        Frequenz (GHz) & 40-25 & 17.6-12 & 12-7.5 & 7.5-3.75 & 3.75-2 & 2-1 & 0.5-0.25\\ 
+%        Wellenlänge (cm) & 0.75–1.2 & 1.7–2.5 & 2.5–4 & 4–8 & 8–15 & 15–30 & 60–120\\ 
+%    \end{tabular}
+%    \label{frequenzbaender}
+%\end{table}
+
+%Die Durchdringungstiefe hängt auch von der Dielektrizitätskonstante, also der Leitfähigkeit, ab. Ist diese groß, kommt es zu starken Reflektionen und die Durchdringungstiefe ist gering. 
+Die Rauigkeit ist eine Eigenschaft der reflektierenden Oberfläche und hat großen Einfluss auf das reflektierte Signal. Ist diese im Verhältnis
+zur verwandten Wellenlänge gering, so kommt es zu einer spiegelnden Reflektionen und nur ein geringer Anteil des Signals wird zum Empfänger zurückgeworfen. 
+%Je diffuser die Reflektion mit zunehmender Rauigkeit wird umso größer ist der Anteil des Signals welcher zum Empfänger zurückgeworfenen Signals. 
+%Doch auch die Form und Exposition der Oberfläche nimmt Einfluss auf das reflektierte Signal. So werden Flächen je nach Neigung unterschiedlich stark bestrahlt. 
+%Ist eine dem System abgewandte Fläche steiler geneigt als der Depressionswinkel liegen Sie sogar im Radarschatten und werden gar nicht bestrahlt \cite{einfuehrung_in_fernerkundung}. 
+Zusätzlich ist die Polarisation der ausgesandten und empfangenen Signale bei der Messung ausschlaggebend. Sie können horizontal oder 
+vertikal polarisiert sein. Dies führt zu vier möglichen Polarisationsmodi für das Senden und das Empfangen, 
+nämlich HH, VV, HV und VH. Auch die 
+Polarisation sorgt für eine unterschiedliche Wiedergabe von beobachteten Objekten und kann somit verwendet werden, um bestimmte Aspekte hervorzuheben
+ \cite{einfuehrung_in_fernerkundung}. 
+Die Auflösung entlang des Azimut unterscheidet sich von der Auflösung in Blickrichtung. 
+Die Auflösung in Azimutrichtung wird von der Antennenlänge bestimmt, da diese festlegt wie lange die Reflektionen eines Objektes empfangen werden. 
+Die Antennenlänge kann bauartbedingt nicht beliebig gesteigert werden.
+%Die Bauart der Antenne bestimmt auch den Abstrahlwinkel $\Theta_a$ und somit die Ausdehnung am Boden eines Impulses in Azimutrichtung. Diese nimmt mit zunehmender Entfernung
+%zu, während die Auflösung abnimmt.
+Die Auflösung in Blickrichtung hängt von der Bandbreite ab, welche sich aus der Sendefrequenz und der Signaldauer zusammensetzt. 
+%Die Ausdehnung des beobachteten Gebietes in Blickrichtung hängt von der Laufzeit des ausgesandten Signales ab. 
+%Die Objekte werden abhängig von ihrer Entfernung zur Antenne verzerrt wiedergegeben da nahegelegene 
+%Objekte von der Wellenfront schneller durchlaufen werden. Dieser Unterschied zwischen Schrägdistanz und Bodendistanz lässt sich jedoch nahezu vollständig korrigieren 
+%\cite{einfuehrung_in_fernerkundung}. 
+%Die bisher beschriebenen Systeme werden auch als Systeme mit realer Apertur bezeichnet und eignen sich nur für geringe Flughöhen da hier 
+%der Abstand zwischen Antenne und Oberfläche gering ist. 
+Bei Radarsystemen mit einer synthetischen Apertur wird durch die Bewegung des Sensors in Azimutrichtung die 
+wirksame Antennenlänge rechnerisch verlängert, indem die reflektierten Signale eines beobachteten Objektes von verschiedenen Standpunkten und unterschiedlichen Zeitpunkten 
+miteinander korreliert werden. So können hohe Azimutauflösungen erzielt werden. Solche Systeme eigenen sich auch für den Einsatz auf Satelliten \cite{einfuehrung_in_fernerkundung}. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Bilder/SAR_Prinzip.png}
+    \caption{Prinzip eines SAR Fernerkundungssystems \cite{tutorial_on_sar}}
+    \label{sar_prinzip}
+\end{figure}
+
+SAR-Systeme können in unterschiedlichen Aufnahmeverfahren arbeiten. Das einfachste dieser Verfahren ist das Stripmap Verfahren, bei welchem nur ein Aufnahmestreifen
+kontinuierlich aufgenommen wird. Breitere Aufnahmestreifen können mit dem ScanSAR Verfahren erzielt werden. Dabei werden unter verschiedenen Depressionswinkeln, 
+in Blickrichtung und zeitversetzt mehrere Subaufnahmestreifen erzeugt. Im Vergleich zum Stripmap Verfahren ist die Auflösung jedoch geringer. 
+Wird eine höhere Auflösung benötigt kann das Spotlight Verfahren zum Einsatz kommen, bei dem eine fixe Region über einen längeren Zeitraum hinweg beobachtet 
+wird. Dies führt zu einer sehr langen wirksamen Antenne (siehe Abbildung \ref{sar_scan_modi}). Angepasste Verfahren oder Mischformen können je nach 
+Beobachtungsszenario zum Einsatz kommen \cite{tutorial_on_sar}. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Bilder/SAR_Modi.png}
+    \caption{Aufnahmeverfahren SAR Systemen (a) Strimpmap (b) ScanSAR (c) Spotlight \cite{tutorial_on_sar}}
+    \label{sar_scan_modi}
+\end{figure}
+
+Im Gegensatz zu optischen Aufnahmeverfahren liefern die Rohdaten 
+einer Befliegung mit Radarsensoren noch keine Bilddaten. Um Bilder zu erzeugen, bedarf es zunächst einer komplexen Verarbeitung der aus Amplitude und Phase bestehenden 
+reflektierten Signale. Dabei werden die Daten entlang des Azimuts und der Blickrichtung gefiltert. In der Regel repräsentieren die Pixelwerte eines aus Radardaten 
+abgeleiteten Bildes die Reflektivität des korrespondierenden Bodenelements. Mittels Geocodierung kann das so entstandene Bild verortet werden. Zusätzlich können diverse,
+ebenfalls rechen- und zeitintensive, Kalibrierungen vorgenommen werden. Dazu gehören Verfahren, welche Rauscheffekte minimieren, die geometrischen Eigenschaften verbessern 
+oder die Interpretation der Bilder erleichtern \cite{tutorial_on_sar}.
+
+\subsection{Copernicus-Programm}
+\subsubsection{Ziele}
+Das Copernicus-Programm ging aus dem Global Monitoring for Environmental Security Programm Programm (GMES) hervor, welches 1998 mit dem Ziel initiiert wurde, Europa 
+zu ermöglichen, eine führende Rolle bei der Lösung von weltweiten Problemen im Kontext Umwelt und Klima zu verschaffen. Teil dieser Bestrebungen ist der Aufbau eines 
+leistungsfähigen Programms zur Erdbeobachtung. 2012 wurde das GMES-Programm zum Copernicus-Programm umbenannt \cite{history_of_copernicus}.
+Erklärte Ziele des Copernicus-Programmes sind das Überwachen der Erde, um den Schutz der Umwelt sowie Bemühungen von Katastrophen- und Zivilschutzbehörden zu 
+unterstützen. Gleichzeitig soll die Wirtschaft im Bereich Raumfahrt und der damit verbundenen Dienstleistungen unterstützt und Chancen für neue Unternehmungen geschaffen
+werden \cite{copernicus_regulation}.
+
+\subsubsection{Aufbau}
+Das Copernicus-Programm besteht aus Weltraum, In-Situ- und Service-Komponente. 
+Zur Weltraum-Komponente gehören die verschiedenen Satellitenmissionen sowie Bodenstationen, welche für den Betrieb sowie die Steuerung und Kalibrierung der 
+Satelliten sowie der Verarbeitung und Validierung der Daten verantwortlich sind \cite{copernicus_regulation}. \\ 
+Sentinel-1 Satelliten sind mit bildgebenden Radarsystemen ausgerüstet und beobachten wetter- und tageszeitunabhängig Land-, Wasser- und Eismassen, um unter anderem das 
+Krisenmanagement zu unterstützen.
+Satelliten der Sentinel-2 Mission führen hochauflösende, multispektrale Kameras mit und liefern weltweit optische Fernerkundungsdaten. \\
+Altimetrische und radiometrische Daten von Land- und Wasserflächen werden von der Sentinel-3 Satellitenmission gesammelt, während spektrometrische Daten zur 
+Überwachung der Luftqualität von Sentinel-4 und 5 Satelliten erfasst werden.
+Ozeanografische Daten sollen von den Sentinel-6 Satelliten geliefert werden \cite{sentinel_overview}.
+
+Die In-Situ-Komponente sammelt Daten von see-, luft- und landbasierten Sensoren sowie geografische und geodätische Referenzdaten. Die harmonisierten Daten 
+werden verwendet, um die Daten der Weltraum-Komponente zu verifizieren oder zu korrigieren. Gleichzeitig können räumliche oder thematische Lücken in der 
+Datenabdeckung gefüllt werden \cite{copernicus_regulation}\cite{what_is_copernicus}. \\
+
+Zur Service-Komponente gehören unterschiedliche Dienste, welche jeweils auf ein Themengebiet abgestimmt sind und Daten in hoher Qualität bereitstellen.
+Der Copernicus Atmosphere Monitoring Service (CAMS) soll Informationen zur Luftqualität und der chemischen Zusammensetzung der Atmosphäre liefern. 
+Daten bezüglich des Zustands und der Dynamik der Meere und deren Ökosysteme lassen sich über den Copernicus Marine Environment Monitoring Service (CMEMS) beziehen. 
+Informationen zur Flächennutzung und Bodenbedeckung werden vom Copernicus Land Monitoring Service (CLMS) bereitgestellt. 
+Um eine nachhaltige Klimapolitik planen und umsetzen zu können, stellt der Copernicus Climate Change Service (C3S) aktuelle sowie historische Klimadaten bereit.  
+Um den Zivilschutzbehörden schnelle Reaktionen auf Umweltkatastrophen zu ermöglichen, stellt der Emergency Management Service (EMS) entsprechende Fernerkundungsdaten 
+bereit. Ähnliche Daten können von europäischen Zoll- und Grenzschutzbehörden über den Copernicus Security Service bezogen werden
+\cite{copernicus_regulation}\cite{what_is_copernicus}.
+
+\subsubsection{Sentinel 1}
+Die Sentinel-1 Satellitenmission liefert wetter- und tageszeitunabhängige Radardaten der Erdoberfläche. Die Mission besteht aus zwei Satelliten, Sentinel-1 A und B,
+sowie einer Bodenkomponente, welche für Steuerung, Kalibrierung und Datenverarbeitung verantwortlich ist. Die Satelliten tragen als Hauptinstrument ein 
+bildgebendes Radar mit synthetischer Apertur, welches im C-Frequenzband arbeitet. Es stehen zwei Polarisationsmodi, Single (HH, VV) oder Dual (HH+HV, VV+VH)
+zur Verfügung \cite{sentinel_1_definition}. 
+Die Erfassung von Daten kann in vier Aufnahmemodi erfolgen, welche sich in Auflösung, Streifenbreite und Anwendungsszenario unterscheiden (siehe Tabelle \ref{aufnahmemodi_sentinel_1}). 
+Der Standardmodus ist der Stripmap Modus (SM) bei dem Aufnahmestreifen mit einer kontinuierlichen Folge von Signalen abgetastet werden \cite{sentinel_1_definition}.
+Die Aufnahmemodi Interferometric Wide Swath Mode (IW) und Extra-Wide Swath Mode (EW) arbeiten im TOPSAR Verfahren mit drei beziehungsweise
+fünf Sub-Aufnahmestreifen, um ein größeres Gebiet aber in geringerer Auflösung aufnehmen zu können. TOPSAR ist eine Abwandlung 
+des ScanSAR Verfahrens, bei welchem die Antenne zusätzlich in Azimut-Richtung vor und zurück bewegt wird, um die radiometrische Qualität der resultierenden Bilder zu verbessern. 
+Wenn der Wave Modus (WV) zum Einsatz kommt, werden kleine, Vignetten genannte, Szenen im Stripmap Verfahren aufgenommen. Sie werden in regelmäßigen Abständen und
+wechselnden Depressionwinkeln aufgenommen \cite{tutorial_on_sar}\cite{sentinel_1_definition}.   
+
+%\begin{figure}[H]
+%    \centering
+%    \includegraphics[width=\textwidth]{Bilder/Aquisition_Modes.png}
+%    \caption{Aufnahmemodi der Sentinel-1 Mission \cite{sentinel_1_overview}}
+%    \label{sar_modi_sentinel_1}
+%\end{figure}
+\begin{center}
+\begin{table}[H]
+    \caption{Eigenschaften der Aufnahmemodi der Sentinel-1 Mission \cite{sentinel_1_overview}}
+    \centering
+    \begin{tabular}{c|c c c c } 
+        Modus & IW & WV & SM & EW \\ 
+        \hline
+        Polarisation & Dual & Single & Dual & Dual \\ 
+        Azimutauflösung (m) & 20 & 5 & 5 & 40 \\
+        Rage-Auflösung (m) & 5 & 5 & 5 & 20 \\
+        Streifenbreite (km) & 250 & 20x20 & 80 & 410\\
+    \end{tabular}
+    \label{aufnahmemodi_sentinel_1}
+\end{table}
+\end{center}
+
+Beide Satelliten befinden sich auf einem polnahen, sonnensynchronen Orbit. 
+Ein Zyklus dauert 12 Tage, in denen die Erde 175 Mal umrundet wird. 
+Da es sich um ein Satellitenpaar handelt, welches als Tandem die Erde umrundet, wird ein Punkt auf der Erdoberfläche alle sechs Tage von einem der Satelliten überflogen. 
+Das System kann eine zuverlässige globale und systematische Abdeckung liefern. 
+Dabei können im IW Modus alle relevanten Land-, Wasser- und Eismassen alle zwölf Tage vollständig von einem Satelliten erfasst werden. 
+In Krisensituationen können Daten nach Bedarf innerhalb von zweieinhalb bis fünf Tagen Daten erfasst werden \cite{sentinel_1_overview}. 
+
+Nach dem Erfassen der Daten und Übersenden an eine Bodenstation werden diverse Vorverarbeitungsschritte vorgenommen, in die sowohl interne also auch externe
+Parameter einfließen. Daraus ergeben sich diverse Produkte, welche sich durch Aufnahmemodus, Produkt-Typ sowie durch ihre 
+Auflösung unterscheiden. SLC-Produkte sind im wesentlichen kalibrierte Rohdaten, in denen Amplitude und Phase nicht
+zur Reflektivität kombiniert wurden und die geometrische Auflösung sich in Azimut- und Blickrichtung unterscheidet. GRD-Produkte bilden hingegen die 
+Reflektivität ab und haben eine annähernd quadratische geometrische Auflösung. Die Reflektivität wird in der logarithmischen Maßeinheit Dezibel (dB) angegeben. Die Korrektur 
+der Schrägdistanz in Blickrichtung erfolgt durch Projektion auf einen Ellipsoiden. \cite{sentinel_1_definition}. 
+%Aus den Level-1 Produkten, SLC und GRD, können die Level-2 Produkte OSW, OWI und RVL abgeleitet werden.
+
+\subsubsection{Datenzugang}
+Die Daten des Copernicus-Programmes sollen einer möglichst breiten Nutzergruppe möglichst einfach zugänglich gemacht werden. Sie sollen frei zugänglich und kostenlos angeboten 
+werden \cite{copernicus_regulation}. Daten der Sentinel-1, 2, 3 und 5 können über das von der ESA betriebene Copernicus Open Access Hub bezogen werden. Datensätze können sowohl
+auf der Webseite als auch mithilfe einer API gesucht und heruntergeladen werden. Daten der Sentinel-3, 4, 5 und 6 sowie weiterer Satelliten können über das 
+dem Copernicus Open Access Hub ähnlichen EUMETCast bezogen werden.
+In Ergänzung zu diesen Quellen werden Daten von fünf privaten, in Kooperation mit dem Copernicus-Programm stehenden Unternehmen in unterschiedlichen Formen bereitgestellt. 
+Diese als Data and Information Access Services (DIAS) bezeichneten Plattformen stellen unverarbeitete und abgeleitete Daten sowie Werkzeuge zur Analyse zur Verfügung \cite{dias_factsheet}.
+Da die DIAS-Plattformen kommerziell betrieben werden, müssen einige Dienste und Werkzeuge bezahlt werden, während Nutzer*innen sich lediglich am Copernicus Open Access Hub oder EUMETCast 
+registrieren müssen. Zu erwähnen ist, dass die DIAS-Plattformen Zugriff auf die gesamte Historie gestatten. 
+Aus dem Copernicus Open Access Hub lassen sich nur aktuelle Datensätze synchron beziehen. 
+In der Regel müssen Daten, welche älter als einen Monat sind, aus dem Landzeitarchiv wiederhergestellt werden. Dieser Vorgang kann einige Zeit in Anspruch nehmen \cite{open_access_hub_overview}. 
+
+\subsection{Überschwemmungsmonitoring}
+Um Wasserflächen und damit auch überflutete Areale auf Radarbildern zu erkennen, können die Reflektionseigenschaften von Wasserflächen genutzt werden. Da Wasser eine 
+sehr niedrige Rauigkeit besitzt, kommt es beim Aufprall eines Radarsignals zu einer spiegelnden Reflektion und nur ein sehr geringer Teil des Signals wird zum Empfänger 
+zurückgeworfen. In den resultierenden Bildern äußert sich dieser Umstand in niedrigen Reflektivitätswerten. 
+Um die Areale mit niedrigen Reflektionswerten zu detektieren, können Verfahren genutzt werden, welche aus den Histogrammen der Bilder einen Schwellwert ermitteln.
+Um die Ergebnisse einer solchen Schwellwertbestimmung zu verbessern, sollten die Radardaten zusätzlich kalibriert werden. 
+So kann die genaue Kenntnis über die tatsächliche Flugbahn des Satelliten dazu beitragen, die geografische Genauigkeit zu verbessern. Diese kann zusätzlich durch Verfahren 
+wie die Diffentialentzerrung gesteigert werden, die die durch das Relief entstandenen Lagefehler ausgleicht \cite{einfuehrung_in_fernerkundung}.
+Die radiometrische Genauigkeit kann gesteigert werden, indem zum Beispiel thermisches Rauschen aus den Daten entfernt wird und die Reflektivitätswerte zum 
+sogenannten $\sigma_0$-Wert umgerechnet werden. Dieser repräsentiert den Querschnitt der Reflektivität für eine normierte Fläche am Boden 
+\cite{radiometric_calibration_of_S1_level1_products}. Dieses Maß erlaubt zudem das Vergleichen unterschiedlicher Radaraufnahmen.  
+Außerdem sollte ein Speckle-Filter zum Einsatz kommen. Dieser reduziert körnige Bildstrukturen, welche auf homogenen Flächen in Radarbildern auftreten und die 
+rechnerische Bildauswertung erschweren können. Mit unterschiedlichen Speckle-Filtern können verschiedene Bildeigenschaften in unterschiedlicher Weise 
+erhalten oder verändert werden. Die ESA schlägt hier die Nutzung eines Lee-Sigma Filters vor \cite{einfuehrung_in_fernerkundung,sentinel_1_flood_mapping_tutorial}.  
+Auf Basis des Schwellwertes kann eine Binärisierung der Bilder durchgeführt werden. Die beiden entstehenden Werte repräsentieren überflutete beziehungsweise trocken liegende 
+Areale \cite{sentinel_1_flood_mapping_tutorial}.
+Eines dieser Schwellwertverfahren wurde von Nobuyuki Otsu vorgeschlagen. Bei diesem Verfahren werden alle Werte eines Histogramms durchlaufen.
+Jeder dieser Werte teilt das Histogramm in zwei Gruppen und bildet so einen Schwellwert. Jener Wert, welcher die gewichtete Varianz zwischen der Klassen maximiert, wird
+als optimaler Grenzwert angesehen \cite{thresholds_selection}. 
+Die Binärisierung kann direkt auf Basis der Radaraufnahme der Überflutung oder auf abgeleiteten Daten erfolgen. So können zum Beispiel Radaraufnahmen vor dem Überschwemmungsereignis
+$\sigma_0^f$ mit überflutungsfreien Referenzaufnahmen $\sigma_0^r$ zum Normalized Difference Sigma-Naught Index (NDSI) kombiniert werden \cite{flood_proxy_mapping_ndsi}.
+Dabei werden die Reflektivitätswerte von zwei unterschiedlichen Zeitpunkten zum NDSI verrechnet, welcher als Maß für die Stärke der Veränderung interpretiert werden kann. 
+
+\begin{equation}
+    NDSI = \frac{\sigma_0^f-\sigma_0^r}{\sigma_0^f+\sigma_0^r}
+\end{equation} 
+
+Dieses Maß bewegt sich zwischen $-1$ und $1$, wobei Werte um $0$ für identische Reflektionswerte an beiden Zeitpunkten und daher für geringe Veränderung stehen. 
+Aufgrund der Reflektionseigenschaften von Wasserflächen deuten Werte nahe $-1$ auf überflutete Areale hin \cite{flood_proxy_mapping_ndsi}. 
+Die vielen und teilweise zeitintensiven Prozessierungsschritte können, je nach Größe des zu untersuchenden Areals, viel Zeit und Rechenleistung in Anspruch nehmen.
+
+\subsection{Application Programming Interfaces}
+Schnittstellen sind gemeinsame Grenzen zwischen funktionalen Einheiten, über die mittels vorgegebener Kommunikationswege Informationen ausgetauscht werden können 
+\cite{geospatial_apis}. Ein Application Programming Interface erlaubt also den Austausch von Informationen zwischen zwei unterschiedlichen Programmen. 
+Genauer ausgedrückt erlaubt eine API einem Programm Funktionen und Ressourcen eines anderen Programms zu nutzen. 
+Die Nutzung von APIs erlaubt die Modularisierung von Anwendungen in voneinander unabhängige und untereinander austauschbare Module \cite{geospatial_apis}.
+Bei diesen kann es sich zum Beispiel um Web-Anwendungen handeln, welche ihre Informationen über standardisierte Protokolle, zum Beispiel HTTP, über das Internet bereitstellen. 
+Mit Requests können diese Informationen über die API angefragt werden. 
+Die API beantwortet einen Request mit einem Response, welcher die im Request spezifizierten Informationen enthält.\\ 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Bilder/api.png}
+    \caption{Modell einer Webanwendung mit API (eigene Darstellung)}
+    \label{api_model}
+\end{figure}
+
+Moderne Web-Anwendungen werden häufig nach dem REST Architekturstil entwickelt. Dieser beschreibt eine Reihe von Einschränkungen und Vereinbarungen für 
+verteilte Hypermedia-Systeme wie das Internet \cite{api_design}. 
+Durch die Umsetzung der REST-Prinzipien sollen das HTTP und auf diesem basierende Infrastrukturen optimal genutzt sowie Webanwendungen so skalierbar, ausfallsicher, transparent 
+und zuverlässig wie möglich werden \cite{api_design,testbed_11}. 
+Ein zentraler Begriff ist der der Ressourcen. Eine Ressource ist eine abstrakte Datenstruktur, welche in verschiedenen konkreten Repräsentationen vorliegen kann. 
+Typische Formate für Repräsentationen sind XML, JSON oder HTML. 
+Ressourcen haben eine eindeutige URI, welche häufig die Gestalt eines URL annimmt. 
+Die Interaktionen mit Ressourcen erfolgen mit den HTTP-Methoden \verb|GET|, \verb|POST|, \verb|PUT| und \verb|DELETE| \cite{api_design}.  
+Als RESTful bezeichnete Systeme sollen zudem stateless operieren. Dies bedeutet, dass alle für die Beantwortung eines Requests nötigen Informationen im Request selbst enthalten sind. 
+Zusätzlich hängt der Erfolg oder Misserfolg eines Requests nicht von dem Ergebnis eines anderen Requests ab \cite{api_design,testbed_11}. 
+Allerdings sollen Responses zwischengespeichert werden können, um häufig auftretende Requests schneller beantworten zu können \cite{testbed_11}.
+Die REST-Prinzipien können um die des HATEOAS-Architekturstil erweitert werden. Nach diesem sollte eine API selbstbeschreibend sein. Sämtliche Interaktionsmöglichkeiten 
+mit Ressourcen sollten mit den Repräsentationen verknüpft sein. Zudem sollte jede Ressource Verknüpfungen zu anderen Ressourcen enthalten. Ein Client benötigt also nur Zugang 
+zu einer Ressource, um alle anderen Ressourcen zu erreichen. Dies Bedeutet auch, dass der Client nicht a-priori Kenntnis über die Details der 
+API haben muss, um mit ihr zu interagieren \cite{api_design}. 
+
+\subsubsection{Rich Data Interfaces}
+Der Begriff Rich Data Interface kann unter zwei Gesichtspunkten betrachtet werden. Einerseits kann darunter eine API verstanden werden, welche 
+reich an Interaktionsmöglichkeiten ist, den Nutzer*innen also umfangreiche Funktionen zur Interaktion mit den durch die von der API angebotenen Ressourcen ermöglicht.
+Andererseits könnten die Ressourcen selbst reich an Informationen sein. %Hier Bezug einsetzen
+Reichhaltige Ressourcen können zum Beispiel analysebereite oder interpretationsfähige Daten sein.
+Unter analysebereiten Daten werden verstanden welche gemäß einer möglichst kleinen Menge von Anforderungen vorprozessiert wurden und in der Folge mit minimalem Aufwand
+für weitere Analysen verwendet werden können. Interpretationsfähige Daten sind Daten welche durch ein gut dokumentiertes und gebräuchliches Verfahren prozessiert wurden 
+und direkt von Menschen interpretiert werden können \cite{testbed_16}. 
+
+\subsection{OGC und OGC Standards}
+Das Open Geospatial Consortium (OGC) widmet sich der Aufgabe die Entwicklung von internationalen Standards und unterstützenden Diensten, welche die Interoperabilität im 
+Bereich der Geodaten verbessern, voranzutreiben. Das OGC soll dabei offene Systeme und Techniken verbreiten, welche es erlauben, Dienste und Prozesse mit Raumbezug
+in Kreisen der Informatik zu verbreiten und die Nutzung von interoperabler und kommerzieller Software zu fördern \cite{ogc_bylaws}. Dabei wird versucht, möglichst viele
+Akteure aus Wissenschaft, Wirtschaft und Verwaltung zu beteiligen, um Standards zu schaffen, welche auf möglichst breitem Konsens basieren. Zudem werden 
+Mechanismen zur Zertifizierung von standardkonformen Software-Lösungen angeboten \cite{ogc_bylaws}.
+
+Das OGC formuliert Standards für unterschiedliche Themenbereiche. In Standards aus dem Bereich Data Models und Encodings werden Daten- und Datenaustauschformate
+definiert. Standards, welche Webdienste und Schnittstellen zum Austausch von Geodaten beschreiben, werden dem Bereich Services und APIs zugeordnet. 
+Der OGC API - Processes - Part 1: Core Standard gehört in diesen Bereich. Die Bereiche Discovery und Containers enthalten Standards für die Speicherung von Geodaten
+sowie die Auffindbarkeit und Durchsuchbarkeit dieser. Ein weiterer Bereich widmet sich Standards zum Thema Sensornetzwerke \cite{standards_architecture_diagram}.
+
+\subsection{OGC API - Processes - Part 1: Core}
+Der OGC API - Processes - Part 1: Core Standard soll das Bereitstellen von aufwendigen Prozessierungsaufgaben und ausführbaren Prozessen, welche über eine Web API
+von anderen Programmen aufgerufen und gestartet werden können, unterstützen \cite{ogc_api_processes_core}. Der Standard ist dabei von Konzepten des 
+OGC Web Processing Service 2.0 Interface Standards beeinflusst und bedient sich des REST Architekturstils sowie der Java Script Object Notation (JSON).\\
+Der Aufbau des OGC API - Processes - Part 1: Core Standards orientiert sich am OGC Spezifikationsmodell. Dieses beschreibt die modularen Komponenten eines Standards und 
+wie diese miteinander in Verbindung stehen \cite{ogc_specification_model}. 
+Das Spezifikationsmodell definiert einen Standard als Teillösung eines Entwicklungsproblems.
+Diese Teillösung limitiert die Anzahl an möglichen Implementierungen. Ziel ist die Harmonisierung der Implementierungen und so die Interoperabilität zu steigern.
+Der OGC API - Processes - Part 1: Core Standard formuliert Requirements sowie Recommendations und fasst diese zu Requirements Classes zusammen, welche wiederum 
+ein Standardisierungsziel beschreiben. Requirements beschreiben Eigenschaften oder Vorgehensweisen, die die Implementierung umsetzen muss, um standardkonform zu sein. 
+Recommendations sind hingegen nicht verpflichtend, beschreiben aber aus Sicht der Autoren empfehlenswerte Eigenschaften oder Vorgehensweisen \cite{ogc_specification_model}. 
+Jedes Requirement kann mit einem ebenfalls im Standard definierten Conformance-Test-Case überprüft werden. Diese Tests können zu Conformance-Test Classes zusammengefasst werden,
+welche alle Tests zum Prüfen einer Requirements Class umfassen. Alle vom 
+Standard definierten Conformance-Test Classes werden im Conformance-Suit zusammengefasst \cite{ogc_specification_model}. 
+Erfüllt eine Implementierung alle im Conformance-Suit definierten Tests, kann sie mit einem Certificate of Conformance für die implementierten Requirements Classes 
+versehen werden. Requirements, Recommendation und Conformance-Suit bilden gemeinsam eine Spezifikation, welche nach der Anerkennung durch ein legitimes 
+Gremium wie das OGC als Standard anerkannt werden. Der OGC API - Processes - Part 1: Core ist seit August 2021 als solcher anerkannt \cite{ogc_specification_model,ogc_api_processes_core}. 
+Der OGC API - Processes - Part 1: Core Standard definiert sieben Requirements Classes, welche Endpoints sowie deren Funktionen, Responses und mögliche Fehlersituationen
+umfassen.  
+Die Requirements Class Core beschreibt dabei die Kernfunktionalitäten, welche 
+von standardkonformen Implementierungen umgesetzt werden. Die in der Requirements Class Core beschriebenen Funktionalitäten könnten auch mit dem 
+OGC OGC Web Processing Service 2.0 umgesetzt werden.
+Da dem Nutzer*innen mit diesen Kernfunktionalitäten Ressourcen zugänglich gemacht werden sollen, werden in den 
+Requirements Classes JSON und HTML Repräsentationen dieser Ressourcen in JSON und HTML definiert \cite{ogc_api_processes_core}. 
+Die Requirements Class OpenAPI Specification 3.0 definiert, wie implementierte APIs mithilfe der OpenAPI 3.0 Spezifikation beschrieben 
+und dokumentiert werden sollen \cite{ogc_api_processes_core}.
+Da der Standard primär, aber nicht ausschließlich, zum Breitstellen von Diensten aus dem Bereich der Geoinformatik genutzt werden 
+soll, wird in der Requirements Class OGC Process Description die Nutzung des OGC Processes Description Formats zum Beschreiben von 
+angebotenen Prozessen empfohlen \cite{ogc_api_processes_core}. 
+Die Requirements Classes Job-List, Callback und Dismiss beschreiben zusätzliche Ressourcen und Interaktionsmöglichkeiten 
+mit den auszuführenden Instanzen eines Prozesses, welche als Jobs bezeichnet werden \cite{ogc_api_processes_core}.
+
+\subsection{Evaluationskriterien}
+Die Evaluation einer Implementierung einer API kann unter verschiedenen Gesichtspunkten erfolgen. So können technische Aspekte wie Performanz, Skalierbarkeit,
+Stabilität und Wartbarkeit untersucht werden. Zu dieser technischen Bewertung einer API kann auch das Überprüfen der Standardkonformität gezählt werden. 
+Diese kann durch einen ebenfalls zu implementierenden Unit-Test teilweise überprüft werden, da manche Testfälle des Test-Suits des Standards automatisch überprüft
+werden können \cite{ogc_api_processes_core}. 
+Der Fokus der in dieser Arbeit durchgeführten Evaluation soll jedoch die Benutzbarkeit und Benutzerfreundlichkeit der 
+Implementierung sein. Dafür können die von Jakob Nielsen 1993 aufgestellten Heuristiken verwendet werden. Dabei handelt es sich um zehn Heuristiken, unter denen 
+eine Anwendung hinsichtlich ihrer Benutzbarkeit betrachtet werden kann. 
+Die Heuristiken decken unter anderem die Themenfelder Verständlichkeit, Fehlerbehandlung, 
+Dokumentation und Konsistenz ab. Da sich einige der vorgeschlagenen Heuristiken auf grafische Benutzeroberflächen beziehen, werden sie im Rahmen dieser Arbeit 
+nicht betrachtet. Zusätzlich sollte bemerkt werden, dass es sich bei einer heuristischen Evaluation um eine subjektive Einschätzung des  
+Evaluierenden handelt \cite{usability_engineering,heuristics_website}. 
+
+
+
+
