@@ -96,7 +96,7 @@ Die API-Definition kann unter folgendem URL erreicht werden:
 curl -X GET "localhost:5000/api?f=text/html"
 
 #Retrieve API-Definition as JSON
-curl -X GET "localhost:5000/api?f=application/json"
+curl -X GET "localhost:5000/api?f=application/vnd.oai.openapi+json;version=3.0"
 ```
 
 Alternativ kann die API-Definition unter folgendem Link 
