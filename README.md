@@ -61,7 +61,7 @@ am: 2. März 2022).
 062r2.html (Zugriff am: 1. März 2022).
 
 [3] N. I. Ulloa, S.-H. Chiang und S.-H. Yun (2020, April 27). Flood Proxy Mapping
-with Normal-ized Difference Sigma-Naught Index and Shannon’s Entropy [Online].
+with Normalized Difference Sigma-Naught Index and Shannon’s Entropy [Online].
 Verfügbar unter: https://doi.org/10.3390/rs12091384 (Zugriff am: 1. März
 2022).
 
