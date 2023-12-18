@@ -245,14 +245,14 @@ Eine dieser Gemeinden ist der Ort Demydow. Das Ausmaß der Überflutung lässt s
 curl -X POST -H "Content-Type:application/json" -d "{'inputs':{'preDate':'20220102', 'postDate':'20220604', 'username':'<username>', 'password':'<password>', 'bbox': {'bbox': [50.68209876799218, 30.373870053936805, 50.75296226636879, 30.29868237792831]}}, 'outputs':{'ndsi': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}, 'bin': {'format': {'mediaType': 'application/tiff'}, 'transmissionMode': 'value'}}, 'response': 'document'}" "localhost:5000/processes/FloodMonitoring/execution"	
 ```
 Wird der Job akzeptiert und bearbeitet werden zunächst Sentinel-1 Datensätze vor und nach dem Überschwemmungsereignis heruntergeladen, kalibriert und zugeschnitten.
-![Pre](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/pre.png?raw=true)
-![Post](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/post.png?raw=true)
+![Pre](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/main/example/pre.png?raw=true)
+![Post](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/main/example/post.png?raw=true)
 
 Aus diesen beiden Radarbildern wird der normalized Difference Sigma-Naught Index berechnet. 
-![NDSI](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/ndsi.png?raw=true)
+![NDSI](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/main/example/ndsi.png?raw=true)
 
 Aus diesem kann eine binäre Überflutungsmaske abgeleitet werden.
-![Flood-Mask](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/dev/example/bin.png?raw=true)
+![Flood-Mask](https://github.com/xcomagent95/RichDataInterfacesForCopernicusData/blob/main/example/bin.png?raw=true)
 
 ## Anmerkungen
 Um mithilfe der Anwendung Überschwemmungsmonitoring zu betrieben wird ein gültiger Zugang zum Copernicus Open Access Hub benötigt.
